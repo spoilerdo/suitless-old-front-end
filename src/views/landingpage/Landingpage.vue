@@ -1,34 +1,26 @@
-<style scoped>
-.particles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, #30002a 0%, #434343 74%);
-}
+<style>
 .landingContainer {
     height: 85vh;
     position: relative;
 }
+
+body {
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+}
+body::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+}
 </style>
 
-
 <template>
-    <v-container fluid pa-0 ma-0>
-        <vue-particles
-        class="particles"
-        color="#fff"
-        :particleOpacity="0.7"
-        :particlesNumber="50"
-        shapeType="polygon"
-        :particleSize="4"
-        :lineLinked="false"
-        :hoverEffect="false"
-        :clickEffect="false"
-        :moveSpeed="2">
-        </vue-particles>
+    <v-container pa-0 ma-0>
+        <Animatedbackground/>
 
         <v-layout align-center justify-center class="landingContainer" row wrap fill-height >
-                <v-flex xs12 md3>
+                <v-flex xs12 sm6 md5>
                     <v-img
                     :src=ehvLogo
                     aspect-ratio="1"
@@ -36,7 +28,7 @@
                     max-height="300"
                     />
                 </v-flex>
-                <v-flex xs12 md3>
+                <v-flex xs12 sm6 md5>
                     <div class="display-2 text-xs-center white--text pb-3">make your company legally ready</div>
                     <div class="text-xs-center">
                     <v-btn class="primary" large>Start</v-btn>
@@ -47,6 +39,8 @@
 </template>
 
 <script>
+import Animatedbackground from '@/components/background/Animatedbackground';
+
     export default {
         name: 'landingPage',
         data: function() {
@@ -54,8 +48,8 @@
                 ehvLogo: require("@/assets/logoehvlinc.png")
             }
         },
-        mounted() {
-            
+        components: {
+            Animatedbackground
         }
     } 
 </script>
