@@ -27,5 +27,9 @@ export default {
 <style>
 #core-view {
   padding-bottom: 100px;
+  margin: 0;
+}
+html{
+  overflow: auto;
 }
 </style>

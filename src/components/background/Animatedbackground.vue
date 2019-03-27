@@ -18,7 +18,6 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        padding-bottom: 5px;
         background: linear-gradient(to top, #30002a 0%, #434343 74%);
     }
 </style>

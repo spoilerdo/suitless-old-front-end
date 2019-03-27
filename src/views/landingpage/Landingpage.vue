@@ -5,13 +5,8 @@
 }
 
 body {
-    overflow-y: scroll;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE 10+ */
-}
-body::-webkit-scrollbar { /* WebKit */
-    width: 0;
-    height: 0;
+    overflow:hidden;
+    overflow: -moz-scrollbars-none;
 }
 </style>
 
@@ -45,7 +40,7 @@ import Animatedbackground from '@/components/background/Animatedbackground';
         name: 'landingPage',
         data: function() {
             return {
-                ehvLogo: require("@/assets/logoehvlinc.png")
+                ehvLogo: require("@/assets/img/logoehvlinc.png")
             }
         },
         components: {
