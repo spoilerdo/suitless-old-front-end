@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Landingpage from '../views/landingpage/Landingpage'
 import Dashboard from '../views/Dashboard.vue'
-import Surveys from '../views/surveys/Survey.vue';
+import Surveys from '../views/surveys/Surveys.vue';
 import Survey from '../views/survey/Survey.vue';
 
 Vue.use(Router)

@@ -1,6 +1,6 @@
 <template>
   <v-container pa-0 ma-0>
-    <Animatedbackground/>
+    <Animatedbackground v-once/>
 
     <v-layout align-center justify-center class="background-content-container" row wrap fill-height>
       <v-flex xs12 sm6 md5>

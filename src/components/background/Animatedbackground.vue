@@ -20,7 +20,4 @@
   height: 100%;
   background: linear-gradient(to top, #30002a 0%, #434343 74%);
 }
-#app {
-    background: #30002a !important;
-}
 </style>
