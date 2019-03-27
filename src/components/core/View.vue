@@ -5,7 +5,7 @@
         <router-view/>
       </v-fade-transition>
     </div>
-    <Footer v-if="$route.name !== 'Maps'" />
+    <Footer/>
   </v-content>
 </template>
 
