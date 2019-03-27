@@ -16,8 +16,8 @@ import CoreView from './components/core/View'
 
 export default {
   components: {
-     // Toolbar,
-     // Drawer,
+      Toolbar,
+      //Drawer,
       CoreView
   }
 }

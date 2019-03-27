@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Landingpage from '../views/landingpage/Landingpage'
+import Dashboard from '../views/Dashboard.vue'
+import Surveys from '../views/surveys/Survey.vue';
 Vue.use(Router)
 
 export default new Router({
@@ -10,6 +12,11 @@ export default new Router({
       name: 'Landingpage',
       component: Landingpage,
       icon: 'mdi-view-dashboard'
+    },
+    {
+      path: '/surveys',
+      name: 'Surveys',
+      component: Surveys
     },
     {
       path: '/about',
