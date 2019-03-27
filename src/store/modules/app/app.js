@@ -1,6 +1,6 @@
 // initial state
 const state = {
-    drawerOpen: null
+    drawerOpen: false
 }
 
 // getters

@@ -2,14 +2,13 @@
   <v-app>
     <Toolbar/>
 
-    <Drawer/>
 
     <CoreView />
   </v-app>
 </template>
 
 <script>
-import Drawer from './components/core/Drawer'
+//import Drawer from './components/core/Drawer'
 import CoreView from './components/core/View'
 import Toolbar from './components/core/Toolbar'
 
@@ -17,7 +16,7 @@ import Toolbar from './components/core/Toolbar'
 export default {
   components: {
       Toolbar,
-      Drawer,
+      //Drawer,
       CoreView
   }
 }
