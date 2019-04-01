@@ -11,7 +11,7 @@ body {
 </style>
 
 <template>
-    <v-container pa-0 ma-0>
+    <v-container fluid pa-0 ma-0>
         <Animatedbackground/>
 
         <v-layout align-center justify-center class="landingContainer" row wrap fill-height >
