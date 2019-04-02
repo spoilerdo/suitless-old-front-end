@@ -1,3 +1,8 @@
 export const SET_SURVEY = "SET_SURVEY";
+
 export const ADD_ANSWER = "ADD_ANSWER";
-export const DELETE_ANSWER = "DELETE_ANSWER";
+export const DELETE_LAST_ANSWER = "DELETE_LAST_ANSWER";
+
+export const SET_PROGRESS = "SET_PROGRESS";
+export const SET_CURRENTQUESTION = "SET_CURRENTQUESTION";
+export const SET_DEPTH = "SET_DEPTH";

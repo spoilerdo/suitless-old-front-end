@@ -1,32 +1,31 @@
 //Get mock data (NOT PERMINENT!!!)
 import survey from '../../../api/survey';
 import _ from 'lodash';
-import { SET_SURVEY, ADD_ANSWER, DELETE_ANSWER } from './mutation-types';
+import { SET_SURVEY } from './mutation-types';
 
 // initial state
 const state = {
-    survey: [],
-    answers: []
+    all: []
 }
 
-// getters
 const getters = {
     getFirstQuestionID: (state) => {
         //get the second node and return its ID
         let id = 0;
-        while(typeof state.survey.nodes[id] == 'undefined' || state.survey.nodes[id].value == 'Start'){
+        while(typeof state.all.nodes[id] == 'undefined' || state.all.nodes[id].value == 'Start'){
             id ++;
         }
         return id; //found first ID
     },
-    getQuestionByID: (state) => (ID) => {
-        return state.survey.nodes.find(node => node.ID === ID);
-    }
+    
 }
 
-// actions
 const actions = {
-    //gets the survey from the mock data (survey) 
+    getAllSurveys({ commit }){
+        //get all surveys from the back-end
+        //TODO: do you need want to obtain all the nodes from all surveys??
+    },
+    //gets the survey from the mock data (survey)
     //TODO: BUT it needs to make an axios call instead
     getSurvey ({ commit }) {
         survey.getSurvey(json => {
@@ -36,7 +35,8 @@ const actions = {
                 n.push({
                     "ID": q.ID,
                     "value": q.value,
-                    "flows": q.flows
+                    "flows": q.flows,
+                    "lincData": q.lincData
                 })
             });
 
@@ -48,22 +48,12 @@ const actions = {
     }
 }
 
-//mutations
 const mutations = {
     [SET_SURVEY] (state, survey){
-        state.survey = survey;
+        state.all = survey;
 
         //makes an object array with the node ID as key
-        state.survey.nodes = _.mapKeys(survey.nodes, 'ID');
-    },
-    [ADD_ANSWER] (state, answer){
-        state.answers.push(answer)
-    },
-    [DELETE_ANSWER] (state, answer){
-        const a = state.answers.find(a => a.id === answer.id)
-        //TODO 2 options:
-        //1: always delete the given answer from the array
-        //2: always delete the last answer of the array
+        state.all.nodes = _.mapKeys(survey.nodes, 'ID');
     }
 }
 
