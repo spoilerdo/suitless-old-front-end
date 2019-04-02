@@ -8,119 +8,80 @@
 </style>
 
 <template>
-  <v-container style="display:block">
-    <v-layout justify-end>
-      <v-flex xs3 style="padding-right:20px">
-        <v-img :src="'http://www.eindhovenlinc.com/img/logos/logo.png'" aspect-ratio="0.73">
-          <template v-slot:placeholder>
-            <v-layout>
-              <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-            </v-layout>
-          </template>
-        </v-img>
+  <v-container class="pa10">
+    <v-layout row wrap>
+      <v-flex md6 sm8 xs12>
+        <materialCard color="primary" title="Student Legal Health Check" :text="loginText">
+          <v-alert :value="alert.message !=null" :type="alert.type" outline>{{alert.message}}</v-alert>
+
+          <div v-show="loggingIn">
+            <Form email password name="loginForm" ref="loginForm" :onclick="loginUser"/>
+
+            <v-btn @click="$refs.loginForm.validatedSubmit()" mx-2 color="primary">Login</v-btn>
+            <v-btn v-on:click="switchForms(false)" mx-2 color="grey">Create New Account</v-btn>
+            <a href="#" style="color: grey">Forgot your password?</a>
+          </div>
+          
+          <div v-show="!loggingIn">
+            <Form email password firstname lastname confirmpassword name="registerForm" ref="registerForm" :onclick="registerUser" :callback="successfulRegister"/>
+
+            <v-btn @click="$refs.registerForm.validatedSubmit()" mx2 color="primary">Register</v-btn>
+            <v-btn v-on:click="switchForms(true)" class="mx-2" color="grey">Login To Existing Account</v-btn>
+            <a href="#" style="color: grey">Forgot your password?</a>
+          </div>
+
+        </materialCard>
+      </v-flex>
+      <v-flex md2 sm2 xs0 offset-sm1 offset-md3 color="primary" pt-1>
+          <Logo aspectratio="0.73"/>
       </v-flex>
     </v-layout>
-    <v-flex md10 lg5 style="position: absolute; top: 15%; padding-right:20px;">
-      <material-card color="primary" title="Student Legal Health Check" :text="loginText">
-        <v-alert v-if="alert.Visible" :type="alert.Type" outline>{{alert.Message}}</v-alert>
-        <v-form v-if="LoggingIn" lazy-validation>
-          <v-layout column>
-            <v-text-field label="Email" v-model="loginForm.Email" :rules="emailRules" required></v-text-field>
-
-            <v-text-field
-              label="Password"
-              v-model="loginForm.Password"
-              :rules="passwordRules"
-              required
-              :type="'password'"
-            ></v-text-field>
-          </v-layout>
-          <v-btn :disabled="buttonDisabled" v-on:click="login(loginForm)" mx-2 color="primary">Login</v-btn>
-          <v-btn v-on:click="switchForms()" mx-2 color="grey">Create New Account</v-btn>
-          <a href="http://ironsm4sh.nl" style="color: grey">Forgot your password?</a>
-        </v-form>
-
-        <v-form v-else lazy-validation>
-          <v-layout column>
-            <v-text-field label="Email" v-model="registerForm.Email" :rules="emailRules" required></v-text-field>
-
-            <v-text-field
-              label="First Name"
-              v-model="registerForm.FirstName"
-              :rules="nameRules"
-              required
-            ></v-text-field>
-
-            <v-text-field
-              label="Last Name"
-              v-model="registerForm.LastName"
-              :rules="nameRules"
-              required
-            ></v-text-field>
-
-            <v-text-field
-                ref="password"
-                label="Password"
-                v-model="registerForm.Password"
-                :rules="passwordRules"
-                v-validate="'required|min:8'"
-                required
-                type='password'
-            ></v-text-field>
-
-            <v-text-field
-              label="Confirm Password"
-              v-model="registerForm.ConfirmPassword"
-              :rules="passwordRules"
-              v-validate="`confirmed:password`"
-              required
-              type="password"
-            ></v-text-field>
-          </v-layout>
-          <v-btn
-            :disabled="buttonDisabled"
-            v-on:click="register(registerForm)"
-            mx2
-            color="primary"
-          >Register</v-btn>
-          <v-btn v-on:click="switchForms()" class="mx-2" color="grey">Login To Existing Account</v-btn>
-          <a href="http://ironsm4sh.nl" style="color: grey">Forgot your password?</a>
-        </v-form>
-      </material-card>
-    </v-flex>
   </v-container>
 </template>
 
 <script>
+// @ is an alias to /src
+import { createNamespacedHelpers } from 'vuex';
+import materialCard from '@/components/material//Card';
+import Form from '@/components/login/Form';
+import Logo from '@/components/login/Logo';
+
+//can be used if you will only need to access ONE module in this component, will auto append /news before actions.
+const { mapState, mapActions } = createNamespacedHelpers('login/');
+
 export default {
-  data() {
-    return {
-
-    };
+  name: "login",
+  components: {
+    Form,
+    Logo,
+    materialCard
   },
-  methods: {
-    switchForms() {
-      this.alert.Visible = false;
-      if (this.loginIn) {
-        this.loginText = "Register";
-        this.loginIn = false;
-      } else {
-        this.loginText = "Login";
-        this.loginIn = true;
-      }
-    },
-
-    register(e) {
-      if (e.Password == e.ConfirmPassword) {
-        this.alert.Type = "success";
-        this.alert.Message = "Succesfully created account";
-        this.alert.Visible = true;
-      } else {
-        this.alert.Type = "error";
-        this.alert.Message = "Passwords do not match";
-        this.alert.Visible = true;
+  data() {
+    return{
+      //form states can and should be stored locally, only vuex mutations should be allowed to mutate a vuex state, and v-model changes state also on every keybind.
+      loginForm: {
+          email:  null,
+          password: null
+      },
+      registerForm: {
+          email: null,
+          firstName: null,
+          lastName: null,
+          password: null,
+          confirmPassword: null
       }
     }
-  }
+  },
+  computed: {
+    ...mapState(['loggingIn', 'loginText', 'alert'])
+  },
+  methods: {
+    ...mapActions(['registerUser', 'loginUser', 'switchForms']),
+    successfulRegister() {
+      //switch to login page on successful login
+      console.log(this.alert);
+      this.switchForms(true);
+    }
+  },
 };
 </script>

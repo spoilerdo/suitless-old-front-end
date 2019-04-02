@@ -1,35 +1,14 @@
 import {apiCall, setToken} from '../../../api/api'
 import { API_URL } from '../../serverconstants';
+import router from '@/router/router'
 
 // initial state
 const state = {
     loggingIn: true,
     loginText: "Login",
-
-    loginForm: {
-        Email: null,
-        Password: null
-    },
-
-    registerForm: {
-        Email: null,
-        FirstName: null,
-        LastName: null,
-        Password: null,
-        ConfirmPassword: null
-    },
-    emailRules: [
-        v => !!v || "E-mail is required",
-        v => /.+@.+/.test(v) || "E-mail must be valid"
-    ],
-    nameRules: [v => !!v || "Name is required"],
-    passwordRules: [
-        v => !!v || "Password is required",
-        v => (v || "").length >= 8 || `A minimum of 8 characters is required`
-    ],
     alert: {
         type: null,
-        Message: null
+        message: null
     }
 }
 
@@ -42,30 +21,48 @@ const getters = {
 
 // actions
 const actions = {
-    registerUser ({commit}, registerForm) {
-        commit(apiCall('post', `${API_URL}/accounts/`, {registerForm}));
+    registerUser ({commit}, registerData) {
+        apiCall('post', `${API_URL}/accounts/`, {email: registerData.email, firstName: registerData.firstName, lastName: registerData.lastName, password: registerData.password})
+        .then((req => {
+            commit("setAlert", {type:"success", message:"Successfully created account!"})
+        })).catch(e => {
+            commit("setAlert", {type:"error", message:e.message});
+        })
     },
 
-    loginUser({commit}, loginForm) {
-            commit(apiCall('post', `${API_URL}/login`, {loginForm})
+    loginUser({commit}, loginData) {
+        apiCall('post', `${API_URL}/login`, {email: loginData.email, password: loginData.password})
             .then((req => {
                 localStorage.setItem('jwtToken', req.token);
                 setToken(req.token);
+                router.push("/dashboard");
             })).catch(e => {
-                commit("setAlert", "error", e.message);
-            }));
+                commit("setAlert", {type:"error", message: "email or password invalid"});
+            });
+    },
+
+    switchForms({commit}, loggingIn) {
+        if(state.loggingIn){
+            commit("setLoginText", "Register");
+        } else {
+            commit("setLoginText", "Login");
+        }
+        commit("setAlert", {type:null, message: null});
+        commit("setloggingIn", loggingIn);
     }
 }
 
 // mutations
 const mutations = {
-    setloggingIn(loggingIn) {
+    setloggingIn(state, loggingIn) {
         state.loggingIn = loggingIn;
     },
-
-    setAlert(type, message) {
-        state.alert.type = type;
-        state.alert.message = message;
+    setLoginText(state, loginText) {
+        state.loginText = loginText;
+    },
+    setAlert(state, payload) {
+        state.alert.type = payload.type;
+        state.alert.message = payload.message;
     }
 }
 
