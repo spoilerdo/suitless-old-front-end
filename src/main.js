@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import VueParticles from 'vue-particles'
+import VeeValidate from 'vee-validate'
 import './plugins/vuetify'
 import App from './App.vue'
 import store from './store/store'
@@ -12,6 +13,7 @@ Vue.use(VueParticles)
 Vue.use(Vuetify, {
   iconfont: 'mdi'
 });
+Vue.use(VeeValidate);
 
 new Vue({
   store,

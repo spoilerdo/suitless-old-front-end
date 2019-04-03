@@ -11,20 +11,17 @@
       >
         <a
           :href="link.Link"
-          class="tertiary--text footer-links">{{ link.name }}</a>
+          class=" footer-links white--text">{{ link.name }}</a>
       </span>
     </div>
     <v-spacer/>
-    <span class="font-weight-light copyright">
+    <span class="font-weight-light copyright white--text">
       &copy;
       {{ (new Date()).getFullYear() }}
       <a
-        href="https://www.creative-tim.com/"
-        target="_blank">Creative Tim</a>, made with
-      <v-icon
-        color="tertiary"
-        size="17">mdi-heart</v-icon>
-      for a better web
+        href="https://www.eindhovenlinc.com/"
+        target="_blank"
+        class="white--text">ehvLINC</a>
     </span>
   </v-footer>
 </template>
