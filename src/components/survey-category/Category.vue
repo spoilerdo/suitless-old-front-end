@@ -1,6 +1,6 @@
 <template>
   <v-flex grow pa-5 xs3>
-    <v-card hover ripple v-on:click="hoi" class="rouned-card">
+    <v-card hover ripple to="/survey" class="rouned-card">
       <!--<v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" aspect-ratio="2.75"></v-img>-->
       <v-card-media>
         <v-layout align-space-around justify-space-between column fill-height pa-3>
