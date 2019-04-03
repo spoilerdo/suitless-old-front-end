@@ -1,0 +1,8 @@
+.background-content-container {
+    height: 85vh;
+    position: relative;
+  }
+.background-content-container, body {
+  overflow: hidden;
+  overflow: -moz-scrollbars-none;
+}

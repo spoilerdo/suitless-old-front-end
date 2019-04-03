@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Landingpage from '../views/landingpage/Landingpage'
 import Dashboard from '../views/Dashboard.vue'
-import Surveys from '../views/surveys/Survey.vue';
+import Surveys from '../views/surveys/Surveys.vue';
+import Survey from '../views/survey/Survey.vue';
+
 Vue.use(Router)
 
 export default new Router({
@@ -17,6 +19,11 @@ export default new Router({
       path: '/surveys',
       name: 'Surveys',
       component: Surveys
+    },
+    {
+      path: '/survey',
+      name: 'Survey',
+      component: Survey
     },
     {
       path: '/about',
