@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Landingpage from '../views/landingpage/Landingpage'
 import Dashboard from '../views/Dashboard.vue'
 import Login from '../views/login/Login';
+import cdn from '../views/cdn/cdn';
 import Surveys from '../views/surveys/Surveys.vue';
 import Survey from '../views/survey/Survey.vue';
 
@@ -25,6 +26,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/cdn',
+      name: 'Cdn',
+      component: cdn
     },
     {
       path: '/about',
