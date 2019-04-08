@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Landingpage from '../views/landingpage/Landingpage'
-import Dashboard from '../views/Dashboard.vue'
 import Login from '../views/login/Login';
-import cdn from '../views/cdn/cdn';
+import Cdn from '../views/cdn/Cdn';
 import Surveys from '../views/surveys/Surveys.vue';
-import Survey from '../views/survey/Survey.vue';
 
 Vue.use(Router)
 
@@ -30,7 +28,7 @@ export default new Router({
     {
       path: '/cdn',
       name: 'Cdn',
-      component: cdn
+      component: Cdn
     },
     {
       path: '/about',
