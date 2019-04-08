@@ -1,7 +1,6 @@
 <template>
   <v-app>
-    <!--<Toolbar/> -->
-
+    <Toolbar v-if="!newUser"/>
     <!--<Drawer/> -->
 
     <CoreView />
@@ -9,16 +8,24 @@
 </template>
 
 <script>
+// @ is an alias to /src
+import { createNamespacedHelpers } from 'vuex';
+//can be used if you will only need to access ONE module in this component, will auto append /app before actions.
+const { mapState, mapActions } = createNamespacedHelpers('app/')
+
 //import Drawer from './components/core/Drawer'
 import CoreView from './components/core/View'
-//import Toolbar from './components/core/Toolbar'
+import Toolbar from './components/core/Toolbar'
 
 
 export default {
   components: {
-      //Toolbar,
+      Toolbar,
       //Drawer,
       CoreView
+  },
+  computed: {
+      ...mapState(['newUser']),
   }
 }
 </script>

@@ -5,6 +5,7 @@ import Dashboard from '../views/Dashboard.vue'
 import Login from '../views/login/Login';
 import Surveys from '../views/surveys/Surveys.vue';
 import Survey from '../views/survey/Survey.vue';
+import LoginLanding from '@/views/landingpage/LoginLanding';
 
 Vue.use(Router)
 
@@ -25,6 +26,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/landingregister',
+      name: 'Landing-Register',
+      component: LoginLanding
     },
     {
       path: '/about',

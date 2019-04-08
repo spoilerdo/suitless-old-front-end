@@ -2,7 +2,7 @@
     <v-form :data-vv-scope="name">
         <v-layout column>
             <!-- firstname input -->
-            <v-text-field v-if="firstname" label="FirstName" v-model="form.firstName" v-validate="'required|alpha'" name="firstname"/>
+            <v-text-field v-if="firstname" label="First Name" v-model="form.firstName" v-validate="'required|alpha'" name="firstname"/>
             <span v-if="firstname">{{ errors.first(`${name}.firstname`) }}</span>
             <!-- /firstname input -->
 
