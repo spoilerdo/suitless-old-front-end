@@ -30,7 +30,6 @@ export default {
     Animatedbackground
   },
   mounted() {
-    console.log(this);
     this.generateDemoPDF();
   }
 };
