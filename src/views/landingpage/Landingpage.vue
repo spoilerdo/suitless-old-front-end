@@ -18,6 +18,7 @@
 
 <script>
 import Animatedbackground from "@/components/background/Animatedbackground";
+import { mapActions } from "vuex";
 
 export default {
   name: "landingPage",
@@ -28,6 +29,14 @@ export default {
   },
   components: {
     Animatedbackground
+  },
+  methods: {
+    ...mapActions({
+      setBackground: "app/setBackground"
+    })
+  },
+  created(){
+    this.setBackground("#30002a");
   }
 };
 </script>

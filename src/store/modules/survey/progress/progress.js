@@ -27,6 +27,9 @@ const actions = {
     }
 
     commit(SET_DEPTH, depth);
+  },
+  setCurrentQuestion({ commit }, question) {
+    commit(SET_CURRENTQUESTION, question);
   }
 }
 
