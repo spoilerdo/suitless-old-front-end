@@ -82,6 +82,6 @@ export default {
       console.log(this.alert);
       this.switchForms(true);
     }
-  },
+  }
 };
 </script>
