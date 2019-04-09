@@ -15,7 +15,7 @@ export let GraphCoder = {
                 ID: e.id,
                 style: e.lincType,
                 value: e.value,
-                lincData: e.lincData,
+                lincData: this.createLincData(e.lincData),
                 height: e.geometry.height,
                 width: e.geometry.width,
                 posX: e.geometry.x,
@@ -32,7 +32,20 @@ export let GraphCoder = {
         }
 
         console.log(JSON.stringify(module, null, "\t"))
-        apiCall('post', "http://ironsm4sh.nl:3303/createModele", JSON.stringify(module, null, "\t"));
+        apiCall('post', "http://localhost:3304/", JSON.stringify(module, null, "\t"));
+    },
+
+    createLincData(lincData){
+        let lincs = [];
+
+        //TODO: maak foreach en array van lincData
+
+        lincs.push({
+            key: "Reason", 
+            value: "Reason for the question"
+        });
+
+        return lincs;
     },
 
     checkEdges(cell){
