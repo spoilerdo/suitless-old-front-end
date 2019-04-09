@@ -41,6 +41,12 @@ export default new Router({
       path: '/about',
       name: 'About',
       icon: 'mdi-view-dashboard'
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard,
+      icon: 'mdi-view-dashboard'
     }
   ],
   mode: 'history'
