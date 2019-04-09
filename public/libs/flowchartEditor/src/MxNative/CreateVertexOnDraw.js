@@ -140,9 +140,10 @@ export function vertexOnDraw(mxEvent, graph) {
         menu.addItem('Question Node', null, function () {
             if (mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.Question;
-                vertexData = {
-                    "reason": "Reason for the question",
-                }
+                vertexData = [{
+                    "key": "reason",
+                    "value": "Reason for the question"
+                }]
                 mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent(), mouseMe.getCell());
             }
         });
@@ -150,9 +151,10 @@ export function vertexOnDraw(mxEvent, graph) {
         menu.addItem('Module Node', null, function () {
             if (mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.Module;
-                vertexData = {
-                    "module": "Module name",
-                }
+                vertexData = [{
+                    "key": "module",
+                    "value": "Module name"
+                }]
                 mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent(), mouseMe.getCell());
             }
         });
