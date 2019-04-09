@@ -7,10 +7,14 @@
 </template>
 
 <script>
+// @ is an alias to /src
+import { createNamespacedHelpers } from 'vuex';
+//can be used if you will only need to access ONE module in this component, will auto append app/ before actions.
+const { mapState, mapActions } = createNamespacedHelpers('app/')
+
 //import Drawer from './components/core/Drawer'
 import CoreView from "./components/core/View";
 import Toolbar from './components/core/Toolbar'
-import { mapState, mapActions } from "vuex";
 
 export default {
   components: {
@@ -25,12 +29,12 @@ export default {
   },
   computed: {
     ...mapState(['newUser']),
-    ...mapState("app", {
+    ...mapState({
       background: state => state.background
     })
   },
   methods: {
-    ...mapActions("app/", ["setBackground"])
+    ...mapActions(["setBackground"])
   },
   watch: {
     background: function(val) {

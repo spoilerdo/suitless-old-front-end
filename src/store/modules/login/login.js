@@ -23,7 +23,7 @@ const getters = {
 // actions
 const actions = {
     registerUser ({commit}, registerData) {
-        apiCall('post', `${API_URL}/accounts/`, {email: registerData.email, firstName: registerData.firstName, lastName: registerData.lastName, password: registerData.password})
+        apiCall('POST', `${API_URL}/accounts/`, {email: registerData.email, firstName: registerData.firstName, lastName: registerData.lastName, password: registerData.password})
         .then((req => {
             commit(SET_ALERT, {type:"success", message:"Successfully created account!"})
         })).catch(e => {
