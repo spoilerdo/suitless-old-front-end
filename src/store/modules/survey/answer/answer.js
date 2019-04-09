@@ -21,7 +21,7 @@ const getters = {
 }
 
 const actions = {
-    answerQuestion({ commit }, {answer, question}) {
+    answerQuestion({ commit }, { answer, question }) {
         //fill the answer in on the answers array
         var a = {
             questionID: question.ID,
@@ -32,6 +32,9 @@ const actions = {
         };
 
         commit(ADD_ANSWER, a);
+    },
+    deleteLastAnswer({ commit }) {
+        commit(DELETE_LAST_ANSWER);
     }
 }
 

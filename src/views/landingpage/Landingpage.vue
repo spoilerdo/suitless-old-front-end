@@ -20,6 +20,7 @@
 // @ is an alias to /src
 import { createNamespacedHelpers } from 'vuex';
 import Animatedbackground from "@/components/background/Animatedbackground";
+import { mapActions } from "vuex";
 
 //can be used if you will only need to access ONE module in this component, will auto append /app before actions.
 const { mapState } = createNamespacedHelpers('app/')
@@ -34,6 +35,14 @@ export default {
   components: {
     Animatedbackground
   },
+  methods: {
+    ...mapActions({
+      setBackground: "app/setBackground"
+    })
+  },
+  created() {
+    this.setBackground("#30002a");
+  },
   computed: {
     ...mapState(['newUser'])
   },
@@ -41,9 +50,6 @@ export default {
     if(!this.newUser) {
         this.$router.push("/dashboard")
     }
-  },
-  mounted() {
-    this.generateDemoPDF();
   }
 };
 </script>

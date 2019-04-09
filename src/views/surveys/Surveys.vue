@@ -22,11 +22,20 @@
 <script>
 import Category from "@/components/survey-category/Category";
 import Animatedbackground from "@/components/background/Animatedbackground";
+import { mapActions } from "vuex";
 
 export default {
   components: {
     Category,
     Animatedbackground
+  },
+  methods: {
+    ...mapActions({
+      setBackground: "app/setBackground"
+    })
+  },
+  created() {
+    this.setBackground("#30002a");
   }
 };
 </script>

@@ -43,27 +43,19 @@ export default {
   created() {
     //when created call the action to get all products from api and put it in the store
     this.$store.dispatch("survey/getSurvey");
+    this.setBackground("#eee");
   },
   methods: {
-    ...mapActions({
-      addAnswer: "answer/answerQuestion",
-      fillProgress: "progress/fillProgress"
-    }),
-    ...mapMutations({
-      deleteLastAnswer: "answer/DELETE_LAST_ANSWER",
-      setCurrentQuestion: "progress/SET_CURRENTQUESTION"
-    }),
+    ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion"]),
+    ...mapActions("progress/", ["fillProgress", "setCurrentQuestion"]),
+    ...mapActions("app/", ["setBackground"]),
+
     answerQuestion(answer) {
-      //add answer to the answer store
       this.addAnswer({
         answer,
         question: this.survey.nodes[this.currentquestion]
       });
-
-      //go to the next question
       this.setCurrentQuestion(answer.targetID);
-
-      //update the progressbar
       this.fillProgress({ addedDepth: 1, survey: this.survey });
     },
 
@@ -71,8 +63,7 @@ export default {
       //select the previouse question
       this.setCurrentQuestion(this.getAnswerByQuestionID(question).questionID);
       this.deleteLastAnswer();
-      
-      //update the progressbar
+
       this.fillProgress({ addedDepth: -1, survey: this.survey });
     }
   },
