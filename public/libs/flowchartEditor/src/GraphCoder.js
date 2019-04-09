@@ -15,7 +15,7 @@ export let GraphCoder = {
                 ID: e.id,
                 style: e.lincType,
                 value: e.value,
-                lincData: this.createLincData(e.lincData),
+                lincData: e.lincData,
                 height: e.geometry.height,
                 width: e.geometry.width,
                 posX: e.geometry.x,
@@ -32,7 +32,7 @@ export let GraphCoder = {
         }
 
         console.log(JSON.stringify(module, null, "\t"))
-        apiCall('post', "http://localhost:3304/", JSON.stringify(module, null, "\t"));
+        apiCall('post', "http://ironsm4sh.nl:3303/modules/", JSON.stringify(module, null, "\t"));
     },
 
     createLincData(lincData){

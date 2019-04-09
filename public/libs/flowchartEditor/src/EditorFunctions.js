@@ -214,9 +214,10 @@ export let graphFunctions = {
 function addQuestion(graph, parent, json, x, y) {
     graphFunctions.setCustomShape(graph, NodeEnum.Question);
 
-    let data = {
-        "reason": "Reason for the question",
-    }
+    let data = [{
+        "key": "reason",
+        "value": "Reason for the question"
+    }]
     return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, x, y);
 }
 
@@ -241,9 +242,10 @@ function addStart(graph, parent, json, x, y) {
 function addModule(graph, parent, json, x, y) {
     graphFunctions.setCustomShape(graph, NodeEnum.Module);
 
-    let data = {
-        "module": "Module name"
-    }
+    let data = [{
+        "key": "module",
+        "value": "Module name"
+    }]
     return genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, x, y);
 }
 
@@ -268,9 +270,10 @@ function addEnd(graph, parent, json, x, y) {
 function addNotification(graph, parent, json, x, y) {
     graphFunctions.setCustomShape(graph, NodeEnum.Notification);
 
-    let data = {
-        "notify": "this is a notification",
-    }
+    let data = [{
+        "key": "notify",
+        "value": "this is a notification"
+    }]
     return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, x, y);
 }
 

@@ -91,23 +91,26 @@ export let formatBarFunctions = {
         return cellQuestionButton;
     },
 
+    //TODO: FIX THIS GARBAGE CODES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Code Duplication !!!!!!!!!!!!!!
+
     createReason(selectedCell, cellInput) {
         let cellReasonButton = mxUtils.button("apply", (evt) => {
-            selectedCell.lincData.reason = cellInput.value;
+            console.log(selectedCell);
+            selectedCell.lincData[0].value = cellInput.value;
         });
         return cellReasonButton;
     },
 
     createModule(selectedCell, cellInput) {
         let cellModuleButton = mxUtils.button("apply", (evt) => {
-            selectedCell.lincData.module = cellInput.value;
+            selectedCell.lincData[0].value = cellInput.value;
         });
         return cellModuleButton;
     },
 
     createNotification(editor, selectedCell, cellInput) {
         let cellNotificationButton = mxUtils.button("apply", (evt) => {
-            selectedCell.lincData.notify = cellInput.value;
+            selectedCell.lincData[0].value = cellInput.value;
             editor.graph.getModel().setValue(selectedCell, cellInput.value);
         })
         return cellNotificationButton;
