@@ -39,8 +39,9 @@ export default new Router({
       component: LoginLanding
     },
     {
-      path: '/about',
-      name: 'About',
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard,
       icon: 'mdi-view-dashboard'
     },
     {

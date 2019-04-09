@@ -7,7 +7,7 @@
       <v-flex d-flex xs8>
         <Question
           v-if="survey.nodes != null && currentquestion != null"
-          v-on:answerQuestion="answerQuestion"
+          v-on:answerQuestion="answeredQuestion"
           v-on:renderPreviousQuestion="renderPreviousQuestion"
           v-bind:question="survey.nodes[currentquestion]"
           v-bind:progress="progress"
@@ -50,13 +50,14 @@ export default {
     ...mapActions("progress/", ["fillProgress", "setCurrentQuestion"]),
     ...mapActions("app/", ["setBackground"]),
 
-    answerQuestion(answer) {
-      this.addAnswer({
+    answeredQuestion(answer) {
+      this.answerQuestion({
         answer,
         question: this.survey.nodes[this.currentquestion]
       });
       this.setCurrentQuestion(answer.targetID);
       this.fillProgress({ addedDepth: 1, survey: this.survey });
+      console.log(this.progress);
     },
 
     renderPreviousQuestion(question) {
@@ -71,6 +72,14 @@ export default {
     //only on the first ever update since this page
     if (this.currentquestion == null) {
       this.setCurrentQuestion(this.firsQuestionID);
+    }
+  },
+  watch: {
+    progress: function (newValue, oldValue) {
+      //watch for completion of survey, then print pdf
+      if(newValue === 100) {
+        this.generateDemoPDF();
+      }
     }
   }
 };
