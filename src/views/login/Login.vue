@@ -19,7 +19,8 @@
 
             <v-btn @click="$refs.loginForm.validatedSubmit()" mx-2 color="primary">Login</v-btn>
             <v-btn v-on:click="switchForms(false)" mx-2 color="grey">Create New Account</v-btn>
-            <a href="#" style="color: grey">Forgot your password?</a>
+            <v-spacer/>
+            <a href="#" style="color: grey;">Forgot your password?</a>
           </div>
           
           <div v-show="!loggingIn">
@@ -27,6 +28,7 @@
 
             <v-btn @click="$refs.registerForm.validatedSubmit()" mx2 color="primary">Register</v-btn>
             <v-btn v-on:click="switchForms(true)" class="mx-2" color="grey">Login To Existing Account</v-btn>
+            <v-spacer/>
             <a href="#" style="color: grey">Forgot your password?</a>
           </div>
 
@@ -79,7 +81,6 @@ export default {
     ...mapActions(['registerUser', 'loginUser', 'switchForms']),
     successfulRegister() {
       //switch to login page on successful login
-      console.log(this.alert);
       this.switchForms(true);
     }
   }
