@@ -32,6 +32,7 @@ export default {
     ...mapState({
       background: state => state.background
     })
+
   },
   methods: {
     ...mapActions(["setBackground"])

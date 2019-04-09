@@ -221,9 +221,17 @@ table.mxPopupMenu tr {
 
 
 <script>
+import {mapActions } from "vuex";
+
 export default {
     mounted(){
         this.startEditor();
+    },
+    methods: {
+        ...mapActions("app/", ["setBackground"]),
+    },
+    beforeMount() {
+        this.setBackground("transparent");
     }
 }
 </script>

@@ -10,6 +10,7 @@ export const setToken = (token) => {
 }
 
 export const apiCall = (method, path, data) => {
+    console.log(axios.defaults.headers.common['Authorization']);
     return new Promise((resolve, reject) => {
         return axios[method.toLowerCase()](path, data, { headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' } })
         .then(res => {
