@@ -28,6 +28,8 @@ export default {
 #core-view {
   padding-bottom: 100px;
   margin: 0;
+  width: 100%;
+  height: 100%;
 }
 html{
   overflow: auto;

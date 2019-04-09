@@ -28,9 +28,6 @@ export default {
   },
   components: {
     Animatedbackground
-  },
-  mounted() {
-    this.generateDemoPDF();
   }
 };
 </script>

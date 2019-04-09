@@ -1,12 +1,3 @@
-<style>
-    body{
-        background-image: url("../../assets/img/header-bg.jpg");
-    }
-    .theme--light.application{
-        background: transparent !important;
-    }
-</style>
-
 <template>
   <v-container class="pa10">
     <v-layout row wrap>
