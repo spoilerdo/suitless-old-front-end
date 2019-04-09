@@ -1,0 +1,7 @@
+version: '3.7'
+services:
+  service:
+    build: .
+    network_mode: "bridge"
+    ports:
+     - "3301:80"

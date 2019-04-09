@@ -1,0 +1,32 @@
+before_script:
+- export GRADLE_USER_HOME=`pwd`/.gradle
+
+cache:
+  paths:
+  - .m2/repository
+
+stages:
+- build
+- docker
+
+
+build_VueJS:
+  stage: build
+  image: node:latest
+  script:
+  - 'npm ci'
+  - 'npm run build'
+  artifacts:
+    paths:
+    - /builds/I386965/ehvlinc-frontend/dist/
+
+docker_compose:
+  stage: docker
+  image: tmaier/docker-compose:latest
+  only:
+  - master
+  before_script:
+  - 'docker info'
+  script:
+  - 'cd /builds/I386965/ehvlinc-frontend/'
+  - 'docker-compose up -d --build'
