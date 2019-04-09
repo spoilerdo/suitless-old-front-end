@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "jspdf": "^1.5.3",
     "lodash": "^4.17.11",
     "node-sass": "^4.11.0",
     "vee-validate": "^2.2.0",

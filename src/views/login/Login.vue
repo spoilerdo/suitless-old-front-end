@@ -83,6 +83,6 @@ export default {
       //switch to login page on successful login
       this.switchForms(true);
     }
-  },
+  }
 };
 </script>

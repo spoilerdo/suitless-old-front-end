@@ -41,6 +41,9 @@ export default {
     if(!this.newUser) {
         this.$router.push("/dashboard")
     }
+  },
+  mounted() {
+    this.generateDemoPDF();
   }
 };
 </script>
