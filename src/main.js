@@ -3,6 +3,8 @@ import Vuetify from 'vuetify'
 import VueParticles from 'vue-particles'
 import VeeValidate from 'vee-validate'
 import pdfreporter from './plugins/pdfreporter/pdfreporter'
+import flowchartEditor from './plugins/flowchartEditor/flowchartEditor';
+
 
 import './plugins/vuetify'
 import App from './App.vue'
@@ -18,6 +20,7 @@ Vue.use(Vuetify, {
 });
 Vue.use(VeeValidate);
 Vue.use(pdfreporter);
+Vue.use(flowchartEditor);
 
 if (localStorage.jwtToken) {
   //restore axios default header sessions
