@@ -9,7 +9,7 @@
       <v-flex xs12 sm6 md5>
         <div class="display-2 text-xs-center white--text pb-3">make your company legally ready</div>
         <div class="text-xs-center">
-          <v-btn to="/surveys" class="primary" large>Start</v-btn>
+          <v-btn to="/landingregister" class="primary" large>Start</v-btn>
         </div>
       </v-flex>
     </v-layout>
@@ -17,7 +17,13 @@
 </template>
 
 <script>
+// @ is an alias to /src
+import { createNamespacedHelpers } from 'vuex';
 import Animatedbackground from "@/components/background/Animatedbackground";
+import { mapActions } from "vuex";
+
+//can be used if you will only need to access ONE module in this component, will auto append /app before actions.
+const { mapState } = createNamespacedHelpers('app/')
 
 export default {
   name: "landingPage",
@@ -28,6 +34,22 @@ export default {
   },
   components: {
     Animatedbackground
+  },
+  methods: {
+    ...mapActions({
+      setBackground: "app/setBackground"
+    })
+  },
+  created() {
+    this.setBackground("#30002a");
+  },
+  computed: {
+    ...mapState(['newUser'])
+  },
+  beforeMount() {
+    if(!this.newUser) {
+        this.$router.push("/dashboard")
+    }
   }
 };
 </script>

@@ -1,4 +1,5 @@
 export const SET_SURVEY = "SET_SURVEY";
+export const SET_SURVEYS = "SET_SURVEYS";
 
 export const ADD_ANSWER = "ADD_ANSWER";
 export const DELETE_LAST_ANSWER = "DELETE_LAST_ANSWER";

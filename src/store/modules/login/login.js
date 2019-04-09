@@ -1,6 +1,7 @@
 import {apiCall, setToken} from '../../../api/api'
 import { API_URL } from '../../serverconstants';
 import router from '@/router/router'
+import { SET_LOGGING_IN, SET_LOGIN_TEXT, SET_ALERT } from './mutation-types';
 
 // initial state
 const state = {
@@ -24,9 +25,9 @@ const actions = {
     registerUser ({commit}, registerData) {
         apiCall('post', `${API_URL}/accounts/`, {email: registerData.email, firstName: registerData.firstName, lastName: registerData.lastName, password: registerData.password})
         .then((req => {
-            commit("setAlert", {type:"success", message:"Successfully created account!"})
+            commit(SET_ALERT, {type:"success", message:"Successfully created account!"})
         })).catch(e => {
-            commit("setAlert", {type:"error", message:e.message});
+            commit(SET_ALERT, {type:"error", message:e.message});
         })
     },
 
@@ -37,30 +38,30 @@ const actions = {
                 setToken(req.token);
                 router.push("/dashboard");
             })).catch(e => {
-                commit("setAlert", {type:"error", message: "email or password invalid"});
+                commit(SET_ALERT, {type:"error", message: "email or password invalid"});
             });
     },
 
     switchForms({commit}, loggingIn) {
         if(state.loggingIn){
-            commit("setLoginText", "Register");
+            commit(SET_LOGIN_TEXT, "Register");
         } else {
-            commit("setLoginText", "Login");
+            commit(SET_LOGIN_TEXT, "Login");
         }
-        commit("setAlert", {type:null, message: null});
-        commit("setloggingIn", loggingIn);
+        commit(SET_ALERT, {type:null, message: null});
+        commit(SET_LOGGING_IN, loggingIn);
     }
 }
 
 // mutations
 const mutations = {
-    setloggingIn(state, loggingIn) {
+    [SET_LOGGING_IN](state, loggingIn) {
         state.loggingIn = loggingIn;
     },
-    setLoginText(state, loginText) {
+    [SET_LOGIN_TEXT](state, loginText) {
         state.loginText = loginText;
     },
-    setAlert(state, payload) {
+    [SET_ALERT](state, payload) {
         state.alert.type = payload.type;
         state.alert.message = payload.message;
     }

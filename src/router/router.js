@@ -6,6 +6,7 @@ import Login from '../views/login/Login';
 import Surveys from '../views/surveys/Surveys';
 import Survey from '../views/survey/Survey.vue';
 import FlowchartEditor from '../views/flowchartEditor/FlowchartEditor';
+import LoginLanding from '@/views/landingpage/LoginLanding';
 
 Vue.use(Router)
 
@@ -23,9 +24,19 @@ export default new Router({
       component: Surveys
     },
     {
+      path: '/survey',
+      name: 'Survey',
+      component: Survey
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/landingregister',
+      name: 'Landing-Register',
+      component: LoginLanding
     },
     {
       path: '/about',
