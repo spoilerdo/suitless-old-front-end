@@ -17,7 +17,7 @@ export default {
   name: "cdn",
   components: {
     ServiceableTable,
-    ServiceableTopbar
+    ServiceableTopbar,
   },
   data() {
     return {};
