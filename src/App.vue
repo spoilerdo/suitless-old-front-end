@@ -1,9 +1,7 @@
 <template>
   <v-app :style="{background: this.background }">
-    <!--<Toolbar/> -->
-
+    <Toolbar v-if="!newUser"/>
     <!--<Drawer/> -->
-
     <CoreView/>
   </v-app>
 </template>
@@ -11,12 +9,12 @@
 <script>
 //import Drawer from './components/core/Drawer'
 import CoreView from "./components/core/View";
-//import Toolbar from './components/core/Toolbar'
+import Toolbar from './components/core/Toolbar'
 import { mapState, mapActions } from "vuex";
 
 export default {
   components: {
-    //Toolbar,
+    Toolbar,
     //Drawer,
     CoreView
   },
@@ -26,6 +24,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(['newUser']),
     ...mapState("app", {
       background: state => state.background
     })
@@ -43,10 +42,9 @@ export default {
         this.calculatedBg = val;
       }
     }
-  }
+   }
 };
 </script>
-
 
 <style lang="scss">
 @import "@/styles/index.scss";

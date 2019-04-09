@@ -4,6 +4,7 @@ import { SET_DRAWER, SET_BACKGROUND } from "./mutation-types";
 const state = {
     drawerOpen: false,
     background: "#eee",
+    newUser : true
 }
 
 // getters
@@ -13,6 +14,9 @@ const getters = {
     },
     getBackground: (state) => () => {
         return state.background;
+    },
+    getNewUser: (state) => () => {
+        return state.newUser;
     }
 }
 
@@ -23,6 +27,9 @@ const actions = {
     },
     setBackground({commit}, newBg) {
         commit(SET_BACKGROUND, newBg);
+    },
+    setNewUser({ commit}, newUser) {
+        commit("setNewUser", newUser);
     }
 }
 
@@ -33,6 +40,9 @@ const mutations = {
     },
     [SET_BACKGROUND] (state, newBg) {
         state.background = newBg;
+    },
+    setNewUser(state, newUser) {
+        state.newUser = newUser;
     }
 }
 

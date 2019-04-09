@@ -10,7 +10,8 @@
 
             <v-btn @click="$refs.loginForm.validatedSubmit()" mx-2 color="primary">Login</v-btn>
             <v-btn v-on:click="switchForms(false)" mx-2 color="grey">Create New Account</v-btn>
-            <a href="#" style="color: grey">Forgot your password?</a>
+            <v-spacer/>
+            <a href="#" style="color: grey;">Forgot your password?</a>
           </div>
 
           <div v-show="!loggingIn">
@@ -32,6 +33,7 @@
               class="mx-2"
               color="grey"
             >Login To Existing Account</v-btn>
+            <v-spacer/>
             <a href="#" style="color: grey">Forgot your password?</a>
           </div>
         </materialCard>
@@ -45,7 +47,6 @@
 
 <script>
 // @ is an alias to /src
-import { createNamespacedHelpers } from "vuex";
 import materialCard from "@/components/material/Card";
 import Form from "@/components/login/Form";
 import Logo from "@/components/login/Logo";
