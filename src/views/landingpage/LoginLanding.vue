@@ -21,7 +21,6 @@
 <script>
 import Animatedbackground from "@/components/background/Animatedbackground";
 import CustomCard from '@/components/login-landingpage/CustomCard'
-
 export default {
     components: {
         Animatedbackground,

@@ -10,6 +10,7 @@
 import RecommendedSurveys from "@/components/dashboard-home/RecommendedSurveys";
 import AllSurveys from "@/components/dashboard-home/AllSurveys";
 import LatestSurveys from "@/components/dashboard-home/LatestSurveys";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -30,5 +31,11 @@ export default {
 
     };
   },
+  methods: {
+    ...mapActions("app/", ["setBackground"])
+  },
+  created() {
+    this.setBackground("#eeeeee");
+  }
 };
 </script>
