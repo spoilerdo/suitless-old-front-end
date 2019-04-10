@@ -12,7 +12,7 @@ export let GraphCoder = {
         let nodes = []
         cells.forEach(e => {
             nodes.push({
-                ID: e.id,
+                id: parseInt(e.id),
                 style: e.lincType,
                 value: e.value,
                 lincData: e.lincData,
