@@ -24,9 +24,10 @@ export default new Router({
       component: Surveys
     },
     {
-      path: '/survey',
+      path: '/survey/:surveyID',
       name: 'Survey',
-      component: Survey
+      component: Survey,
+      props: true
     },
     {
       path: '/login',
