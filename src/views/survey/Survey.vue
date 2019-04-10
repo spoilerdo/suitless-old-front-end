@@ -23,6 +23,7 @@ import ProgressBar from "@/components/survey/Progress.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
+  props: ['surveyID'],
   components: {
     Question,
     ProgressBar
@@ -41,15 +42,16 @@ export default {
     })
   },
   created() {
-    //when created call the action to get all products from api and put it in the store
-    this.$store.dispatch("survey/getSurvey");
+    //when created call the action to get the survey with the id in the props.
+    this.getSurveyByID(this.surveyID);
     this.setBackground("#eee");
+    console.log(this.state.all);
   },
   methods: {
+    ...mapActions("survey/", ["getSurveyByID"]),
     ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion"]),
     ...mapActions("progress/", ["fillProgress", "setCurrentQuestion"]),
     ...mapActions("app/", ["setBackground"]),
-
     answeredQuestion(answer) {
       this.answerQuestion({
         answer,
@@ -59,7 +61,6 @@ export default {
       this.fillProgress({ addedDepth: 1, survey: this.survey });
       console.log(this.progress);
     },
-
     renderPreviousQuestion(question) {
       //select the previouse question
       this.setCurrentQuestion(this.getAnswerByQuestionID(question).questionID);
@@ -82,6 +83,5 @@ export default {
       }
     }
   }
-
 };
 </script>

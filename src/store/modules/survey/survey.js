@@ -1,5 +1,4 @@
-//Get mock data (NOT PERMINENT!!!)
-import survey from '../../../api/survey';
+
 import _ from 'lodash';
 import { SET_SURVEY, SET_SURVEYS } from './mutation-types';
 import { apiCall } from '../../../api/api';
@@ -34,39 +33,24 @@ const actions = {
     },
     //gets the survey from the mock data (survey)
     //TODO: BUT it needs to make an axios call instead
-    getSurvey({ commit }) {
-        survey.getSurvey(json => {
-            //filter the survey beceause some data is not needed
-            let n = [];
-            json.nodes.forEach(q => {
-                n.push({
-                    "ID": q.ID,
-                    "value": q.value,
-                    "flows": q.flows,
-                    "lincData": q.lincData
-                })
-            });
-
-            //change the unfiltered questions by the filtered questions
-            json.nodes = n;
-
-            commit(SET_SURVEY, json)
-        })
+    getSurveyByID({ commit }, surveyID) {
+        apiCall('get', `${API_URL}/modules/${surveyID}`, null)
+        .then((req => {
+            commit(SET_SURVEY, req.module);
+        }));
     }
 }
 
 const mutations = {
-    [SET_SURVEY](state, survey) {
+    SET_SURVEY(state, survey) {
         state.all = survey;
-
+        console.log(survey);
         //makes an object array with the node ID as key
-        state.all.nodes = _.mapKeys(survey.nodes, 'ID');
+        state.all.nodes = _.mapKeys(survey.nodes, 'id');
     },
-    [SET_SURVEYS](state, surveys) {
+    SET_SURVEYS(state, surveys) {
         state.all = surveys;
-
         //HAAL IK NOU ALLE FLOWCHARTS OP OF ALLEEN MODULE DATA???
-
         //makes an object array with the node ID as key
     }
 }

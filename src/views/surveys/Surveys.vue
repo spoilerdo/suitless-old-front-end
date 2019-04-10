@@ -7,7 +7,7 @@
         <div class="display-2 text-xs-center white--text pb-3">Recommended starter surveys</div>
       </v-flex>
       <v-layout align-center justify-center row wrap>
-        <CustomCard redirecturl="/survey"  imagename="IP.svg" text="Privacy"/>
+        <CustomCard redirecturl='/survey/5cac95e3c00a700008e56810'  imagename="IP.svg" text="Privacy"/>
         <CustomCard redirecturl="/survey"  imagename="IP.svg" text="Privacy"/>
         <CustomCard redirecturl="/survey"  imagename="IP.svg" text="Privacy"/>
       </v-layout>
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import Category from "@/components/survey-category/Category";
 import Animatedbackground from "@/components/background/Animatedbackground";
 import CustomCard from '@/components/login-landingpage/CustomCard'
 
@@ -28,7 +27,6 @@ import { mapActions } from "vuex";
 
 export default {
   components: {
-    Category,
     Animatedbackground,
     CustomCard
   },
