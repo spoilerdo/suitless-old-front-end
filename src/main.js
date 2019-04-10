@@ -9,6 +9,7 @@ import App from './App.vue'
 import store from './store/store'
 import router from './router/router'
 import '@mdi/font/css/materialdesignicons.css'
+import { setToken } from './api/api';
 
 Vue.config.productionTip = false
 Vue.use(VueParticles)
@@ -17,6 +18,10 @@ Vue.use(Vuetify, {
 });
 Vue.use(VeeValidate);
 Vue.use(pdfreporter);
+
+if(localStorage.jwtToken) {
+  setToken(localStorage.jwtToken);
+}
 
 new Vue({
   store,

@@ -1,5 +1,5 @@
 <template>
-    <v-flex pa-3 xs6 md12>
+    <v-flex pa-3 xs12>
         <v-card hover ripple :to="redirecturl" class="rouned-card">
             <v-card-media>
                 <v-layout align-space-around justify-space-between column fill-height pa-3>
