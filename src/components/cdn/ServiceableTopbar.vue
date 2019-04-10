@@ -43,7 +43,7 @@ export default {
     uploadImage() {
       //TODO: Replace this url with an environment variable/api gatewat
       console.log("I DO NOT WORK UwU");
-      api.apiCall("POST", "http://ironsm4sh.nl:3305/", {});
+      // api.apiCall("POST", "http://ironsm4sh.nl:3305/", {});
     }
   }
 };

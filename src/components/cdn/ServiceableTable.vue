@@ -1,10 +1,10 @@
 <template>
-  <v-data-table :headers="headers" :items="serviceables" class="elevation-1">
+  <v-data-table :headers="headers" :items="serviceables" :rows-per-page-items=[4] class="elevation-1">
     <template v-slot:items="props">
       <td>{{ props.item.name }}</td>
-      <td class="text-xs-left">{{ props.item.size }}</td>
-      <td class="text-xs-left">{{ props.item.type }}</td>
-      <td class="text-xs-left actionsSection">
+      <td>{{ props.item.size }}</td>
+      <td>{{ props.item.type }}</td>
+      <td class="actionsSection">
         <v-btn color="info" small @click="viewContent(props.item.baseURL)">View</v-btn>
         <v-btn color="danger" small @click="deleteContent(props.item.baseURL)">Delete</v-btn>
       </td>
@@ -20,17 +20,11 @@ export default {
     return {
       headers: [
         { text: "Serviceables", value: "name" },
-        { text: "Size (MB)", value: "size" },
+        { text: "Size (KB)", value: "size" },
         { text: "Type", value: "type" },
         { text: "Actions", sortable: false }
       ],
       serviceables: [
-        {
-          name: "ehvLINC Logo",
-          size: "0.6",
-          type: "image/png",
-          baseURL: "nope"
-        }
       ]
     };
   },
@@ -43,8 +37,20 @@ export default {
     },
     getAllContent() {
       console.log("GET ALL");
-      api.apiCall("GET", "http://localhost:3305/meta/all").then((data, data2) => {
+
+      //TODO: DE URI uit env.
+      let apiURI = "http://localhost:3305/";
+
+      api.apiCall("GET", apiURI + "meta/all").then((data) => {
         console.log(data);
+        data.metadataList.forEach(serviceable => {
+          this.serviceables.push({
+            name: serviceable.tag,
+            size: (serviceable.size/1000).toFixed(2), //Byte to MB
+            type: serviceable.type,
+            baseURL: apiURI + serviceable.tag
+          })
+        });
       })
     }
   },
@@ -56,6 +62,6 @@ export default {
 
 <style>
 .actionsSection {
-  max-width: 80px;
+  max-width: 100px;
 }
 </style>
