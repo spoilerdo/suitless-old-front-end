@@ -9,17 +9,17 @@
         <!-- <v-flex v-for="i in 4" :key="`4${i}`" class="text-xs-center"> -->
         <!-- <div v-for="i in 4" :key="`4${i}`" class="text-xs-center"> -->
           <div>
-        <RecommendedSurveyCard
+        <DashboardSurveyCard
           redirecturl="/survey"
           imagename="IP.svg"
           text="Intellectual Property"
         /></div><div>
-        <RecommendedSurveyCard
+        <DashboardSurveyCard
           redirecturl="/survey"
           imagename="Privacy.svg"
           text="Intellectual Property"
         /></div><div>
-        <RecommendedSurveyCard
+        <DashboardSurveyCard
           redirecturl="/survey"
           imagename="Trademark.svg"
           text="Intellectual Property"
@@ -35,12 +35,12 @@
 
 <script>
 import Card from "@/components/material/Card";
-import RecommendedSurveyCard from "@/components/dashboard-home/RecommendedSurveyCard";
+import DashboardSurveyCard from "@/components/dashboard-home/DashboardSurveyCard";
 
 export default {
   components: {
     Card,
-    RecommendedSurveyCard
+    DashboardSurveyCard
   },
   data() {
     return {};
