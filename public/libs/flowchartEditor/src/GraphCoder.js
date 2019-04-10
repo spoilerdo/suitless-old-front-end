@@ -35,19 +35,6 @@ export let GraphCoder = {
         apiCall('post', "http://ironsm4sh.nl:3303/modules/", JSON.stringify(module, null, "\t"));
     },
 
-    createLincData(lincData){
-        let lincs = [];
-
-        //TODO: maak foreach en array van lincData
-
-        lincs.push({
-            key: "Reason", 
-            value: "Reason for the question"
-        });
-
-        return lincs;
-    },
-
     checkEdges(cell){
         let output = [];
         if(cell.edges !== null){

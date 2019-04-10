@@ -16,6 +16,7 @@ import { graphFunctions } from "./EditorFunctions"
 import { environment } from "./EnvironmentVariables"
 import { backgroundFunctions } from "./Background"
 import { NodeEnum } from "./NodeEnum";
+import { clipBoardFunctions } from "./MxNative/Clipboard";
 
 import { mxClient, mxGraph, mxUtils, mxEvent, mxConstraintHandler, mxConnectionHandler, mxEditor, mxGraphModel, mxKeyHandler, mxConstants, mxGraphView } from "./MxGraph";
 
@@ -94,6 +95,8 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
             mxGraphViewValidateBackground.apply(this, arguments);
             backgroundFunctions.repaintGrid();
         };
+
+        clipBoardFunctions();
 
         StartFlowchart(graph);
     }

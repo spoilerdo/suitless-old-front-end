@@ -61,7 +61,7 @@ function showFormatBar(formatbarContainer, editor, selectedCell, model){
 function showQuestion(formatbarContainer, editor, selectedCell, model) {
     formatBarFunctions.createDataContainer(formatbarContainer, editor, selectedCell, "Question", selectedCell.value, FormatBarEnum.Question);
     formatBarFunctions.createDataContainer(formatbarContainer, editor, selectedCell, "Reason", selectedCell.lincData[0].value, FormatBarEnum.Reason);
-    formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, true);
+    //formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, true);
 };
 
 function showCondition(formatbarContainer, editor, selectedCell, model) {
@@ -70,16 +70,16 @@ function showCondition(formatbarContainer, editor, selectedCell, model) {
 };
 
 function showStart(formatbarContainer, editor, selectedCell, model){
-    formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, false);
+    //formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, false);
 };
 
 function showEnd(formatbarContainer, editor, selectedCell, model){
-    formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, false);
+    //formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, false);
 }
 
 function showModule(formatbarContainer, editor, selectedCell, model){
     formatBarFunctions.createDataContainer(formatbarContainer, editor, selectedCell, "Module name:", selectedCell.lincData[0].value, FormatBarEnum.Module);
-    formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, true);
+    //formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, true);
 }
 
 function showNotification(formatbarContainer, editor, selectedCell, model){
