@@ -8,7 +8,7 @@
     >
       <v-layout row wrap>
         <div v-for="s in survey._embedded.moduleList" :key="s.moduelID" class="text-xs-center flex xs12 md3">
-          <DashboardSurveyCard :redirecturl='`/survey/${s.moduleID}`' imagename="IP.svg" :text="s.name" v-if="role == 'ADMIN'"/>
+          <DashboardSurveyCard :redirecturl='`/survey/${s.moduleID}`' imagename="IP.svg" :text="s.name"/>
         </div>
       </v-layout>
     </Card>
@@ -33,11 +33,6 @@ export default {
   created() {
     //when created call the action to get all products from api and put it in the store
     this.$store.dispatch("survey/getAllSurveys");
-    let jwtDecode = require('jwt-decode');
-
-    let decoded = jwtDecode(localStorage.jwtToken);
-
-    this.role = decoded['scopes'];
   },
   data() {
     return {
