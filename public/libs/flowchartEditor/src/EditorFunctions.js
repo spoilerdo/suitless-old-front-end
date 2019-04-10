@@ -123,7 +123,6 @@ export let graphFunctions = {
     * @param {mxGraph} graph
     */
     exportChart(graph, name, description) {
-        console.log(graph);
         GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth);
     },
 
@@ -293,12 +292,12 @@ function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y
         data = json.lincData;
     } else if (x == null || y == null) {
         vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], posX, posY,
-            defaultSize, defaultSize); //'whiteSpace=wrap;'
+            defaultSize, defaultSize, 'shape='+nodeEnum); //'whiteSpace=wrap;'
 
         posY += 20;
     } else {
         vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], x, y,
-            defaultSize, defaultSize);
+            defaultSize, defaultSize, 'shape='+nodeEnum);
     }
 
     vertex.lincType = nodeEnum;
@@ -312,6 +311,7 @@ function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y
     }
 
     graph.addCell(vertex, parent);
+    console.log(vertex);
     return vertex;
 }
 

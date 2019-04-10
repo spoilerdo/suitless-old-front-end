@@ -35,8 +35,7 @@ export function addKeyActions(keyHandler, graph, graphcontainer) {
     });
     keyHandler.bindControlKey(88, (evt) => {
         if (graph.isEnabled()) {
-            mxClipboard.copy(graph);
-            graph.removeCells();
+            mxClipboard.cut(graph);
         }
     });
 

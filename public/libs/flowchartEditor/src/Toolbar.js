@@ -101,16 +101,8 @@ function addDedicatedActions(toolbar, editor, model) {
         (click) => {
             graphFunctions.addVertex(NodeEnum.Notification, editor.graph, null, null, null);
         }, null, "v-icon mdi theme--light mxToolbarItem");
-    /*toolbar.addItem("Add edge", "http://ironsm4sh.nl:3305/AddEdge",
+    toolbar.addItem("Add edge", "http://ironsm4sh.nl:3305/AddEdge",
         (click) => {
             graphFunctions.addEdge(editor.graph, null);
         }, null, "v-icon mdi theme--light mxToolbarItem");
-    /*toolbar.addItem("Export chart", environment.img + "ExportTool.png",
-        (click) => {
-            graphFunctions.exportChart(editor.graph)
-        }, null, "mxToolbarItem mxToolbarNode");
-    toolbar.addItem("Import chart", environment.img + "CopyTool.png",
-        (click) => {
-            graphFunctions.importChart(editor.graph, testJSON, model)
-        }, null, "mxToolbarItem mxToolbarNode");*/
 }
