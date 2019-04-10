@@ -17,7 +17,7 @@
 
         <v-list>
           <v-list-tile>
-            <v-list-tile-title>{{question.lincData.find(data => data.key === "reason").value}}</v-list-tile-title>
+            <v-list-tile-title v-if="question.lincData.some(data => data.key === 'reason')">{{question.lincData.find(data => data.key === "reason").value}}</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
