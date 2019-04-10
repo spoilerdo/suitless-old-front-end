@@ -5,7 +5,7 @@
       @click="pickFile"
       v-model="imageName"
       prepend-icon="attach_file"
-      readonly= true
+      :readonly=true
     ></v-text-field>
     <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
   </v-flex>

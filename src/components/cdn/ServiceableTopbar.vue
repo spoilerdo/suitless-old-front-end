@@ -16,7 +16,7 @@
         </v-flex>
 
         <v-flex xs5 md4>
-          <v-btn color="info">upload</v-btn>
+          <v-btn color="info" @click="uploadImage">upload</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -25,6 +25,8 @@
 
 <script>
 import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
+import * as api from "@/api/api"
+import { type } from 'os';
 
 export default {
   data: () => ({
@@ -36,6 +38,13 @@ export default {
   }),
   components: {
     ServiceableFilePicker
+  },
+  methods: {
+    uploadImage() {
+      //TODO: Replace this url with an environment variable/api gatewat
+      console.log("I DO NOT WORK UwU");
+      api.apiCall("POST", "http://ironsm4sh.nl:3305/", {});
+    }
   }
 };
 </script>

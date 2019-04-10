@@ -5,14 +5,16 @@
       <td class="text-xs-left">{{ props.item.size }}</td>
       <td class="text-xs-left">{{ props.item.type }}</td>
       <td class="text-xs-left actionsSection">
-        <v-btn color="info" small @click="viewImage(props.item.baseURL)">View</v-btn>
-        <v-btn color="danger" small @click="deleteImage(props.item.baseURL)">Delete</v-btn>
+        <v-btn color="info" small @click="viewContent(props.item.baseURL)">View</v-btn>
+        <v-btn color="danger" small @click="deleteContent(props.item.baseURL)">Delete</v-btn>
       </td>
     </template>
   </v-data-table>
 </template>
 
 <script>
+import * as api from "@/api/api"
+
 export default {
   data() {
     return {
@@ -27,15 +29,27 @@ export default {
           name: "ehvLINC Logo",
           size: "0.6",
           type: "image/png",
-          baseURL: "nope",
+          baseURL: "nope"
         }
       ]
     };
   },
   methods: {
-    uploadImage() {},
-    viewImage(baseURL) { console.log("SHOW", baseURL); },
-    deleteImage(baseURL) { console.log("DELETE", baseURL); }
+    viewContent(baseURL) {
+      console.log("SHOW", baseURL);
+    },
+    deleteContent(baseURL) {
+      console.log("DELETE", baseURL);
+    },
+    getAllContent() {
+      console.log("GET ALL");
+      api.apiCall("GET", "http://localhost:3305/meta/all").then((data, data2) => {
+        console.log(data);
+      })
+    }
+  },
+  mounted() {
+    this.getAllContent();
   }
 };
 </script>
