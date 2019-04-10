@@ -60,7 +60,11 @@ export function vertexOnDraw(mxEvent, graph) {
                 mouseTarget = target;
                 mouseMe = me;
                 currentPoint = this.currentPoint;
-                graph.popupMenuHandler.popup(currentPoint.x, currentPoint.y, null, null);
+                if(target == null){
+                    graph.popupMenuHandler.popup(currentPoint.x, currentPoint.y, null, null);
+                }else{
+                    mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent(), mouseMe.getCell());
+                }
             }
             else {
                 // Selects the source terminal for self-references
@@ -154,6 +158,17 @@ export function vertexOnDraw(mxEvent, graph) {
                 vertexData = [{
                     "key": "module",
                     "value": "Module name"
+                }]
+                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent(), mouseMe.getCell());
+            }
+        });
+
+        menu.addItem('Notification Node', null, function(){
+            if(mouseThis != null && currentPoint != null) {
+                selectedvertexType = NodeEnum.Notification;
+                vertexData = [{
+                    "key": "notify",
+                    "value": "Notification"
                 }]
                 mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent(), mouseMe.getCell());
             }

@@ -95,7 +95,6 @@ export let formatBarFunctions = {
 
     createReason(selectedCell, cellInput) {
         let cellReasonButton = mxUtils.button("apply", (evt) => {
-            console.log(selectedCell);
             selectedCell.lincData[0].value = cellInput.value;
         });
         return cellReasonButton;

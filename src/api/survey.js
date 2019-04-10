@@ -21,9 +21,10 @@ const json = {
             "ID": "3",
             "style": 1,
             "value": "1. Does the IP relate to your study?",
-            "lincData": {
-                "reason": "Reason for the question"
-            },
+            "lincData": [{
+                "key": "reason",
+                "value": "Reason for the question"
+            }],
             "height": 110,
             "width": 120,
             "posX": -40,
@@ -47,9 +48,10 @@ const json = {
             "ID": "4",
             "style": 1,
             "value": "When does my IP relate to my study?",
-            "lincData": {
-                "reason": "Reason for the question"
-            },
+            "lincData": [{
+                "key": "reason",
+                "value": "Reason for the question"
+            }],
             "height": 90,
             "width": 110,
             "posX": 172,
@@ -65,9 +67,10 @@ const json = {
             "ID": "5",
             "style": 1,
             "value": "Did you received help from a university employee or did you created the IP during a course?",
-            "lincData": {
-                "reason": "Reason for the question"
-            },
+            "lincData": [{
+                "key": "reason",
+                "value": "Reason for the question"
+            }],
             "height": 180,
             "width": 200,
             "posX": 210,
@@ -87,9 +90,10 @@ const json = {
             "ID": "6",
             "style": 1,
             "value": "Do you receive any relevent other support from the unitversity?",
-            "lincData": {
-                "reason": "Reason for the question"
-            },
+            "lincData": [{
+                "key": "reason",
+                "value": "Reason for the question"
+            }],
             "height": 160,
             "width": 190,
             "posX": 210,
@@ -100,9 +104,10 @@ const json = {
             "ID": "9",
             "style": 1,
             "value": "Have you made any arrangements regarding this support?",
-            "lincData": {
-                "reason": "Reason for the question"
-            },
+            "lincData": [{
+                "key": "reason",
+                "value": "Reason for the question"
+            }],
             "height": 120,
             "width": 200,
             "posX": 478,
@@ -113,9 +118,10 @@ const json = {
             "ID": "10",
             "style": 1,
             "value": "The University is not the owner of IP by law?",
-            "lincData": {
-                "reason": "Reason for the question"
-            },
+            "lincData": [{
+                "key": "reason",
+                "value": "Reason for the question"
+            }],
             "height": 91,
             "width": 130,
             "posX": 504,
