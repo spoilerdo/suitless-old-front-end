@@ -7,8 +7,8 @@
       class="flex xs12 md6"
     >
       <v-layout row wrap>
-        <div v-for="s in survey._embedded.moduleList" :key="s.moduelID" class="text-xs-center flex xs12 md3">
-          <DashboardSurveyCard :redirecturl='`/survey/${s.moduleID}`' imagename="IP.svg" :text="s.name"/>
+        <div v-for="s in survey" :key="s.moduelID" class="text-xs-center flex xs12 md3">
+          <RoundCard :redirecturl='`/survey/${s.moduleID}`' imagename="IP.svg" :text="s.name" width="xs12"/>
         </div>
       </v-layout>
     </Card>
@@ -17,13 +17,13 @@
 
 <script>
 import Card from "@/components/material/Card";
-import DashboardSurveyCard from "@/components/dashboard-home/DashboardSurveyCard";
+import RoundCard from "@/components/material/RoundCard";
 import { mapState, mapGetters } from "vuex";
 
 export default {
   components: {
     Card,
-    DashboardSurveyCard
+    RoundCard
   },
   computed: {
     ...mapState("survey", {
