@@ -1,5 +1,5 @@
 <template>
-    <v-flex pa-3 xs6 md3>
+    <v-flex pa-3 :class="width">
         <v-card hover ripple :to="redirecturl" class="rouned-card">
             <v-card-media>
                 <v-layout align-space-around justify-space-between column fill-height pa-3>
@@ -16,13 +16,20 @@
     </v-flex>
 </template>
 
+<style scoped>
+.rouned-card{
+  border-radius:35px;
+}
+</style>
+
 <script>
 export default {
-    name: "CustomCard",
+    name: "RoundCard",
     props: {
         redirecturl: String,
         imagename: String,
-        text: String
+        text: String,
+        width: String,
     }
 }
 </script>

@@ -10,9 +10,9 @@
         <div class="subheading text-xs-center white--text pb-3">Creating an account allows us to suggest surveys to you based on your data and submitted surveys!</div>
       </v-flex>
       <v-layout align-center justify-center row>
-        <CustomCard redirecturl="/login" imagename="Account.svg" text="Create an account"/>
+        <RoundCard redirecturl="/login" imagename="Account.svg" text="Create an account"  width="xs6 md3"/>
           <v-divider vertical inset dark></v-divider>
-        <CustomCard redirecturl="/surveys"  imagename="Incognito.svg" text="Continue anonymously"/>
+        <RoundCard redirecturl="/surveys"  imagename="Incognito.svg" text="Continue anonymously" width="xs6 md3"/>
       </v-layout>
     </v-layout>
   </v-container>
@@ -20,11 +20,11 @@
 
 <script>
 import Animatedbackground from "@/components/background/Animatedbackground";
-import CustomCard from '@/components/login-landingpage/CustomCard'
+import RoundCard from '@/components/material/RoundCard'
 export default {
     components: {
         Animatedbackground,
-        CustomCard
+        RoundCard
     }
 }
 </script>
