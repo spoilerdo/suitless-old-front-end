@@ -45,7 +45,7 @@ export default {
     //when created call the action to get the survey with the id in the props.
     this.getSurveyByID(this.surveyID);
     this.setBackground("#eee");
-    console.log(this.state.all);
+    console.log(this.survey);
   },
   methods: {
     ...mapActions("survey/", ["getSurveyByID"]),

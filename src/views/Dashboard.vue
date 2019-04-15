@@ -1,9 +1,8 @@
 <template>
- <v-container fill-height fluid grid-list-sm>
-   <AllSurveys v-if="role == 'ADMIN'"/>
-   <LatestSurveys v-else/>
- </v-container>
-
+  <v-container fill-height fluid grid-list-sm>
+    <AllSurveys v-if="role == 'ADMIN'"/>
+    <LatestSurveys v-else/>
+  </v-container>
 </template>
 
 <script>
@@ -18,15 +17,14 @@ export default {
     AllSurveys,
     LatestSurveys
   },
-  created() {
-    //when created call the action to get all products from api and put it in the store
-    let jwtDecode = require('jwt-decode');
+  beforeMount() {
+    let jwtDecode = require("jwt-decode");
     let decoded = jwtDecode(localStorage.jwtToken);
-    this.role = decoded['scopes'];
+    this.role = decoded["scopes"];
   },
   data() {
     return {
-      role: null,
+      role: null
     };
   },
   methods: {
