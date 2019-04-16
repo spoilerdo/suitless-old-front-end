@@ -6,7 +6,6 @@
  */
 
 import { getDefaultPdfOptions } from "./PdfOptions"
-import { pdfContent } from "./PdfContent/PdfContent"
 import { getDemoPdfContents } from "./DemoPDF"
 import jsPDF from 'jspdf'
 
@@ -28,8 +27,14 @@ const pdfReporter = {
     generatePDF(pdfOptions, pdfContents, pdfName) {
         let doc = new jsPDF(pdfOptions);
 
-        let offset = 1;
-        for(let i = 0; i < pdfContents.length; i++){
+        let startOffset = 2;
+        let offset = startOffset;
+        
+        for (let i = 0; i < pdfContents.length; i++) {
+            if(offset > doc.internal.pageSize.height-2){
+                doc.addPage();
+                offset = startOffset;
+            }
             offset += pdfContents[i].addToDoc(doc, offset);
         }
 

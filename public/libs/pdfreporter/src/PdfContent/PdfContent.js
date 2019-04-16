@@ -6,8 +6,6 @@
  * @since 12-03-2019
  */
 
-import { pdfContentEnum } from "./PdfContentEnum";
-import { runInThisContext } from "vm";
 
 /**
  * pdfContent class which the pdf Generator can use.

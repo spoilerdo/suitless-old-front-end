@@ -21,14 +21,12 @@ export default {
   created() {
     //when created call the action to get all products from api and put it in the store
     let jwtDecode = require('jwt-decode');
-
     let decoded = jwtDecode(localStorage.jwtToken);
-
     this.role = decoded['scopes'];
   },
   data() {
     return {
-
+      role: null,
     };
   },
   methods: {
