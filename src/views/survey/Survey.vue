@@ -94,6 +94,9 @@ export default {
       for (let i = 0; i < this.answer.length; i++) {
         pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
         pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
+
+        //TODO: voeg warnings aka "Notifications" toe.
+        //TODO: voeg Results toe (ook in flowchart editor).
       }
 
       return pdfContents;
