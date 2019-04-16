@@ -32,6 +32,9 @@ export default {
     ...mapState("survey", {
       survey: state => state.all
     }),
+    ...mapState("answer", {
+      answer: state => state.all
+    }),
     ...mapState("progress", {
       currentquestion: state => state.currentquestion,
       progress: state => state.progress
@@ -58,7 +61,6 @@ export default {
       });
       this.setCurrentQuestion(answer.targetID);
       this.fillProgress({ addedDepth: 1, survey: this.survey });
-      console.log(this.progress);
     },
     renderPreviousQuestion(question) {
       //select the previouse question
@@ -89,12 +91,10 @@ export default {
         )
       );
 
-      pdfContents.push(
-        this.pdfContentQuestion(
-          "potje pool? d askd daldj adkald sndkj jksaj da sasljdalsdjas askljdal aldjas asnsaijd aid adjlasd ajdlasjd y ddh flkfjf fjkfdiufd jdduduasdj  f fsdfs fs fdf ssfskjfh jakf" +
-            "dadah dj aldjahdka laldja jdakd9d wokdjwoijdjklsadjiwojijowia djaods dlaksdjaldjowjda lskldjawiduasldjs aldwoidljsakdjaklwkjdowa9 owid daslkdjaslkdjiowadjawdljwalj"
-        )
-      );
+      for (let i = 0; i < this.answer.length; i++) {
+        pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
+        pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
+      }
 
       return pdfContents;
     },
