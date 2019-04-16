@@ -23,7 +23,7 @@ import ProgressBar from "@/components/survey/Progress.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
-  props: ['surveyID'],
+  props: ["surveyID"],
   components: {
     Question,
     ProgressBar
@@ -45,7 +45,6 @@ export default {
     //when created call the action to get the survey with the id in the props.
     this.getSurveyByID(this.surveyID);
     this.setBackground("#eee");
-    console.log(this.state.all);
   },
   methods: {
     ...mapActions("survey/", ["getSurveyByID"]),
@@ -67,6 +66,23 @@ export default {
       this.deleteLastAnswer();
 
       this.fillProgress({ addedDepth: -1, survey: this.survey });
+    },
+    getFormattedDate() {
+      var myDate = new Date();
+      var month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+      var date = ("0" + myDate.getDate()).slice(-2);
+      var year = myDate.getFullYear();
+      return year + "/" + month + "/" + date;
+    },
+    generatePDF() {
+      let pdfOptions = {
+        orientation: "portrait",
+        unit: "cm"
+      };
+      let pdfContents = [];
+      let name = "report " + this.getFormattedDate();
+
+      this.generatePdf(pdfOptions, pdfContents, name);
     }
   },
   updated() {
@@ -76,10 +92,10 @@ export default {
     }
   },
   watch: {
-    progress: function (newValue, oldValue) {
+    progress: function(newValue, oldValue) {
       //watch for completion of survey, then print pdf
-      if(newValue === 100) {
-        this.generateDemoPDF();
+      if (newValue === 100) {
+        this.generatePDF();
       }
     }
   }

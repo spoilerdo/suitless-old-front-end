@@ -35,6 +35,9 @@ const actions = {
     },
     deleteLastAnswer({ commit }) {
         commit(DELETE_LAST_ANSWER);
+    },
+    getPDFData(){
+        
     }
 }
 

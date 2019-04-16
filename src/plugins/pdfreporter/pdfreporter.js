@@ -5,7 +5,7 @@ export default {
         Vue.mixin({
             methods: {
                 generatePdf(pdfOptions, pdfContents, pdfName) {
-                    pdfReporter.generatePdf(pdfOptions,pdfContents, pdfName);
+                    pdfReporter.generatePDF(pdfOptions,pdfContents, pdfName);
                 },
                 generateDemoPDF() {
                     pdfReporter.generateDemoPDF();
