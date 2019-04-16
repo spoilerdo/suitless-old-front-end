@@ -74,12 +74,36 @@ export default {
       var year = myDate.getFullYear();
       return year + "/" + month + "/" + date;
     },
-    generatePDF() {
+    getPDFContent() {
+      let pdfContents = [];
+
+      var today = new Date();
+      pdfContents.push(
+        this.pdfContentTitle(
+          "ehvLINC REPORT  " +
+            today.getFullYear() +
+            "-" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate()
+        )
+      );
+
+      pdfContents.push(
+        this.pdfContentQuestion(
+          "potje pool? d askd daldj adkald sndkj jksaj da sasljdalsdjas askljdal aldjas asnsaijd aid adjlasd ajdlasjd y ddh flkfjf fjkfdiufd jdduduasdj  f fsdfs fs fdf ssfskjfh jakf" +
+            "dadah dj aldjahdka laldja jdakd9d wokdjwoijdjklsadjiwojijowia djaods dlaksdjaldjowjda lskldjawiduasldjs aldwoidljsakdjaklwkjdowa9 owid daslkdjaslkdjiowadjawdljwalj"
+        )
+      );
+
+      return pdfContents;
+    },
+    printPDF() {
       let pdfOptions = {
         orientation: "portrait",
         unit: "cm"
       };
-      let pdfContents = [];
+      let pdfContents = this.getPDFContent();
       let name = "report " + this.getFormattedDate();
 
       this.generatePdf(pdfOptions, pdfContents, name);
@@ -95,7 +119,7 @@ export default {
     progress: function(newValue, oldValue) {
       //watch for completion of survey, then print pdf
       if (newValue === 100) {
-        this.generatePDF();
+        this.printPDF();
       }
     }
   }
