@@ -23,7 +23,7 @@ import ProgressBar from "@/components/survey/Progress.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
-  props: ['surveyID'],
+  props: ["surveyID"],
   components: {
     Question,
     ProgressBar
@@ -31,6 +31,9 @@ export default {
   computed: {
     ...mapState("survey", {
       survey: state => state.all
+    }),
+    ...mapState("answer", {
+      answer: state => state.all
     }),
     ...mapState("progress", {
       currentquestion: state => state.currentquestion,
@@ -45,7 +48,6 @@ export default {
     //when created call the action to get the survey with the id in the props.
     this.getSurveyByID(this.surveyID);
     this.setBackground("#eee");
-    console.log(this.state.all);
   },
   methods: {
     ...mapActions("survey/", ["getSurveyByID"]),
@@ -59,7 +61,6 @@ export default {
       });
       this.setCurrentQuestion(answer.targetID);
       this.fillProgress({ addedDepth: 1, survey: this.survey });
-      console.log(this.progress);
     },
     renderPreviousQuestion(question) {
       //select the previouse question
@@ -67,6 +68,48 @@ export default {
       this.deleteLastAnswer();
 
       this.fillProgress({ addedDepth: -1, survey: this.survey });
+    },
+    getFormattedDate() {
+      var myDate = new Date();
+      var month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+      var date = ("0" + myDate.getDate()).slice(-2);
+      var year = myDate.getFullYear();
+      return year + "/" + month + "/" + date;
+    },
+    getPDFContent() {
+      let pdfContents = [];
+
+      var today = new Date();
+      pdfContents.push(
+        this.pdfContentTitle(
+          "ehvLINC REPORT  " +
+            today.getFullYear() +
+            "-" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate()
+        )
+      );
+
+      for (let i = 0; i < this.answer.length; i++) {
+        pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
+        pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
+
+        //TODO: voeg warnings aka "Notifications" toe.
+        //TODO: voeg Results toe (ook in flowchart editor).
+      }
+
+      return pdfContents;
+    },
+    printPDF() {
+      let pdfOptions = {
+        orientation: "portrait",
+        unit: "cm"
+      };
+      let pdfContents = this.getPDFContent();
+      let name = "report " + this.getFormattedDate();
+
+      this.generatePdf(pdfOptions, pdfContents, name);
     }
   },
   updated() {
@@ -76,10 +119,10 @@ export default {
     }
   },
   watch: {
-    progress: function (newValue, oldValue) {
+    progress: function(newValue, oldValue) {
       //watch for completion of survey, then print pdf
-      if(newValue === 100) {
-        this.generateDemoPDF();
+      if (newValue === 100) {
+        this.printPDF();
       }
     }
   }

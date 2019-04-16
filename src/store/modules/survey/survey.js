@@ -44,7 +44,6 @@ const actions = {
 const mutations = {
     SET_SURVEY(state, survey) {
         state.all = survey;
-        console.log(survey);
         //makes an object array with the node ID as key
         state.all.nodes = _.mapKeys(survey.nodes, 'id');
     },
