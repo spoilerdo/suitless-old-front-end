@@ -7,9 +7,9 @@
         <div class="display-2 text-xs-center white--text pb-3">Recommended starter surveys</div>
       </v-flex>
       <v-layout align-center justify-center row wrap>
-        <RoundCard redirecturl='/survey/5cac95e3c00a700008e56810'  imagename="IP.svg" text="Privacy" width="xs6 md3"/>
-        <RoundCard redirecturl="/survey"  imagename="IP.svg" text="Privacy" width="xs6 md3"/>
-        <RoundCard redirecturl="/survey"  imagename="IP.svg" text="Privacy" width="xs6 md3"/>
+        <RoundCard redirecturl='/survey/5cb07a1ba38986000833c1b5'  imagename="IP.svg" text="General Intake" width="xs6 md3"/>
+        <RoundCard redirecturl="/survey/5cb496f4a38986000833c1ba"  imagename="IP.svg" text="Privacy" width="xs6 md3"/>
+        <RoundCard redirecturl="/survey/5cb470a3a38986000833c1b9"  imagename="IP.svg" text="Software IP" width="xs6 md3"/>
       </v-layout>
     </v-layout>
     <div class="text-xs-center">
