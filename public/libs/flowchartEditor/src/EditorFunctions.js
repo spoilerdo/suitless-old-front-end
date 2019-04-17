@@ -68,18 +68,18 @@ export let graphFunctions = {
             } else {
                 selectedCells = graph.getSelectionCells();
             }
-            let firsCell = selectedCells[0];
+            let firstCell = selectedCells[0];
             let secondCell = selectedCells[1];
 
-            if (firsCell.edges != null) {
-                firsCell.edges.forEach(e => {
+            /*if (firstCell.edges != null) {
+                firstCell.edges.forEach(e => {
                     if (e.target.id === secondCell.id) {
                         throw new Error("cannot make the same edge");
                     }
                 })
-            }
-            graph.insertEdge(parent, null, value, firsCell, secondCell);
-            this.updateDepth(secondCell, firsCell);
+            }*/
+            graph.insertEdge(parent, null, value, firstCell, secondCell);
+            this.updateDepth(secondCell, firstCell);
             this.checkDepth(secondCell, null);
         }
         finally {
@@ -139,13 +139,14 @@ export let graphFunctions = {
             let cellflows = n.flows;
             let cell = {
                 cellflows,
-                ...n.ID,
+                id: n.id,
             }
             cells = cells.concat(cell);
         })
 
         cells.forEach(c => {
-            let fromCell = model.getCell(c[0]);
+            let fromCell = model.getCell(c.id);
+            //console.log(c);
             c.cellflows.forEach(f => {
                 let targetCell = model.getCell(f.targetID);
                 let flow = {
@@ -288,7 +289,7 @@ var posX = 20, posY = 20;
 function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y) {
     let vertex;
     if (json != null) {
-        vertex = graph.createVertex(parent, json.ID, json.value, json.posX, json.posY, json.width, json.height, 'whiteSpace=wrap;');
+        vertex = graph.createVertex(parent, json.id, json.value, json.posX, json.posY, json.width, json.height, 'whiteSpace=wrap;');
         data = json.lincData;
     } else if (x == null || y == null) {
         vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], posX, posY,
@@ -311,7 +312,6 @@ function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y
     }
 
     graph.addCell(vertex, parent);
-    console.log(vertex);
     return vertex;
 }
 

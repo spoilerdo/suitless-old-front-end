@@ -48,7 +48,7 @@
 <script>
 // @ is an alias to /src
 import materialCard from "@/components/material/Card";
-import Form from "@/components/login/Form";
+import Form from "@/components/login/LoginForm";
 import Logo from "@/components/login/Logo";
 import { mapState, mapActions } from "vuex";
 

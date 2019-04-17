@@ -5,6 +5,7 @@ import login from './modules/login/login'
 import survey from './modules/survey/survey';
 import answer from './modules/survey/answer/answer';
 import progress from './modules/survey/progress/progress';
+import flowcharteditor from './modules/flowcharteditor/flowcharteditor';
 
 Vue.use(Vuex);
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
         login,
         survey,
         answer,
-        progress
+        progress,
+        flowcharteditor
     },
     strict: debug
 })

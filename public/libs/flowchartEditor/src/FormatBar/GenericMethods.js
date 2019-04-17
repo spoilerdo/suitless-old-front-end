@@ -9,6 +9,7 @@ import { graphFunctions } from "../EditorFunctions";
 import { FormatBarEnum } from "./FormatBarEnum";
 import { NodeEnum } from "../NodeEnum";
 import { mxUtils } from "../MxGraph";
+import { methods } from '../store/flowcharteditor';
 
 let selectedQuestion = null;
 
@@ -44,6 +45,12 @@ export let formatBarFunctions = {
         });
         saveButton.className = "primary v-btn v-btn--large v-btn--router theme--light";
         formatbarContainer.appendChild(saveButton);
+
+        let importButton = mxUtils.button("import", (evt) => {
+            methods.setDialog(true);
+        })
+        importButton.className = "primary v-btn v-btn--large v-btn--router theme--light"
+        formatbarContainer.appendChild(importButton);
     },
 
     createDataContainer(formatBarContainer, editor, selectedCell, title, inputValue, formatBarEnum){
