@@ -8,8 +8,8 @@
   >
     <v-icon color="white" class="mr-3">mdi-bell-plus</v-icon>
     <div>
-      Welcome to
-      <b>Vue Material Dashboard</b> - a beautiful freebie for every web developer.
+      Information:
+      {{value}}
     </div>
     <v-icon size="16" @click="snackbar = false">mdi-close-circle</v-icon>
   </v-snackbar>
