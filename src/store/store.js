@@ -5,6 +5,7 @@ import login from './modules/login/login'
 import survey from './modules/survey/survey';
 import answer from './modules/survey/answer/answer';
 import progress from './modules/survey/progress/progress';
+import profile from './modules/profile/profile';
 
 Vue.use(Vuex);
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
         login,
         survey,
         answer,
-        progress
+        progress,
+        profile
     },
     strict: debug
 })

@@ -1,0 +1,3 @@
+export const SET_HAS_DONE_SURVEY = "SET_HAS_DONE_SURVEY"
+export const SET_PROFILES = "SET_PROFILES"
+export const ADD_PROFILE = "ADD_PROFILE"

@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Landingpage from '../views/landingpage/Landingpage'
+import Landingpage from '../views/landingpages/Landingpage'
 import Dashboard from '../views/Dashboard.vue'
 import Login from '../views/login/Login';
-import Surveys from '../views/surveys/Surveys';
+import Surveys from '../views/landingpages/SurveysLanding';
 import Survey from '../views/survey/Survey.vue';
 import FlowchartEditor from '../views/flowchartEditor/FlowchartEditor';
-import LoginLanding from '@/views/landingpage/LoginLanding';
+import LoginLanding from '@/views/landingpages/LoginLanding';
 
 Vue.use(Router)
 

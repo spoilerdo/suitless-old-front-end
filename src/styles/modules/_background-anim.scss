@@ -1,8 +1,17 @@
 .background-content-container {
     height: 85vh;
     position: relative;
+  
   }
 .background-content-container, body {
   overflow: hidden;
   overflow: -moz-scrollbars-none;
+}
+
+.custom-background-content-container {
+    height: 85vh;
+    position: relative;
+    @media screen and (max-width: 600px) {
+        height: 100%;
+    }
 }

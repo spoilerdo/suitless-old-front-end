@@ -6,7 +6,7 @@
           <v-alert :value="alert.message !=null" :type="alert.type" outline>{{alert.message}}</v-alert>
 
           <div v-show="loggingIn">
-            <Form email password name="loginForm" ref="loginForm" :onclick="loginUser"/>
+            <Form email password name="loginForm" ref="loginForm" :onclick="loginUser" :callback="successfulLogin"/>
 
             <v-btn @click="$refs.loginForm.validatedSubmit()" mx-2 color="primary">Login</v-btn>
             <v-btn v-on:click="switchForms(false)" mx-2 color="grey">Create New Account</v-btn>
@@ -42,6 +42,13 @@
         <Logo aspectratio="0.73"/>
       </v-flex>
     </v-layout>
+<!--    <Dialog 
+      ref="dialog" 
+      header="Starter survey" 
+      text="this survey is used to gather critical data about your current company status, this data will be used to recommend surveys to you." 
+      buttontext="go to survey" 
+    /> -->
+    <!-- persistentdialog -->
   </v-container>
 </template>
 
@@ -50,6 +57,7 @@
 import materialCard from "@/components/material/Card";
 import Form from "@/components/login/Form";
 import Logo from "@/components/login/Logo";
+import Dialog from '@/components/dialog/Dialog';
 import { mapState, mapActions } from "vuex";
 
 export default {
@@ -57,7 +65,8 @@ export default {
   components: {
     Form,
     Logo,
-    materialCard
+    materialCard,
+    Dialog
   },
   data() {
     return {
@@ -72,22 +81,36 @@ export default {
         lastName: null,
         password: null,
         confirmPassword: null
-      }
+      },
+      showDialog: false
     };
   },
   computed: {
-    ...mapState("login/", ["loggingIn", "loginText", "alert"])
+    ...mapState("login/", ["loggingIn", "loginText", "alert"]),
+    ...mapState("profile/", ["profiles"])
   },
   methods: {
     ...mapActions("login/", ["registerUser", "loginUser", "switchForms"]),
     ...mapActions("app/", ["setBackground"]),
+    ...mapActions("profile/", ["getAllProfiles"]),
     successfulRegister() {
       //switch to login page on successful login
       this.switchForms(true);
+    },
+    successfulLogin() {
+      this.$router.push("/survey/5cb71cdb3fc9910008f9f2f4");
+      //router.push("/dashboard");
     }
   },
   beforeMount() {
     this.setBackground("header-bg.jpg");
+  },
+  mounted() {
+    this.getAllProfiles().then((req => {
+      if(this.profiles.length === 0) {
+        //this.$refs.dialog.dialog = true;
+      }
+    }));
   }
 };
 </script>

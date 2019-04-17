@@ -2,14 +2,14 @@
   <v-container fluid pa-0 ma-o>
     <Animatedbackground/>
 
-    <v-layout align-center justify-center class="background-content-container" row wrap fill-height>
-      <v-flex grow xs10>
+    <v-layout align-center justify-center class="custom-background-content-container" row wrap fill-height>
+      <v-flex grow xs12>
         <div class="display-2 text-xs-center white--text pb-3">Recommended starter surveys</div>
       </v-flex>
       <v-layout align-center justify-center row wrap>
-        <RoundCard redirecturl='/survey/5cac95e3c00a700008e56810'  imagename="IP.svg" text="Privacy" width="xs6 md3"/>
-        <RoundCard redirecturl="/survey"  imagename="IP.svg" text="Privacy" width="xs6 md3"/>
-        <RoundCard redirecturl="/survey"  imagename="IP.svg" text="Privacy" width="xs6 md3"/>
+        <RoundCard redirecturl='/survey/5cac95e3c00a700008e56810'  imagename="IP.svg" text="Privacy" width="xs6 sm4 md3"/>
+        <RoundCard redirecturl="/survey"  imagename="IP.svg" text="Privacy" width="xs6 sm4 md3"/>
+        <RoundCard redirecturl="/survey"  imagename="IP.svg" text="Privacy" width="xs6 sm4 md3"/>
       </v-layout>
     </v-layout>
     <div class="text-xs-center">

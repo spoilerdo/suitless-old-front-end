@@ -36,7 +36,6 @@ const actions = {
             .then((req => {
                 localStorage.setItem('jwtToken', req.token);
                 setToken(req.token);
-                router.push("/dashboard");
             })).catch(e => {
                 commit(SET_ALERT, {type:"error", message: "email or password invalid"});
             });
