@@ -15,8 +15,7 @@ export default new Router({
     {
       path: '/',
       name: 'Landingpage',
-      component: Landingpage,
-      icon: 'mdi-view-dashboard'
+      component: Landingpage
     },
     {
       path: '/surveys',
