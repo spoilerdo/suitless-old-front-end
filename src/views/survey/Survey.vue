@@ -4,13 +4,17 @@
       <ProgressBar ref="progressBar"/>
     </v-layout>
     <v-layout align-center justify-center row pa-5>
-      <v-flex d-flex xs8>
+      <v-flex d-flex xs8 v-if="survey.nodes != null && currentquestion != null">
         <Question
-          v-if="survey.nodes != null && currentquestion != null"
+          v-if="survey.nodes[currentquestion].style == 1"
           v-on:answerQuestion="answeredQuestion"
           v-on:renderPreviousQuestion="renderPreviousQuestion"
           v-bind:question="survey.nodes[currentquestion]"
           v-bind:progress="progress"
+        />
+        <Notification
+          v-if="notification != null"
+          v-bind:value="notification.value"
         />
       </v-flex>
     </v-layout>
@@ -20,13 +24,15 @@
 <script>
 import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
+import Notification from "@/components/material/Notification.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: ["surveyID"],
   components: {
     Question,
-    ProgressBar
+    ProgressBar,
+    Notification
   },
   computed: {
     ...mapState("survey", {
@@ -44,6 +50,11 @@ export default {
       getAnswerByQuestionID: "answer/getAnswerByQuestionID"
     })
   },
+  data(){
+    return{
+      notification: null
+    }
+  },
   created() {
     //when created call the action to get the survey with the id in the props.
     this.getSurveyByID(this.surveyID);
@@ -60,7 +71,14 @@ export default {
         question: this.survey.nodes[this.currentquestion]
       });
       this.setCurrentQuestion(answer.targetID);
-      this.fillProgress({ addedDepth: 1, survey: this.survey });
+
+      //if the next question is a notification then store it in the notification array and show it on the front-end
+      if(this.survey.nodes[this.currentquestion].style == 5){
+        this.notification = this.survey.nodes[this.currentquestion];
+        this.setCurrentQuestion(this.survey.nodes[this.currentquestion].flows[0].targetID);
+      }
+
+      this.fillProgress({ addedDepth: 1, survey: this.survey });      
     },
     renderPreviousQuestion(question) {
       //select the previouse question
@@ -129,6 +147,8 @@ export default {
       //watch for completion of survey, then print pdf
       if (newValue === 100) {
         this.printPDF();
+        this.$router.push('/dashboard');
+        this.setCurrentQuestion(null);
       }
     }
   }
