@@ -1,30 +1,31 @@
 <template>
-  <v-alert
-    v-bind="$attrs"
-    :class="[`elevation-${elevation}`]"
-    :value="value"
-    class="v-alert--notification"
-    v-on="$listeners"
+  <v-snackbar
+    v-model="snackbar"
+    bottom
+    right
+    dark
+    color="primary"
   >
-    <slot />
-  </v-alert>
+    <v-icon color="white" class="mr-3">mdi-bell-plus</v-icon>
+    <div>
+      Welcome to
+      <b>Vue Material Dashboard</b> - a beautiful freebie for every web developer.
+    </div>
+    <v-icon size="16" @click="snackbar = false">mdi-close-circle</v-icon>
+  </v-snackbar>
 </template>
 
 <script>
 export default {
-  inheritAttrs: false,
-
   props: {
-    elevation: {
-      type: [Number, String],
-      default: 6
-    },
-    value: {
-      type: Boolean,
-      default: true
+    value: ""
+  },
+  data(){
+    return{
+      snackbar: true
     }
   }
-}
+};
 </script>
 
 <style>

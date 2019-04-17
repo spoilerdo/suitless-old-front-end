@@ -3,6 +3,7 @@
     <div id="toolbarContainer" class="toolbar"></div>
     <v-layout id="flowchartContainer" class="flowchart" align-space-around justify-center row fill-height/>
     <div id="formatbarContainer" class="format"></div>
+    <FlowchartForm id="importForm"/>
   </v-layout>
 </template>
 
@@ -219,11 +220,14 @@ table.mxPopupMenu tr {
 }
 </style>
 
-
 <script>
 import {mapActions } from "vuex";
+import FlowchartForm from "@/components/flowcharteditor/FlowchartForm";
 
 export default {
+    components: {
+        FlowchartForm
+    },
     mounted(){
         this.startEditor();
     },

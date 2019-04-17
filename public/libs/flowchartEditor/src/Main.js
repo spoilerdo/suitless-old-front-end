@@ -17,6 +17,7 @@ import { environment } from "./EnvironmentVariables"
 import { backgroundFunctions } from "./Background"
 import { NodeEnum } from "./NodeEnum";
 import { clipBoardFunctions } from "./MxNative/Clipboard";
+import { state } from "./store/flowcharteditor";
 
 import { mxClient, mxGraph, mxUtils, mxEvent, mxConstraintHandler, mxConnectionHandler, mxEditor, mxGraphModel, mxKeyHandler, mxConstants, mxGraphView } from "./MxGraph";
 
@@ -99,6 +100,10 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         clipBoardFunctions();
 
         StartFlowchart(graph);
+
+        state.flowchart.registerListener(function(val){
+            graphFunctions.importChart(graph, val.nodes, model);
+        })
     }
 };
 
