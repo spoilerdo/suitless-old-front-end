@@ -1,6 +1,9 @@
 <template>
   <v-container fluid pa-0 ma-0>
+    <LoginNavbar class="absolute"/>
     <Animatedbackground v-once/>
+
+
 
     <v-layout align-center justify-center class="background-content-container" row wrap fill-height>
       <v-flex xs12 sm6 md5>
@@ -18,12 +21,13 @@
 
 <script>
 // @ is an alias to /src
-import { createNamespacedHelpers } from 'vuex';
+import { createNamespacedHelpers } from "vuex";
 import Animatedbackground from "@/components/background/Animatedbackground";
+import LoginNavbar from "@/components/login/LoginNavbar";
 import { mapActions } from "vuex";
 
 //can be used if you will only need to access ONE module in this component, will auto append /app before actions.
-const { mapState } = createNamespacedHelpers('app/')
+const { mapState } = createNamespacedHelpers("app/");
 
 export default {
   name: "landingPage",
@@ -33,7 +37,8 @@ export default {
     };
   },
   components: {
-    Animatedbackground
+    Animatedbackground,
+    LoginNavbar
   },
   methods: {
     ...mapActions({
@@ -44,12 +49,22 @@ export default {
     this.setBackground("#30002a");
   },
   computed: {
-    ...mapState(['newUser'])
+    ...mapState(["newUser"])
   },
   beforeMount() {
-    if(!this.newUser) {
-        this.$router.push("/dashboard")
+    if (!this.newUser) {
+      this.$router.push("/dashboard");
     }
   }
 };
 </script>
+
+<style>
+.absolute{
+  position: absolute;
+  top:0px;
+  right:0px;
+
+  z-index: 100;
+}
+</style>

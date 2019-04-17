@@ -92,8 +92,14 @@ export default {
       );
 
       for (let i = 0; i < this.answer.length; i++) {
-        pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
-        pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
+        if(this.answer[i].answerValue != null) {
+          pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
+          pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
+        } else {
+          pdfContents.push(this.pdfContentWarning(this.answer[i].questionValue));
+          console.error("Error while printing to the PDF");
+          console.error(this.answer[i]);
+        }
 
         //TODO: voeg warnings aka "Notifications" toe.
         //TODO: voeg Results toe (ook in flowchart editor).
