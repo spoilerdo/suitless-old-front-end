@@ -6,6 +6,7 @@
       text="Surveys we recommend for you based on previous input"
       class="flex xs12 md6"
     >
+    allSurveys
       <v-layout row wrap>
         <div v-for="s in survey" :key="s.moduelID" class="text-xs-center flex xs12 md3">
           <RoundCard :redirecturl='`/survey/${s.moduleID}`' imagename="IP.svg" :text="s.name" width="xs12"/>
