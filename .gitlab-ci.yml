@@ -26,7 +26,7 @@ test_VueJS:
   stage: test
   image: nightwatch:latest
   script:
-  - 'npm ci'
+  - 'npm i'
   - 'npm run test:e2e'
   artifacts:
     paths:
