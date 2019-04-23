@@ -1,4 +1,3 @@
-
 var config = {
     test_settings: {
       chrome: {
@@ -8,7 +7,7 @@ var config = {
             acceptSslCerts: true,
             nativeEvents: true,
             chromeOptions : {
-              "args" : ["headless", "no-sandbox", "disable-gpu"]
+              "args" : ["headless", "disable-gpu"]
             }
           }
       }
