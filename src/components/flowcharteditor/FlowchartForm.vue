@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     ...mapActions("flowcharteditor/", ["setDialog", "getFlowchartByName"]),
-    importFlowchart(surveyName){
+    importFlowchart(){
       this.setDialog(false);
 
       this.getFlowchartByName(this.form.moduleName)
@@ -59,7 +59,6 @@ export default {
         }));
     },
     setFlowchart(){
-      console.log("Set flowchart");
       this.setFlowchartState(this.flowchart.module);
     },
     validatedSubmit() {

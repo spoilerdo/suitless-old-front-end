@@ -1,6 +1,6 @@
 /**
- * Contains generic methods from the Formatbar
- * @author Martijn Doramns
+ * Contains generic methods from the Formatbar --- DEPRECATED ---
+ * @author Martijn Dormans
  * @version 1.0
  * @since 3-4-2019
  */
@@ -51,6 +51,10 @@ export let formatBarFunctions = {
         })
         importButton.className = "primary v-btn v-btn--large v-btn--router theme--light"
         formatbarContainer.appendChild(importButton);
+    },
+
+    saveFlowchart(editor, name, description) {
+        graphFunctions.exportChart(editor.graph, name, description);
     },
 
     createDataContainer(formatBarContainer, editor, selectedCell, title, inputValue, formatBarEnum){
