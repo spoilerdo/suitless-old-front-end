@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     ...mapActions("flowcharteditor/", ["setDialog", "getFlowchartByName"]),
-    importFlowchart(surveyName){
+    importFlowchart(){
       this.setDialog(false);
 
       this.getFlowchartByName(this.form.moduleName)
