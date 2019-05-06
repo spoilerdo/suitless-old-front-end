@@ -1,6 +1,6 @@
 <template>
   <v-layout column style="height: 59vh">
-    <v-flex md6 style="overflow: auto">
+    <v-flex style="overflow: auto">
       <v-data-table :headers="headers" :items="serviceables" hide-actions class="elevation-1">
         <template slot="items" slot-scope="props">
           <td>{{ props.item.name }}</td>
@@ -12,7 +12,7 @@
               <template v-slot:activator="{ on }">
                 <v-btn color="blue lighten-2" small v-on="on">view</v-btn>
               </template>
-              <v-card>
+              <v-card class="fullscreen">
                 <v-card-title class="headline grey lighten-2" primary-title>{{ props.item.name }}</v-card-title>
                 <iframe class="cdnContent" :src="props.item.baseURL"></iframe>
               </v-card>
@@ -42,9 +42,6 @@ export default {
     };
   },
   methods: {
-    viewContent(baseURL) {
-      console.log("SHOW", baseURL);
-    },
     deleteContent(baseURL) {
       console.log("DELETE", baseURL);
     },
@@ -78,8 +75,18 @@ export default {
   max-width: 100px;
 }
 
+.fullscreen{
+  height: 80vh;
+}
+
+.headline{
+  height: 10%;
+  padding: 0;
+  padding-left: 20px;
+}
+
 .cdnContent{
   width: 100%;
-  height: 100%;
+  height: 89%;
 }
 </style>
