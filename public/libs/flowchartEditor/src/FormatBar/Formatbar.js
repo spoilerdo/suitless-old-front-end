@@ -6,8 +6,6 @@
  */
 
 import { NodeEnum } from "../NodeEnum";
-import { formatBarFunctions } from "./GenericMethods";
-import { FormatBarEnum } from "./FormatBarEnum";
 import { mxEvent, mxEditor } from "../MxGraph";
 import { state } from "../store/flowcharteditor";
 
@@ -49,53 +47,19 @@ function showFormatBar(formatbarContainer, editor, selectedCell, model){
 
         switch (selectedCell.lincType) {
             case NodeEnum.Question:
-                state.questionfunctions.set = true;
-                break;
-            case NodeEnum.Start:
-                showStart(formatbarContainer, editor, selectedCell, model);
-                break;
-            case NodeEnum.Condition:
-                showCondition(formatbarContainer, editor, selectedCell, model);
-                break;
-            case NodeEnum.End:
-                showEnd(formatbarContainer, editor, selectedCell, model);
+                changeStates(true, false, false);
                 break;
             case NodeEnum.Module:
-                state.modulefunctions.set = true;
+                changeStates(false, true, false);
                 break;
             case NodeEnum.Notification:
-                state.notificationfunctions.set = true;
+                changeStates(false, false, true);
                 break;
         };
 }
 
-function showQuestion(formatbarContainer, editor, selectedCell, model) {
-    state.questionfunctions.set = true;
-    //formatBarFunctions.createDataContainer(formatbarContainer, editor, selectedCell, "Question", selectedCell.value, FormatBarEnum.Question);
-    //formatBarFunctions.createDataContainer(formatbarContainer, editor, selectedCell, "Reason", selectedCell.lincData[0].value, FormatBarEnum.Reason);
-    //formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, true);
-};
-
-function showCondition(formatbarContainer, editor, selectedCell, model) {
-    formatBarFunctions.createCondition(formatbarContainer, editor, selectedCell, model, true);
-    formatBarFunctions.createDataContainer(formatbarContainer, editor, selectedCell, "Reason", selectedCell.lincData[0].value, FormatBarEnum.Reason);
-};
-
-function showStart(formatbarContainer, editor, selectedCell, model){
-    //formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, false);
-};
-
-function showEnd(formatbarContainer, editor, selectedCell, model){
-    //formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, false);
-}
-
-function showModule(formatbarContainer, editor, selectedCell, model){
-    state.modulefunctions.set = true;
-    //formatBarFunctions.createDataContainer(formatbarContainer, editor, selectedCell, "Module name:", selectedCell.lincData[0].value, FormatBarEnum.Module);
-    //formatBarFunctions.createConditions(formatbarContainer, editor, selectedCell, model, true);
-}
-
-function showNotification(formatbarContainer, editor, selectedCell, model){
-    //formatBarFunctions.createDataContainer(formatbarContainer, editor, selectedCell, "Notification", selectedCell.value, FormatBarEnum.Notification);
-    state.notificationfunctions.set = true;
+function changeStates(questionState, moduleState, notificationState){
+    state.questionfunctions.set = questionState;
+    state.modulefunctions.set = moduleState;
+    state.notificationfunctions = notificationState;
 }
