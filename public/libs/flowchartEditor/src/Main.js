@@ -80,6 +80,41 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         graph.setHtmlLabels(true);
         graph.setConnectable(true);
 
+        //WHEN CELLS GET SELECTED OR DESELECTED ADJUST THE BOUNDARIES OF THE CELLS TO THE TEXT
+        graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
+            //GET SELECTED AND DESELECTED CELLS
+            let removedCells = evt.getProperty('removed')
+            let addedCells = evt.getProperty('added')
+
+            let cells = []
+            if (addedCells != undefined) {
+                addedCells.forEach(c => {
+                    cells.push(c)
+                })
+            }
+            if (removedCells != undefined) {
+                removedCells.forEach(c => {
+                    cells.push(c)
+                })
+            }
+            
+            //LOOP THROUGH EACH CELL AND GET THEIR PREFERRED BOUNDARIES
+            cells.forEach(c => {
+                let newRect = {}
+                let rect = c.geometry
+                let preffered = graph.getPreferredSizeForCell(c)
+
+                newRect.x = rect.x
+                newRect.y = rect.y
+
+                //IF THEY ARE UNDER A MINIMUM OF 80 BY 80 RESIZE THEM BIGGER 
+                newRect.width = (preffered.width + 10 < 80) ? 80 : preffered.width + 10
+                newRect.height = (preffered.height + 25 < 80) ? 80 : preffered.height + 25
+
+                graph.resizeCell(c, newRect)
+            })
+        });
+
         createSnapPoints(graph, model);
 
         // Enables rubberband selection
@@ -101,7 +136,7 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
 
         StartFlowchart(graph);
 
-        state.flowchart.registerListener(function(val){
+        state.flowchart.registerListener(function (val) {
             graphFunctions.importChart(graph, val.nodes, model);
         })
 
