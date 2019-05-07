@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Landingpage from '../views/landingpage/Landingpage'
-import Dashboard from '../views/Dashboard.vue'
 import Login from '../views/login/Login';
 import Surveys from '../views/surveys/Surveys';
 import Survey from '../views/survey/Survey.vue';
 import FlowchartEditor from '../views/flowchartEditor/FlowchartEditor';
 import LoginLanding from '@/views/landingpage/LoginLanding';
+import Cdn from '../views/cdn/Cdn';
+import Dashboard from '../views/Dashboard.vue'
 
 Vue.use(Router)
 
@@ -42,6 +43,15 @@ export default new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
+    },
+    {
+      path: '/cdn',
+      name: 'Cdn',
+      component: Cdn
+    },
+    {
+      path: '/about',
+      name: 'About',
       icon: 'mdi-view-dashboard'
     },
     {
