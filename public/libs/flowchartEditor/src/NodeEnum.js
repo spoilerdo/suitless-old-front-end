@@ -21,6 +21,7 @@ export let NodeEnum = {
     Condition: 3,
     Module: 4,
     Notification: 5,
+    Note: 6,
 
     /**
      * Value to Name mapping.
@@ -30,5 +31,6 @@ export let NodeEnum = {
     2 : "End",
     3 : "Condition",
     4 : "Module",
-    5 : "Notification"
+    5 : "Notification",
+    6 : "Note"
 }
