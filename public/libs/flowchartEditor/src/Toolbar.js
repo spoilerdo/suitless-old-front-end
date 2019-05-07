@@ -97,9 +97,13 @@ function addDedicatedActions(toolbar, editor, model) {
         (click) => {
             graphFunctions.addVertex(NodeEnum.End, editor.graph, null, null, null)
         }, null, "v-icon mdi theme--light mxToolbarItem")
-    toolbar.addItem("Add notification node", "http://ironsm4sh.nl:3305/notificationNode",
+    /*toolbar.addItem("Add notification node", "http://ironsm4sh.nl:3305/notificationNode",
         (click) => {
             graphFunctions.addVertex(NodeEnum.Notification, editor.graph, null, null, null);
+        }, null, "v-icon mdi theme--light mxToolbarItem");*/
+    toolbar.addItem("Add notepad node", "http://ironsm4sh.nl:3305/questionNode",
+        (click) => {
+            graphFunctions.addVertex(NodeEnum.Note, editor.graph, null, null, null);
         }, null, "v-icon mdi theme--light mxToolbarItem");
     toolbar.addItem("Add edge", "http://ironsm4sh.nl:3305/AddEdge",
         (click) => {

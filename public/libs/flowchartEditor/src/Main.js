@@ -104,6 +104,8 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         state.flowchart.registerListener(function(val){
             graphFunctions.importChart(graph, val.nodes, model);
         })
+
+        state.editor = editor;
     }
 };
 

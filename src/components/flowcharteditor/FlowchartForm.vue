@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 
 export default {
   data() {
@@ -50,24 +50,15 @@ export default {
   },
   methods: {
     ...mapActions("flowcharteditor/", ["setDialog", "getFlowchartByName"]),
-    importFlowchart(){
+    importFlowchart() {
       this.setDialog(false);
 
-      this.getFlowchartByName(this.form.moduleName)
-        .then((req => {
-          this.setFlowchart();
-        }));
+      this.getFlowchartByName(this.form.moduleName).then(req => {
+        this.setFlowchart();
+      });
     },
-    setFlowchart(){
-      console.log("Set flowchart");
+    setFlowchart() {
       this.setFlowchartState(this.flowchart.module);
-    },
-    validatedSubmit() {
-      this.$validator.validateAll().then(valid =>{
-        if(valid){
-          //apiCall with this.form to get survey/flowchart by name
-        }
-      })
     }
   }
 };
