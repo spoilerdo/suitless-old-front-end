@@ -10,45 +10,96 @@ import LoginLanding from '@/views/landingpage/LoginLanding';
 
 Vue.use(Router)
 
-export default new Router({
+
+let router = new Router({
   routes: [
     {
       path: '/',
       name: 'Landingpage',
-      component: Landingpage
+      component: Landingpage,
+      meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
       path: '/surveys',
       name: 'Surveys',
-      component: Surveys
+      component: Surveys,
+      meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
       path: '/survey/:surveyID',
       name: 'Survey',
       component: Survey,
-      props: true
+      props: true,
+      meta: { requiresAuth: true, requiresAdmin: false }
     },
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
       path: '/landingregister',
       name: 'Landing-Register',
-      component: LoginLanding
+      component: LoginLanding,
+      meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      icon: 'mdi-view-dashboard'
+      icon: 'mdi-view-dashboard',
+      meta: { requiresAuth: true, requiresAdmin: false }
     },
     {
       path: '/flowchart',
       name: 'test',
-      component: FlowchartEditor
+      component: FlowchartEditor,
+      meta: { requiresAuth: true, requiresAdmin: true }
+    },
+    {
+      path: '*',
+      name: 'Login',
+      component: Login,
+      meta: { requiresAuth: false, requiresAdmin: false }
     }
   ],
   mode: 'history'
+}
+)
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    let jwtDecode = require("jwt-decode");
+    try {
+      let token = jwtDecode(localStorage.jwtToken);
+      if (token != null) {
+        if (to.matched.some(record => record.meta.requiresAdmin)) {
+          let role = token["scopes"];
+          if (role == "ADMIN") {
+            next()
+          }
+          else {
+            next({
+              path: '/dashboard',
+              query: { redirect: to.fullPath }
+            })
+          }
+        }
+        else {
+          next()
+        }
+      }
+    }
+    catch{
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    }
+  } else {
+    next()
+  }
 })
+
+export default router;
