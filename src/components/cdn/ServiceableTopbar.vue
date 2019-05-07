@@ -15,8 +15,8 @@
           <ServiceableFilePicker/>
         </v-flex>
 
-        <v-flex xs5 md4>
-          <v-btn color="info" @click="uploadImage">upload</v-btn>
+        <v-flex xs5 md1>
+          <v-btn :disabled=true color="info" @click="uploadImage">upload</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -25,6 +25,7 @@
 
 <script>
 import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
+import {CDN_URL} from "@/store/serverconstants"
 import * as api from "@/api/api"
 import { type } from 'os';
 
@@ -41,9 +42,9 @@ export default {
   },
   methods: {
     uploadImage() {
-      //TODO: Replace this url with an environment variable/api gatewat
-      console.log("I DO NOT WORK UwU");
-      // api.apiCall("POST", "http://ironsm4sh.nl:3305/", {});
+      api.apiCall("POST", "http://ironsm4sh.nl:3305/", {}).then(() => {
+
+      });
     }
   }
 };

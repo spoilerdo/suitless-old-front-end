@@ -8,7 +8,7 @@
           <td>{{ props.item.type }}</td>
           <td class="actionsSection">
 
-            <v-dialog v-model="dialog">
+            <v-dialog :lazy=true>
               <template v-slot:activator="{ on }">
                 <v-btn color="blue lighten-2" small v-on="on">view</v-btn>
               </template>
@@ -18,7 +18,7 @@
               </v-card>
             </v-dialog>
 
-            <v-btn color="danger" small @click="deleteContent(props.item.baseURL)">Delete</v-btn>
+            <v-btn color="danger" :disabled=true small @click="deleteContent(props.item.baseURL)">Delete</v-btn>
           </td>
         </template>
       </v-data-table>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import * as api from "@/api/api";
+import cdn from "@/store/modules/cdn/server";
 
 export default {
   data() {
@@ -46,22 +46,7 @@ export default {
       console.log("DELETE", baseURL);
     },
     getAllContent() {
-      console.log("GET ALL");
-
-      //TODO: DE URI uit env.
-      let apiURI = "http://localhost:3305/";
-
-      api.apiCall("GET", apiURI + "meta/all").then(data => {
-        console.log(data);
-        data.metadataList.forEach(serviceable => {
-          this.serviceables.push({
-            name: serviceable.tag,
-            size: (serviceable.size / 1000).toFixed(2), //Byte to MB
-            type: serviceable.type,
-            baseURL: apiURI + serviceable.tag
-          });
-        });
-      });
+      this.serviceables = cdn.actions.getAllData(this.serviceables);
     }
   },
   mounted() {
@@ -75,17 +60,17 @@ export default {
   max-width: 100px;
 }
 
-.fullscreen{
+.fullscreen {
   height: 80vh;
 }
 
-.headline{
+.headline {
   height: 10%;
   padding: 0;
   padding-left: 20px;
 }
 
-.cdnContent{
+.cdnContent {
   width: 100%;
   height: 89%;
 }
