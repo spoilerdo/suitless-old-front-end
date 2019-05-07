@@ -139,8 +139,21 @@ export function vertexOnDraw(mxEvent, graph) {
         return cell;
     }
 
+    graph.connectionHandler.addListener(mxEvent.CONNECT, function (sender, evt){
+        var edge = evt.getProperty('cell');
+        var style = graph.getCellStyle(edge); //style is in object form
+        var newStyle = graph.stylesheet.getCellStyle("edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;", style); //Method will merge styles into a new style object.  We must translate to string from here 
+        var array = [];
+           for (var prop in newStyle)
+               array.push(prop + "=" + newStyle[prop]);
+           edge.style = array.join(';'); 
+   }),
+
     graph.popupMenuHandler.factoryMethod = function (menu, cell, evt) {
         if (evt != null) { return; }
+
+        console.log(mouseMe.getEvent());
+
         menu.addItem('Question Node', null, function () {
             if (mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.Question;
@@ -148,7 +161,7 @@ export function vertexOnDraw(mxEvent, graph) {
                     "key": "reason",
                     "value": "Reason for the question"
                 }]
-                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent(), mouseMe.getCell());
+                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent());
             }
         });
 

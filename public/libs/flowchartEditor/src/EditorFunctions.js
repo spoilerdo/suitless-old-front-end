@@ -73,14 +73,7 @@ export let graphFunctions = {
             let firstCell = selectedCells[0];
             let secondCell = selectedCells[1];
 
-            /*if (firstCell.edges != null) {
-                firstCell.edges.forEach(e => {
-                    if (e.target.id === secondCell.id) {
-                        throw new Error("cannot make the same edge");
-                    }
-                })
-            }*/
-            graph.insertEdge(parent, null, value, firstCell, secondCell);
+            graph.insertEdge(parent, null, value, firstCell, secondCell, "edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;");
             this.updateDepth(secondCell, firstCell);
             this.checkDepth(secondCell, null);
         }
@@ -220,7 +213,7 @@ function addQuestion(graph, parent, json, x, y) {
         "key": "reason",
         "value": "Reason for the question"
     }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, x, y, 'shape='+NodeEnum.Question);
 }
 
 /**
@@ -234,7 +227,7 @@ function addQuestion(graph, parent, json, x, y) {
 function addStart(graph, parent, json, x, y) {
     graphFunctions.setCustomShape(graph, NodeEnum.Start);
 
-    return genericAddVertex(graph, parent, json, NodeEnum.Start, null, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.Start, null, 80, x, y, 'shape='+NodeEnum.Start+';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -252,7 +245,7 @@ function addModule(graph, parent, json, x, y) {
         "key": "module",
         "value": "Module name"
     }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, x, y, 'shape='+NodeEnum.Module+';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -266,7 +259,7 @@ function addModule(graph, parent, json, x, y) {
 function addEnd(graph, parent, json, x, y) {
     graphFunctions.setCustomShape(graph, NodeEnum.Start);
 
-    return genericAddVertex(graph, parent, json, NodeEnum.End, null, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.End, null, 80, x, y, 'shape='+NodeEnum.Start+';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -284,7 +277,7 @@ function addNotification(graph, parent, json, x, y) {
         "key": "notify",
         "value": "this is a notification"
     }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, x, y, 'shape='+NodeEnum.Notification+';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -312,19 +305,18 @@ var posX = 20, posY = 20;
  * @param {object} json 
  * @param {NodeEnum} nodeEnum 
  */
-function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y) {
+function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y, style) {
     let vertex;
     if (json != null) {
-        vertex = graph.createVertex(parent, json.id, json.value, json.posX, json.posY, json.width, json.height, 'whiteSpace=wrap;');
+        vertex = graph.createVertex(parent, json.id, json.value, json.posX, json.posY, json.width, json.height, style);
         data = json.lincData;
     } else if (x == null || y == null) {
         vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], posX, posY,
-            defaultSize, defaultSize, 'shape='+nodeEnum); //'whiteSpace=wrap;'
-
+            defaultSize, defaultSize, style);
         posY += 20;
     } else {
         vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], x, y,
-            defaultSize, defaultSize, 'shape='+nodeEnum);
+            defaultSize, defaultSize, style);
     }
 
     vertex.lincType = nodeEnum;
