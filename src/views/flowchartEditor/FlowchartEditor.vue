@@ -2,7 +2,12 @@
   <v-layout fluid align-space-around justify-start row fill-height>
     <div id="toolbarContainer" class="toolbar"></div>
     <v-layout id="flowchartContainer" class="flowchart" align-space-around justify-center row fill-height/>
-    <div id="formatbarContainer" class="format"></div>
+    <div id="formatbarContainer" class="format">
+        <GeneralFunctions v-show="generalfunctions"/>
+        <QuestionFunctions v-show="questionfunctions"/>
+        <ModuleFunctions v-show="modulefunctions"/>
+        <NotificationFunctions v-show="notificationfunctions"/>
+    </div>
     <FlowchartForm id="importForm"/>
   </v-layout>
 </template>
@@ -221,12 +226,20 @@ table.mxPopupMenu tr {
 </style>
 
 <script>
-import {mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 import FlowchartForm from "@/components/flowcharteditor/FlowchartForm";
+import GeneralFunctions from "@/components/flowcharteditor/formatbar/GeneralFunctions";
+import QuestionFunctions from "@/components/flowcharteditor/formatbar/QuestionFunctions";
+import ModuleFunctions from "@/components/flowcharteditor/formatbar/ModuleFunctions";
+import NotificationFunctions from "@/components/flowcharteditor/formatbar/NotificationFunctions";
 
 export default {
     components: {
-        FlowchartForm
+        FlowchartForm,
+        GeneralFunctions,
+        QuestionFunctions,
+        ModuleFunctions,
+        NotificationFunctions
     },
     mounted(){
         this.startEditor();
@@ -236,6 +249,10 @@ export default {
     },
     beforeMount() {
         this.setBackground("transparent");
+    },
+    computed: {
+        //MapState aren't updated when a value is changed
+        ...mapState("flowcharteditor/", ["generalfunctions", "questionfunctions", "modulefunctions", "notificationfunctions"])
     }
 }
 </script>

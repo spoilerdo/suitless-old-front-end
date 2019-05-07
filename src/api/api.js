@@ -20,3 +20,13 @@ export const apiCall = (method, path, data) => {
         })
     });
 }
+
+export const asyncApiCall = (method, path, data) => {
+    return axios[method.toLowerCase()](path, data, {headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}})
+        .then(res => {
+            return res.data;
+        })
+        .catch(e => {
+            return e.response.data.error;
+        })
+}
