@@ -2,7 +2,7 @@
     <v-layout row justify-center>
         <v-form>
             <v-layout column>
-                <h5 class="headline"></h5>
+                <h5 class="headline">General flowchart information</h5>
                 <v-text-field
                     label="Flowchart Name"
                     v-model="form.tile"

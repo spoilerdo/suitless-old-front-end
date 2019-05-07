@@ -35,16 +35,14 @@ export default {
     Notification
   },
   computed: {
-    ...mapState("survey", {
+    ...mapState("survey/", {
       survey: state => state.all
     }),
     ...mapState("answer", {
       answer: state => state.all
     }),
-    ...mapState("progress", {
-      currentquestion: state => state.currentquestion,
-      progress: state => state.progress
-    }),
+    ...mapState("progress/", ["currentquestion", "progress"]),
+    ...mapState("app/", ["footerColor"]),
     ...mapGetters({
       firsQuestionID: "survey/getFirstQuestionID",
       getAnswerByQuestionID: "answer/getAnswerByQuestionID"
@@ -59,12 +57,16 @@ export default {
     //when created call the action to get the survey with the id in the props.
     this.getSurveyByID(this.surveyID);
     this.setBackground("#eee");
+    this.setFooterColor("#c01833");
+  },
+  beforeDestroy() {
+    this.setFooterColor("#fff");
   },
   methods: {
     ...mapActions("survey/", ["getSurveyByID"]),
     ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion"]),
     ...mapActions("progress/", ["fillProgress", "setCurrentQuestion"]),
-    ...mapActions("app/", ["setBackground"]),
+    ...mapActions("app/", ["setBackground", "setFooterColor"]),
     answeredQuestion(answer) {
       this.answerQuestion({
         answer,
