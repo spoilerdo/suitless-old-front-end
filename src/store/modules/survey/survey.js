@@ -49,7 +49,7 @@ const mutations = {
         state.all.nodes = _.mapKeys(survey.nodes, 'id');
     },
     SET_SURVEYS(state, surveys) {
-        state.all = surveys;
+        state.all = surveys._embedded.moduleList;
         //HAAL IK NOU ALLE FLOWCHARTS OP OF ALLEEN MODULE DATA???
         //makes an object array with the node ID as key
     }

@@ -2,12 +2,13 @@
   <v-layout fluid grid-list-sm>
     <Card
       color="primary"
-      title="All Surveys"
-      text="Surveys we recommend for you based on previous input"
+      title="Incomplete surveys"
+      text="Surveys that you started but not finished"
       class="flex xs12 md12"
+      icon="mdi-format-list-bulleted"
       style="display: flex; flex-wrap: wrap;"
     >
-      <v-layout row wrap style="overflow-y: scroll; max-height: 573px">
+      <v-layout row wrap class="extender" v-bind:class="{ collapsed: this.limit == 2, extended: this.limit != 2 }">
         <div
           v-for="s in survey.slice(0,limit)"
           :key="s.moduelID"
@@ -17,9 +18,10 @@
           <ListCard
             :redirecturl="`/survey/${s.moduleID}`"
             imagename="IP.svg"
-            percentage="0"
+            progress="10"
             :title="s.name"
             :description="s.description"
+            orientation="vertical"
           />
         </div>
       </v-layout>
@@ -28,7 +30,22 @@
       </div>
     </Card>
   </v-layout>
-</template> 
+</template>
+
+<style scoped>
+.extender {
+  /* height: 320px; */
+}
+.collapsed {
+  overflow: hidden;
+}
+
+.extended {
+  height: 700px;
+  overflow-y: scroll;
+}
+</style>
+
 
 <script>
 import Card from "@/components/material/Card";
