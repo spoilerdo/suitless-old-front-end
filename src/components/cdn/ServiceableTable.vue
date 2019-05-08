@@ -47,6 +47,9 @@ export default {
     },
     getAllContent() {
       this.serviceables = cdn.actions.getAllData(this.serviceables);
+    },
+    addServiceable(serviceable){
+      this.serviceables.push(serviceable);
     }
   },
   mounted() {
