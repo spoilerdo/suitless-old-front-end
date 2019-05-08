@@ -1,9 +1,8 @@
 <template>
-  <v-layout align-center justify-center class="background-content-container" row wrap fill-height>
-    <h1>Serviceable Content</h1>
-    <div class="ServiceableRow">
-      <ServiceableTopbar class="ServiceableRow"/>
-      <ServiceableTable class="ServiceableRow"/>
+  <v-layout justify-center wrap class="fillScreen">
+    <div class="ServiceableRow stretch">
+      <ServiceableTopbar class="ServiceableRow form"/>
+      <ServiceableTable class="ServiceableRow data"/>
     </div>
   </v-layout>
 </template>
@@ -29,5 +28,18 @@ export default {
 .ServiceableRow {
   width: 100%;
   margin-bottom: 4px;
+}
+.stretch{
+  height: 100%;
+}
+.fillScreen{
+  height: 94vh;
+}
+.form{
+ height: 15%;
+ max-height: 150px;
+}
+.data{
+ height: 85%;
 }
 </style>

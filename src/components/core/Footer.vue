@@ -2,7 +2,7 @@
   <v-footer
     id="core-footer"
     absolute
-    height="82"
+    height="50"
   >
     <div class="footer-items">
       <span
@@ -14,6 +14,7 @@
           class=" footer-links white--text">{{ link.name }}</a>
       </span>
     </div>
+
     <v-spacer/>
     <span class="font-weight-light copyright white--text">
       &copy;
@@ -40,5 +41,9 @@ export default {
 <style>
 #core-footer {
   z-index: 0;
+  padding: 0;
+  height: 5vh !important;
+  display: flex;
+  flex-direction: row;
 }
 </style>

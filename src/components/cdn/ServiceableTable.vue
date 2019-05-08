@@ -1,5 +1,5 @@
 <template>
-  <v-layout column style="height: 59vh">
+  <v-layout column>
     <v-flex style="overflow: auto">
       <v-data-table :headers="headers" :items="serviceables" hide-actions class="elevation-1">
         <template slot="items" slot-scope="props">
