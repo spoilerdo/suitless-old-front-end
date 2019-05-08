@@ -1,9 +1,8 @@
 <template>
-  <v-container fluid pa-0 ma-0>
+<full-page ref="fullpage" :options="options">
+  <v-container class="section" fluid pa-0 ma-0>
     <LoginNavbar class="absolute"/>
     <Animatedbackground v-once/>
-
-
 
     <v-layout align-center justify-center class="background-content-container" row wrap fill-height>
       <v-flex xs12 sm6 md5>
@@ -16,7 +15,16 @@
         </div>
       </v-flex>
     </v-layout>
+    <v-layout align-center justify-center> 
+        <i @click="$refs.fullpage.api.moveSectionDown()" class="down"/>
+    </v-layout>
   </v-container>
+
+  <v-container class="section">
+    
+  </v-container>
+
+  </full-page>
 </template>
 
 <script>
@@ -33,7 +41,10 @@ export default {
   name: "landingPage",
   data: () => {
     return {
-      ehvLogo: require("@/assets/img/logoehvlinc.png")
+      ehvLogo: require("@/assets/img/logoehvlinc.png"),
+      options: {
+        anchors: ['landing', 'info']
+      }
     };
   },
   components: {
@@ -64,7 +75,19 @@ export default {
   position: absolute;
   top:0px;
   right:0px;
-
   z-index: 100;
+}
+
+i {
+  border: solid white;
+  border-width: 0 15px 15px 0;
+  display: inline-block;
+  padding: 40px;
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  margin-bottom: 250px;
 }
 </style>

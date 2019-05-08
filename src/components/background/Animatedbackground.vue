@@ -11,7 +11,7 @@
     :lineOpacity="0.5"
     :hoverEffect="false"
     :clickEffect="false"
-    :moveSpeed="0.3"
+    :moveSpeed="1"
   ></vue-particles>
 </template>
 
