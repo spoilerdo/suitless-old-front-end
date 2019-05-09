@@ -1,13 +1,14 @@
 import flowchartEditor from '../../../public/libs/flowchartEditor/src/Main';
 import { state, methods } from '../../../public/libs/flowchartEditor/src/store/flowcharteditor';
 import { mapActions } from 'vuex';
+import { NodeEnum } from '../../../public/libs/flowchartEditor/src/NodeEnum';
 
 export default {
     install(Vue) {
         Vue.mixin({
             methods: {
                 //Map the actions that will change the Vue store values
-                ...mapActions("flowcharteditor/", ["setDialog", "setGeneralFunctions", "setQuestionFunctions", "setModuleFunctions", "setNotificationFunctions"]),
+                ...mapActions("flowcharteditor/", ["setDialog", "setFormatBarType"]),
                 startEditor() {
                     flowchartEditor.startEditor();
                     let setDialogmethod = this.setDialogState;
@@ -16,48 +17,22 @@ export default {
                     })
 
                     /*
-                    register to the booleans that will change when a window needs to be shown.
+                    register to the variable that will change when the variable changes.
                     When something changes in the store of the flowchart editor 
-                    these functions will be called in order to update the Vue store
+                    this function will be called in order to update the Vue store
                     */
-                    let setGeneralFunctionsmethod = this.setGeneralFunctionsState;
-                    state.generalfunctions.registerListener(function(val){
-                        setGeneralFunctionsmethod(val);
-                    })
-
-                    let setQuestionFunctionsMethod = this.setQuestionFunctionsState;
-                    state.questionfunctions.registerListener(function(val){
-                        setQuestionFunctionsMethod(val);
-                    })
-
-                    let setModuleFunctionsMethod = this.setModuleFunctionsState;
-                    state.modulefunctions.registerListener(function(val){
-                        setModuleFunctionsMethod(val);
-                    })
-
-                    let setNotificationFunctionsMethod = this.setNotificationFunctionsState;
-                    state.notificationfunctions.registerListener(function(val){
-                        setNotificationFunctionsMethod(val);
+                    let setActiveFormatBarmethod = this.setActiveFormatBar;
+                    state.activeFormatBar.registerListener(function(val){
+                        setActiveFormatBarmethod(val);
                     })
                 },
                 setDialogState(val) {
                     this.setDialog(val);
                 },
 
-                /*
-                Functions for the flowchart plugin callbacks
-                */
-                setGeneralFunctionsState(val) {
-                    this.setGeneralFunctions(val);
-                },
-                setQuestionFunctionsState(val){
-                    this.setQuestionFunctions(val);
-                },
-                setModuleFunctionsState(val){
-                    this.setModuleFunctions(val);
-                },
-                setNotificationFunctionsState(val){
-                    this.setNotificationFunctions(val);
+                //Function for the flowchart plugin callbacks
+                setActiveFormatBar(val) {
+                    this.setFormatBarType(val);
                 },
 
                 setFlowchartState(val) {
@@ -73,12 +48,17 @@ export default {
                 changeQuestionNode(questionNode, question, reason, implication){
                     methods.changeQuestionNode(questionNode, question, reason, implication);
                 },
-                changeModuleNode(moduleNode, moduleName){
-                    methods.changeModuleNode(moduleNode, moduleName);
+                genericChangeNode(nodeName, name){
+                    methods.genericChangeNode(nodeName, name);
                 },
-                changeNotificationNode(notificationNode, notificationName){
-                    methods.changeNotificationNode(notificationNode, notificationName);
+                changeMultipleChoiceNode(nodeName, title, amountOfChoices){
+                    methods.changeMultipleChoiceNode(nodeName, title, amountOfChoices);
                 }
+            },
+            data: function () {
+                return {
+                    nodeEnum: NodeEnum
+                };
             }
         })
 

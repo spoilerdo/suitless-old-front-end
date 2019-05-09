@@ -24,7 +24,7 @@
                 <span>{{ errors.first('module') }}</span>
             </v-layout>
             <v-layout align-center justify-center row>
-                <v-btn color="primary" @click="changeModuleNode(form.moduleNode, form.name)">Apply</v-btn>
+                <v-btn color="primary" @click="genericChangeNode(form.moduleNode, form.name)">Apply</v-btn>
             </v-layout>
         </v-form>
     </v-layout>

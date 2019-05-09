@@ -26,6 +26,14 @@
   font-size: $font-size-default;
 }
 
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 @include inputs-color($brand-primary, 'purple');
 @include inputs-color($brand-warning, 'orange');
 @include inputs-color($brand-info, 'info');

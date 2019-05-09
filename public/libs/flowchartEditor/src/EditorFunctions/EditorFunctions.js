@@ -4,10 +4,11 @@
  * @version 3.0
  * @since 18-02-2019
  */
-import { NodeEnum } from "./NodeEnum";
-import { GraphCoder } from "./GraphCoder";
+import { NodeEnum } from "../NodeEnum";
+import { GraphCoder } from "../GraphCoder";
+import {addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice} from "./PrivateFunctions";
 
-import { mxGraph, mxGraphModel, mxConstants, mxEllipse, mxHexagon, mxRectangle, mxCellRenderer, mxUtils } from "./MxGraph";
+import { mxGraph, mxGraphModel, mxConstants, mxEllipse, mxHexagon, mxSwimlane } from "../MxGraph";
 
 /**
  * This is the max depth of a flowchart AKA what is the longest path of a flowchart.
@@ -18,7 +19,7 @@ let maxDepth = 0;
 /**
  * Contains common graph functions such as adding or connecting nodes.
  */
-export let graphFunctions = {
+export let editorFunctions = {
     /**
      * adds a vertex to the editor.
      * @param {NodeEnum} nodeEnum 
@@ -44,6 +45,8 @@ export let graphFunctions = {
                     return addNotification(graph, parent, json, x, y);
                 case NodeEnum.Note:
                     return addNote(graph, parent, json, x, y);
+                case NodeEnum.MultipleChoice:
+                    return addMultipleChoice(graph, parent, json, x, y);
             }
         }
         finally {
@@ -109,6 +112,16 @@ export let graphFunctions = {
         hexagon.prototype.constructor = hexagon;
 
         registerCustomShape(graph, hexagon, NodeEnum.Notification);
+
+        //Swimlane that represents a multiple choice node you can refer to
+        function swimLane() { };
+        swimLane.prototype = new mxSwimlane();
+        swimLane.prototype.constructor = swimLane;
+        swimLane.prototype.editable = 0;
+        swimLane.prototype.resizable = false;
+
+
+        registerCustomShape(graph, swimLane, NodeEnum.MultipleChoice);
     },
 
     /**
@@ -198,165 +211,3 @@ export let graphFunctions = {
     }
 }
 
-/**
- * Inserts vertex with Question parameters and json if given
- * @param {mxGraph} graph 
- * @param {DefaultParent} parent 
- * @param {object} json
- * @param {String} x
- * @param {String} y
- */
-function addQuestion(graph, parent, json, x, y) {
-    graphFunctions.setCustomShape(graph, NodeEnum.Question);
-
-    let data = [{
-        "key": "reason",
-        "value": "Reason for the question"
-    }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, x, y, 'shape='+NodeEnum.Question);
-}
-
-/**
- * Inserts vertex with Start parameters and json if given
- * @param {mxGraph} graph 
- * @param {DefaultParent} parent 
- * @param {object} json
- * @param {String} x
- * @param {String} y
- */
-function addStart(graph, parent, json, x, y) {
-    graphFunctions.setCustomShape(graph, NodeEnum.Start);
-
-    return genericAddVertex(graph, parent, json, NodeEnum.Start, null, 80, x, y, 'shape='+NodeEnum.Start+';perimeter=ellipsePerimeter;');
-}
-
-/**
- * Inserts vertex with Module parameters and json if given
- * @param {mxGraph} graph
- * @param {DefaultParent} parent
- * @param {object} json
- * @param {String} x
- * @param {String} y
- */
-function addModule(graph, parent, json, x, y) {
-    graphFunctions.setCustomShape(graph, NodeEnum.Module);
-
-    let data = [{
-        "key": "module",
-        "value": "Module name"
-    }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, x, y, 'shape='+NodeEnum.Module+';perimeter=ellipsePerimeter;');
-}
-
-/**
- * Inserts End vertex and json if given
- * @param {mxGraph} graph 
- * @param {DefaultParent} parent 
- * @param {object} json
- * @param {String} x
- * @param {String} y
- */
-function addEnd(graph, parent, json, x, y) {
-    graphFunctions.setCustomShape(graph, NodeEnum.Start);
-
-    return genericAddVertex(graph, parent, json, NodeEnum.End, null, 80, x, y, 'shape='+NodeEnum.Start+';perimeter=ellipsePerimeter;');
-}
-
-/**
- * Inserts vertex with Notification parameters and json if given
- * @param {mxGraph} graph
- * @param {DefaultParent} parent
- * @param {object} json
- * @param {String} x
- * @param {String} y
- */
-function addNotification(graph, parent, json, x, y) {
-    graphFunctions.setCustomShape(graph, NodeEnum.Notification);
-
-    let data = [{
-        "key": "notify",
-        "value": "this is a notification"
-    }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, x, y, 'shape='+NodeEnum.Notification+';perimeter=ellipsePerimeter;');
-}
-
-/**
- * Inserts vertex with Note parameters and json if given
- * @param {mxGraph} graph
- * @param {DefaultParent} parent
- * @param {object} json
- * @param {String} x
- * @param {String} y
- */
-function addNote(graph, parent, json, x, y) {
-    graphFunctions.setCustomShape(graph, NodeEnum.Question);
-    let style = graph.getStylesheet().getDefaultVertexStyle();
-    style[mxConstants.STYLE_FILLCOLOR] = '#fcea76';
-
-    return genericAddVertex(graph, parent, json, NodeEnum.Note, null, 80, x, y);
-}
-
-var posX = 20, posY = 20;
-
-/**
- * Generic insert vertex method with vertex type, data parameters and json if given
- * @param {mxGraph} graph 
- * @param {DefaultParent} parent 
- * @param {object} json 
- * @param {NodeEnum} nodeEnum 
- */
-function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y, style) {
-    let vertex;
-    if (json != null) {
-        vertex = graph.createVertex(parent, json.id, json.value, json.posX, json.posY, json.width, json.height, style);
-        data = json.lincData;
-    } else if (x == null || y == null) {
-        vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], posX, posY,
-            defaultSize, defaultSize, style);
-        posY += 20;
-    } else {
-        vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], x, y,
-            defaultSize, defaultSize, style);
-    }
-
-    vertex.lincType = nodeEnum;
-    if (data != null) {
-        vertex.lincData = data;
-    }
-
-    //Add depth to a question or notification node
-    if (nodeEnum === NodeEnum.Question || nodeEnum === NodeEnum.Notification || nodeEnum === NodeEnum.Start) {
-        vertex.depth = 0;
-    }
-
-    graph.addCell(vertex, parent);
-    return vertex;
-}
-
-/**
- * registers an mxShape to the mxCellRenderer and allows it to be
- * used in the style by using its name.
- * @param {mxGraph} graph 
- * @param {mxShape} shape 
- * @param {string} name 
- */
-function registerCustomShape(graph, shape, name) {
-    mxCellRenderer.registerShape(name, shape);
-
-    let style = graph.getStylesheet().getDefaultVertexStyle();
-    style[mxConstants.STYLE_SHAPE] = name;
-    style[mxConstants.STYLE_FILLCOLOR] = '#ffffff';
-    style[mxConstants.STYLE_STROKECOLOR] = '#000000';
-    style[mxConstants.STYLE_FONTCOLOR] = '#000000';
-    style[mxConstants.STYLE_FONTSIZE] = '16';
-
-    style = graph.getStylesheet().getDefaultEdgeStyle();
-    style[mxConstants.STYLE_STROKECOLOR] = '#000000';
-    style[mxConstants.STYLE_FONTCOLOR] = '#000000';
-    style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = '#ffffff';
-    style['fontStyle'] = '0';
-    style['fontStyle'] = '0';
-    style[mxConstants.STYLE_FONTSIZE] = '16';
-    style['startSize'] = '8';
-    style['endSize'] = '8';
-}

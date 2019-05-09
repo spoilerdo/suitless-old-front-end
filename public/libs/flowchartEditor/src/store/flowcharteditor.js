@@ -1,16 +1,35 @@
-import { graphFunctions } from "../EditorFunctions";
+/**
+ * The store of the flowchart editor.
+ * This script contains some general information that can be communicated to Vue.js trough the Plugin script in Vue
+ * @author Martijn Dormans
+ * @version 1.3
+ * @since 17-04-2019
+ */
 
+import { editorFunctions } from "../EditorFunctions/EditorFunctions";
+import { NodeEnum } from "../NodeEnum";
+
+/**
+ * All general variables that can be communicated to Vue
+ * Every state can register a Listener so when a state changes value 
+ * Vue and the Flowcharteditor get a notification
+ */
 export const state = {
     dialog: {
+        //private variable
         dialogInternal: false,
+        //Listenere (Vue plugin script) that will be calledback whenever the variable state changes
         dialogListener: function (val) { },
+        //set a new value for the variable and callback to the listener
         set set(val) {
             this.dialogInternal = val;
             this.dialogListener(val);
         },
+        //get the private variable value
         get get() {
             return this.dialogInternal;
         },
+        //register a new listener that will reveive a callback whenever the state/ variable changes
         registerListener: function (listener) {
             this.dialogListener = listener;
         }
@@ -37,62 +56,20 @@ export const state = {
     model: null,
 
     /*
-    The booleans that change value whenever a certain menu needs to be shown
+    Variable that changes the formatbar when a certain node has been selected
     */
-    generalfunctions: {
-        gfInternal: true,
-        gfListener: function (val) { },
+    activeFormatBar: {
+        activeFormatBarInternal: null,
+        activeFormatBarListener: function (val) { },
         set set(val) {
-            this.gfInternal = val;
-            this.gfListener(val);
+            this.activeFormatBarInternal = val;
+            this.activeFormatBarListener(val);
         },
         get get() {
-            return this.gfInternal;
+            return this.activeFormatBarInternal;
         },
         registerListener: function (listener) {
-            this.gfListener = listener;
-        }
-    },
-    questionfunctions: {
-        questionInternal: false,
-        questionListener: function(val) { },
-        set set(val) {
-            this.questionInternal = val;
-            this.questionListener(val);
-        },
-        get get() {
-            return this.questionInternal;
-        },
-        registerListener: function (listener) {
-            this.questionListener = listener;
-        }
-    },
-    modulefunctions: {
-        moduleInternal: false,
-        moduleListener: function(val) { },
-        set set(val){
-            this.moduleInternal = val;
-            this.moduleListener(val);
-        },
-        get get(){
-            return this.moduleInternal;
-        },
-        registerListener: function (listener) {
-            this.moduleListener = listener;
-        }
-    },
-    notificationfunctions: {
-        notificationInternal: false,
-        notificationListener: function(val) { },
-        set set(val){
-            this.notificationInternal = val;
-            this.notificationListener(val);
-        },
-        get get(){
-            return this.notificationInternal;
-        },
-        registerListener: function (listener) {
-            this.notificationListener = listener;
+            this.activeFormatBarListener = listener;
         }
     }
 };
@@ -105,27 +82,51 @@ export const methods = {
         state.flowchart.set = val;
     },
     saveFlowchart(name, description) {
-        graphFunctions.exportChart(state.editor.graph, name, description);
+        editorFunctions.exportChart(state.editor.graph, name, description);
     },
 
     /*
     These methods will be called from the Vue plugin instance and will change the look of the selectedcell,
     by the newly inputed values from the user
-    TODO: refactor this a bit and finish adding all the functionality
     */
     changeQuestionNode(questionNode, question, reason, implication){
-        state.selectedCell.value = questionNode;
-        state.editor.graph.getModel().setValue(state.selectedCell, questionNode);
-        state.selectedCell.lincData[0].value = question;
+        this.genericChangeNode(questionNode, question);
+        //TODO: add reason and implication
     },
-    changeModuleNode(moduleNode, moduleName){
-        state.selectedCell.value = moduleNode;
-        state.editor.graph.getModel().setValue(state.selectedCell, moduleNode);
-        state.selectedCell.lincData[0].value = moduleName;
+    changeMultipleChoiceNode(nodeName, title, amountOfChoices){
+        let graph = state.editor.graph;
+
+        this.genericChangeNode(nodeName, title);
+        let childerenCount = state.selectedCell.getChildCount();
+
+        if(childerenCount < amountOfChoices){
+            //add some cells
+            for (let i = childerenCount; i < amountOfChoices; i++) {
+                var vertex = graph.createVertex(state.selectedCell, null, "Choice " + i, 10, (70 + i * 50), 80, 30, 'movable=0');
+                graph.addCell(vertex, state.selectedCell);
+            }
+        }else if(childerenCount > amountOfChoices){
+            //delete some cells
+
+            //get the amount of cells that needs to be removed
+            let children = state.selectedCell.children;
+            let maxAmountOfChilderen = state.selectedCell.children.length;
+            let cellToBeRemoved = maxAmountOfChilderen - amountOfChoices;
+
+            let childrenToBeRemoved = [];
+            //loop trouugh the amount of cells that needs to be removed in order to remove the cells
+            for (let i = 1; i <= cellToBeRemoved; i++) {
+                //get the index of the cell that needs to be removed
+                let index = maxAmountOfChilderen - i;
+                childrenToBeRemoved.push(children[index]);
+            }
+            graph.removeCells(childrenToBeRemoved, true);
+        }
     },
-    changeNotificationNode(notificationNode, notificationName){
-        state.selectedCell.value = notificationNode;
-        state.editor.graph.getModel().setValue(state.selectedCell, notificationNode);
-        state.selectedCell.lincData[0].value = notificationName;
+    //Generic method for a basic node with 2 inputs
+    genericChangeNode(nodeName, name){
+        state.selectedCell.value = nodeName;
+        state.editor.graph.getModel().setValue(state.selectedCell, nodeName);
+        state.selectedCell.lincData[0].value = name;
     }
 }
