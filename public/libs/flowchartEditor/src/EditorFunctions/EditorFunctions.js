@@ -152,7 +152,7 @@ export let editorFunctions = {
 
         cells.forEach(c => {
             let fromCell = model.getCell(c.id);
-            //console.log(c);
+            
             c.cellflows.forEach(f => {
                 let targetCell = model.getCell(f.targetID);
                 let flow = {
@@ -173,6 +173,8 @@ export let editorFunctions = {
     setCustomShape(graph, name) {
         var style = graph.getStylesheet().getDefaultVertexStyle();
         style[mxConstants.STYLE_SHAPE] = name;
+        style['movable'] = '1';
+        style['resizable'] = '1';
 
         return style
     },
@@ -182,26 +184,27 @@ export let editorFunctions = {
     */
     updateDepth(cell, source) {
         //get the previouse cell's depth and set the next cells depth + 1
-        if (cell.lincType === NodeEnum.Question) {
+        if (cell.lincType === NodeEnum.Question || cell.lincType === NodeEnum.MultipleChoice) {
             cell.depth = source.depth + 1;
         } else if (cell.lincType === NodeEnum.Notification) {
             cell.depth = source.depth;
         }
     },
 
+    //TODO add children functionality
+
     /**
      * This function will check the depth of the newly connected node to the flowchart.
      * So this functions fires when a new edge is connected to a node.
      * It checks if the depth of the new node is bigger than the maxDepth of the flowchart.
      * If so than the maxDepth = the depth of the node
-     * !!Only works with question nodes and notifications!!
      */
     checkDepth(cell, source) {
         let parent = source;
         if (parent == null) {
             parent = cell.edges[0].source;
         }
-        if (parent.lincType === NodeEnum.Question || parent.lincType === NodeEnum.Notification) {
+        if (parent.lincType === NodeEnum.Question || parent.lincType === NodeEnum.Notification || cell.lincType === NodeEnum.MultipleChoice) {
             //the connected edge is a question so get the depth from it
             //if it is a notification node than the depth of it is equal to the priour connected question node
             if (parent.depth > maxDepth) {

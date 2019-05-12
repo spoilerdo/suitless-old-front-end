@@ -8,6 +8,7 @@
         <ModuleFunctions v-show="formatBarType == this.$data.nodeEnum.Module"/>
         <NotificationFunctions v-show="formatBarType == this.$data.nodeEnum.Notification"/>
         <MultipleChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.MultipleChoice"/>
+        <ChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.Choice"/>
     </div>
     <FlowchartForm id="importForm"/>
   </v-layout>
@@ -234,6 +235,7 @@ import QuestionFunctions from "@/components/flowcharteditor/formatbar/QuestionFu
 import ModuleFunctions from "@/components/flowcharteditor/formatbar/ModuleFunctions";
 import NotificationFunctions from "@/components/flowcharteditor/formatbar/NotificationFunctions";
 import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/MultipleChoiceFunctions";
+import ChoiceFunctions from "@/components/flowcharteditor/formatbar/ChoiceFunctions";
 
 export default {
     components: {
@@ -242,7 +244,8 @@ export default {
         QuestionFunctions,
         ModuleFunctions,
         NotificationFunctions,
-        MultipleChoiceFunctions
+        MultipleChoiceFunctions,
+        ChoiceFunctions
     },
     mounted(){
         this.startEditor();

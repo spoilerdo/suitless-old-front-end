@@ -34,7 +34,7 @@ export function addQuestion(graph, parent, json, x, y) {
             "value": "Implication of the question"
         }
     ]
-    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, x, y, 'shape=' + NodeEnum.Question);
+    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, 80, x, y, 'shape=' + NodeEnum.Question);
 }
 
 /**
@@ -48,7 +48,7 @@ export function addQuestion(graph, parent, json, x, y) {
 export function addStart(graph, parent, json, x, y) {
     editorFunctions.setCustomShape(graph, NodeEnum.Start);
 
-    return genericAddVertex(graph, parent, json, NodeEnum.Start, null, 80, x, y, 'shape=' + NodeEnum.Start + ';perimeter=ellipsePerimeter;');
+    return genericAddVertex(graph, parent, json, NodeEnum.Start, null, 80, 80, x, y, 'shape=' + NodeEnum.Start + ';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -66,7 +66,7 @@ export function addModule(graph, parent, json, x, y) {
         "key": "module",
         "value": "Module name"
     }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, x, y, 'shape=' + NodeEnum.Module + ';perimeter=ellipsePerimeter;');
+    return genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, 80, x, y, 'shape=' + NodeEnum.Module + ';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -80,7 +80,7 @@ export function addModule(graph, parent, json, x, y) {
 export function addEnd(graph, parent, json, x, y) {
     editorFunctions.setCustomShape(graph, NodeEnum.Start);
 
-    return genericAddVertex(graph, parent, json, NodeEnum.End, null, 80, x, y, 'shape=' + NodeEnum.Start + ';perimeter=ellipsePerimeter;');
+    return genericAddVertex(graph, parent, json, NodeEnum.End, null, 80, 80, x, y, 'shape=' + NodeEnum.Start + ';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -98,7 +98,7 @@ export function addNotification(graph, parent, json, x, y) {
         "key": "notify",
         "value": "this is a notification"
     }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, x, y, 'shape=' + NodeEnum.Notification + ';perimeter=ellipsePerimeter;');
+    return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, 80, x, y, 'shape=' + NodeEnum.Notification + ';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -114,7 +114,7 @@ export function addNote(graph, parent, json, x, y) {
     let style = graph.getStylesheet().getDefaultVertexStyle();
     style[mxConstants.STYLE_FILLCOLOR] = '#fcea76';
 
-    return genericAddVertex(graph, parent, json, NodeEnum.Note, null, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.Note, null, 80, 80, x, y);
 }
 
 /**
@@ -134,13 +134,10 @@ export function addMultipleChoice(graph, parent, json, x, y) {
         "value": "this is the multiplechoice question"
     }]
 
-    let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, data, 300, x, y, 'resizable=0');
+    let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, data, 300, 300, x, y, 'resizable=0');
 
-    for (let i = 0; i < 3; i++) {
-        var vertex = graph.createVertex(parentSwimlane, null, "Choice " + i, 10, (70 + i * 50), 80, 30, 'movable=0');
-        graph.addCell(vertex, parentSwimlane);
-    }
-
+    addSubVertexes(graph, parentSwimlane, json);
+    
     return parentSwimlane;
 }
 
@@ -153,7 +150,7 @@ var posX = 20, posY = 20;
  * @param {object} json 
  * @param {NodeEnum} nodeEnum 
  */
-export function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y, style) {
+function genericAddVertex(graph, parent, json, nodeEnum, data, width, height, x, y, style) {
     let vertex;
 
     //when importing a flowchart from json this will be true
@@ -162,11 +159,11 @@ export function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSiz
         data = json.lincData;
     } else if (x == null || y == null) {
         vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], posX, posY,
-            defaultSize, defaultSize, style);
+            width, height, style);
         posY += 20;
     } else {
         vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], x, y,
-            defaultSize, defaultSize, style);
+            width, height, style);
     }
 
     vertex.lincType = nodeEnum;
@@ -175,12 +172,31 @@ export function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSiz
     }
 
     //Add depth to a question or notification node
-    if (nodeEnum === NodeEnum.Question || nodeEnum === NodeEnum.Notification || nodeEnum === NodeEnum.Start) {
+    if (nodeEnum === NodeEnum.Question || nodeEnum === NodeEnum.Notification || nodeEnum === NodeEnum.Start || nodeEnum === nodeEnum.MultipleChoice) {
         vertex.depth = 0;
     }
 
     graph.addCell(vertex, parent);
     return vertex;
+}
+
+function addSubVertexes(graph, parent, json) {
+    if(json != null) {
+        //add the sub vertexes trough json
+        json.lincData.children.forEach(child => {
+            graph.createVertex(graph, parent, child, NodeEnum.Choice, null, null, null, null, null, null);
+        });
+    } else {
+        //add three standard sub vertexes
+        for (let i = 0; i < 3; i++) {
+            let data = [{
+                "key": "choice",
+                "value": "this is a choice"
+            }]
+
+            genericAddVertex(graph, parent, null, NodeEnum.Choice, data, 80, 40, 10, (70 + i * 50), 'movable=0');
+        }
+    }
 }
 
 /**

@@ -99,9 +99,6 @@ export function vertexOnDraw(mxEvent, graph) {
         }
 
         let cell = editorFunctions.addVertex(selectedvertexType, this.graph, null, null, null);
-        if (vertexData != null) {
-            cell.lincData = vertexData;
-        }
 
         editorFunctions.updateDepth(cell, source);
 
@@ -155,10 +152,6 @@ export function vertexOnDraw(mxEvent, graph) {
         menu.addItem('Question Node', null, function () {
             if (mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.Question;
-                vertexData = [{
-                    "key": "reason",
-                    "value": "Reason for the question"
-                }]
                 mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent());
             }
         });
@@ -166,10 +159,6 @@ export function vertexOnDraw(mxEvent, graph) {
         menu.addItem('Module Node', null, function () {
             if (mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.Module;
-                vertexData = [{
-                    "key": "module",
-                    "value": "Module name"
-                }]
                 mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent());
             }
         });
@@ -177,10 +166,6 @@ export function vertexOnDraw(mxEvent, graph) {
         menu.addItem('Notification Node', null, function(){
             if(mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.Notification;
-                vertexData = [{
-                    "key": "notify",
-                    "value": "Notification"
-                }]
                 mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent());
             }
         });

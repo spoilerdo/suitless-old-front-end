@@ -35,6 +35,9 @@ const mutations = {
     },
     [SET_FORMATBAR](state, formatBarState) {
         state.formatBarType = formatBarState;
+    },
+    [SET_FLOWCHART](state, flowchartState) {
+        state.flowchart = flowchartState;
     }
 }
 

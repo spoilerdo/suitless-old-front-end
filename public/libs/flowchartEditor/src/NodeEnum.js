@@ -23,6 +23,7 @@ export let NodeEnum = {
     Notification: 5,
     Note: 6,
     MultipleChoice: 7,
+    Choice: 8,
 
     /**
      * Value to Name mapping.
@@ -34,5 +35,6 @@ export let NodeEnum = {
     4 : "Module",
     5 : "Notification",
     6 : "Note",
-    7 : "MultipleChoice"
+    7 : "MultipleChoice",
+    8 : "Choice"
 }
