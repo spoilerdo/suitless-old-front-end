@@ -26,7 +26,7 @@ export default {
 
 <style>
 #core-view {
-  padding-bottom: 50px;
+  padding-bottom: calc(5vh);
   margin: 0;
   width: 100%;
   height: 100%;
