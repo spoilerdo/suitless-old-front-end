@@ -1,6 +1,6 @@
 /**
- * Contains generic methods from the Formatbar
- * @author Martijn Doramns
+ * Contains generic methods from the Formatbar --- DEPRECATED ---
+ * @author Martijn Dormans
  * @version 1.0
  * @since 3-4-2019
  */
@@ -9,6 +9,7 @@ import { graphFunctions } from "../EditorFunctions";
 import { FormatBarEnum } from "./FormatBarEnum";
 import { NodeEnum } from "../NodeEnum";
 import { mxUtils } from "../MxGraph";
+import { methods } from '../store/flowcharteditor';
 
 let selectedQuestion = null;
 
@@ -44,6 +45,16 @@ export let formatBarFunctions = {
         });
         saveButton.className = "primary v-btn v-btn--large v-btn--router theme--light";
         formatbarContainer.appendChild(saveButton);
+
+        let importButton = mxUtils.button("import", (evt) => {
+            methods.setDialog(true);
+        })
+        importButton.className = "primary v-btn v-btn--large v-btn--router theme--light"
+        formatbarContainer.appendChild(importButton);
+    },
+
+    saveFlowchart(editor, name, description) {
+        graphFunctions.exportChart(editor.graph, name, description);
     },
 
     createDataContainer(formatBarContainer, editor, selectedCell, title, inputValue, formatBarEnum){

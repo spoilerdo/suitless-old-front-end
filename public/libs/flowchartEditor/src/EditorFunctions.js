@@ -7,7 +7,7 @@
 import { NodeEnum } from "./NodeEnum";
 import { GraphCoder } from "./GraphCoder";
 
-import { mxGraph, mxGraphModel, mxConstants, mxEllipse, mxHexagon, mxCellRenderer, mxUtils } from "./MxGraph";
+import { mxGraph, mxGraphModel, mxConstants, mxEllipse, mxHexagon, mxRectangle, mxCellRenderer, mxUtils } from "./MxGraph";
 
 /**
  * This is the max depth of a flowchart AKA what is the longest path of a flowchart.
@@ -42,6 +42,8 @@ export let graphFunctions = {
                     return addEnd(graph, parent, json, x, y);
                 case NodeEnum.Notification:
                     return addNotification(graph, parent, json, x, y);
+                case NodeEnum.Note:
+                    return addNote(graph, parent, json, x, y);
             }
         }
         finally {
@@ -68,18 +70,11 @@ export let graphFunctions = {
             } else {
                 selectedCells = graph.getSelectionCells();
             }
-            let firsCell = selectedCells[0];
+            let firstCell = selectedCells[0];
             let secondCell = selectedCells[1];
 
-            if (firsCell.edges != null) {
-                firsCell.edges.forEach(e => {
-                    if (e.target.id === secondCell.id) {
-                        throw new Error("cannot make the same edge");
-                    }
-                })
-            }
-            graph.insertEdge(parent, null, value, firsCell, secondCell);
-            this.updateDepth(secondCell, firsCell);
+            graph.insertEdge(parent, null, value, firstCell, secondCell, "edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;");
+            this.updateDepth(secondCell, firstCell);
             this.checkDepth(secondCell, null);
         }
         finally {
@@ -114,8 +109,6 @@ export let graphFunctions = {
         hexagon.prototype.constructor = hexagon;
 
         registerCustomShape(graph, hexagon, NodeEnum.Notification);
-
-        //De register van een nieuwe shape gaat fout waarom????
     },
 
     /**
@@ -139,13 +132,14 @@ export let graphFunctions = {
             let cellflows = n.flows;
             let cell = {
                 cellflows,
-                ...n.ID,
+                id: n.id,
             }
             cells = cells.concat(cell);
         })
 
         cells.forEach(c => {
-            let fromCell = model.getCell(c[0]);
+            let fromCell = model.getCell(c.id);
+            //console.log(c);
             c.cellflows.forEach(f => {
                 let targetCell = model.getCell(f.targetID);
                 let flow = {
@@ -208,7 +202,9 @@ export let graphFunctions = {
  * Inserts vertex with Question parameters and json if given
  * @param {mxGraph} graph 
  * @param {DefaultParent} parent 
- * @param {object} json 
+ * @param {object} json
+ * @param {String} x
+ * @param {String} y
  */
 function addQuestion(graph, parent, json, x, y) {
     graphFunctions.setCustomShape(graph, NodeEnum.Question);
@@ -217,19 +213,21 @@ function addQuestion(graph, parent, json, x, y) {
         "key": "reason",
         "value": "Reason for the question"
     }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, x, y, 'shape='+NodeEnum.Question);
 }
 
 /**
  * Inserts vertex with Start parameters and json if given
  * @param {mxGraph} graph 
  * @param {DefaultParent} parent 
- * @param {object} json 
+ * @param {object} json
+ * @param {String} x
+ * @param {String} y
  */
 function addStart(graph, parent, json, x, y) {
     graphFunctions.setCustomShape(graph, NodeEnum.Start);
 
-    return genericAddVertex(graph, parent, json, NodeEnum.Start, null, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.Start, null, 80, x, y, 'shape='+NodeEnum.Start+';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -237,6 +235,8 @@ function addStart(graph, parent, json, x, y) {
  * @param {mxGraph} graph
  * @param {DefaultParent} parent
  * @param {object} json
+ * @param {String} x
+ * @param {String} y
  */
 function addModule(graph, parent, json, x, y) {
     graphFunctions.setCustomShape(graph, NodeEnum.Module);
@@ -245,19 +245,21 @@ function addModule(graph, parent, json, x, y) {
         "key": "module",
         "value": "Module name"
     }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, x, y, 'shape='+NodeEnum.Module+';perimeter=ellipsePerimeter;');
 }
 
 /**
  * Inserts End vertex and json if given
  * @param {mxGraph} graph 
  * @param {DefaultParent} parent 
- * @param {object} json 
+ * @param {object} json
+ * @param {String} x
+ * @param {String} y
  */
 function addEnd(graph, parent, json, x, y) {
     graphFunctions.setCustomShape(graph, NodeEnum.Start);
 
-    return genericAddVertex(graph, parent, json, NodeEnum.End, null, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.End, null, 80, x, y, 'shape='+NodeEnum.Start+';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -265,6 +267,8 @@ function addEnd(graph, parent, json, x, y) {
  * @param {mxGraph} graph
  * @param {DefaultParent} parent
  * @param {object} json
+ * @param {String} x
+ * @param {String} y
  */
 function addNotification(graph, parent, json, x, y) {
     graphFunctions.setCustomShape(graph, NodeEnum.Notification);
@@ -273,7 +277,23 @@ function addNotification(graph, parent, json, x, y) {
         "key": "notify",
         "value": "this is a notification"
     }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, x, y);
+    return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, x, y, 'shape='+NodeEnum.Notification+';perimeter=ellipsePerimeter;');
+}
+
+/**
+ * Inserts vertex with Note parameters and json if given
+ * @param {mxGraph} graph
+ * @param {DefaultParent} parent
+ * @param {object} json
+ * @param {String} x
+ * @param {String} y
+ */
+function addNote(graph, parent, json, x, y) {
+    graphFunctions.setCustomShape(graph, NodeEnum.Question);
+    let style = graph.getStylesheet().getDefaultVertexStyle();
+    style[mxConstants.STYLE_FILLCOLOR] = '#fcea76';
+
+    return genericAddVertex(graph, parent, json, NodeEnum.Note, null, 80, x, y);
 }
 
 var posX = 20, posY = 20;
@@ -285,19 +305,18 @@ var posX = 20, posY = 20;
  * @param {object} json 
  * @param {NodeEnum} nodeEnum 
  */
-function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y) {
+function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y, style) {
     let vertex;
     if (json != null) {
-        vertex = graph.createVertex(parent, json.ID, json.value, json.posX, json.posY, json.width, json.height, 'whiteSpace=wrap;');
+        vertex = graph.createVertex(parent, json.id, json.value, json.posX, json.posY, json.width, json.height, style);
         data = json.lincData;
     } else if (x == null || y == null) {
         vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], posX, posY,
-            defaultSize, defaultSize, 'shape='+nodeEnum); //'whiteSpace=wrap;'
-
+            defaultSize, defaultSize, style);
         posY += 20;
     } else {
         vertex = graph.createVertex(parent, null, NodeEnum[nodeEnum], x, y,
-            defaultSize, defaultSize, 'shape='+nodeEnum);
+            defaultSize, defaultSize, style);
     }
 
     vertex.lincType = nodeEnum;
@@ -311,7 +330,6 @@ function genericAddVertex(graph, parent, json, nodeEnum, data, defaultSize, x, y
     }
 
     graph.addCell(vertex, parent);
-    console.log(vertex);
     return vertex;
 }
 

@@ -8,12 +8,8 @@
     >
       <v-layout row wrap>
         <div v-for="s in survey" :key="s.moduelID" class="text-xs-center flex xs12 md3">
-          <RoundCard
-            :redirecturl='`/survey/${s.moduleID}`' 
-            imagename="IP.svg" 
-            :text="s.name"
-            />
-            <h1>69%</h1>
+          <RoundCard :redirecturl="`/survey/${s.moduleID}`" imagename="IP.svg" :text="s.name"/>
+          <h1>69%</h1>
         </div>
       </v-layout>
     </Card>
@@ -56,7 +52,7 @@ export default {
   },
   data() {
     return {
-      collapsed: false,
+      collapsed: false
     };
   }
 };

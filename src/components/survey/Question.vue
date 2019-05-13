@@ -17,7 +17,9 @@
 
         <v-list>
           <v-list-tile>
-            <v-list-tile-title v-if="question.lincData.some(data => data.key === 'reason')">{{question.lincData.find(data => data.key === "reason").value}}</v-list-tile-title>
+            <v-list-tile-title
+              v-if="question.lincData.some(data => data.key === 'reason')"
+            >{{question.lincData.find(data => data.key === "reason").value}}</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -30,12 +32,12 @@
         </v-layout>
       </v-card-title>
       <v-card-actions class="action-card">
-        <v-layout align-center justify-center row>
+        <v-layout align-center justify-center row wrap>
           <v-btn
             v-for="answer in question.flows"
             :key="answer.targetID"
             v-on:click="$emit('answerQuestion', answer)"
-            class="primary"
+            class="primary answerBtn"
           >{{answer.value}}</v-btn>
         </v-layout>
         <v-btn
@@ -56,6 +58,10 @@
 </template>
 
 <style scoped>
+.answerBtn {
+  margin-bottom: 15px;
+}
+
 .action-btn {
   opacity: 0.3;
 }

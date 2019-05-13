@@ -28,11 +28,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['newUser']),
-    ...mapState({
-      background: state => state.background
-    })
-
+    ...mapState(['newUser', 'background'])
   },
   methods: {
     ...mapActions(["setBackground"])
