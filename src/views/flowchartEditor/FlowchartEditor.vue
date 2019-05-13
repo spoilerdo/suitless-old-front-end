@@ -1,5 +1,5 @@
 <template>
-  <v-layout fluid align-space-around justify-start row fill-height>
+  <v-layout class="layout">
     <div id="toolbarContainer" class="toolbar"></div>
     <v-layout id="flowchartContainer" class="flowchart"/>
     <div id="formatbarContainer" class="format">
@@ -13,22 +13,39 @@
 </template>
 
 <style>
+.flowchart {
+    /* Pure aids, maar dit magic number werkt! */
+    height: 95vh !important;
+}
+
+.flowchart * {
+    width: 100%;
+    height: 100%;
+}
+
+/* .flowchartCanvas {
+    z-index: -100 !important;
+} */
+
 .toolbar{
     width: 60px;
     height: 100%;
     background-color: #ffffff;
     padding-left: 15px;
     padding-right: 15px;
+    z-index: 1;
 }
 .flowchart{
     width: 100%;
-    overflow: hidden;
+    z-index: 0;
 }
 .format{
     width: 400px;
     padding-left: 15px;
     padding-right: 40px;
     padding-top: 25px;
+    background-color: #ffffff;
+    z-index: 1;
 }
 
 .cellDiv {

@@ -43,7 +43,7 @@ export default {
 
 <style>
 #core-footer {
-  z-index: 0;
+  z-index: 2;
   padding: 0;
   height: 5vh !important;
   display: flex;
