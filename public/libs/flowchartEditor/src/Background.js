@@ -19,7 +19,6 @@ export let backgroundFunctions = {
         canvas.style.top = '0px';
         canvas.style.left = '0px';
         canvas.style.zIndex = -1;
-        canvas.className = 'flowchartCanvas';
         _graph.container.appendChild(canvas);
         graph = _graph;
 
