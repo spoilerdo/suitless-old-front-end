@@ -19,7 +19,7 @@ import { NodeEnum } from "./NodeEnum";
 import { clipBoardFunctions } from "./MxNative/Clipboard";
 import { state } from "./store/flowcharteditor";
 
-import { mxClient, mxGraph, mxUtils, mxEvent, mxConstraintHandler, mxConnectionHandler, mxEditor, mxGraphModel, mxKeyHandler, mxConstants, mxGraphView } from "./MxGraph";
+import { mxClient, mxGraph, mxUtils, mxEvent, mxConstraintHandler, mxConnectionHandler, mxEditor, mxGraphModel, mxKeyHandler, mxUndoManager, mxConstants, mxGraphView } from "./MxGraph";
 
 /**
  * triggers the flowchart to be created.
@@ -69,7 +69,13 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         let model = new mxGraphModel();
         let graph = new mxGraph(graphContainer, model);
         let keyHandler = new mxKeyHandler(graph);
+        let undoManager = new mxUndoManager();
 
+        let undoListener = function (sender, evt) {
+            undoManager.undoableEditHappened(evt.getProperty('edit'));
+        }
+
+        
         vertexOnDraw(mxEvent, graph);
 
         editor.graph = graph;
@@ -79,6 +85,8 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         graph.setCellsDisconnectable(false);
         graph.setHtmlLabels(true);
         graph.setConnectable(true);
+        graph.getModel().addListener(mxEvent.UNDO, undoListener)
+        graph.getView().addListener(mxEvent.UNDO, undoListener)
 
         //WHEN CELLS GET SELECTED OR DESELECTED ADJUST THE BOUNDARIES OF THE CELLS TO THE TEXT
         graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
@@ -97,7 +105,7 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
                     cells.push(c)
                 })
             }
-            
+
             //LOOP THROUGH EACH CELL AND GET THEIR PREFERRED BOUNDARIES
             cells.forEach(c => {
                 let newRect = {}
@@ -123,7 +131,7 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         mxConstants.WORD_WRAP = 'break-word';
 
         graphFunctions.addCustomShapes(graph);
-        createToolbar(toolbarContainer, editor, model, keyHandler, window);
+        createToolbar(toolbarContainer, editor, model, keyHandler, window, undoManager);
         createFormatbar(formatbarContainer, editor, model);
         backgroundFunctions.init(graph);
         var mxGraphViewValidateBackground = mxGraphView.prototype.validateBackground;

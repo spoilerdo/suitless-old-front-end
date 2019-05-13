@@ -19,13 +19,14 @@ import { mxUtils, mxEditor, mxGraphModel, mxToolbar, mxClipboard } from "./MxGra
  * @param {mxEditor} editor 
  * @param {mxKeyhandler} keyHandler
  * @param {XmlDocument} doc
+ * @param {mxUndoManager} undoManager
  */
-export function createToolbar(toolbarContainer, editor, model, keyHandler, graphcontainer) {
+export function createToolbar(toolbarContainer, editor, model, keyHandler, graphcontainer, undoManager) {
 
     let toolbar = new mxToolbar(toolbarContainer);
 
     addDefaultActions(toolbar, editor.graph);
-    addKeyActions(keyHandler, editor.graph, graphcontainer);
+    addKeyActions(keyHandler, editor.graph, graphcontainer, undoManager);
     addDedicatedActions(toolbar, editor, model);
 }
 
