@@ -6,7 +6,7 @@
  */
 import { NodeEnum } from "../NodeEnum";
 import { GraphCoder } from "../GraphCoder";
-import {addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice} from "./PrivateFunctions";
+import {addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice, genericAddVertex} from "./PrivateFunctions";
 
 import { mxGraph, mxGraphModel, mxConstants, mxEllipse, mxHexagon, mxSwimlane } from "../MxGraph";
 
@@ -139,14 +139,32 @@ export let editorFunctions = {
     * @param {mxGraphModel} model
     */
     importChart(graph, json, model) {
+        //delete existing graph
+        graph.removeCells(graph.getChildVertices(graph.getDefaultParent()))
+
         let cells = [];
         json.forEach(n => {
-            this.addVertex(parseInt(n.style), graph, n);
+            if(n.style != NodeEnum.Choice){
+                if(n.style == NodeEnum.MultipleChoice){
+                    //The multiplechoice needs some childs
+                    let data = n.lincData.filter(c => c.key !== "question")
+
+                    let childs = [];
+                    data.forEach(child => {
+                        //get child from json array and ad it to the parent
+                        childs = childs.concat(json.find(c => c.id == child.value));
+                    });
+                    n.children = childs;
+                }
+
+                this.addVertex(parseInt(n.style), graph, n);
+            }
             let cellflows = n.flows;
             let cell = {
                 cellflows,
                 id: n.id,
             }
+
             cells = cells.concat(cell);
         })
 
@@ -184,14 +202,17 @@ export let editorFunctions = {
     */
     updateDepth(cell, source) {
         //get the previouse cell's depth and set the next cells depth + 1
-        if (cell.lincType === NodeEnum.Question || cell.lincType === NodeEnum.MultipleChoice) {
+        if (cell.lincType === NodeEnum.Question || cell.lincType === NodeEnum.MultipleChoice || cell.lincType === NodeEnum.Choice) {
             cell.depth = source.depth + 1;
+            if(cell.children != null){
+                cell.children.forEach(child => {
+                    child.depth = cell.depth;
+                });
+            }
         } else if (cell.lincType === NodeEnum.Notification) {
             cell.depth = source.depth;
         }
     },
-
-    //TODO add children functionality
 
     /**
      * This function will check the depth of the newly connected node to the flowchart.
@@ -204,7 +225,7 @@ export let editorFunctions = {
         if (parent == null) {
             parent = cell.edges[0].source;
         }
-        if (parent.lincType === NodeEnum.Question || parent.lincType === NodeEnum.Notification || cell.lincType === NodeEnum.MultipleChoice) {
+        if (parent.lincType === NodeEnum.Question || parent.lincType === NodeEnum.Notification || cell.lincType === NodeEnum.MultipleChoice || cell.lincType === NodeEnum.Choice) {
             //the connected edge is a question so get the depth from it
             //if it is a notification node than the depth of it is equal to the priour connected question node
             if (parent.depth > maxDepth) {

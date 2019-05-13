@@ -150,7 +150,7 @@ var posX = 20, posY = 20;
  * @param {object} json 
  * @param {NodeEnum} nodeEnum 
  */
-function genericAddVertex(graph, parent, json, nodeEnum, data, width, height, x, y, style) {
+export function genericAddVertex(graph, parent, json, nodeEnum, data, width, height, x, y, style) {
     let vertex;
 
     //when importing a flowchart from json this will be true
@@ -175,16 +175,14 @@ function genericAddVertex(graph, parent, json, nodeEnum, data, width, height, x,
     if (nodeEnum === NodeEnum.Question || nodeEnum === NodeEnum.Notification || nodeEnum === NodeEnum.Start || nodeEnum === nodeEnum.MultipleChoice) {
         vertex.depth = 0;
     }
-
     graph.addCell(vertex, parent);
     return vertex;
 }
 
 function addSubVertexes(graph, parent, json) {
-    if(json != null) {
-        //add the sub vertexes trough json
-        json.lincData.children.forEach(child => {
-            graph.createVertex(graph, parent, child, NodeEnum.Choice, null, null, null, null, null, null);
+    if(json != null){
+        json.children.forEach(child => {
+            genericAddVertex(graph, parent, child, NodeEnum.Choice, null, null, null, null, null, null);
         });
     } else {
         //add three standard sub vertexes
