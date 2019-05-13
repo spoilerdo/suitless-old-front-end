@@ -1,9 +1,8 @@
 <template>
-  <v-layout align-center justify-center class="background-content-container" row wrap fill-height>
-    <h1>Serviceable Content</h1>
-    <div class="ServiceableRow">
-      <ServiceableTopbar class="ServiceableRow"/>
-      <ServiceableTable class="ServiceableRow"/>
+  <v-layout justify-center wrap class="fillScreen">
+    <div class="ServiceableRow stretch">
+      <ServiceableTopbar v-on:serviceable="addServiceable($event)" class="ServiceableRow form"/>
+      <ServiceableTable ref="table" class="ServiceableRow data"/>
     </div>
   </v-layout>
 </template>
@@ -19,8 +18,13 @@ export default {
     ServiceableTable,
     ServiceableTopbar,
   },
-  data() {
-    return {};
+ data: () => ({
+  }),
+  methods : {
+    addServiceable(serviceable) {
+      console.log(serviceable);
+      this.$refs.table.addServiceable(serviceable);
+    }
   }
 };
 </script>
@@ -29,5 +33,17 @@ export default {
 .ServiceableRow {
   width: 100%;
   margin-bottom: 4px;
+}
+.stretch{
+  height: 100%;
+}
+.fillScreen{
+  height: calc(50% - 5vh);
+}
+.form{
+ height: 150px;
+}
+.data{
+ height: calc(100% - 150px);
 }
 </style>

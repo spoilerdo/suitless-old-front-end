@@ -4,26 +4,20 @@
       color="primary"
       title="Recommended Surveys"
       text="Surveys we recommend for you based on previous input"
+      class="flex xs12 md12"
+      icon="mdi-format-list-bulleted"
+      style="display: flex; flex-wrap: wrap;"
     >
       <v-layout row wrap>
-        <!-- <v-flex v-for="i in 4" :key="`4${i}`" class="text-xs-center"> -->
-        <!-- <div v-for="i in 4" :key="`4${i}`" class="text-xs-center"> -->
-          <div>
-        <RoundCard
-          redirecturl="/survey"
-          imagename="IP.svg"
-          text="Intellectual Property"
-        /></div><div>
-        <RoundCard
-          redirecturl="/survey"
-          imagename="Privacy.svg"
-          text="Intellectual Property"
-        /></div><div>
-        <RoundCard
-          redirecturl="/survey"
-          imagename="Trademark.svg"
-          text="Intellectual Property"
-        /></div>
+        <div class="flex xs4">
+          <ListCard redirecturl="/survey" imagename="IP.svg" title="Intellectual Property" orientation="horizontal"/>
+        </div>
+        <div class="flex xs4">
+          <ListCard redirecturl="/survey" imagename="Privacy.svg" title="Intellectual Property" orientation="horizontal"/>
+        </div>
+        <div class="flex xs4">
+          <ListCard redirecturl="/survey" imagename="Trademark.svg" title="Intellectual Property" orientation="horizontal"/>
+        </div>
 
         <!-- </div> -->
 
@@ -35,12 +29,12 @@
 
 <script>
 import Card from "@/components/material/Card";
-import RoundCard from "@/components/material/RoundCard";
+import ListCard from "@/components/material/ListCard";
 
 export default {
   components: {
     Card,
-    RoundCard
+    ListCard
   },
   data() {
     return {};

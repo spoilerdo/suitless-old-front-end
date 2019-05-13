@@ -2,6 +2,7 @@
   <v-layout row justify-center>
     <v-form>
       <v-layout column>
+        <h5 class="headline">General Question node information</h5>
         <h6 class="body-2">Text you want to see in the node</h6>
         <v-textarea
           v-model="form.questionNode"

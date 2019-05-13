@@ -37,7 +37,10 @@ export default {
 				fr.readAsDataURL(files[0])
 				fr.addEventListener('load', () => {
 					this.imageUrl = fr.result
-					this.imageFile = files[0] // this is an image file that can be sent to server...
+          this.imageFile = files[0] // this is an image file that can be sent to server...
+
+          this.$emit('Base64', this.imageUrl.substring(this.imageUrl.indexOf(',')+1));
+          this.$emit('Type', this.imageFile.type);
 				})
 			} else {
 				this.imageName = ''
