@@ -3,24 +3,27 @@
     <Toolbar v-if="!newUser"/>
     <!--<Drawer/> -->
     <CoreView/>
+    <Notification ref="notification"/>
   </v-app>
 </template>
 
 <script>
 // @ is an alias to /src
-import { createNamespacedHelpers } from 'vuex';
+import { createNamespacedHelpers } from "vuex";
 //can be used if you will only need to access ONE module in this component, will auto append app/ before actions.
-const { mapState, mapActions } = createNamespacedHelpers('app/')
+const { mapState, mapActions } = createNamespacedHelpers("app/");
 
 //import Drawer from './components/core/Drawer'
 import CoreView from "./components/core/View";
-import Toolbar from './components/core/Toolbar'
+import Toolbar from "./components/core/Toolbar";
+import Notification from "@/components/material/Notification.vue";
 
 export default {
   components: {
     Toolbar,
     //Drawer,
-    CoreView
+    CoreView,
+    Notification
   },
   date() {
     return {
@@ -28,11 +31,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(['newUser']),
+    ...mapState(["newUser"]),
     ...mapState({
       background: state => state.background
     })
-
   },
   methods: {
     ...mapActions(["setBackground"])
@@ -47,7 +49,7 @@ export default {
         this.calculatedBg = val;
       }
     }
-   }
+  }
 };
 </script>
 

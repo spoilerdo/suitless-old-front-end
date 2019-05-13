@@ -3,7 +3,7 @@ import VueParticles from 'vue-particles'
 import VeeValidate from 'vee-validate'
 import pdfreporter from './plugins/pdfreporter/pdfreporter'
 import flowchartEditor from './plugins/flowchartEditor/flowchartEditor';
-
+import notification from './plugins/notification/notification';
 
 import './plugins/vuetify/vuetify'
 import App from './App.vue'
@@ -16,6 +16,7 @@ Vue.use(VueParticles)
 Vue.use(VeeValidate);
 Vue.use(pdfreporter);
 Vue.use(flowchartEditor);
+Vue.use(notification)
 
 if (localStorage.jwtToken) {
   //restore axios default header sessions

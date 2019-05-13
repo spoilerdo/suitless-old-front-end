@@ -116,7 +116,7 @@ export let graphFunctions = {
     * @param {mxGraph} graph
     */
     exportChart(graph, name, description) {
-        GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth);
+        return GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth);
     },
 
     /**

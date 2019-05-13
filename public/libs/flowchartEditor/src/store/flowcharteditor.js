@@ -104,8 +104,8 @@ export const methods = {
     setFlowchart(val) {
         state.flowchart.set = val;
     },
-    saveFlowchart(name, description) {
-        graphFunctions.exportChart(state.editor.graph, name, description);
+    getFlowchart(name, description) {
+        return graphFunctions.exportChart(state.editor.graph, name, description);
     },
 
     /*

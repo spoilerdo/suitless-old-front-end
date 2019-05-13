@@ -61,5 +61,5 @@ function showFormatBar(formatbarContainer, editor, selectedCell, model){
 function changeStates(questionState, moduleState, notificationState){
     state.questionfunctions.set = questionState;
     state.modulefunctions.set = moduleState;
-    state.notificationfunctions = notificationState;
+    state.notificationfunctions.set = notificationState;
 }
