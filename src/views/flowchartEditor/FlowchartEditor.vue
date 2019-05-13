@@ -1,7 +1,7 @@
 <template>
-  <v-layout class="layout">
+  <v-layout fluid align-space-around justify-start row fill-height>
     <div id="toolbarContainer" class="toolbar"></div>
-    <v-layout id="flowchartContainer" class="flowchart"/>
+    <v-layout id="flowchartContainer" class="flowchart" align-space-around justify-center row fill-height/>
     <div id="formatbarContainer" class="format">
         <GeneralFunctions v-show="generalfunctions"/>
         <QuestionFunctions v-show="questionfunctions"/>
@@ -13,39 +13,23 @@
 </template>
 
 <style>
-.flowchart {
-    /* Pure aids, maar dit magic number werkt! */
-    height: 95vh !important;
-}
-
-.flowchart * {
-    width: 100%;
-    height: 100%;
-}
-
-/* .flowchartCanvas {
-    z-index: -100 !important;
-} */
-
 .toolbar{
     width: 60px;
     height: 100%;
     background-color: #ffffff;
     padding-left: 15px;
     padding-right: 15px;
-    z-index: 1;
 }
 .flowchart{
     width: 100%;
-    z-index: 0;
+    height: 100%;
+    overflow: hidden;
 }
 .format{
     width: 400px;
     padding-left: 15px;
     padding-right: 40px;
     padding-top: 25px;
-    background-color: #ffffff;
-    z-index: 1;
 }
 
 .cellDiv {
