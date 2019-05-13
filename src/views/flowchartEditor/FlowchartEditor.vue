@@ -1,7 +1,7 @@
 <template>
   <v-layout fluid align-space-around justify-start row fill-height>
     <div id="toolbarContainer" class="toolbar"></div>
-    <v-layout id="flowchartContainer" class="flowchart" align-space-around justify-center row fill-height/>
+    <v-layout id="flowchartContainer" class="flowchart"/>
     <div id="formatbarContainer" class="format">
         <GeneralFunctions v-show="generalfunctions"/>
         <QuestionFunctions v-show="questionfunctions"/>
@@ -22,7 +22,6 @@
 }
 .flowchart{
     width: 100%;
-    height: 100%;
     overflow: hidden;
 }
 .format{
