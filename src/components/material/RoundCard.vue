@@ -4,7 +4,7 @@
       hover
       ripple
       :to="redirecturl"
-      class="rouned-card flex xs12"
+      class="rouned-card flex md4 xs12"
       :style="`display: flex; flex-direction: ${direction};`"
     >
       <v-card-media>

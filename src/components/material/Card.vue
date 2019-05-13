@@ -21,8 +21,8 @@
               <v-icon v-if="icon != undefined" size="40" style="margin-right: 15px;">{{icon}}</v-icon>
             </div>
             <div style="display: flex; flex-direction: column;">
-              <h4 class="title font-weight-light mb-2" v-text="title"/>
-              <p class="category font-weight-thin" v-text="text"/>
+              <h4 class="title font-weight-light mb-2" v-text="title" v-if="title !== undefined"/>
+              <p class="category font-weight-thin white--text" v-text="text"/>
             </div>
           </div>
         </span>

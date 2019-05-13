@@ -3,7 +3,7 @@
     <v-layout align-center justify-center row pa-5>
       <ProgressBar ref="progressBar"/>
     </v-layout>
-    <v-layout align-center justify-center row pa-5>
+    <v-layout align-center justify-center row ma-4>
       <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
         <Question
           v-if="survey.nodes[currentquestion].style == 1"
