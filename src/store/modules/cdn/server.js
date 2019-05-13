@@ -18,7 +18,6 @@ const actions = {
     getData(id) {
         return new Promise((resolve, reject) => {
             return api.apiCall("GET", CDN_URL + "meta/id/" + id).then(data => {
-                console.log(data);
                 resolve({
                     name: data.metadataList[0].tag,
                     size: (data.metadataList[0].size / 1000).toFixed(2), //Byte to KB
@@ -26,11 +25,12 @@ const actions = {
                     baseURL: CDN_URL + data.metadataList[0].tag
                 });
             }).catch(error => {
-                console.log("ERROR");
-                console.log(error);
                 reject(error);
             });
         });
+    },
+    delete(serviceable) {
+        api.apiCall("DELETE", CDN_URL + serviceable.name);
     },
     uploadImage(file, name, type) {
         let data = new FormData();
@@ -41,11 +41,9 @@ const actions = {
         return new Promise((resolve, reject) => {
             return api.apiCall("POST", CDN_URL + "base64/", data).then(data => {
                 this.getData(data.serviceable.id).then(serviceable => {
-                    return resolve (serviceable);
+                    return resolve(serviceable);
                 })
             }).catch(error => {
-                console.log("ERROR");
-                console.log(error);
                 reject(error);
             });
         });

@@ -18,7 +18,7 @@
               </v-card>
             </v-dialog>
 
-            <v-btn color="danger" :disabled=true small @click="deleteContent(props.item.baseURL)">Delete</v-btn>
+            <v-btn color="danger" small @click="deleteContent(props.item)">Delete</v-btn>
           </td>
         </template>
       </v-data-table>
@@ -42,8 +42,8 @@ export default {
     };
   },
   methods: {
-    deleteContent(baseURL) {
-      console.log("DELETE", baseURL);
+    deleteContent(serviceable) {
+      cdn.actions.delete(serviceable);
     },
     getAllContent() {
       this.serviceables = cdn.actions.getAllData(this.serviceables);

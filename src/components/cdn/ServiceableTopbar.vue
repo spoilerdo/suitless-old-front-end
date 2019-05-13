@@ -4,9 +4,9 @@
       <p>
         <b>Create a new serviceable</b>
       </p>
-      <v-layout>
+      <v-layout class="center">
         <v-flex xs12 md4>
-          <v-text-field v-model="name" :rules="nameRules" :counter="10" label="name" required></v-text-field>
+          <v-text-field v-model="name" :rules="nameRules" :counter="255" label="name" required></v-text-field>
         </v-flex>
 
         <v-flex xs12 md4>
@@ -31,7 +31,10 @@ export default {
     name: "",
     type: "",
     file: "",
-    nameRules: [v => !!v || "this is required"]
+    nameRules: [
+      v => !!v || "this is required", 
+      v => !v.includes('/') || "You may not use a '/'"
+      ]
   }),
   components: {
     ServiceableFilePicker
@@ -47,9 +50,9 @@ export default {
       let serviceable = cdn.actions
         .uploadImage(this.file, this.name, this.type)
         .then(serviceable => {
-            if (serviceable != null) {
-              this.$emit("serviceable", serviceable);
-            }
+          if (serviceable != null) {
+            this.$emit("serviceable", serviceable);
+          }
         });
     }
   }
@@ -59,5 +62,10 @@ export default {
 <style>
 .ServiceableTopbar {
   background: white;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
 }
 </style>
