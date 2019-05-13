@@ -1,10 +1,15 @@
 <template>
-  <v-footer id="core-footer" absolute height="82">
+  <v-footer
+    id="core-footer"
+    absolute
+    height="50"
+  >
     <div class="footer-items">
       <span v-for="link in links" :key="link.name">
         <a :href="link.Link" class="footer-links" :style="{color: footerColor}">{{ link.name }}</a>
       </span>
     </div>
+
     <v-spacer/>
     <span class="font-weight-light copyright" :style="{color: footerColor}">
       &copy;
@@ -39,5 +44,9 @@ export default {
 <style>
 #core-footer {
   z-index: 0;
+  padding: 0;
+  height: 5vh !important;
+  display: flex;
+  flex-direction: row;
 }
 </style>
