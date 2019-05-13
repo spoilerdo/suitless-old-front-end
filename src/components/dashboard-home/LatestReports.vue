@@ -2,33 +2,30 @@
   <v-layout fluid grid-list-sm>
     <Card
       color="primary"
-      title="All Surveys"
-      text="Surveys we recommend for you based on previous input"
+      title="Latest Reports"
+      text="Reports from the latest surveys you have filled in"
       class="flex xs12 md12"
+      icon="mdi-file"
       style="display: flex; flex-wrap: wrap;"
     >
-      <v-layout row wrap style="overflow-y: scroll; max-height: 573px">
+      <v-layout row wrap>
         <div
-          v-for="s in survey.slice(0,limit)"
+          v-for="s in survey.slice(0,4)"
           :key="s.moduelID"
-          class="text-xs-center flex xs12"
-          style="padding-bottom: 15px;"
+          class="text-xs-center flex xs12 md6"
+          style="padding-bottom: 15px; flex-wrap: wrap;"
         >
           <ListCard
             :redirecturl="`/survey/${s.moduleID}`"
             imagename="IP.svg"
-            percentage="0"
             :title="s.name"
-            :description="s.description"
+            orientation="vertical"
           />
         </div>
       </v-layout>
-      <div class="flex xs12" style="display: flex; justify-content: flex-end;">
-        <v-btn class="primary" v-on:click="updateSurveys()" large>{{buttonText}}</v-btn>
-      </div>
     </Card>
   </v-layout>
-</template> 
+</template>
 
 <script>
 import Card from "@/components/material/Card";
@@ -51,22 +48,8 @@ export default {
   },
   data() {
     return {
-      role: null,
-      limit: 2,
-      buttonText: "Show more"
+      collapsed: false
     };
-  },
-
-  methods: {
-    updateSurveys() {
-      if (this.limit == 2) {
-        this.limit = this.survey.length;
-        this.buttonText = "Show less";
-      } else {
-        this.limit = 2;
-        this.buttonText = "Show more";
-      }
-    }
   }
 };
 </script>
