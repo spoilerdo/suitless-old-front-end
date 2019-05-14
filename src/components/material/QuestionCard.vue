@@ -3,7 +3,7 @@
             <v-img
             v-if="image !== undefined"
             :src="image"
-            max-height="125px"
+            max-height="90px"
             contain
             @click="onSelect()"
             ></v-img>
