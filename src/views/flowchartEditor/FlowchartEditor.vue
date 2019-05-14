@@ -251,10 +251,14 @@ export default {
         this.startEditor();
     },
     methods: {
-        ...mapActions("app/", ["setBackground"]),
+        ...mapActions("app/", ["setBackground", "setFooterColor"]),
     },
     beforeMount() {
         this.setBackground("transparent");
+        this.setFooterColor("#c01833");
+    },
+    beforeDestroy() {
+        this.setFooterColor("#fff");
     },
     computed: {
         ...mapState("flowcharteditor/", ["formatBarType"])

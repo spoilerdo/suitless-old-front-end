@@ -3,19 +3,25 @@
     <v-layout align-center justify-center row pa-5>
       <ProgressBar ref="progressBar"/>
     </v-layout>
-    <v-layout align-center justify-center row pa-5>
-      <v-flex d-flex xs8 v-if="survey.nodes != null && currentquestion != null">
+    <v-layout align-center justify-center row ma-4>
+      <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
         <Question
           v-if="survey.nodes[currentquestion].style == 1"
           v-on:answerQuestion="answeredQuestion"
           v-on:renderPreviousQuestion="renderPreviousQuestion"
           v-bind:question="survey.nodes[currentquestion]"
           v-bind:progress="progress"
+          :isMobile="isMobile"
         />
         <Notification
           v-if="notification != null"
           v-bind:value="notification.value"
         />
+      </v-flex>
+    </v-layout>
+    <v-layout align-center justify-center row pa-5>
+      <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
+          <Info :question="survey.nodes[currentquestion]"  v-if="!isMobile"/>
       </v-flex>
     </v-layout>
   </v-container>
@@ -25,6 +31,7 @@
 import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
 import Notification from "@/components/material/Notification.vue";
+import Info from "@/components/survey/Info.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
@@ -32,19 +39,18 @@ export default {
   components: {
     Question,
     ProgressBar,
-    Notification
+    Notification,
+    Info
   },
   computed: {
-    ...mapState("survey", {
+    ...mapState("survey/", {
       survey: state => state.all
     }),
     ...mapState("answer", {
       answer: state => state.all
     }),
-    ...mapState("progress", {
-      currentquestion: state => state.currentquestion,
-      progress: state => state.progress
-    }),
+    ...mapState("progress/", ["currentquestion", "progress"]),
+    ...mapState("app/", ["footerColor"]),
     ...mapGetters({
       firsQuestionID: "survey/getFirstQuestionID",
       getAnswerByQuestionID: "answer/getAnswerByQuestionID"
@@ -52,19 +58,24 @@ export default {
   },
   data(){
     return{
-      notification: null
+      notification: null,
+      isMobile: false
     }
   },
   created() {
     //when created call the action to get the survey with the id in the props.
     this.getSurveyByID(this.surveyID);
     this.setBackground("#eee");
+    this.setFooterColor("#c01833");
+  },
+  beforeDestroy() {
+    this.setFooterColor("#fff");
   },
   methods: {
     ...mapActions("survey/", ["getSurveyByID"]),
     ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion"]),
     ...mapActions("progress/", ["fillProgress", "setCurrentQuestion"]),
-    ...mapActions("app/", ["setBackground"]),
+    ...mapActions("app/", ["setBackground", "setFooterColor"]),
     answeredQuestion(answer) {
       this.answerQuestion({
         answer,
@@ -81,11 +92,10 @@ export default {
       this.fillProgress({ addedDepth: 1, survey: this.survey });      
     },
     renderPreviousQuestion(question) {
+      this.fillProgress({ addedDepth: -1, survey: this.survey });
       //select the previouse question
       this.setCurrentQuestion(this.getAnswerByQuestionID(question).questionID);
       this.deleteLastAnswer();
-
-      this.fillProgress({ addedDepth: -1, survey: this.survey });
     },
     getFormattedDate() {
       var myDate = new Date();
@@ -134,7 +144,14 @@ export default {
       let name = "report " + this.getFormattedDate();
 
       this.generatePdf(pdfOptions, pdfContents, name);
+    },
+    onResize () {
+      this.isMobile = window.innerWidth < 600
     }
+  },
+  mounted() {
+    this.onResize()
+    window.addEventListener('resize', this.onResize, { passive: true })
   },
   updated() {
     //only on the first ever update since this page
@@ -151,6 +168,11 @@ export default {
         this.setCurrentQuestion(null);
       }
     }
-  }
+  },
+  beforeDestroy () {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('resize', this.onResize, { passive: true })
+    }
+  },
 };
 </script>
