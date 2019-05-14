@@ -28,14 +28,23 @@
       </v-card-title>
       <v-card-actions class="action-card">
         <v-layout align-center justify-center row wrap>
-          <v-btn
+          <!-- question card for single answer questions -->
+          <QuestionCard
+            v-on:selectedAnswer="selectAnswer"
             v-for="answer in question.flows"
             :key="answer.targetID"
-            v-on:click="$emit('answerQuestion', answer)"
-            class="primary answerBtn"
-          >{{answer.value}}</v-btn>
+            :text="answer.value"
+            :answer="answer"
+            image="http://ironsm4sh.nl:3303/cdn/man"
+            color="primary" 
+            style="margin:10px"
+            ref="question"
+          />
+          <!-- multiple choice TODO -->
         </v-layout>
       </v-card-actions>
+
+
       <!-- previous arrow -->
       <v-layout align-center justify-center row>
         <v-btn
@@ -55,6 +64,7 @@
           icon
           bottom
           class="action-btn"
+          @click="answerQuestion()"
         >
            <v-icon color="secondary" x-large right>mdi-chevron-right</v-icon>
         </v-btn>
@@ -81,12 +91,39 @@
 
 
 <script>
+import QuestionCard from "@/components/material/QuestionCard.vue";
 import Info from "@/components/survey/Info.vue";
 
 export default {
   components: {
+    QuestionCard,
     Info
   },
-  props: ["question", "progress", "isMobile"]
+  props: ["question", "progress", "isMobile"],
+  data() {
+    return{
+      selectedAnswer: null
+    }
+  },
+  methods: {
+    selectAnswer(selectAnswer) {
+      //loop through all answers and deselect any that do not match
+      this.$refs.question.forEach(child => {
+        //only to get components which contain the needed method
+        if(child.answer == selectAnswer) {
+          child.setSelected(true);
+        } else {
+          child.setSelected(false);
+        }
+      })
+      //change selected answer, will change with multiple choice.
+      this.selectedAnswer = selectAnswer;
+    },
+    answerQuestion() {
+      if(this.selectedAnswer !== null) {
+        this.$emit('answerQuestion', this.selectedAnswer);
+      }
+    }
+  }
 };
 </script>

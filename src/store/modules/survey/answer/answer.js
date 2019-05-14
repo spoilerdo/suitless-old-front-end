@@ -24,7 +24,7 @@ const actions = {
     answerQuestion({ commit }, { answer, question }) {
         //fill the answer in on the answers array
         var a = {
-            questionID: question.ID,
+            questionID: question.id,
             questionValue: question.value,
             lincData: question.lincData,
             targetID: answer.targetID,

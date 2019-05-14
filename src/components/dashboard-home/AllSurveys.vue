@@ -11,7 +11,7 @@
         <div
           v-for="s in survey.slice(0,limit)"
           :key="s.moduelID"
-          class="text-xs-center flex xs12"
+          class="text-xs-center flex md3 xs12"
           style="padding-bottom: 15px;"
         >
           <ListCard
