@@ -8,7 +8,7 @@
         <v-flex xs12 md4>
           <v-text-field
             v-model="form.name"
-            v-validate="'required|min:5|alpha'"
+            v-validate="'required|min:3|alpha'"
             :counter="255"
             label="tag"
             name="tag"
