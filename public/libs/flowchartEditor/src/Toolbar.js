@@ -26,7 +26,9 @@ export function createToolbar(toolbarContainer, editor, model, keyHandler, graph
 
     addDefaultActions(toolbar, editor.graph);
     addKeyActions(keyHandler, editor.graph, graphcontainer);
-    addDedicatedActions(toolbar, editor, model);
+    
+    // TODO: Removed to enforce a more dynamic workflow.
+    // addDedicatedActions(toolbar, editor, model);
 }
 
 /**
