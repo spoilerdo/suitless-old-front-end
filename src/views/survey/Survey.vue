@@ -31,7 +31,7 @@
     </v-layout>
     <v-layout align-center justify-center row pa-5>
       <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
-          <Info :question="survey.nodes[currentquestion]"  v-if="!isMobile"/>
+          <Info :question="currentquestion"  v-if="!isMobile"/>
       </v-flex>
     </v-layout>
   </v-container>
@@ -90,17 +90,24 @@ export default {
     answeredQuestion(answer) {
       this.answerQuestion({
         answer,
-        question: this.survey.nodes[this.currentquestion]
+        question: this.currentquestion
       });
-      this.setCurrentQuestion({ question: this.survey.nodes[answer.targetID], nodes: this.survey.nodes });
 
-      let test = this.survey;
-      //this.fillProgress({ addedDepth: 1, survey: test });      
+      this.setCurrentQuestion({ question: this.survey.nodes[answer.targetID], nodes: this.survey.nodes });
+      
+      this.fillProgress({ addedDepth: 1, survey: this.survey });      
     },
     renderPreviousQuestion(question) {
       this.fillProgress({ addedDepth: -1, survey: this.survey });
+
+      //get previous answer
+      let prevAnswer = this.getAnswerByQuestionID(question);
+      //check if previous question is a notification, if so go one more back.
+      while(this.survey.nodes[prevAnswer.questionID].style == 5) {
+        this.renderPreviousQuestion(this.survey.nodes[prevAnswer]);
+      }
       //select the previouse question
-      this.setCurrentQuestion({question: this.getAnswerByQuestionID(question).questionID, nodes: this.survey.nodes });
+      this.setCurrentQuestion({question: this.survey.nodes[prevAnswer.questionID], nodes: this.survey.nodes });
       this.deleteLastAnswer();
     },
     getFormattedDate() {
@@ -158,7 +165,6 @@ export default {
   },
   updated() {
     //only on the first ever update since this page
-    console.log(this.currentquestion);
     if (this.currentquestion == null) {
       let tetsdatax = this.survey.nodes[this.firsQuestionID];
       let xxx = this.survey.nodes;

@@ -21,7 +21,7 @@ const actions = {
       depth = d;
     }
 
-    if (survey.nodes[currentquestion].flows.length > 0) {
+    if (currentquestion.flows.length > 0) {
       //bump up the progress
       commit(SET_PROGRESS, (depth / survey.maxDepth) * 100);
     } else {
@@ -34,9 +34,8 @@ const actions = {
     //if the next question is a notification then store it in the notification array and show it on the front-end
     if(question.style == 5){
       commit(SET_NOTIFICATION, question);
-      commit(SET_CURRENTQUESTION, question.flows[0].targetID);
+      commit(SET_CURRENTQUESTION, nodes[question.flows[0].targetID]);
     }
-
     //if the next question is a multiple choice node then get the different options
     else if(question.style == 7){
       commit(SET_OPTIONS, []);
@@ -44,9 +43,13 @@ const actions = {
       choices.forEach(choice => {
         commit(PUSH_OPTION, nodes[choice.value]);
       });
-    }
 
-    commit(SET_CURRENTQUESTION, question);
+      commit(SET_CURRENTQUESTION, question);
+    }
+    //else just commit the currentquestion
+    else {
+      commit(SET_CURRENTQUESTION, question);
+    }
   }
 }
 

@@ -22,6 +22,7 @@ const getters = {
 
 const actions = {
     answerQuestion({ commit }, { answer, question }) {
+
         //fill the answer in on the answers array
         var a = {
             questionID: question.id,
