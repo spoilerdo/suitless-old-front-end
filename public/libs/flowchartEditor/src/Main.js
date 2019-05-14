@@ -6,17 +6,36 @@
  * @since 18-02-2019
  */
 
+//Script that displays the toolbar on the left
 import { createToolbar } from "./Toolbar"
+
+//Script that contains the main functions for the formatbar on the right
 import { createFormatbar } from "./FormatBar/Formatbar"
+
+//Scripts that contains the main functions to draw lines between nodes 
+//and giving a small menu when drawing a line without connecting it to a node
 import { createRubberband } from "./MxNative/Rubberband"
 import { snapToFixedPoint } from "./MxNative/Snapping";
 import { createSnapPoints } from "./MxNative/SnapPoints";
 import { vertexOnDraw } from "./MxNative/CreateVertexOnDraw";
-import { graphFunctions } from "./EditorFunctions"
-import { environment } from "./EnvironmentVariables"
-import { backgroundFunctions } from "./Background"
+
+//Script that contains the main editor functions (import-, export flowchart, create edges and nodes)
+import { editorFunctions } from "./EditorFunctions/EditorFunctions";
+
+//Some constants
+import { environment } from "./EnvironmentVariables";
+
+//Script that contains the main background functionality in order to adjust the grid size etc.
+import { backgroundFunctions } from "./Background";
+
+//Enum that contains all the nodes
 import { NodeEnum } from "./NodeEnum";
+
+//Script that contains the main Clipboard functionality (copy, paste and cut)
 import { clipBoardFunctions } from "./MxNative/Clipboard";
+
+//Script that is the store of the flowchart editor this script contains some general information 
+//about the flowchart that will be shared with Vue trough the plugin script
 import { state } from "./store/flowcharteditor";
 
 import { mxClient, mxGraph, mxUtils, mxEvent, mxConstraintHandler, mxConnectionHandler, mxEditor, mxGraphModel, mxKeyHandler, mxUndoManager, mxConstants, mxGraphView } from "./MxGraph";
@@ -140,7 +159,7 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
             backgroundFunctions.repaintGrid();
         };
 
-        clipBoardFunctions();
+        clipBoardFunctions(graph);
 
         StartFlowchart(graph);
 
@@ -160,7 +179,7 @@ function StartFlowchart(graph) {
     //Adds cells to the model in a single step
     graph.getModel().beginUpdate();
     try {
-        graphFunctions.addVertex(NodeEnum.Start, graph, null, 20, 20);
+        editorFunctions.addVertex(NodeEnum.Start, graph, null, 20, 20);
     } finally {
         graph.getModel().endUpdate();
     }

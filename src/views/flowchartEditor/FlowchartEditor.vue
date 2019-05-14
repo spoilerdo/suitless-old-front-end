@@ -3,10 +3,12 @@
     <div id="toolbarContainer" class="toolbar"></div>
     <v-layout id="flowchartContainer" class="flowchart" align-space-around justify-center row fill-height/>
     <div id="formatbarContainer" class="format">
-        <GeneralFunctions v-show="generalfunctions"/>
-        <QuestionFunctions v-show="questionfunctions"/>
-        <ModuleFunctions v-show="modulefunctions"/>
-        <NotificationFunctions v-show="notificationfunctions"/>
+        <GeneralFunctions v-if="formatBarType == null"/>
+        <QuestionFunctions v-show="formatBarType == this.$data.nodeEnum.Question"/>
+        <ModuleFunctions v-show="formatBarType == this.$data.nodeEnum.Module"/>
+        <NotificationFunctions v-show="formatBarType == this.$data.nodeEnum.Notification"/>
+        <MultipleChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.MultipleChoice"/>
+        <ChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.Choice"/>
     </div>
     <FlowchartForm id="importForm"/>
   </v-layout>
@@ -232,6 +234,8 @@ import GeneralFunctions from "@/components/flowcharteditor/formatbar/GeneralFunc
 import QuestionFunctions from "@/components/flowcharteditor/formatbar/QuestionFunctions";
 import ModuleFunctions from "@/components/flowcharteditor/formatbar/ModuleFunctions";
 import NotificationFunctions from "@/components/flowcharteditor/formatbar/NotificationFunctions";
+import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/MultipleChoiceFunctions";
+import ChoiceFunctions from "@/components/flowcharteditor/formatbar/ChoiceFunctions";
 
 export default {
     components: {
@@ -239,7 +243,9 @@ export default {
         GeneralFunctions,
         QuestionFunctions,
         ModuleFunctions,
-        NotificationFunctions
+        NotificationFunctions,
+        MultipleChoiceFunctions,
+        ChoiceFunctions
     },
     mounted(){
         this.startEditor();
@@ -255,8 +261,7 @@ export default {
         this.setFooterColor("#fff");
     },
     computed: {
-        //MapState aren't updated when a value is changed
-        ...mapState("flowcharteditor/", ["generalfunctions", "questionfunctions", "modulefunctions", "notificationfunctions"])
+        ...mapState("flowcharteditor/", ["formatBarType"])
     }
 }
 </script>

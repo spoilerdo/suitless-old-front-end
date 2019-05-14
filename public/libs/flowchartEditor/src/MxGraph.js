@@ -1,3 +1,7 @@
+/**
+ * MXGraph library
+ */
+
 var mxgraph = require("mxgraph")({
     mxImageBasePath: "./libs/flowchartEditor/images",
     mxBasePath: "./libs/flowchartEditor/src"

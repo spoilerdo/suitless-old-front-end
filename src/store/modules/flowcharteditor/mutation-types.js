@@ -1,6 +1,3 @@
 export const SET_DIALOG = "SET_DIALOG";
 export const SET_FLOWCHART = "SET_FLOWCHART";
-export const SET_GF = "SET_GENERALFUNCTIONS";
-export const SET_QUESTION = "SET_QUESTION";
-export const SET_MODULE = "SET_MODULE";
-export const SET_NOTIFICATION = "SET_NOTIFICATION";
+export const SET_FORMATBAR = "SET_FORMATBARTYPE";
