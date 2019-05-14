@@ -1,0 +1,58 @@
+<template>
+    <v-layout row justify-center>
+        <v-form>
+            <v-layout column>
+                <h6 class="body-2">Multiple choice Title</h6>
+                <v-textarea
+                    v-model="form.multipleChoiceNode"
+                    auto-grow
+                    box
+                    color="primary"
+                    label="Title"
+                    rows="1"
+                    v-validate="'required'"
+                    name="title"
+                />
+                <span>{{ errors.first('title') }}</span>
+                <h6 class="body-2">The question you want to ask</h6>
+                <v-textarea
+                    v-model="form.multipleChoice"
+                    auto-grow
+                    box
+                    color="primary"
+                    label="Question"
+                    rows="1"
+                    v-validate="'required'"
+                    name="question"
+                />
+                <span>{{ errors.first('question') }}</span>
+                <h6 class="body-2">The amount of choices</h6>
+                <v-text-field
+                    v-model="form.amountOfChoices"
+                    type="number"
+                    value="3"
+                    v-validate="'required'"
+                    name="amount of choices"
+                />
+                <span>{{ errors.first('amount of choices') }}</span>
+            </v-layout>
+            <v-layout align-center justify-center row>
+                <v-btn color="primary" @click="changeMultipleChoiceNode(form.multipleChoiceNode, form.multipleChoice, form.amountOfChoices)">Apply</v-btn>
+            </v-layout>
+        </v-form>
+    </v-layout>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            form: {
+                multipleChoiceNode: null,
+                multipleChoice: null,
+                amountOfChoices: 3
+            }
+        }
+    }
+}
+</script>
