@@ -3,7 +3,7 @@
     <div id="toolbarContainer" class="toolbar"></div>
     <v-layout id="flowchartContainer" class="flowchart" align-space-around justify-center row fill-height/>
     <div id="formatbarContainer" class="format">
-        <GeneralFunctions v-if="formatBarType == null"/>
+        <GeneralFunctions v-show="formatBarType == null"/>
         <QuestionFunctions v-show="formatBarType == this.$data.nodeEnum.Question"/>
         <ModuleFunctions v-show="formatBarType == this.$data.nodeEnum.Module"/>
         <NotificationFunctions v-show="formatBarType == this.$data.nodeEnum.Notification"/>
