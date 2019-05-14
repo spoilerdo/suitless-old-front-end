@@ -11,20 +11,31 @@
 // @ is an alias to /src
 import ServiceableTable from "@/components/cdn/ServiceableTable";
 import ServiceableTopbar from "@/components/cdn/ServiceableTopbar";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "cdn",
   components: {
     ServiceableTable,
-    ServiceableTopbar,
+    ServiceableTopbar
   },
- data: () => ({
-  }),
-  methods : {
+  data: () => ({}),
+  methods: {
+    ...mapActions("app/", ["setBackground", "setFooterColor"]),
     addServiceable(serviceable) {
       console.log(serviceable);
       this.$refs.table.addServiceable(serviceable);
     }
+  },
+  created() {
+    //when created call the action to get the survey with the id in the props.
+    this.setFooterColor("#c01833");
+  },
+  beforeDestroy() {
+    this.setFooterColor("#fff");
+  },
+  computed: {
+    ...mapState("app/", ["footerColor"])
   }
 };
 </script>
@@ -34,16 +45,20 @@ export default {
   width: 100%;
   margin-bottom: 4px;
 }
-.stretch{
+.stretch {
   height: 100%;
 }
-.fillScreen{
+.fillScreen {
   height: calc(50% - 5vh);
 }
-.form{
- height: 150px;
+.form {
+  height: 150px;
 }
-.data{
- height: calc(100% - 150px);
+.data {
+  height: calc(100% - 150px);
+}
+
+#core-view {
+  height: auto;
 }
 </style>
