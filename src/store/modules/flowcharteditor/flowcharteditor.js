@@ -1,10 +1,11 @@
-import { apiCall } from '../../../api/api'
+import { asyncApiCall } from '../../../api/api'
 import { API_URL } from '../../serverconstants';
-import { SET_DIALOG, SET_FLOWCHART } from './mutation-types';
+import { SET_DIALOG, SET_FLOWCHART, SET_FORMATBAR } from './mutation-types';
 
 const state = {
     dialog: false,
     flowchart: null,
+    formatBarType: null,
 }
 
 const getters = {}
@@ -13,13 +14,18 @@ const actions = {
     setDialog({commit}, dialogState){
         commit(SET_DIALOG, dialogState);
     },
-    getFlowchartByName({commit}, name){
-        apiCall('get', `${API_URL}/modules/name/${encodeURI(name)}`)
-            .then((req => {
-                commit(SET_FLOWCHART, req);
-            })).catch(e => {
-                console.log(e);
-            })
+
+    setFormatBarType({commit}, newType){
+        commit(SET_FORMATBAR, newType);
+    },
+    
+    async getFlowchartByName({commit}, name){
+        try{
+            const req = await asyncApiCall('get', `${API_URL}/modules/name/${encodeURI(name)}`);
+            commit(SET_FLOWCHART, req);
+        }catch (e){
+            console.log(e);
+        }
     }
 }
 
@@ -27,8 +33,11 @@ const mutations = {
     [SET_DIALOG](state, dialogState){
         state.dialog = dialogState;
     },
-    [SET_FLOWCHART](state, flowchart){
-        state.flowchart = flowchart;
+    [SET_FORMATBAR](state, formatBarState) {
+        state.formatBarType = formatBarState;
+    },
+    [SET_FLOWCHART](state, flowchartState) {
+        state.flowchart = flowchartState;
     }
 }
 

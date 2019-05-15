@@ -1,7 +1,7 @@
 /**
  * Node ENUM contains all node types
- * @author Julius Ammerlaan
- * @version 1.0
+ * @author Julius Ammerlaan, Martijn Dormans
+ * @version 1.3
  * @since 18-02-2019
  */
 
@@ -21,6 +21,9 @@ export let NodeEnum = {
     Condition: 3,
     Module: 4,
     Notification: 5,
+    Note: 6,
+    MultipleChoice: 7,
+    Choice: 8,
 
     /**
      * Value to Name mapping.
@@ -30,5 +33,8 @@ export let NodeEnum = {
     2 : "End",
     3 : "Condition",
     4 : "Module",
-    5 : "Notification"
+    5 : "Notification",
+    6 : "Note",
+    7 : "MultipleChoice",
+    8 : "Choice"
 }

@@ -1,16 +1,14 @@
 /**
  * spawns a toolbar with tools attached to the mxGraph.
- * @author Julius Ammerlaan
- * @version 1.0
+ * @author Julius Ammerlaan, Martijn Dormans
+ * @version 2.0
  * @since 18-02-2019
  */
 
-import { environment } from "./EnvironmentVariables"
-import { graphFunctions } from "./EditorFunctions"
+import { editorFunctions } from "./EditorFunctions/EditorFunctions"
 import { addKeyActions } from "./MxNative/keyActions"
 import { NodeEnum } from "./NodeEnum";
-import { testJSON } from './testJSON';
-import { mxUtils, mxEditor, mxGraphModel, mxToolbar, mxClipboard } from "./MxGraph";
+import { mxUtils, mxToolbar, mxClipboard } from "./MxGraph";
 
 /**
  * Creates the mxToolbar and adds the 
@@ -19,14 +17,17 @@ import { mxUtils, mxEditor, mxGraphModel, mxToolbar, mxClipboard } from "./MxGra
  * @param {mxEditor} editor 
  * @param {mxKeyhandler} keyHandler
  * @param {XmlDocument} doc
+ * @param {mxUndoManager} undoManager
  */
-export function createToolbar(toolbarContainer, editor, model, keyHandler, graphcontainer) {
+export function createToolbar(toolbarContainer, editor, model, keyHandler, graphcontainer, undoManager) {
 
     let toolbar = new mxToolbar(toolbarContainer);
 
     addDefaultActions(toolbar, editor.graph);
-    addKeyActions(keyHandler, editor.graph, graphcontainer);
-    addDedicatedActions(toolbar, editor, model);
+    addKeyActions(keyHandler, editor.graph, graphcontainer, undoManager);
+    
+    // TODO: Removed to enforce a more dynamic workflow.
+    // addDedicatedActions(toolbar, editor, model);
 }
 
 /**
@@ -87,22 +88,26 @@ function addDefaultActions(toolbar, graph) {
 function addDedicatedActions(toolbar, editor, model) {
     toolbar.addItem('Add question node', "http://ironsm4sh.nl:3305/questionNode",
         (click) => {
-            graphFunctions.addVertex(NodeEnum.Question, editor.graph, null, null, null);
+            editorFunctions.addVertex(NodeEnum.Question, editor.graph, null, null, null);
         }, null, "v-icon mdi theme--light mxToolbarItem");
     toolbar.addItem('Add module node', "http://ironsm4sh.nl:3305/moduleNode",
         (click) => {
-            graphFunctions.addVertex(NodeEnum.Module, editor.graph, null, null, null);
+            editorFunctions.addVertex(NodeEnum.Module, editor.graph, null, null, null);
         }, null, "v-icon mdi theme--light mxToolbarItem");
     toolbar.addItem("Add end node", "http://ironsm4sh.nl:3305/endNode",
         (click) => {
-            graphFunctions.addVertex(NodeEnum.End, editor.graph, null, null, null)
+            editorFunctions.addVertex(NodeEnum.End, editor.graph, null, null, null)
         }, null, "v-icon mdi theme--light mxToolbarItem")
-    toolbar.addItem("Add notification node", "http://ironsm4sh.nl:3305/notificationNode",
+    /*toolbar.addItem("Add notification node", "http://ironsm4sh.nl:3305/notificationNode",
         (click) => {
             graphFunctions.addVertex(NodeEnum.Notification, editor.graph, null, null, null);
+        }, null, "v-icon mdi theme--light mxToolbarItem");*/
+    toolbar.addItem("Add notepad node", "http://ironsm4sh.nl:3305/questionNode",
+        (click) => {
+            editorFunctions.addVertex(NodeEnum.MultipleChoice, editor.graph, null, null, null);
         }, null, "v-icon mdi theme--light mxToolbarItem");
     toolbar.addItem("Add edge", "http://ironsm4sh.nl:3305/AddEdge",
         (click) => {
-            graphFunctions.addEdge(editor.graph, null);
+            editorFunctions.addEdge(editor.graph, null);
         }, null, "v-icon mdi theme--light mxToolbarItem");
 }

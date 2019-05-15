@@ -8,7 +8,7 @@
  */
 
 import { NodeEnum } from "../NodeEnum";
-import { graphFunctions } from "../EditorFunctions";
+import { editorFunctions } from "../EditorFunctions/EditorFunctions";
 
 import { mxConnectionHandler, mxPoint } from "../MxGraph";
 
@@ -98,12 +98,9 @@ export function vertexOnDraw(mxEvent, graph) {
             geo = this.graph.getCellGeometry(source);
         }
 
-        let cell = graphFunctions.addVertex(selectedvertexType, this.graph, null, null, null);
-        if (vertexData != null) {
-            cell.lincData = vertexData;
-        }
+        let cell = editorFunctions.addVertex(selectedvertexType, this.graph, null, null, null);
 
-        graphFunctions.updateDepth(cell, source);
+        editorFunctions.updateDepth(cell, source);
 
         geo = this.graph.getModel().getGeometry(cell);
 
@@ -134,50 +131,56 @@ export function vertexOnDraw(mxEvent, graph) {
                 }
             }
         }
-        graphFunctions.checkDepth(cell, source);
+        editorFunctions.checkDepth(cell, source);
 
         return cell;
     }
 
+    graph.connectionHandler.addListener(mxEvent.CONNECT, function (sender, evt){
+        var edge = evt.getProperty('cell');
+        var style = graph.getCellStyle(edge); //style is in object form
+        var newStyle = graph.stylesheet.getCellStyle("edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;", style);
+        var array = [];
+           for (var prop in newStyle)
+               array.push(prop + "=" + newStyle[prop]);
+           edge.style = array.join(';'); 
+   }),
+
     graph.popupMenuHandler.factoryMethod = function (menu, cell, evt) {
         if (evt != null) { return; }
+
         menu.addItem('Question Node', null, function () {
             if (mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.Question;
-                vertexData = [{
-                    "key": "reason",
-                    "value": "Reason for the question"
-                }]
-                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent(), mouseMe.getCell());
+                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent());
             }
         });
 
         menu.addItem('Module Node', null, function () {
             if (mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.Module;
-                vertexData = [{
-                    "key": "module",
-                    "value": "Module name"
-                }]
-                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent(), mouseMe.getCell());
+                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent());
             }
         });
 
         menu.addItem('Notification Node', null, function(){
             if(mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.Notification;
-                vertexData = [{
-                    "key": "notify",
-                    "value": "Notification"
-                }]
-                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent(), mouseMe.getCell());
+                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent());
+            }
+        });
+
+        menu.addItem('Multiple Choice Node', null, function(){
+            if(mouseThis != null && currentPoint != null) {
+                selectedvertexType = NodeEnum.MultipleChoice;
+                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent());
             }
         });
 
         menu.addItem('End Node', null, function () {
             if (mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.End;
-                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent(), mouseMe.getCell());
+                mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent());
             }
         });
     };
