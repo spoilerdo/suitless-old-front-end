@@ -82,15 +82,22 @@ export default {
   methods: {
     ...mapActions("survey/", ["getSurveyByID"]),
     ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion"]),
-    ...mapActions("progress/", ["fillProgress", "setCurrentQuestion"]),
+    ...mapActions("progress/", ["fillProgress", "setCurrentQuestion", "fillCurrentQuestionBacklog"]),
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
+
     answeredQuestion(answer) {
       this.answerQuestion({
         answer,
         question: this.currentquestion
       });
 
-      this.setCurrentQuestion({ question: this.survey.nodes[answer.targetID], nodes: this.survey.nodes });
+      console.log(this.survey.nodes[answer.targetID].style);
+
+      if(this.survey.nodes[answer.targetID].style == this.$data.nodeEnum.End){
+        this.setCurrentQuestion({ question: null, nodes: this.survey.nodes });
+      }else {
+        this.setCurrentQuestion({ question: this.survey.nodes[answer.targetID], nodes: this.survey.nodes });
+      }
       
       this.fillProgress({ addedDepth: 1, survey: this.survey });      
     },
@@ -113,10 +120,16 @@ export default {
           question: this.currentquestion
         });
 
+        let questions = [];
+        answers.forEach(answer => {
+          if(answer.flows.length > 0){
+            questions.push(this.survey.nodes[answer.flows[0].targetID])
+          }
+        });
+
+        this.fillCurrentQuestionBacklog({questions, nodes: this.survey.nodes});
+
         this.fillProgress({addedDepth: 1, survey: this.survey});
-        //
-
-
     },
     getFormattedDate() {
       var myDate = new Date();

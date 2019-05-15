@@ -221,15 +221,11 @@ export let editorFunctions = {
      * If so than the maxDepth = the depth of the node
      */
     checkDepth(cell, source) {
-        let parent = source;
-        if (parent == null) {
-            parent = cell.edges[0].source;
-        }
-        if (parent.lincType === NodeEnum.Question || parent.lincType === NodeEnum.Notification || cell.lincType === NodeEnum.MultipleChoice || cell.lincType === NodeEnum.Choice) {
+        if (cell.lincType === NodeEnum.Question || cell.lincType === NodeEnum.Notification || cell.lincType === NodeEnum.MultipleChoice || cell.lincType === NodeEnum.Choice) {
             //the connected edge is a question so get the depth from it
             //if it is a notification node than the depth of it is equal to the priour connected question node
-            if (parent.depth > maxDepth) {
-                maxDepth = parent.depth;
+            if (cell.depth > maxDepth) {
+                maxDepth = cell.depth;
             }
         }
     }

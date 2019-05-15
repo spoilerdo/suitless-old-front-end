@@ -134,7 +134,7 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         StartFlowchart(graph);
 
         state.flowchart.registerListener(function (val) {
-            graphFunctions.importChart(graph, val.nodes, model);
+            editorFunctions.importChart(graph, val.nodes, model);
         })
 
         state.editor = editor;

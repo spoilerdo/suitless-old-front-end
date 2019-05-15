@@ -4,6 +4,7 @@
             v-if="image !== undefined"
             :src="image"
             max-height="90px"
+            min-height="45px"
             contain
             @click="onSelect()"
             ></v-img>

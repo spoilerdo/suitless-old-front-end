@@ -99,7 +99,9 @@ export default {
       answerQuestion() {
         if(this.answers.length > 0) {
           //emit answers to parent if answers are filled.
-          this.$emit('answerMultiChoice', this.answers);
+          let nextQuestions = this.answers;
+          nextQuestions.push(this.question);
+          this.$emit('answerMultiChoice', nextQuestions);
         }
       }
     }
