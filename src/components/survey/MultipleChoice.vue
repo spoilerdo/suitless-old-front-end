@@ -37,6 +37,7 @@
               hide-details
               on-icon="mdi-checkbox-blank"
               color="primary"
+              @change="selectChoice(option)"
             />
             </v-flex>
           </v-layout>
@@ -82,10 +83,25 @@ export default {
     props: ["question", "progress", "isMobile", "options"],
     data() {
       return {
-
+        answers: []
       }
     },
     methods: {
+      selectChoice(answer) {
+          //check if answer is already in array, if so delete it
+          if(this.answers.includes(answer)) {
+            this.answers.splice(this.answers.indexOf(answer), 1);
+          } else{
+            //else add it to the array as a chosen answer.
+            this.answers.push(answer);
+          }
+      },
+      answerQuestion() {
+        if(this.answers.length > 0) {
+          //emit answers to parent if answers are filled.
+          this.$emit('answerMultiChoice', this.answers);
+        }
+      }
     }
 }
 </script>

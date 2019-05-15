@@ -40,6 +40,7 @@
             style="margin:10px"
             ref="question"
           />
+          <!-- multiple choice TODO -->
         </v-layout>
       </v-card-actions>
 
@@ -98,7 +99,14 @@ export default {
     QuestionCard,
     Info
   },
-  props: ["question", "progress", "isMobile"],
+  props: {
+      question: {
+          type: Object,
+          required: true
+      },
+      progress: Number,
+      isMobile: Boolean
+  },
   data() {
     return{
       selectedAnswer: null

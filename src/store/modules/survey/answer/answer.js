@@ -22,17 +22,38 @@ const getters = {
 
 const actions = {
     answerQuestion({ commit }, { answer, question }) {
+        //check if the answer given is multiple choice (an array)
+        if(Array.isArray(answer)) {
+            //multi choice question answered
+            //create temp array for storing created answer objects
+            let temp = [];
+            answer.forEach(ans => {
+                let a = {
+                    questionID: question.id,
+                    questionValue: question.value,
+                    lincData: question.lincData,
+                    targetID: ans.targetID,
+                    answerValue: ans.value
+                };
 
-        //fill the answer in on the answers array
-        var a = {
-            questionID: question.id,
-            questionValue: question.value,
-            lincData: question.lincData,
-            targetID: answer.targetID,
-            answerValue: answer.value
-        };
+                temp.push(a);
+            });
+            
+            //push the array to the main answer store.
+            commit(ADD_ANSWER, temp);
 
-        commit(ADD_ANSWER, a);
+        } else {
+            //single choice question answered
+            //fill the answer in on the answers array
+            var a = {
+                questionID: question.id,
+                questionValue: question.value,
+                lincData: question.lincData,
+                targetID: answer.targetID,
+                answerValue: answer.value
+            };
+            commit(ADD_ANSWER, a);
+        }
     },
     deleteLastAnswer({ commit }) {
         commit(DELETE_LAST_ANSWER);

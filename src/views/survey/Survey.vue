@@ -16,7 +16,7 @@
         />
         <MultipleChoice 
           v-else-if="currentquestion.style == 7"
-          v-on:answerQuestion="answeredQuestion"
+          v-on:answerMultiChoice="answeredMultiChoiceQuestion"
           v-on:renderPreviousQuestion="renderPreviousQuestion"
           :question="currentquestion"
           :progress="progress"
@@ -79,9 +79,6 @@ export default {
     this.setBackground("#eee");
     this.setFooterColor("#c01833");
   },
-  beforeDestroy() {
-    this.setFooterColor("#fff");
-  },
   methods: {
     ...mapActions("survey/", ["getSurveyByID"]),
     ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion"]),
@@ -110,6 +107,17 @@ export default {
       this.setCurrentQuestion({question: this.survey.nodes[prevAnswer.questionID], nodes: this.survey.nodes });
       this.deleteLastAnswer();
     },
+    answeredMultiChoiceQuestion(answers) {
+        this.answerQuestion({
+          answer: answers,
+          question: this.currentquestion
+        });
+
+        this.fillProgress({addedDepth: 1, survey: this.survey});
+        //
+
+
+    },
     getFormattedDate() {
       var myDate = new Date();
       var month = ("0" + (myDate.getMonth() + 1)).slice(-2);
@@ -133,10 +141,30 @@ export default {
       );
 
       for (let i = 0; i < this.answer.length; i++) {
-        if(this.answer[i].answerValue != null) {
+        //check if the question to be printed is multi or single choice
+        let currentAnswer = this.answer[i];
+
+        if(Array.isArray(currentAnswer)) {
+          //print relevant question based on first answer given
+          
+          pdfContents.push(this.pdfContentQuestion(currentAnswer[0].questionValue));
+
+          //temp variable for text to put as answers to the question
+          let tempAnswer = "";
+          //multi choice answer
+          currentAnswer.forEach(ans => {
+              //add all answers to a string.
+              tempAnswer += ans.answerValue;
+              tempAnswer += " ";
+          });
+          pdfContents.push(this.pdfContentReply(tempAnswer));
+          console.log(pdfContents);
+        } else if(currentAnswer.answerValue != null) {
+          //single choice answer
           pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
           pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
         } else {
+          //no answer found, print error.
           pdfContents.push(this.pdfContentWarning(this.answer[i].questionValue));
           console.error("Error while printing to the PDF");
           console.error(this.answer[i]);
@@ -159,10 +187,6 @@ export default {
       this.isMobile = window.innerWidth < 600
     }
   },
-  mounted() {
-    this.onResize()
-    window.addEventListener('resize', this.onResize, { passive: true })
-  },
   updated() {
     //only on the first ever update since this page
     if (this.currentquestion == null) {
@@ -170,6 +194,10 @@ export default {
       let xxx = this.survey.nodes;
       this.setCurrentQuestion({ question: tetsdatax, nodes: xxx });
     }
+  },
+  mounted() {
+    this.onResize()
+    window.addEventListener('resize', this.onResize, { passive: true })
   },
   watch: {
     progress: function(newValue, oldValue) {
@@ -181,10 +209,13 @@ export default {
       }
     }
   },
-  beforeDestroy () {
+  beforeDestroy() {
+    this.setFooterColor("#fff");
     if (typeof window !== 'undefined') {
-      window.removeEventListener('resize', this.onResize, { passive: true })
+      window.removeEventListener('resize', this.onResize, { passive: true });
     }
-  },
+
+
+  }
 };
 </script>
