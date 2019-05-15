@@ -22,7 +22,6 @@ const actions = {
       depth = d;
     }
 
-    console.log(currentquestion);
     if (currentquestion.flows.length > 0) {
       //bump up the progress
       commit(SET_PROGRESS, (depth / survey.maxDepth) * 100);
@@ -35,7 +34,6 @@ const actions = {
   setCurrentQuestion({ commit, state }, { question, nodes }) {
     //if you want to get a new question but the flow ends but the backlog is not empty yet
     if (question == null && state.currentquestionBacklog.length > 0) {
-      console.log(state.currentquestionBacklog);
       commit(SET_CURRENTQUESTION, state.currentquestionBacklog[0]);
       commit(DELETE_FIRST_CURRENTBACKLOG_QUESTION);
     } else if(question == null){

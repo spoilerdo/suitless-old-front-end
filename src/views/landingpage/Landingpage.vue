@@ -77,8 +77,7 @@ export default {
   }
 };
 </script>
-
-<style>
+<style scoped>
 .absolute{
   position: absolute;
   top:0px;
