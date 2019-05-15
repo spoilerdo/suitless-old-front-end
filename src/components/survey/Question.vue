@@ -40,7 +40,6 @@
             style="margin:10px"
             ref="question"
           />
-          <!-- multiple choice TODO -->
         </v-layout>
       </v-card-actions>
 

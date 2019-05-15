@@ -42,6 +42,32 @@
           </v-layout>
         </v-container>
       </v-card-actions>
+
+      <!-- previous arrow -->
+      <v-layout align-center justify-center row>
+        <v-btn
+          v-if="progress > 0"
+          v-on:click="$emit('renderPreviousQuestion', question)"
+          flat
+          class="action-btn"
+        >
+          <v-icon color="secondary" x-large left>mdi-chevron-left</v-icon>
+        </v-btn>
+
+        <!-- next arrow -->
+        <v-btn
+          large
+          flat
+          round
+          icon
+          bottom
+          class="action-btn"
+          @click="answerQuestion()"
+        >
+          <v-icon color="secondary" x-large right>mdi-chevron-right</v-icon>
+        </v-btn>
+      </v-layout>
+
     </v-card>
   </v-scale-transition>
 </template>
@@ -53,6 +79,13 @@ export default {
     components: {
         Info
     },
-    props: ["question", "progress", "isMobile", "options"]
+    props: ["question", "progress", "isMobile", "options"],
+    data() {
+      return {
+
+      }
+    },
+    methods: {
+    }
 }
 </script>
