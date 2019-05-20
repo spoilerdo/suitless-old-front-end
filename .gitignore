@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /dist
+tests/e2e/reports
 
 # local env files
 .env.local
@@ -21,3 +22,4 @@ yarn-error.log*
 *.sw*
 .node-version
 .npm-version
+*.log
