@@ -22,6 +22,8 @@ const actions = {
       depth = d;
     }
 
+
+    //TODO: this check doesn't work
     if (currentquestion.flows.length > 0) {
       //bump up the progress
       commit(SET_PROGRESS, (depth / survey.maxDepth) * 100);

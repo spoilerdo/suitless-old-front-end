@@ -31,7 +31,6 @@ export function createFormatbar(editor, model) {
 
 function showFormatBar(editor, selectedCell, model){
     if(selectedCell == null){return;}
-
         //change the state values
         state.editor = editor;
         state.selectedCell = selectedCell;
