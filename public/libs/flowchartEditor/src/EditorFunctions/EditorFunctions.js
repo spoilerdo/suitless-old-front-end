@@ -148,7 +148,7 @@ export let editorFunctions = {
     * @param {mxGraph} graph
     */
     exportChart(graph, name, description) {
-        return GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth);
+        GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth);
     },
 
     /**
