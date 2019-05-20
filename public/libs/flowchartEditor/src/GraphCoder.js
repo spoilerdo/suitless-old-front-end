@@ -1,5 +1,3 @@
-import { apiCall } from "../../../../src/api/api";
-
 /**
  * Saves your flowchart to convert it to JSON
  * @author Marco Driessen, Martijn Dormans
@@ -36,8 +34,7 @@ export let GraphCoder = {
             nodes   
         }
 
-        console.log(JSON.stringify(module, null, "\t"))
-        apiCall('post', "http://ironsm4sh.nl:3303/modules/", JSON.stringify(module, null, "\t"));
+        return JSON.stringify(module, null, "\t")
     },
 
     checkEdges(cell){
