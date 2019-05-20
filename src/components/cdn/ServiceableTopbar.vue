@@ -1,22 +1,28 @@
 <template>
-  <v-form v-model="valid" class="ServiceableTopbar">
+  <v-form :data-vv-scope="'Form'" class="ServiceableTopbar">
     <v-container>
-      <p><b>Create a new serviceable</b></p>
-      <v-layout>
+      <p>
+        <b>Create a new serviceable</b>
+      </p>
+      <v-layout class="center">
         <v-flex xs12 md4>
-          <v-text-field v-model="name" :rules="nameRules" :counter="10" label="name" required></v-text-field>
+          <v-text-field
+            v-model="form.name"
+            v-validate="'required|min:3|alpha'"
+            :counter="255"
+            label="tag"
+            name="tag"
+            required
+          ></v-text-field>
+          <span>{{ errors.first(`Form.tag`) }}</span>
         </v-flex>
 
         <v-flex xs12 md4>
-          <v-text-field v-model="type" :rules="nameRules" :counter="10" label="type" required></v-text-field>
-        </v-flex>
-
-        <v-flex xs12 md4>
-          <ServiceableFilePicker/>
+          <ServiceableFilePicker v-on:Base64="setFile($event)" v-on:Type="setType($event)"/>
         </v-flex>
 
         <v-flex xs5 md1>
-          <v-btn :disabled=true color="info" @click="uploadImage">upload</v-btn>
+          <v-btn color="info" @click="uploadImage">upload</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -25,25 +31,41 @@
 
 <script>
 import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
-import {CDN_URL} from "@/store/serverconstants"
-import * as api from "@/api/api"
-import { type } from 'os';
+import cdn from "@/store/modules/cdn/server";
 
 export default {
-  data: () => ({
-    valid: false,
-    name: "",
-    type: "",
-    nameRules: [v => !!v || "this is required"],
-    FILE: ""
-  }),
+  data() {
+    return {
+      valid: false,
+      form: {
+        name: "",
+        file: "",
+        type: ""
+      },
+      validated: 1
+    };
+  },
   components: {
     ServiceableFilePicker
   },
   methods: {
+    setFile(file) {
+      this.form.file = file;
+    },
+    setType(type) {
+      this.form.type = type;
+    },
     uploadImage() {
-      api.apiCall("POST", "http://ironsm4sh.nl:3305/", {}).then(() => {
-
+      this.$validator.validateAll("Form").then(valid => {
+        if (valid) {
+          let serviceable = cdn.actions
+            .uploadImage(this.form.file, this.form.name, this.form.type)
+            .then(serviceable => {
+              if (serviceable != null) {
+                this.$emit("serviceable", serviceable);
+              }
+            });
+        }
       });
     }
   }
@@ -53,5 +75,10 @@ export default {
 <style>
 .ServiceableTopbar {
   background: white;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
 }
 </style>

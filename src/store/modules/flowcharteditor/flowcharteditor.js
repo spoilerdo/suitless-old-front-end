@@ -5,10 +5,7 @@ import { SET_DIALOG, SET_FLOWCHART, SAVE_FLOWCHART, SET_GF, SET_QUESTION, SET_MO
 const state = {
     dialog: false,
     flowchart: null,
-    generalfunctions: true,
-    questionfunctions: false,
-    modulefunctions: false,
-    notificationfunctions: false
+    formatBarType: null,
 }
 
 const getters = {}
@@ -18,18 +15,8 @@ const actions = {
         commit(SET_DIALOG, dialogState);
     },
 
-    /*Sets the different modules to true in order to show them on the screen*/
-    setGeneralFunctions({commit}, gfState){
-        commit(SET_GF, gfState);
-    },
-    setQuestionFunctions({commit}, questionState){
-        commit(SET_QUESTION, questionState);
-    },
-    setModuleFunctions({commit}, moduleState){
-        commit(SET_MODULE, moduleState);
-    },
-    setNotificationFunctions({commit}, notificationState){
-        commit(SET_NOTIFICATION, notificationState);
+    setFormatBarType({commit}, newType){
+        commit(SET_FORMATBAR, newType);
     },
     
     async getFlowchartByName({commit}, name){
@@ -56,20 +43,11 @@ const mutations = {
     [SET_DIALOG](state, dialogState){
         state.dialog = dialogState;
     },
-    [SET_GF](state, gfState){
-        state.generalfunctions = gfState;
+    [SET_FORMATBAR](state, formatBarState) {
+        state.formatBarType = formatBarState;
     },
-    [SET_QUESTION](state, questionState) {
-        state.questionfunctions = questionState;
-    },
-    [SET_MODULE](state, moduleState) {
-        state.modulefunctions = moduleState;
-    },
-    [SET_NOTIFICATION](state, notificationState){
-        state.notificationfunctions = notificationState
-    },
-    [SET_FLOWCHART](state, flowchart){
-        state.flowchart = flowchart;
+    [SET_FLOWCHART](state, flowchartState) {
+        state.flowchart = flowchartState;
     }
 }
 

@@ -13,11 +13,12 @@ import { mxGraph, mxClipboard, mxKeyHandler } from "../MxGraph";
 * https://stackoverflow.com/questions/3898130/check-if-a-user-has-scrolled-to-the-bottom
 * https://stackoverflow.com/questions/31223341/detecting-scroll-direction
 * actions to the toolbar.
-* @param {mxKeyHandler} keyHandler 
+* @param {mxKeyHandler} x 
 * @param {mxGraph} graph
+* @param {mxUndoManager} undoManager
 
 */
-export function addKeyActions(keyHandler, graph, graphcontainer) {
+export function addKeyActions(keyHandler, graph, graphcontainer, undoManager) {
     keyHandler.bindKey(46, (evt) => {
         if (graph.isEnabled()) {
             graph.removeCells();
@@ -45,6 +46,14 @@ export function addKeyActions(keyHandler, graph, graphcontainer) {
             crtlPressed = true;
         }
     });
+
+    keyHandler.bindControlKey(90, (evt) => {
+        undoManager.undo()
+    })
+
+    keyHandler.bindControlKey(89, (evt) => {
+        undoManager.redo()
+    })
 
     graphcontainer.addEventListener('keyup', function(e){
         if(e.keyCode === 17){

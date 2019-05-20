@@ -7,19 +7,24 @@
 export let GraphCoder = {
     encodeGraphToJSON(graph, name, description, maxDepth) {
         let cells =  graph.getChildVertices(graph.getDefaultParent())
-        let nodes = []
-        cells.forEach(e => {
-            nodes.push({
-                id: parseInt(e.id),
-                style: e.lincType,
-                value: e.value,
-                lincData: e.lincData,
-                height: e.geometry.height,
-                width: e.geometry.width,
-                posX: e.geometry.x,
-                posY: e.geometry.y,
-                flows: this.checkEdges(e)
-            })
+        let nodes = [];
+        cells.forEach(n => {
+            if(n.children != null && n.children.length > 0){
+                //the node contains children that need to be exported correctly
+                n.children.forEach(child => {
+                    //add child-node to the nodes array
+                    nodes.push(this.createNode(child));
+                    
+                    //add some lincdata to the parent node in order to save the child
+                    //it will save the child-node's name and id in order to get a reference to
+                    n.lincData.push({
+                        "key": child.value,
+                        "value": child.id
+                    });
+                })
+            }
+
+            nodes.push(this.createNode(n))
         })
 
         let module = {
@@ -45,5 +50,19 @@ export let GraphCoder = {
             }
         }
         return output;
-    }
+    },
+
+    createNode(node){
+        return {
+            id: parseInt(node.id),
+            style: node.lincType,
+            value: node.value,
+            lincData: node.lincData,
+            height: node.geometry.height,
+            width: node.geometry.width,
+            posX: node.geometry.x,
+            posY: node.geometry.y,
+            flows: this.checkEdges(node)
+        }
+    },
 }

@@ -1,6 +1,14 @@
+/**
+ * General clipboard functionality (copy, paste and cut).
+ * These will also work with shorkeys crtl-c, crtl-p and crtl-x
+ * @author Martijn Dormans
+ * @version 1.0
+ * @since 10-04-2019
+ */
+
 import { mxClipboard, mxUtils, mxCodec, mxGraphModel, mxEvent } from "../MxGraph";
 
-export function clipBoardFunctions() {
+export function clipBoardFunctions(graph) {
     var textInput = document.createElement('textarea');
     mxUtils.setOpacity(textInput, 0);
     textInput.style.width = '1px';

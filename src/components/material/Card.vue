@@ -1,14 +1,11 @@
 <template>
-  <v-card
-    v-bind="$attrs"
-    :style="styles"
-    v-on="$listeners"
-  >
+  <v-card v-bind="$attrs" :style="styles" v-on="$listeners">
     <Offset
       v-if="hasOffset"
       :inline="inline"
       :full-width="fullWidth"
       :offset="offset"
+      class="flex xs12"
     >
       <v-card
         v-if="!$slots.offset"
@@ -17,44 +14,36 @@
         class="v-card--material__header"
         dark
       >
-        <slot
-          v-if="!title && !text"
-          name="header"
-        />
+        <slot v-if="!title && !text" name="header"/>
         <span v-else>
-          <h4
-            class="title font-weight-light mb-2"
-            v-text="title"
-          />
-          <p
-            class="category font-weight-thin"
-            v-text="text"
-          />
+          <div style="display: flex;">
+            <div style="display: flex;">
+              <v-icon v-if="icon != undefined" size="40" style="margin-right: 15px;">{{icon}}</v-icon>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+              <h4 class="title font-weight-light mb-2" v-text="title" v-if="title !== undefined"/>
+              <p class="category font-weight-thin white--text" v-text="text"/>
+            </div>
+          </div>
         </span>
       </v-card>
-      <slot
-        v-else
-        name="offset"
-      />
+      <slot v-else name="offset"/>
     </Offset>
 
     <v-card-text>
-      <slot />
+      <slot/>
     </v-card-text>
 
-    <v-divider
-      v-if="$slots.actions"
-      class="mx-3"
-    />
+    <v-divider v-if="$slots.actions" class="mx-3"/>
 
     <v-card-actions v-if="$slots.actions">
-      <slot name="actions" />
+      <slot name="actions"/>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import Offset from '@/components/helper/Offset'
+import Offset from "@/components/helper/Offset";
 
 export default {
   inheritAttrs: false,
@@ -62,7 +51,7 @@ export default {
   props: {
     color: {
       type: String,
-      default: 'secondary'
+      default: "secondary"
     },
     elevation: {
       type: [Number, String],
@@ -87,36 +76,39 @@ export default {
     text: {
       type: String,
       default: undefined
+    },
+    icon: {
+      type: String,
+      default: undefined
     }
   },
   components: {
     Offset
   },
   computed: {
-    hasOffset () {
-      return this.$slots.header ||
-        this.$slots.offset ||
-        this.title ||
-        this.text
+    hasOffset() {
+      return (
+        this.$slots.header || this.$slots.offset || this.title || this.text
+      );
     },
-    styles () {
-      if (!this.hasOffset) return null
+    styles() {
+      if (!this.hasOffset) return null;
 
       return {
         marginBottom: `${this.offset}px`,
         marginTop: `${this.offset * 2}px`
-      }
+      };
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
-  .v-card--material {
-    &__header {
-      &.v-card {
-        border-radius: 4px;
-      }
+.v-card--material {
+  &__header {
+    &.v-card {
+      border-radius: 4px;
     }
   }
+}
 </style>

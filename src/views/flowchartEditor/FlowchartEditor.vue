@@ -1,19 +1,14 @@
 <template>
   <v-layout fluid align-space-around justify-start row fill-height>
     <div id="toolbarContainer" class="toolbar"></div>
-    <v-layout
-      id="flowchartContainer"
-      class="flowchart"
-      align-space-around
-      justify-center
-      row
-      fill-height
-    />
+    <v-layout id="flowchartContainer" class="flowchart"/>
     <div id="formatbarContainer" class="format">
-      <GeneralFunctions v-show="generalfunctions"/>
-      <QuestionFunctions v-show="questionfunctions"/>
-      <ModuleFunctions v-show="modulefunctions"/>
-      <NotificationFunctions v-show="notificationfunctions"/>
+        <GeneralFunctions v-show="formatBarType == null"/>
+        <QuestionFunctions v-show="formatBarType == this.$data.nodeEnum.Question"/>
+        <ModuleFunctions v-show="formatBarType == this.$data.nodeEnum.Module"/>
+        <NotificationFunctions v-show="formatBarType == this.$data.nodeEnum.Notification"/>
+        <MultipleChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.MultipleChoice"/>
+        <ChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.Choice"/>
     </div>
     <FlowchartForm id="importForm"/>
   </v-layout>
@@ -27,10 +22,10 @@
   padding-left: 15px;
   padding-right: 15px;
 }
-.flowchart {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+.flowchart{
+    width: 100%;
+    height: 95vh;
+    overflow: hidden;
 }
 .format {
   width: 400px;
@@ -240,32 +235,34 @@ import GeneralFunctions from "@/components/flowcharteditor/formatbar/GeneralFunc
 import QuestionFunctions from "@/components/flowcharteditor/formatbar/QuestionFunctions";
 import ModuleFunctions from "@/components/flowcharteditor/formatbar/ModuleFunctions";
 import NotificationFunctions from "@/components/flowcharteditor/formatbar/NotificationFunctions";
+import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/MultipleChoiceFunctions";
+import ChoiceFunctions from "@/components/flowcharteditor/formatbar/ChoiceFunctions";
 
 export default {
-  components: {
-    FlowchartForm,
-    GeneralFunctions,
-    QuestionFunctions,
-    ModuleFunctions,
-    NotificationFunctions
-  },
-  mounted() {
-    this.startEditor();
-  },
-  methods: {
-    ...mapActions("app/", ["setBackground"])
-  },
-  beforeMount() {
-    this.setBackground("transparent");
-  },
-  computed: {
-    //MapState aren't updated when a value is changed
-    ...mapState("flowcharteditor/", [
-      "generalfunctions",
-      "questionfunctions",
-      "modulefunctions",
-      "notificationfunctions"
-    ])
-  }
-};
+    components: {
+        FlowchartForm,
+        GeneralFunctions,
+        QuestionFunctions,
+        ModuleFunctions,
+        NotificationFunctions,
+        MultipleChoiceFunctions,
+        ChoiceFunctions
+    },
+    mounted(){
+        this.startEditor();
+    },
+    methods: {
+        ...mapActions("app/", ["setBackground", "setFooterColor"]),
+    },
+    beforeMount() {
+        this.setBackground("transparent");
+        this.setFooterColor("#c01833");
+    },
+    beforeDestroy() {
+        this.setFooterColor("#fff");
+    },
+    computed: {
+        ...mapState("flowcharteditor/", ["formatBarType"])
+    }
+}
 </script>

@@ -1,30 +1,44 @@
 <template>
-  <v-layout fill-height fluid grid-list-sm>
+  <v-layout fluid grid-list-sm>
     <Card
       color="primary"
       title="All Surveys"
       text="Surveys we recommend for you based on previous input"
-      class="flex xs12 md6"
+      class="flex xs12 md12"
+      style="display: flex; flex-wrap: wrap;"
     >
-    allSurveys
-      <v-layout row wrap>
-        <div v-for="s in survey" :key="s.moduelID" class="text-xs-center flex xs12 md3">
-          <RoundCard :redirecturl='`/survey/${s.moduleID}`' imagename="IP.svg" :text="s.name" width="xs12"/>
+      <v-layout row wrap style="overflow-y: scroll; max-height: 573px">
+        <div
+          v-for="s in survey.slice(0,limit)"
+          :key="s.moduelID"
+          class="text-xs-center flex md3 xs12"
+          style="padding-bottom: 15px;"
+        >
+          <ListCard
+            :redirecturl="`/survey/${s.moduleID}`"
+            imagename="IP.svg"
+            percentage="0"
+            :title="s.name"
+            :description="s.description"
+          />
         </div>
       </v-layout>
+      <div class="flex xs12" style="display: flex; justify-content: flex-end;">
+        <v-btn class="primary" v-on:click="updateSurveys()" large>{{buttonText}}</v-btn>
+      </div>
     </Card>
   </v-layout>
 </template> 
 
 <script>
 import Card from "@/components/material/Card";
-import RoundCard from "@/components/material/RoundCard";
+import ListCard from "@/components/material/ListCard";
 import { mapState, mapGetters } from "vuex";
 
 export default {
   components: {
     Card,
-    RoundCard
+    ListCard
   },
   computed: {
     ...mapState("survey", {
@@ -38,7 +52,21 @@ export default {
   data() {
     return {
       role: null,
+      limit: 2,
+      buttonText: "Show more"
     };
+  },
+
+  methods: {
+    updateSurveys() {
+      if (this.limit == 2) {
+        this.limit = this.survey.length;
+        this.buttonText = "Show less";
+      } else {
+        this.limit = 2;
+        this.buttonText = "Show more";
+      }
+    }
   }
 };
 </script>
