@@ -54,8 +54,8 @@ export default {
                 changeMultipleChoiceNode(nodeName, title, amountOfChoices){
                     methods.changeMultipleChoiceNode(nodeName, title, amountOfChoices);
                 },
-                changeEdge(name, implication, implicationLevel){
-                    methods.changeEdge(name, implication, implicationLevel);
+                changeEdge(name, implication, implicationLevel, implicationColor){
+                    methods.changeEdge(name, implication, implicationLevel, implicationColor);
                 }
             },
             data: function () {

@@ -33,7 +33,7 @@
                         icon 
                         color="success" 
                         v-bind:class="{selectedColor: form.implicationLevel == theme.success}"
-                        @click="setSelected(theme.success)"
+                        @click="setSelected('success', theme.success)"
                     >
                         <v-icon>mdi-checkbox-blank</v-icon>
                     </v-btn>
@@ -42,7 +42,7 @@
                         icon 
                         color="info"
                         v-bind:class="{selectedColor: form.implicationLevel == theme.info}"
-                        @click="setSelected(theme.info)"
+                        @click="setSelected('info', theme.info)"
                     >
                         <v-icon>mdi-checkbox-blank</v-icon>
                     </v-btn>
@@ -51,7 +51,7 @@
                         icon 
                         color="warning"
                         v-bind:class="{selectedColor: form.implicationLevel == theme.warning}"
-                        @click="setSelected(theme.warning)"
+                        @click="setSelected('warning', theme.warning)"
                     >
                         <v-icon>mdi-checkbox-blank</v-icon>
                     </v-btn>
@@ -60,14 +60,14 @@
                         icon 
                         color="primary"
                         v-bind:class="{selectedColor: form.implicationLevel == theme.primary}"
-                        @click="setSelected(theme.primary)"
+                        @click="setSelected('primary', theme.primary)"
                     >
                         <v-icon>mdi-checkbox-blank</v-icon>
                     </v-btn>
                 </v-layout>
             </v-layout>
             <v-layout align-center justify-center row>
-                <v-btn color="primary" @click="changeEdge(form.answer, form.implication, form.implicationLevel)">Apply</v-btn>
+                <v-btn color="primary" @click="changeEdge(form.answer, form.implication, form.implicationLevel, form.implicationColor)">Apply</v-btn>
             </v-layout>
         </v-form>
     </v-layout>
@@ -89,13 +89,15 @@ export default {
                 answer: null,
                 implication: null,
                 implicationLevel: null,
+                implicationColor: null
             },
             theme
         }
     },
     methods: {
-        setSelected(selected){
+        setSelected(selected, color){
             this.form.implicationLevel = selected;
+            this.form.implicationColor = color;
         }
     }
 }

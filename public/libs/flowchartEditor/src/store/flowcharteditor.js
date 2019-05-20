@@ -124,7 +124,7 @@ export const methods = {
             graph.removeCells(childrenToBeRemoved, true);
         }
     },
-    changeEdge(name, implication, implicationLevel){
+    changeEdge(name, implication, implicationLevel, implicationColor){
         state.selectedCell.value = name;
         state.editor.graph.getModel().setValue(state.selectedCell, name);
 
@@ -134,7 +134,7 @@ export const methods = {
             let styles = state.selectedCell.style.split("strokeColor");
             state.selectedCell.style = styles[0];
         }
-        state.selectedCell.style += "strokeColor=" + implicationLevel
+        state.selectedCell.style += "strokeColor=" + implicationColor
         state.editor.graph.refresh();
 
         state.selectedCell.lincData[0].value = implication;
