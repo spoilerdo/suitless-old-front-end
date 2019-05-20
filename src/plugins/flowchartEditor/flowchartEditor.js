@@ -38,8 +38,8 @@ export default {
                 setFlowchartState(val) {
                     methods.setFlowchart(val);
                 },
-                getFlowchart(name, description) {
-                    return methods.getFlowchart(name, description)
+                saveFlowchart(name, description) {
+                    methods.saveFlowchart(name, description);
                 },
 
                 /*

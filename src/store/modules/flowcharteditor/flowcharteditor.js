@@ -1,6 +1,6 @@
 import { asyncApiCall } from '../../../api/api'
 import { API_URL } from '../../serverconstants';
-import { SET_DIALOG, SET_FLOWCHART, SAVE_FLOWCHART, SET_GF, SET_QUESTION, SET_MODULE, SET_NOTIFICATION } from './mutation-types';
+import { SET_DIALOG, SET_FLOWCHART, SET_FORMATBAR } from './mutation-types';
 
 const state = {
     dialog: false,
@@ -25,16 +25,6 @@ const actions = {
             commit(SET_FLOWCHART, req);
         }catch (e){
             console.log(e);
-        }
-    },
-
-    async saveFlowchart({commit}, flowchart) {
-        try {
-            const req = await asyncApiCall('post', `${API_URL}/modules/`, flowchart)
-            return req
-            commit(SAVE_FLOWCHART, req)
-        } catch(e) {
-            return e
         }
     }
 }

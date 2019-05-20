@@ -36,21 +36,5 @@ function showFormatBar(editor, selectedCell, model){
         state.selectedCell = selectedCell;
         state.model = model;
 
-        switch (selectedCell.lincType) {
-            case NodeEnum.Question:
-                changeStates(true, false, false);
-                break;
-            case NodeEnum.Module:
-                changeStates(false, true, false);
-                break;
-            case NodeEnum.Notification:
-                changeStates(false, false, true);
-                break;
-        };
-}
-
-function changeStates(questionState, moduleState, notificationState){
-    state.questionfunctions.set = questionState;
-    state.modulefunctions.set = moduleState;
-    state.notificationfunctions.set = notificationState;
+        state.activeFormatBar.set = selectedCell.lincType;
 }
