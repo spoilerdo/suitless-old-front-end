@@ -3,9 +3,13 @@
     <v-layout row wrap>
       <v-flex xs12>
         <div v-if="role == 'ADMIN'">
+          <Drawer/>
           <AllSurveys/>
         </div>
         <div v-else style="display: flex; flex-wrap: wrap;">
+          <div v-if="role == 'USER'">
+            <Drawer/>
+          </div>
           <div class="flex xs12">
             <IncompleteSurveys/>
           </div>
@@ -27,13 +31,15 @@ import AllSurveys from "@/components/dashboard-home/AllSurveys";
 import IncompleteSurveys from "@/components/dashboard-home/IncompleteSurveys";
 import LatestReports from "@/components/dashboard-home/LatestReports";
 import { mapActions } from "vuex";
+import Drawer from "@/components/core/Drawer";
 
 export default {
   components: {
     RecommendedSurveys,
     AllSurveys,
     IncompleteSurveys,
-    LatestReports
+    LatestReports,
+    Drawer
   },
   mounted() {
     //when created call the action to get all products from api and put it in the store

@@ -77,8 +77,8 @@ export default {
   data: function() {
     return {
       links: [],
-      logoehvlinc: require("@/assets/logoehvlinc.png"),
-      backgroundImage: require("@/assets/BackgroundMenu.png"),
+      logoehvlinc: require("@/assets/img/logoehvlinc.png"),
+      backgroundImage: require("@/assets/img/BackgroundMenu.png"),
       responsive: false
     };
   },
