@@ -11,17 +11,6 @@ stages:
 - test
 - docker
 
-
-build_VueJS:
-  stage: build
-  image: node:latest
-  script:
-  - 'npm ci'
-  - 'npm run build'
-  artifacts:
-    paths:
-    - /builds/I386965/ehvlinc-frontend/dist/
-
 test_VueJS:
   stage: test
   image: nightwatch:latest
@@ -31,6 +20,18 @@ test_VueJS:
   artifacts:
     paths:
     - /builds/I386965/ehvlinc-frontend/tests/e2e/reports/
+
+build_VueJS:
+  stage: build
+  image: node:latest
+  only:
+  - master
+  script:
+  - 'npm ci'
+  - 'npm run build'
+  artifacts:
+    paths:
+    - /builds/I386965/ehvlinc-frontend/dist/
 
 docker_compose:
   stage: docker
