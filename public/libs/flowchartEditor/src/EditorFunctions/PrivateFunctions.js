@@ -28,10 +28,6 @@ export function addQuestion(graph, parent, json, x, y) {
         {
             "key": "reason",
             "value": "Reason for the question"
-        },
-        {
-            "key": "implication",
-            "value": "Implication of the question"
         }
     ]
     return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, 80, x, y, 'shape=' + NodeEnum.Question);

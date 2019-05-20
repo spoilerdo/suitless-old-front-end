@@ -6,7 +6,7 @@
  */
 import { NodeEnum } from "../NodeEnum";
 import { GraphCoder } from "../GraphCoder";
-import {addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice, genericAddVertex} from "./PrivateFunctions";
+import { addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice } from "./PrivateFunctions";
 
 import { mxGraph, mxGraphModel, mxConstants, mxEllipse, mxHexagon, mxSwimlane } from "../MxGraph";
 
@@ -76,7 +76,26 @@ export let editorFunctions = {
             let firstCell = selectedCells[0];
             let secondCell = selectedCells[1];
 
-            graph.insertEdge(parent, null, value, firstCell, secondCell, "edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;");
+            let edge = graph.createEdge(parent, null, value, firstCell, secondCell, "edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;");
+
+            edge.lincType = NodeEnum.Edge;
+
+            let data = [
+                {
+                    "key": "implication",
+                    "value": "Implication of the answer"
+                },
+                {
+                    "key": "implicationLevel",
+                    "value": "Info"
+                }
+            ]
+
+            edge.lincData = data;
+
+            graph.addEdge(edge, parent, firstCell, secondCell);
+
+            //graph.insertEdge(parent, null, value, firstCell, secondCell, "edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;");
             this.updateDepth(secondCell, firstCell);
             this.checkDepth(secondCell, null);
         }

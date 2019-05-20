@@ -47,7 +47,9 @@ export let GraphCoder = {
                 if(cell.id === cell.edges[i].source.id && cell.edges[i].target.id !== null){
                    output.push({
                        targetID: cell.edges[i].target.id,
-                       value: cell.edges[i].value
+                       value: cell.edges[i].value,
+                       implication: cell.edges[i].lincData[0].value,
+                       implicationLevel: cell.edges[i].lincData[1].value
                    }) 
                 }
             }
