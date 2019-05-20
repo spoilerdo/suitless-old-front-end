@@ -23,6 +23,11 @@
           :isMobile="isMobile"
           :options="options"
         />
+        <EndPage 
+          v-else-if="progress === 100"
+          :answers="answer"
+          v-on:printPDF="printPDF"
+        />
         <Notification
           v-if="notification != null"
           v-bind:value="notification.value"
@@ -42,6 +47,7 @@ import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
 import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
+import EndPage from "@/components/survey/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
@@ -52,7 +58,8 @@ export default {
     ProgressBar,
     Notification,
     MultipleChoice,
-    Info
+    Info,
+    EndPage
   },
   computed: {
     ...mapState("survey/", {
@@ -90,8 +97,6 @@ export default {
         answer,
         question: this.currentquestion
       });
-
-      console.log(this.survey.nodes[answer.targetID].style);
 
       if(this.survey.nodes[answer.targetID].style == this.$data.nodeEnum.End){
         this.setCurrentQuestion({ question: null, nodes: this.survey.nodes });
@@ -171,11 +176,29 @@ export default {
               tempAnswer += " ";
           });
           pdfContents.push(this.pdfContentReply(tempAnswer));
-          console.log(pdfContents);
         } else if(currentAnswer.answerValue != null) {
           //single choice answer
           pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
           pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
+          switch(this.answer[i].answerImplicationLevel) {
+            case "success" :
+              pdfContents.push(this.pdfContentSuccess("Success : "));
+              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
+              break;
+            case "warning" :
+              pdfContents.push(this.pdfContentWarning("Warning : "));
+              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
+              break;
+            case "info" :
+              pdfContents.push(this.pdfContentInfo("Info : "));
+              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
+              break;
+            case "primary" : 
+              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
+              break;
+            default:
+              break;
+          }
         } else {
           //no answer found, print error.
           pdfContents.push(this.pdfContentWarning(this.answer[i].questionValue));
@@ -216,8 +239,6 @@ export default {
     progress: function(newValue, oldValue) {
       //watch for completion of survey, then print pdf
       if (newValue === 100) {
-        this.printPDF();
-        this.$router.push('/dashboard');
         this.setCurrentQuestion({ question: null, nodes: this.survey.nodes });
       }
     }
