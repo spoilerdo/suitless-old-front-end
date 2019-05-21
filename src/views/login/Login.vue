@@ -8,7 +8,7 @@
           <div v-show="loggingIn">
             <Form email password name="loginForm" ref="loginForm" :onclick="loginUser"/>
 
-            <v-btn @click="$refs.loginForm.validatedSubmit()" mx-2 color="primary">Login</v-btn>
+            <v-btn  id="btn_login" @click="$refs.loginForm.validatedSubmit()" mx-2 color="primary">Login</v-btn>
             <v-btn v-on:click="switchForms(false)" mx-2 color="grey">Create New Account</v-btn>
             <v-spacer/>
             <a href="#" style="color: grey;">Forgot your password?</a>

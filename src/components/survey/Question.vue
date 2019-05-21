@@ -33,6 +33,7 @@
             v-on:selectedAnswer="selectAnswer"
             v-for="answer in question.flows"
             :key="answer.targetID"
+            :id="'question-' + answer.targetID"
             :text="answer.value"
             :answer="answer"
             image="http://ironsm4sh.nl:3303/cdn/man"
@@ -65,6 +66,7 @@
           bottom
           class="action-btn"
           @click="answerQuestion()"
+          id="next-btn"
         >
            <v-icon color="secondary" x-large right>mdi-chevron-right</v-icon>
         </v-btn>
