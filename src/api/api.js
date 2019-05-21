@@ -16,7 +16,7 @@ export const apiCall = (method, path, data) => {
             return resolve(res.data);
         })
         .catch(err => {
-            return reject(err.response.data.error);
+            return reject(err);
         })
     });
 }
@@ -28,7 +28,7 @@ export const apiCallWithContentType = (method, path, data, type) => {
             return resolve(res.data);
         })
         .catch(err => {
-            return reject(err.response.data.error);
+            return reject(err);
         })
     });
 }
@@ -39,6 +39,6 @@ export const asyncApiCall = (method, path, data) => {
             return res.data;
         })
         .catch(e => {
-            return e.response.data.error;
+            return e;
         })
 }

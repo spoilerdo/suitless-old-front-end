@@ -19,7 +19,7 @@
                 />
             </v-layout>
             <v-layout align-center justify-center row>
-                <v-btn color="primary" @click="saveFlowchart(form.title, form.description)">Save</v-btn>
+                <v-btn color="primary" @click="prepareSaveFlowchart(form.title, form.description)">Save</v-btn>
                 <v-btn color="primary" @click="setDialog(true)">Import</v-btn>
                 <v-btn color="primary" >Test</v-btn>
             </v-layout>
@@ -40,7 +40,18 @@ export default {
         }
     },
     methods: {
-        ...mapActions("flowcharteditor/", "setDialog")
+        ...mapActions("flowcharteditor/", ["setDialog", "saveFlowchart"]),
+        prepareSaveFlowchart(name, description) {
+            let flowchart = this.getFlowchart(name, description);
+
+            this.saveFlowchart(flowchart).then(req => {
+                if (req != undefined && req.module != null) {
+                    this.showNotification("Flowchart saved!");
+                } else {
+                    this.showNotification("Error during flowchart save");
+                }
+            })
+        }
     }
 }
 </script>

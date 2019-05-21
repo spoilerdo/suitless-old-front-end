@@ -2,6 +2,7 @@
   <v-app :style="{background: this.background }">
     <Toolbar v-if="!newUser"/>
     <CoreView/>
+    <Notification ref="notification"/>
   </v-app>
 </template>
 
@@ -13,11 +14,13 @@ const { mapState, mapActions } = createNamespacedHelpers('app/')
 
 import CoreView from "./components/core/View";
 import Toolbar from './components/core/Toolbar'
+import Notification from "@/components/material/Notification.vue";
 
 export default {
   components: {
     Toolbar,
-    CoreView
+    CoreView,
+    Notification
   },
   date() {
     return {
