@@ -3,17 +3,17 @@
     <v-layout row wrap>
       <v-flex xs12>
         <div v-if="role == 'ADMIN'">
-          <AllSurveys/>
+          <AllSurveys id="AllSurveys_Component"/>
         </div>
         <div v-else style="display: flex; flex-wrap: wrap;">
           <div class="flex xs12">
-            <IncompleteSurveys/>
+            <IncompleteSurveys id="IncompleteSurveys_Component"/>
           </div>
           <div class="flex md7 xs12">
-            <LatestReports/>
+            <LatestReports id="LatestReports_Component"/>
           </div>
           <div class="flex md5 xs12">
-            <RecommendedSurveys/>
+            <RecommendedSurveys id="RecommendedSurveys_Component"/>
           </div>
         </div>
       </v-flex>

@@ -1,5 +1,7 @@
 var config = {
-    test_settings: {
+  "page_objects_path" : "tests/e2e/pages",
+
+  test_settings: {
       chrome: {
           desiredCapabilities: {
             browserName: 'chrome',
@@ -7,8 +9,7 @@ var config = {
             acceptSslCerts: true,
             nativeEvents: true,
             chromeOptions : {
-              // "args" : ["headless", "disable-gpu", "no-sandbox"]
-              "args" : ["disable-gpu", "no-sandbox"]
+              "args": ["headless", "disable-gpu", "no-sandbox"]
             }
           }
       }
