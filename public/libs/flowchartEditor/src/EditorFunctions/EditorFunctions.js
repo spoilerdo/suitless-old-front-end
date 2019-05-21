@@ -111,14 +111,14 @@ export let editorFunctions = {
      */
     addCustomShapes(graph) {
         //Ellipse that represents the start node
-        function ellipse() { };
+        function ellipse() { }
         ellipse.prototype = new mxEllipse();
         ellipse.prototype.constructor = ellipse;
 
         registerCustomShape(graph, ellipse, NodeEnum.Start);
 
         //Dotted ellipse that represents a module you can refer to
-        function dottedEllipse() { };
+        function dottedEllipse() { }
         dottedEllipse.prototype = new mxEllipse();
         dottedEllipse.prototype.constructor = dottedEllipse;
         dottedEllipse.prototype.isDashed = true;
@@ -126,19 +126,16 @@ export let editorFunctions = {
         registerCustomShape(graph, dottedEllipse, NodeEnum.Module);
 
         //Dotted hexagon that represents a notification you can refer to
-        function hexagon() { };
+        function hexagon() { }
         hexagon.prototype = new mxHexagon();
         hexagon.prototype.constructor = hexagon;
 
         registerCustomShape(graph, hexagon, NodeEnum.Notification);
 
         //Swimlane that represents a multiple choice node you can refer to
-        function swimLane() { };
+        function swimLane() { }
         swimLane.prototype = new mxSwimlane();
         swimLane.prototype.constructor = swimLane;
-        swimLane.prototype.editable = 0;
-        swimLane.prototype.resizable = false;
-
 
         registerCustomShape(graph, swimLane, NodeEnum.MultipleChoice);
     },
