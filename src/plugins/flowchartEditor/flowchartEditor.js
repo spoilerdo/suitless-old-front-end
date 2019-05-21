@@ -38,21 +38,24 @@ export default {
                 setFlowchartState(val) {
                     methods.setFlowchart(val);
                 },
-                saveFlowchart(name, description) {
-                    methods.saveFlowchart(name, description);
+                getFlowchart(name, description) {
+                    return methods.getFlowchart(name, description);
                 },
 
                 /*
                 Methods from the flowchart plugin that you want to call whenever you apply new changes
                 */
-                changeQuestionNode(questionNode, question, reason, implication){
-                    methods.changeQuestionNode(questionNode, question, reason, implication);
+                changeQuestionNode(questionNode, question, reason){
+                    methods.changeQuestionNode(questionNode, question, reason);
                 },
                 genericChangeNode(nodeName, name){
                     methods.genericChangeNode(nodeName, name);
                 },
                 changeMultipleChoiceNode(nodeName, title, amountOfChoices){
                     methods.changeMultipleChoiceNode(nodeName, title, amountOfChoices);
+                },
+                changeEdge(name, implication, implicationLevel, implicationColor){
+                    methods.changeEdge(name, implication, implicationLevel, implicationColor);
                 }
             },
             data: function () {

@@ -7,7 +7,7 @@
  */
 
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
-import { NodeEnum } from "../NodeEnum";
+import { mxConstants } from "../MxGraph";
 
 /**
  * All general variables that can be communicated to Vue
@@ -81,17 +81,18 @@ export const methods = {
     setFlowchart(val) {
         state.flowchart.set = val;
     },
-    saveFlowchart(name, description) {
-        editorFunctions.exportChart(state.editor.graph, name, description);
+    getFlowchart(name, description) {
+        return editorFunctions.exportChart(state.editor.graph, name, description);
     },
 
     /*
     These methods will be called from the Vue plugin instance and will change the look of the selectedcell,
     by the newly inputed values from the user
     */
-    changeQuestionNode(questionNode, question, reason, implication){
+    changeQuestionNode(questionNode, question, reason){
         this.genericChangeNode(questionNode, question);
-        //TODO: add reason and implication
+        if(state.selectedCell.lincData != null && state.selectedCell.lincData[1].key === "reason")
+        state.selectedCell.lincData[1].value = reason
     },
     changeMultipleChoiceNode(nodeName, title, amountOfChoices){
         let graph = state.editor.graph;
@@ -123,7 +124,23 @@ export const methods = {
             graph.removeCells(childrenToBeRemoved, true);
         }
     },
-    //Generic method for a basic node with 2 inputs
+    changeEdge(name, implication, implicationLevel, implicationColor){
+        state.selectedCell.value = name;
+        state.editor.graph.getModel().setValue(state.selectedCell, name);
+
+        if(state.selectedCell.style.includes("strokeColor")){
+            //the first index are the styles that you want to reuse
+            //the second index is the part that you want to replace
+            let styles = state.selectedCell.style.split("strokeColor");
+            state.selectedCell.style = styles[0];
+        }
+        state.selectedCell.style += "strokeColor=" + implicationColor
+        state.editor.graph.refresh();
+
+        state.selectedCell.lincData[0].value = implication;
+        state.selectedCell.lincData[1].value = implicationLevel;
+    },
+    //Generic method for a basic node with 2 inputs nodeName (name of the cell) and name of the first lincdata prop (question etc...)
     genericChangeNode(nodeName, name){
         state.selectedCell.value = nodeName;
         state.editor.graph.getModel().setValue(state.selectedCell, nodeName);

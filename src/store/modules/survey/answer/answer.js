@@ -27,13 +27,16 @@ const actions = {
             //multi choice question answered
             //create temp array for storing created answer objects
             let temp = [];
+
             answer.forEach(ans => {
                 let a = {
                     questionID: question.id,
                     questionValue: question.value,
                     lincData: question.lincData,
                     targetID: ans.targetID,
-                    answerValue: ans.value
+                    answerValue: ans.value,
+                    answerImplication: ans.implication,
+                    answerImplicationLevel: ans.implicationLevel
                 };
 
                 temp.push(a);
@@ -50,7 +53,9 @@ const actions = {
                 questionValue: question.value,
                 lincData: question.lincData,
                 targetID: answer.targetID,
-                answerValue: answer.value
+                answerValue: answer.value,
+                answerImplication: answer.implication,
+                answerImplicationLevel: answer.implicationLevel
             };
             commit(ADD_ANSWER, a);
         }

@@ -26,6 +26,7 @@ export function autoResizeCells(graph) {
                 let newRect = {}
                 let rect = c.geometry
                 let preffered = graph.getPreferredSizeForCell(c)
+                if(preffered == null) { return; }
 
                 newRect.x = rect.x
                 newRect.y = rect.y

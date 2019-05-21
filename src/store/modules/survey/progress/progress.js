@@ -1,4 +1,4 @@
-import { SET_CURRENTQUESTION, SET_PROGRESS, SET_DEPTH, SET_NOTIFICATION, SET_OPTIONS, PUSH_OPTION, ADD_CURRENTQBACKLOG, DELETE_FIRST_CURRENTBACKLOG_QUESTION, ADD_CURRENTQBACKLOG_ARRAY } from '../mutation-types';
+import { SET_CURRENTQUESTION, SET_PROGRESS, SET_DEPTH, SET_NOTIFICATION, SET_OPTIONS, PUSH_OPTION, ADD_CURRENTQBACKLOG, DELETE_FIRST_CURRENTBACKLOG_QUESTION, ADD_CURRENTQBACKLOG_ARRAY,CLEAR_CURRENTBACKLOG, ADD_CURRENTSUBQUESTIONBACKLOG, CLEAR_CURRENTSUBQUESTIONBACKLOG, DELETE_FIRST_SUBQUESTION_BACKLOG } from '../mutation-types';
 
 const state = {
   progress: 0,
@@ -7,6 +7,7 @@ const state = {
   notification: null,
   options: [],
   currentquestionBacklog: [],
+  subQuestionBackLog: []
 }
 
 const getters = {
@@ -22,6 +23,8 @@ const actions = {
       depth = d;
     }
 
+
+    //TODO: this check doesn't work
     if (currentquestion.flows.length > 0) {
       //bump up the progress
       commit(SET_PROGRESS, (depth / survey.maxDepth) * 100);
@@ -32,48 +35,56 @@ const actions = {
     commit(SET_DEPTH, depth);
   },
   setCurrentQuestion({ commit, state }, { question, nodes }) {
-    //if you want to get a new question but the flow ends but the backlog is not empty yet
-    if (question == null && state.currentquestionBacklog.length > 0) {
+    //if you do not have a next question, first check if there's more subquestions to be handled
+    if(question == null && state.subQuestionBackLog.length > 0) {
+      commit(SET_CURRENTQUESTION, state.subQuestionBackLog[0]);
+      commit(DELETE_FIRST_SUBQUESTION_BACKLOG);
+    }
+    //if you do not hav a next question and there's no more sub questions switch to the normal question flow if it exists.
+    else if (question == null && state.currentquestionBacklog.length > 0) {
       commit(SET_CURRENTQUESTION, state.currentquestionBacklog[0]);
       commit(DELETE_FIRST_CURRENTBACKLOG_QUESTION);
     } else if(question == null){
+      console.log(" null part");
       return;
     } else {
       //if the next question is a notification then store it in the notification array and show it on the front-end
       if (question.style == 5) {
+        console.log("notification part");
         commit(SET_NOTIFICATION, question);
         commit(SET_CURRENTQUESTION, nodes[question.flows[0].targetID]);
       }
       //if the next question is a multiple choice node then get the different options
       else if (question.style == 7) {
+        console.log("multi choice part" );
         commit(SET_OPTIONS, []);
         let choices = question.lincData.filter(c => c.key !== "question");
         choices.forEach(choice => {
           commit(PUSH_OPTION, nodes[choice.value]);
         });
-
         commit(SET_CURRENTQUESTION, question);
-
       }
       //else just commit the currentquestion
       else {
-        //check if the backlog is not empty otherwise you need to append the new question to the backlog
-        if (state.currentquestionBacklog.length === 0) {
-          commit(SET_CURRENTQUESTION, question);
-        } else {
-          commit(ADD_CURRENTQBACKLOG, question)
-          commit(SET_CURRENTQUESTION, state.currentquestionBacklog[0]);
-          commit(DELETE_FIRST_CURRENTBACKLOG_QUESTION);
-        }
+        commit(SET_CURRENTQUESTION, question);
       }
     }
   },
-  fillCurrentQuestionBacklog({ commit, dispatch }, { questions, nodes }) {
-    //add all the questions to the backlog
-    //but the first one needs to be the currentquestion
-    let question = questions.shift();
-    commit(ADD_CURRENTQBACKLOG, questions);
-    dispatch('setCurrentQuestion', { question, nodes });
+  fillCurrentQuestionBacklog({ commit, dispatch }, { firstSubQuestion, backLogQuestion, nodes }) {
+    //set the first sub question as current question
+    dispatch('setCurrentQuestion', {question: firstSubQuestion, nodes });
+    //add the first question to come after the subquestions are done to the backlog
+    commit(ADD_CURRENTQBACKLOG, backLogQuestion);
+  },
+  clearCurrentQuestionBacklog({commit, dispatch}) {
+    commit(CLEAR_CURRENTBACKLOG);
+  },
+  fillsubQuestionBackLog({commit, dispatch}, futureSubQuestions) {
+    //add subquestions to come in the future 
+    commit(ADD_CURRENTSUBQUESTIONBACKLOG, futureSubQuestions);
+  },
+  clearSubQuestionBackLog({commit, dispatch}) {
+    commit(CLEAR_CURRENTSUBQUESTIONBACKLOG);
   }
 }
 
@@ -97,12 +108,23 @@ const mutations = {
     state.options.push(option);
   },
   [ADD_CURRENTQBACKLOG](state, backlog) {
-    console.log(backlog);
     state.currentquestionBacklog = state.currentquestionBacklog.concat(backlog);
   },
   [DELETE_FIRST_CURRENTBACKLOG_QUESTION](state) {
     state.currentquestionBacklog.shift();
-  }
+  },
+  [CLEAR_CURRENTBACKLOG](state) {
+    state.currentquestionBacklog = [];
+  },
+  [ADD_CURRENTSUBQUESTIONBACKLOG](state, backlog) {
+    state.subQuestionBackLog = state.subQuestionBackLog.concat(backlog);
+  },
+  [CLEAR_CURRENTSUBQUESTIONBACKLOG](state) {
+    state.subQuestionBackLog = [];
+  },
+  [DELETE_FIRST_SUBQUESTION_BACKLOG](state) {
+    state.subQuestionBackLog.shift();
+  },
 }
 
 export default {

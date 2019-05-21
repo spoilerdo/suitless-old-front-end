@@ -1,8 +1,8 @@
 <template>
   <v-app :style="{background: this.background }">
     <Toolbar v-if="!newUser"/>
-    <!--<Drawer/> -->
     <CoreView/>
+    <Notification ref="notification"/>
   </v-app>
 </template>
 
@@ -12,15 +12,15 @@ import { createNamespacedHelpers } from 'vuex';
 //can be used if you will only need to access ONE module in this component, will auto append app/ before actions.
 const { mapState, mapActions } = createNamespacedHelpers('app/')
 
-//import Drawer from './components/core/Drawer'
 import CoreView from "./components/core/View";
 import Toolbar from './components/core/Toolbar'
+import Notification from "@/components/material/Notification.vue";
 
 export default {
   components: {
     Toolbar,
-    //Drawer,
-    CoreView
+    CoreView,
+    Notification
   },
   date() {
     return {

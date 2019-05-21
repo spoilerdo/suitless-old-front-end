@@ -5,6 +5,9 @@ import { pdfContentReply } from "../../../public/libs/pdfreporter/src/PdfContent
 import { pdfContentResult } from "../../../public/libs/pdfreporter/src/PdfContent/PdfContentResult"
 import { pdfContentTitle } from "../../../public/libs/pdfreporter/src/PdfContent/PdfContentTitle"
 import { pdfContentWarning } from "../../../public/libs/pdfreporter/src/PdfContent/PdfContentWarning"
+import { pdfContentInfo } from "../../../public/libs/pdfreporter/src/PdfContent/PdfContentInfo"
+import { pdfContentSuccess } from "../../../public/libs/pdfreporter/src/PdfContent/PdfContentSuccess"
+import { pdfContentSub } from "../../../public/libs/pdfreporter/src/PdfContent/PdfContentSub"
 
 export default {
     install(Vue){ 
@@ -31,6 +34,15 @@ export default {
                 },
                 pdfContentWarning(content){
                     return new pdfContentWarning(content);
+                },
+                pdfContentInfo(content) {
+                    return new pdfContentInfo(content);
+                },
+                pdfContentSuccess(content) {
+                    return new pdfContentSuccess(content);
+                },
+                pdfContentSub(content) {
+                    return new pdfContentSub(content);
                 }
             }
         })

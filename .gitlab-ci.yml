@@ -4,15 +4,28 @@ before_script:
 cache:
   paths:
   - .m2/repository
+  - node_modules/
 
 stages:
 - build
+- test
 - docker
 
+test_VueJS:
+  stage: test
+  image: nightwatch:latest
+  script:
+  - 'npm i'
+  - 'npm run test:e2e'
+  artifacts:
+    paths:
+    - /builds/I386965/ehvlinc-frontend/tests/e2e/reports/
 
 build_VueJS:
   stage: build
   image: node:latest
+  only:
+  - master
   script:
   - 'npm ci'
   - 'npm run build'
