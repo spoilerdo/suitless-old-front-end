@@ -11,7 +11,7 @@
       <v-flex xs12 sm6 md5>
         <div class="display-2 text-xs-center white--text pb-3">Make your company legally ready!</div>
         <div class="text-xs-center">
-          <v-btn to="/landingregister" class="primary" large>Start</v-btn>
+          <v-btn to="/landingregister" class="primary" id="startbtn" large>Start</v-btn>
         </div>
       </v-flex>
     </v-layout>

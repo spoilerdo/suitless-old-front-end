@@ -10,9 +10,9 @@
         <div class="subheading text-xs-center white--text pb-3">Creating an account allows us to suggest surveys to you based on your data and submitted surveys!</div>
       </v-flex>
       <v-layout align-center justify-center row>
-        <RoundCard redirecturl="/login" imagename="Account.svg" text="Create an account"  cardWidth="xs6 md3" direction="column"/>
+        <RoundCard redirecturl="/login" imagename="Account.svg" text="Create an account"  cardWidth="xs6 md3" direction="column" id="createaccbtn"/>
           <v-divider vertical inset dark></v-divider>
-        <RoundCard redirecturl="/surveys"  imagename="Incognito.svg" text="Continue anonymously" cardWidth="xs6 md3" direction="column"/>
+        <RoundCard redirecturl="/surveys"  imagename="Incognito.svg" text="Continue anonymously" cardWidth="xs6 md3" direction="column" id="anonymousbtn"/>
       </v-layout>
     </v-layout>
   </v-container>

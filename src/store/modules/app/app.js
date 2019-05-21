@@ -2,7 +2,7 @@ import { SET_DRAWER, SET_BACKGROUND, SET_FOOTERCOLOR, SET_NEWUSER } from "./muta
 
 // initial state
 const state = {
-    drawerOpen: true,
+    drawerOpen: false,
     background: "#eee",
     footerColor: "#fff",
     newUser : true

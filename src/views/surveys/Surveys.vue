@@ -14,7 +14,7 @@
     </v-layout>
     <div class="text-xs-center">
       <v-layout align-center justify-center row>
-         <v-btn  color="primary" large href="/dashboard"><v-icon dark>close</v-icon> &nbsp; No thanks, i'll find my own surveys.</v-btn>
+         <v-btn  color="primary" id="skipbtn" large href="/dashboard"><v-icon dark>close</v-icon> &nbsp; No thanks, i'll find my own surveys.</v-btn>
       </v-layout>
     </div>
   </v-container>

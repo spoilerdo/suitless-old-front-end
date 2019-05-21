@@ -1,6 +1,6 @@
 <template>
   <v-flex text-xs-right justify-center class="margin">
-      <v-btn to="/login" small class="primary">Login</v-btn>
+      <v-btn to="/login" small class="primary" id="loginbtn">Login</v-btn>
   </v-flex>
 </template>
 

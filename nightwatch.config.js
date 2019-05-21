@@ -1,4 +1,5 @@
 var config = {
+    globals_path: "globals.js",
     test_settings: {
       chrome: {
           desiredCapabilities: {

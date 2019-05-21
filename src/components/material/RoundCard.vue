@@ -4,7 +4,7 @@
       hover
       ripple
       :to="redirecturl"
-      class="rouned-card flex"
+      class="rouned-card flex surveycard"
       :style="`display: flex; flex-direction: ${direction};`"
     >
       <v-card-media>
