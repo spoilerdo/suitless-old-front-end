@@ -1,5 +1,5 @@
 let config = {
-  "page_objects_path" : "tests/e2e/pages",
+  "page_objects_path": "tests/e2e/pages",
 
   test_settings: {
     chrome: {
