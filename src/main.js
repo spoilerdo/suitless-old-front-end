@@ -2,8 +2,10 @@ import Vue from 'vue'
 import VueParticles from 'vue-particles'
 import VeeValidate from 'vee-validate'
 import VueFullPage from 'vue-fullpage.js'
+
 import pdfreporter from './plugins/pdfreporter/pdfreporter'
 import flowchartEditor from './plugins/flowchartEditor/flowchartEditor';
+import notification from './plugins/notification/notification';
 
 
 import './plugins/vuetify/vuetify'
@@ -16,8 +18,10 @@ Vue.config.productionTip = false
 Vue.use(VueParticles);
 Vue.use(VeeValidate);
 Vue.use(VueFullPage);
+
 Vue.use(pdfreporter);
 Vue.use(flowchartEditor);
+Vue.use(notification)
 
 if (localStorage.jwtToken) {
   //restore axios default header sessions
