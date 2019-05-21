@@ -89,7 +89,7 @@ export default {
   methods: {
     ...mapActions("survey/", ["getSurveyByID"]),
     ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion"]),
-    ...mapActions("progress/", ["fillProgress", "setCurrentQuestion", "fillCurrentQuestionBacklog"]),
+    ...mapActions("progress/", ["fillProgress", "setCurrentQuestion", "fillCurrentQuestionBacklog", "clearCurrentQuestionBacklog", "fillsubQuestionBackLog", "clearSubQuestionBackLog"]),
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
 
     answeredQuestion(answer) {
@@ -98,41 +98,53 @@ export default {
         question: this.currentquestion
       });
 
-      if(this.survey.nodes[answer.targetID].style == this.$data.nodeEnum.End){
-        this.setCurrentQuestion({ question: null, nodes: this.survey.nodes });
-      }else {
-        this.setCurrentQuestion({ question: this.survey.nodes[answer.targetID], nodes: this.survey.nodes });
-      }
-      
-      this.fillProgress({ addedDepth: 1, survey: this.survey });      
+      console.log(answer);
+
+      this.setCurrentQuestion({ question: this.survey.nodes[answer.targetID], nodes: this.survey.nodes });
+      this.fillProgress({ addedDepth: 1, survey: this.survey });     
     },
     renderPreviousQuestion(question) {
-      this.fillProgress({ addedDepth: -1, survey: this.survey });
 
-      //get previous answer
+      //get previous answer(s) and convert them to an array.
       let prevAnswer = this.getAnswerByQuestionID(question);
-      //check if previous question is a notification, if so go one more back.
-      while(this.survey.nodes[prevAnswer.questionID].style == 5) {
-        this.renderPreviousQuestion(this.survey.nodes[prevAnswer]);
+      console.log(prevAnswer);
+      if(!Array.isArray(prevAnswer)) {
+        prevAnswer = Array.of(prevAnswer);
+      } else {
+        //make sure to clear the backlog so the flow of the survey doesnt mess up.
+        this.clearCurrentQuestionBacklog();
+        this.clearSubQuestionBackLog();
       }
-      //select the previouse question
-      this.setCurrentQuestion({question: this.survey.nodes[prevAnswer.questionID], nodes: this.survey.nodes });
-      this.deleteLastAnswer();
+
+      prevAnswer.forEach(prev => {
+          //reset progress for each previous answer
+          this.fillProgress({ addedDepth: -1, survey: this.survey });
+      });
+
+      let previousQuestionID = prevAnswer[0].questionID;
+
+        //check if previous question is a notification, if so go one more back.
+        while(this.survey.nodes[previousQuestionID].style == 5) {
+          this.renderPreviousQuestion(this.survey.nodes[prevAnswer[0]]);
+        }
+        //select the previous question
+        this.setCurrentQuestion({question: this.survey.nodes[previousQuestionID], nodes: this.survey.nodes });
+        this.deleteLastAnswer();
     },
-    answeredMultiChoiceQuestion(answers) {
+    answeredMultiChoiceQuestion({answers, questions}) {
+        //add answer to list of given answers.
         this.answerQuestion({
           answer: answers,
           question: this.currentquestion
         });
 
-        let questions = [];
-        answers.forEach(answer => {
-          if(answer.flows.length > 0){
-            questions.push(this.survey.nodes[answer.flows[0].targetID])
-          }
+        //add the future sub questions to the PRIORITY sub question backlog (skip the first one since it will be handled by the fillcurrentquestionbacklog)
+        answers.slice(1).forEach(ans => {
+          this.fillsubQuestionBackLog(this.survey.nodes[ans.flows[0].targetID]);
         });
-
-        this.fillCurrentQuestionBacklog({questions, nodes: this.survey.nodes});
+    
+        //add the first question to come after finishing all multiple choice sub questions to the backlog.
+        this.fillCurrentQuestionBacklog({firstSubQuestion: this.survey.nodes[answers[0].flows[0].targetID], backLogQuestion: this.survey.nodes[questions.flows[0].targetID], nodes: this.survey.nodes});
 
         this.fillProgress({addedDepth: 1, survey: this.survey});
     },
@@ -197,6 +209,7 @@ export default {
               pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
               break;
             default:
+              console.log('default');
               break;
           }
         } else {
