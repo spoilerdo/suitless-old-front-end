@@ -9,7 +9,7 @@
 import { pdfContent } from "./PdfContent"
 import { pdfContentEnum } from "./PdfContentEnum";
 
-export class pdfContentInfo extends pdfContent {
+export class pdfContentSuccess extends pdfContent {
 
     constructor(data){
         super();

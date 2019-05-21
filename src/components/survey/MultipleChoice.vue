@@ -91,7 +91,7 @@ export default {
           //check if answer is already in array, if so delete it
           if(this.answers.includes(answer)) {
             this.answers.splice(this.answers.indexOf(answer), 1);
-          } else{
+          } else {
             //else add it to the array as a chosen answer.
             this.answers.push(answer);
           }
@@ -99,9 +99,7 @@ export default {
       answerQuestion() {
         if(this.answers.length > 0) {
           //emit answers to parent if answers are filled.
-          let nextQuestions = this.answers;
-          nextQuestions.push(this.question);
-          this.$emit('answerMultiChoice', nextQuestions);
+          this.$emit('answerMultiChoice', {answers: this.answers, questions: this.question});
         }
       }
     }
