@@ -13,6 +13,7 @@
             label="tag"
             name="tag"
             required
+            id="nameField"
           ></v-text-field>
           <span>{{ errors.first(`Form.tag`) }}</span>
         </v-flex>
@@ -22,7 +23,7 @@
         </v-flex>
 
         <v-flex xs5 md1>
-          <v-btn color="info" @click="uploadImage">upload</v-btn>
+          <v-btn color="info" id="uploadBtn" @click="uploadImage">upload</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
