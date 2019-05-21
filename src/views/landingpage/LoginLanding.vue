@@ -7,24 +7,37 @@
     <v-layout align-center justify-center class="background-content-container" row wrap fill-height>
       <v-flex grow xs10>
         <div class="display-2 text-xs-center white--text pb-3">Would you like to create an account?</div>
-        <div class="subheading text-xs-center white--text pb-3">Creating an account allows us to suggest surveys to you based on your data and submitted surveys!</div>
+        <div
+          class="subheading text-xs-center white--text pb-3"
+        >Creating an account allows us to suggest surveys to you based on your data and submitted surveys!</div>
       </v-flex>
-      <v-layout align-center justify-center row>
-        <RoundCard redirecturl="/login" imagename="Account.svg" text="Create an account"  cardWidth="xs6 md3" direction="column"/>
-          <v-divider vertical inset dark></v-divider>
-        <RoundCard redirecturl="/surveys"  imagename="Incognito.svg" text="Continue anonymously" cardWidth="xs6 md3" direction="column"/>
-      </v-layout>
+      <div class="layout row wrap" style="justify-content: center">
+        <ImageCard
+          redirecturl="/login"
+          imagename="account"
+          text="Create an account"
+          cardWidth="xs6 md3"
+          direction="column"
+        />
+        <ImageCard
+          redirecturl="/surveys"
+          imagename="anonymous"
+          text="Continue anonymously"
+          cardWidth="xs6 md3"
+          direction="column"
+        />
+      </div>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import Animatedbackground from "@/components/background/Animatedbackground";
-import RoundCard from '@/components/material/RoundCard'
+import ImageCard from "@/components/material/ImageCard";
 export default {
-    components: {
-        Animatedbackground,
-        RoundCard
-    }
-}
+  components: {
+    Animatedbackground,
+    ImageCard
+  }
+};
 </script>
