@@ -27,21 +27,21 @@ const actions = {
             //multi choice question answered
             //create temp array for storing created answer objects
             let temp = [];
-
             answer.forEach(ans => {
-                let a = {
-                    questionID: question.id,
-                    questionValue: question.value,
-                    lincData: question.lincData,
-                    targetID: ans.targetID,
-                    answerValue: ans.value,
-                    answerImplication: ans.implication,
-                    answerImplicationLevel: ans.implicationLevel
-                };
-
-                temp.push(a);
+                ans.flows.forEach(flow => {
+                    let a = {
+                        questionID: question.id,
+                        questionValue: question.value,
+                        lincData: question.lincData,
+                        targetID: flow.targetID,
+                        answerValue: ans.value,
+                        answerImplication: flow.implication,
+                        answerImplicationLevel: flow.implicationLevel
+                    };
+    
+                    temp.push(a);
+                })
             });
-            
             //push the array to the main answer store.
             commit(ADD_ANSWER, temp);
 

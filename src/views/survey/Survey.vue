@@ -98,8 +98,6 @@ export default {
         question: this.currentquestion
       });
 
-      console.log(answer);
-
       this.setCurrentQuestion({ question: this.survey.nodes[answer.targetID], nodes: this.survey.nodes });
       this.fillProgress({ addedDepth: 1, survey: this.survey });     
     },
@@ -107,7 +105,6 @@ export default {
 
       //get previous answer(s) and convert them to an array.
       let prevAnswer = this.getAnswerByQuestionID(question);
-      console.log(prevAnswer);
       if(!Array.isArray(prevAnswer)) {
         prevAnswer = Array.of(prevAnswer);
       } else {
@@ -188,30 +185,22 @@ export default {
               tempAnswer += " ";
           });
           pdfContents.push(this.pdfContentReply(tempAnswer));
+
+          let implications = this.fillImplications(currentAnswer);
+
+          implications.forEach(impl => {
+            pdfContents.push(impl);
+          });
+
         } else if(currentAnswer.answerValue != null) {
           //single choice answer
           pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
           pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
-          switch(this.answer[i].answerImplicationLevel) {
-            case "success" :
-              pdfContents.push(this.pdfContentSuccess("Success : "));
-              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
-              break;
-            case "warning" :
-              pdfContents.push(this.pdfContentWarning("Warning : "));
-              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
-              break;
-            case "info" :
-              pdfContents.push(this.pdfContentInfo("Info : "));
-              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
-              break;
-            case "primary" : 
-              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
-              break;
-            default:
-              console.log('default');
-              break;
-          }
+
+          let implications = this.fillImplications(Array.of(this.answer[i]));
+          implications.forEach(impl => {
+            pdfContents.push(impl);
+          });
         } else {
           //no answer found, print error.
           pdfContents.push(this.pdfContentWarning(this.answer[i].questionValue));
@@ -221,6 +210,32 @@ export default {
       }
 
       return pdfContents;
+    },
+    fillImplications(flows) {
+      let implicationContents = [];
+      flows.forEach(flow => {
+          switch(flow.answerImplicationLevel) {
+            case "success" :
+            implicationContents.push(this.pdfContentSuccess("Success : "));
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            break;
+          case "warning" :
+            implicationContents.push(this.pdfContentWarning("Warning : "));
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            break;
+          case "info" :
+            implicationContents.push(this.pdfContentInfo("Info : "));
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            break;
+          case "primary" : 
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            break;
+          default:
+            break;
+          }
+      });
+
+        return implicationContents;
     },
     printPDF() {
       let pdfOptions = {
