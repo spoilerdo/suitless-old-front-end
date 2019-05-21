@@ -130,8 +130,7 @@ export function addMultipleChoice(graph, parent, json, x, y) {
         "value": "this is the multiplechoice question"
     }]
 
-    let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, data, 300, 300, x, y, 'resizable=0');
-
+    let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, data, 300, 300, x, y, 'shape=' + NodeEnum.MultipleChoice);
     addSubVertexes(graph, parentSwimlane, json);
     
     return parentSwimlane;
@@ -178,7 +177,7 @@ export function genericAddVertex(graph, parent, json, nodeEnum, data, width, hei
 function addSubVertexes(graph, parent, json) {
     if(json != null){
         json.children.forEach(child => {
-            genericAddVertex(graph, parent, child, NodeEnum.Choice, null, null, null, null, null, null);
+            genericAddVertex(graph, parent, child, NodeEnum.Choice);
         });
     } else {
         //add three standard sub vertexes
@@ -188,7 +187,7 @@ function addSubVertexes(graph, parent, json) {
                 "value": "this is a choice"
             }]
 
-            genericAddVertex(graph, parent, null, NodeEnum.Choice, data, 80, 40, 10, (70 + i * 50), 'movable=0');
+            genericAddVertex(graph, parent, null, NodeEnum.Choice, data, 80, 40, 10, (70 + i * 50), 'shape=' + NodeEnum.MultipleChoice + ';movable=0');
         }
     }
 }
