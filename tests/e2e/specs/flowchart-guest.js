@@ -1,6 +1,5 @@
 module.exports = {
   'Flowchart-guest page title check': function (browser) {
-    browser.deleteCookie();
     // Browser is the browser that is being controlled
     browser
       .url('http://localhost:8080/flowchart') // Navigate to the url
@@ -10,7 +9,6 @@ module.exports = {
   },
 
   'Flowchart-guest redirect login url check': function (browser) {
-    browser.deleteCookie();
     // Browser is the browser that is being controlled
     browser
       .url('http://localhost:8080/flowchart') // Navigate to the url
