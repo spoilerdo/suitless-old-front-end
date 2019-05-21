@@ -13,5 +13,10 @@ module.exports = function (browser) {
     .assert.visible('#btn_login')       // Check if login button is visible
     .click('#btn_login')        // Click login button 
     .pause(1000)        // Wait an extra 1 second so browser can reload itself when login is succesful.
+  },
+
+  this.logout = function() {
+    browser.deleteCookie()
+    .end()
   }
 };

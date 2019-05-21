@@ -1,4 +1,5 @@
 let config = {
+  "custom_commands_path" : "tests/e2e/custom-commands",
   "page_objects_path" : "tests/e2e/pages",
 
   test_settings: {
@@ -9,7 +10,7 @@ let config = {
         acceptSslCerts: true,
         nativeEvents: true,
         chromeOptions: {
-          "args": ["disable-gpu", "no-sandbox"]
+          "args": ["headless", "disable-gpu", "no-sandbox"]
         }
       }
     }
