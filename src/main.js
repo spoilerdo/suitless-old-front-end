@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueParticles from 'vue-particles'
 import VeeValidate from 'vee-validate'
+import 'fullpage.js/vendors/scrolloverflow'
 import VueFullPage from 'vue-fullpage.js'
 
 import pdfreporter from './plugins/pdfreporter/pdfreporter'

@@ -11,8 +11,8 @@
         </v-layout>
       </v-flex>
 
-      <v-layout align-start justify-space-between row fill-heights>
-        <v-flex xs12 sm8 md4 pl-4 pr-4>
+      <v-layout align-start justify-space-between row fill-heights wrap style="justify-content: center">
+        <v-flex xs12 sm8 md4 pl-4 pr-4 style="padding: 30px 0px">
           <v-img :src="Students" aspect-ratio="1" contain max-height="100"/>
           <br>
           <div class="display-1 text-xs-center bold">Students</div>
@@ -24,7 +24,7 @@
             This way: students obtain practical experience from a first-hand source, and get feedback from lawyers from established law firms.
           </div>
         </v-flex>
-        <v-flex xs12 sm8 md4 pl-4 pr-4>
+        <v-flex xs12 sm8 md4 pl-4 pr-4 style="padding: 30px 0px">
           <v-img :src="Startups" aspect-ratio="1" contain max-height="100"/>
           <br>
           <div class="display-1 text-xs-center bold">Startups</div>
@@ -37,7 +37,7 @@
             In return the start-ups will be provided with good quality legal and tax support, an insight in their tax position and high level legal documents.
           </div>
         </v-flex>
-        <v-flex xs12 sm8 md4 pl-4 pr-4>
+        <v-flex xs12 sm8 md4 pl-4 pr-4 style="padding: 30px 0px">
           <v-img :src="LawFirms" aspect-ratio="1" contain max-height="100"/>
           <br>
           <div class="display-1 text-xs-center bold">Law Firms</div>
