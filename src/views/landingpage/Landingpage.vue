@@ -5,9 +5,10 @@
     <Animatedbackground colorA="#30002a 0%" colorB="#232323 25%" colorC="#eeeeee 25.1%" v-once/>
 
     <v-layout align-center justify-center class="background-content-container" row wrap fill-height>
-      <v-flex xs12 sm6 md5>
-        <v-img :src="ehvLogo" aspect-ratio="1" contain max-height="300"/>
+      <v-flex xs12 sm6 md5 class="center" style="justify-content: center;">
+        <v-img :src="ehvLogo" aspect-ratio="1" contain class="flex xs6"/>
       </v-flex>
+      
       <v-flex xs12 sm6 md5>
         <div class="display-2 text-xs-center white--text pb-3">Make your company legally ready!</div>
         <div class="text-xs-center">
@@ -100,5 +101,12 @@ i {
 
 .bold {
     font-weight: bold;
+}
+
+.logo-text {
+  font-weight: bold;
+  font-size: 36px !important;
+  color: white;
+  text-align: center;
 }
 </style>
