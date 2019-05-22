@@ -16,17 +16,18 @@
 
                     <v-layout row wrap justify-center align-center>
                         <v-list>
-                            <template v-for="answer in answers">
-                                 <v-alert
+                            <template text-xs-center v-for="answer in structuredAnswers">
+                                <v-flex row wrap xs12 text-xs-center   :key="answer.answerValue" v-if="answer.answerImplication !== null">
+                                    <h3>{{answer.questionValue}}</h3>
+                                </v-flex>
+                                   <v-alert
                                     :key="answer.answerValue"
                                     :value="true"
                                     :type="answer.answerImplicationLevel"
                                     v-if="answer.answerImplication !== null"
                                 >
-                                {{answer.answerValue}}
-                                 </v-alert>
-
-                                <v-divider :key="answer.answerValue" v-if="answer.answerImplication !== null" />
+                                    {{answer.answerImplication}}
+                                </v-alert>
                             </template>
                         </v-list>
                     </v-layout>
@@ -53,6 +54,29 @@ export default {
         printPDF() {
             this.$emit('printPDF');
         }
+    },
+    data() {
+        return {
+            structuredAnswers: []
+        }
+    },
+     mounted() {
+        //make a clone without reference from this.answers, this way we can fix the prop value without breaking the structure which is used for PDF generation.
+        let anse = JSON.parse(JSON.stringify(this.answers))
+
+        anse.forEach(function(ans, index)  {
+            if(Array.isArray(ans)) {
+                //take the data of the embedded array from the splice
+                let a = anse.splice(index, 1);
+                //take the answer from the array.
+                a[0].forEach(element => {
+                    anse.splice(index, 0, element);
+                });
+            }
+        });
+        //push the fixed answers to the structuredanswers data.
+        this.structuredAnswers = anse;
+        console.log(this.structuredAnswers);
     }
 }
 </script>

@@ -98,16 +98,15 @@ export default {
         question: this.currentquestion
       });
 
-      console.log(answer);
-
-      this.setCurrentQuestion({ question: this.survey.nodes[answer.targetID], nodes: this.survey.nodes });
-      this.fillProgress({ addedDepth: 1, survey: this.survey });     
+      let nextQuestion = this.survey.nodes[answer.targetID];
+      
+      this.setCurrentQuestion({ question: nextQuestion, nodes: this.survey.nodes });
+      this.fillProgress({ addedDepth: 1, survey: this.survey });   
     },
     renderPreviousQuestion(question) {
 
       //get previous answer(s) and convert them to an array.
       let prevAnswer = this.getAnswerByQuestionID(question);
-      console.log(prevAnswer);
       if(!Array.isArray(prevAnswer)) {
         prevAnswer = Array.of(prevAnswer);
       } else {
@@ -140,11 +139,23 @@ export default {
 
         //add the future sub questions to the PRIORITY sub question backlog (skip the first one since it will be handled by the fillcurrentquestionbacklog)
         answers.slice(1).forEach(ans => {
-          this.fillsubQuestionBackLog(this.survey.nodes[ans.flows[0].targetID]);
+          if(ans.flows.length > 0) {
+            this.fillsubQuestionBackLog(this.survey.nodes[ans.flows[0].targetID]);
+          }
         });
     
+        let firstSubQuestion = null;
+        if(answers[0].flows.length > 0) {
+          firstSubQuestion = this.survey.nodes[answers[0].flows[0].targetID];
+        }
+        let backLogQuestion = null;
+        if(questions.flows.length > 0) {
+            backLogQuestion = this.survey.nodes[questions.flows[0].targetID];
+        }
+
+
         //add the first question to come after finishing all multiple choice sub questions to the backlog.
-        this.fillCurrentQuestionBacklog({firstSubQuestion: this.survey.nodes[answers[0].flows[0].targetID], backLogQuestion: this.survey.nodes[questions.flows[0].targetID], nodes: this.survey.nodes});
+        this.fillCurrentQuestionBacklog({firstSubQuestion: firstSubQuestion, backLogQuestion: backLogQuestion, nodes: this.survey.nodes});
 
         this.fillProgress({addedDepth: 1, survey: this.survey});
     },
@@ -173,6 +184,7 @@ export default {
       for (let i = 0; i < this.answer.length; i++) {
         //check if the question to be printed is multi or single choice
         let currentAnswer = this.answer[i];
+        console.log(currentAnswer);
 
         if(Array.isArray(currentAnswer)) {
           //print relevant question based on first answer given
@@ -188,40 +200,56 @@ export default {
               tempAnswer += " ";
           });
           pdfContents.push(this.pdfContentReply(tempAnswer));
+
+          let implications = this.fillImplications(currentAnswer);
+
+          implications.forEach(impl => {
+            pdfContents.push(impl);
+          });
+
         } else if(currentAnswer.answerValue != null) {
           //single choice answer
           pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
           pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
-          switch(this.answer[i].answerImplicationLevel) {
-            case "success" :
-              pdfContents.push(this.pdfContentSuccess("Success : "));
-              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
-              break;
-            case "warning" :
-              pdfContents.push(this.pdfContentWarning("Warning : "));
-              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
-              break;
-            case "info" :
-              pdfContents.push(this.pdfContentInfo("Info : "));
-              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
-              break;
-            case "primary" : 
-              pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
-              break;
-            default:
-              console.log('default');
-              break;
-          }
-        } else {
-          //no answer found, print error.
-          pdfContents.push(this.pdfContentWarning(this.answer[i].questionValue));
-          console.error("Error while printing to the PDF");
-          console.error(this.answer[i]);
+          let implications = this.fillImplications(Array.of(this.answer[i]));
+          implications.forEach(impl => {
+            pdfContents.push(impl);
+          });
         }
       }
-
       return pdfContents;
     },
+    fillImplications(flows) {
+      let implicationContents = [];
+      flows.forEach(flow => {
+          switch(flow.answerImplicationLevel) {
+            case "success" :
+            implicationContents.push(this.pdfContentSuccess("Success : "));
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
+            break;
+          case "warning" :
+            implicationContents.push(this.pdfContentWarning("Warning : "));
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
+            break;
+          case "info" :
+            implicationContents.push(this.pdfContentInfo("Info : "));
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
+            break;
+          case "primary" : 
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
+            break;
+          default:
+            break;
+          }
+      });
+
+        return implicationContents;
+    },
+
     printPDF() {
       let pdfOptions = {
         orientation: "portrait",
