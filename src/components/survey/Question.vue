@@ -23,7 +23,7 @@
 
       <v-card-title primary-title class="grow mb-3">
         <v-layout align-center justify-center row>
-          <h3 class="mb-0">{{question.value}}</h3>
+          <h3 class="headline mb-0">{{question.lincData.find(data => data.key === "question").value}}</h3>
         </v-layout>
       </v-card-title>
       <v-card-actions class="action-card">

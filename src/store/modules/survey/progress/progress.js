@@ -23,27 +23,40 @@ const actions = {
       depth = d;
     }
 
-
     //TODO: this check doesn't work
     if (currentquestion.flows.length > 0) {
       //bump up the progress
       commit(SET_PROGRESS, (depth / survey.maxDepth) * 100);
-    } else {
+    } else if(state.currentquestionBacklog.length == 0 && state.subQuestionBackLog.length == 0) {
       commit(SET_PROGRESS, 100);
     }
 
     commit(SET_DEPTH, depth);
   },
   setCurrentQuestion({ commit, state }, { question, nodes }) {
+    console.log(question);
     //if you do not have a next question, first check if there's more subquestions to be handled
-    if(question == null && state.subQuestionBackLog.length > 0) {
-      commit(SET_CURRENTQUESTION, state.subQuestionBackLog[0]);
+    if(question == null && state.subQuestionBackLog.length > 0 || question != null && question.style == 2 && state.subQuestionBackLog.length > 0) {
+      let comingQuestion = state.subQuestionBackLog[0];
+      
+      commit(SET_CURRENTQUESTION, comingQuestion);
       commit(DELETE_FIRST_SUBQUESTION_BACKLOG);
     }
     //if you do not hav a next question and there's no more sub questions switch to the normal question flow if it exists.
-    else if (question == null && state.currentquestionBacklog.length > 0) {
-      commit(SET_CURRENTQUESTION, state.currentquestionBacklog[0]);
+    else if (question == null && state.currentquestionBacklog.length > 0 || question != null && question.style == 2 && state.currentquestionBacklog.length > 0) {
+      let comingQuestion = state.currentquestionBacklog[0];
+      //set the options for the coming question if it is multiple choice
+      if(comingQuestion.style == 7) {
+        commit(SET_OPTIONS, []);
+        let choices = comingQuestion.lincData.filter(c => c.key !== "question");
+        console.log(choices);
+        choices.forEach(choice => {
+          commit(PUSH_OPTION, nodes[choice.value]);
+        });
+      }
+      commit(SET_CURRENTQUESTION, comingQuestion);
       commit(DELETE_FIRST_CURRENTBACKLOG_QUESTION);
+      
     } else if(question == null){
       console.log(" null part");
       return;
@@ -59,6 +72,7 @@ const actions = {
         console.log("multi choice part" );
         commit(SET_OPTIONS, []);
         let choices = question.lincData.filter(c => c.key !== "question");
+        console.log(choices);
         choices.forEach(choice => {
           commit(PUSH_OPTION, nodes[choice.value]);
         });
@@ -66,15 +80,21 @@ const actions = {
       }
       //else just commit the currentquestion
       else {
+        console.log("else part");
+        console.log(question);
         commit(SET_CURRENTQUESTION, question);
       }
     }
   },
   fillCurrentQuestionBacklog({ commit, dispatch }, { firstSubQuestion, backLogQuestion, nodes }) {
+    //add the first question (if any) to come after the subquestions are done to the backlog
+    if(backLogQuestion !== null) {
+      commit(ADD_CURRENTQBACKLOG, backLogQuestion);
+    }
+  
     //set the first sub question as current question
     dispatch('setCurrentQuestion', {question: firstSubQuestion, nodes });
-    //add the first question to come after the subquestions are done to the backlog
-    commit(ADD_CURRENTQBACKLOG, backLogQuestion);
+    
   },
   clearCurrentQuestionBacklog({commit, dispatch}) {
     commit(CLEAR_CURRENTBACKLOG);
