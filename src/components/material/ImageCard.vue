@@ -6,7 +6,7 @@
     class="rouned-card flex xs5 md3"
     style="margin: 2% 2%; padding: 1%;"
   >
-    <v-img :src="`http://ironsm4sh.nl:3303/cdn/${imagename}`"></v-img>
+    <v-img :src="`http://ironsm4sh.nl:3303/cdn/${imagename}`" style="height: 100% !important;"></v-img>
 
     <div style="padding-top: 15px;">
       <p class="card-text">{{ text }}</p>
