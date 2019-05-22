@@ -6,7 +6,9 @@
  * @since 17-04-2019
  */
 
+import { NodeEnum } from "../NodeEnum";
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
+import { genericAddVertex } from "../EditorFunctions/PrivateFunctions";
 import { mxConstants } from "../MxGraph";
 
 /**
@@ -103,8 +105,11 @@ export const methods = {
         if(childerenCount < amountOfChoices){
             //add some cells
             for (let i = childerenCount; i < amountOfChoices; i++) {
-                var vertex = graph.createVertex(state.selectedCell, null, "Choice " + i, 10, (70 + i * 50), 80, 30, 'movable=0');
-                graph.addCell(vertex, state.selectedCell);
+                let data = [{
+                    "key": "choice",
+                    "value": "this is a choice"
+                }]
+                genericAddVertex(graph, state.selectedCell, null, NodeEnum.Choice, data, 80, 40, 10, (70 + i * 50), 'shape=' + NodeEnum.MultipleChoice + ';movable=0');
             }
         }else if(childerenCount > amountOfChoices){
             //delete some cells
@@ -115,7 +120,7 @@ export const methods = {
             let cellToBeRemoved = maxAmountOfChilderen - amountOfChoices;
 
             let childrenToBeRemoved = [];
-            //loop trouugh the amount of cells that needs to be removed in order to remove the cells
+            //loop trough the amount of cells that needs to be removed in order to remove the cells
             for (let i = 1; i <= cellToBeRemoved; i++) {
                 //get the index of the cell that needs to be removed
                 let index = maxAmountOfChilderen - i;
