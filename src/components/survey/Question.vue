@@ -27,7 +27,7 @@
         </v-layout>
       </v-card-title>
       <v-card-actions class="action-card">
-        <v-layout align-center justify-center row wrap>
+        <div class="layout row wrap" style="justify-content: center">
           <!-- question card for single answer questions -->
           <QuestionCard
             v-on:selectedAnswer="selectAnswer"
@@ -41,7 +41,7 @@
             ref="question"
           />
           <!-- multiple choice TODO -->
-        </v-layout>
+        </div>
       </v-card-actions>
 
 

@@ -7,9 +7,6 @@
           <AllSurveys/>
         </div>
         <div v-else style="display: flex; flex-wrap: wrap;">
-          <div v-if="role == 'USER'">
-            <Drawer/>
-          </div>
           <div class="flex xs12">
             <IncompleteSurveys/>
           </div>
