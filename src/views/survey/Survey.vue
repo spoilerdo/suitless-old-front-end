@@ -196,17 +196,21 @@ export default {
             case "success" :
               pdfContents.push(this.pdfContentSuccess("Success : "));
               pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
+              pdfContents.push(this.pdfContentWhitespace());
               break;
             case "warning" :
               pdfContents.push(this.pdfContentWarning("Warning : "));
               pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
+              pdfContents.push(this.pdfContentWhitespace());
               break;
             case "info" :
               pdfContents.push(this.pdfContentInfo("Info : "));
               pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
+              pdfContents.push(this.pdfContentWhitespace());
               break;
             case "primary" : 
               pdfContents.push(this.pdfContentSub(this.answer[i].answerImplication));
+              pdfContents.push(this.pdfContentWhitespace());
               break;
             default:
               console.log('default');

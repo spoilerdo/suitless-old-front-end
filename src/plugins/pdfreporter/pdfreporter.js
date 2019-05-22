@@ -8,6 +8,7 @@ import { pdfContentWarning } from "../../../public/libs/pdfreporter/src/PdfConte
 import { pdfContentInfo } from "../../../public/libs/pdfreporter/src/PdfContent/PdfContentInfo"
 import { pdfContentSuccess } from "../../../public/libs/pdfreporter/src/PdfContent/PdfContentSuccess"
 import { pdfContentSub } from "../../../public/libs/pdfreporter/src/PdfContent/PdfContentSub"
+import { pdfContentWhitespace } from "../../../public/libs/pdfreporter/src/PdfContent/PdfContentWhitespace"
 
 export default {
     install(Vue){ 
@@ -43,6 +44,9 @@ export default {
                 },
                 pdfContentSub(content) {
                     return new pdfContentSub(content);
+                },
+                pdfContentWhitespace(){
+                    return new pdfContentWhitespace();
                 }
             }
         })
