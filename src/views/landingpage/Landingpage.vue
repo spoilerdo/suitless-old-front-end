@@ -54,7 +54,7 @@ export default {
   },
   data: () => {
     return {
-      ehvLogo: require("@/assets/img/logoehvlinc.png"),
+      ehvLogo: "http://ironsm4sh.nl:3303/cdn/LogoWhite",
       options: {
         anchors: ['Landing', 'Intro', 'WhatWeDo', 'HowWeDoIt']
       }
