@@ -7,9 +7,9 @@
         <div class="display-2 text-xs-center white--text pb-3">Recommended starter surveys</div>
       </v-flex>
       <v-layout align-center justify-center row wrap>
-        <RoundCard redirecturl='/survey/5cac95e3c00a700008e56810'  imagename="IP.svg" text="Privacy" cardWidth="xs6 sm4 md3" direction="column"/>
-        <RoundCard redirecturl="/survey"  imagename="IP.svg" text="Privacy" cardWidth="xs6 sm4 md3" direction="column"/>
-        <RoundCard redirecturl="/survey"  imagename="IP.svg" text="Privacy" cardWidth="xs6 sm4 md3" direction="column"/>
+        <ImageCard redirecturl='/survey/5cac95e3c00a700008e56810'  imagename="IP" text="Privacy" cardWidth="xs6 sm4 md3" direction="column"/>
+        <ImageCard redirecturl="/survey"  imagename="IP" text="Privacy" cardWidth="xs6 sm4 md3" direction="column"/>
+        <ImageCard redirecturl="/survey"  imagename="IP" text="Privacy" cardWidth="xs6 sm4 md3" direction="column"/>
       </v-layout>
     </v-layout>
     <div class="text-xs-center">
@@ -30,14 +30,14 @@
 
 <script>
 import Animatedbackground from "@/components/background/Animatedbackground";
-import RoundCard from '@/components/material/RoundCard'
+import ImageCard from '@/components/material/ImageCard'
 
 import { mapActions } from "vuex";
 
 export default {
   components: {
     Animatedbackground,
-    RoundCard
+    ImageCard
   },
   methods: {
     ...mapActions({
