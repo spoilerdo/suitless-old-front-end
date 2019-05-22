@@ -211,7 +211,6 @@ export default {
           //single choice answer
           pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
           pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
-
           let implications = this.fillImplications(Array.of(this.answer[i]));
           implications.forEach(impl => {
             pdfContents.push(impl);
@@ -227,17 +226,21 @@ export default {
             case "success" :
             implicationContents.push(this.pdfContentSuccess("Success : "));
             implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
             break;
           case "warning" :
             implicationContents.push(this.pdfContentWarning("Warning : "));
             implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
             break;
           case "info" :
             implicationContents.push(this.pdfContentInfo("Info : "));
             implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
             break;
           case "primary" : 
             implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
             break;
           default:
             break;
