@@ -8,14 +8,14 @@
       </v-flex>
       <v-layout align-center justify-center row wrap>
         <ImageCard
-          redirecturl="/survey/5ce511506401640008fe5a29"
+          redirecturl="/survey/5ce5208f6401640008fe5a2a"
           imagename="trademark"
           text="Trademark"
           cardWidth="xs6 sm4 md3"
           direction="column"
         />
         <ImageCard
-          redirecturl="/survey/5ce5208f6401640008fe5a2a"
+          redirecturl="/survey/5ce511506401640008fe5a29"
           imagename="software"
           text="Software IP"
           cardWidth="xs6 sm4 md3"
