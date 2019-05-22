@@ -10,7 +10,7 @@
       <v-card-media>
         <v-layout align-space-around justify-space-between column pa-3>
           <div>
-            <v-img :src="require(`@/assets/img/illustrations/${imagename}`)" :width=imageWidth></v-img>
+            <v-img :src="require(`@/assets/img/illustrations/${imagename}`)" :width="imageWidth"></v-img>
           </div>
         </v-layout>
       </v-card-media>
@@ -39,7 +39,10 @@ export default {
     text: String,
     cardWidth: String,
     imageSize: String,
-    imageWidth: String,
+    imageWidth: {
+      type: String,
+      default: '100%'
+    },
     imageHeight: String,
     direction: String
   }

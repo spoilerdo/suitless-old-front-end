@@ -19,7 +19,6 @@
             <!-- password input -->
             <v-text-field
                 v-if="password"
-                ref="password"
                 label="Password"
                 v-model="form.password"
                 v-validate="'required|min:8'"

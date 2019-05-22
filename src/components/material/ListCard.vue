@@ -88,10 +88,14 @@
 
 <script>
 export default {
-  name: "RoundCard",
+  name: "ListCard",
   props: {
     redirecturl: String,
     imagename: String,
+    imageWidth: {
+      type: String,
+      default: '100%'
+    },
     text: String,
     percentage: String,
     title: String,

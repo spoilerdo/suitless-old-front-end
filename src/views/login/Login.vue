@@ -5,16 +5,16 @@
         <materialCard color="primary" title="Student Legal Health Check" :text="loginText">
           <v-alert :value="alert.message !=null" :type="alert.type" outline>{{alert.message}}</v-alert>
 
-          <div v-show="loggingIn">
+          <div v-show="loggingIn" id="LoginForm">
             <Form email password name="loginForm" ref="loginForm" :onclick="loginUser"/>
 
             <v-btn @click="$refs.loginForm.validatedSubmit()" mx-2 color="primary">Login</v-btn>
-            <v-btn v-on:click="switchForms(false)" mx-2 color="grey">Create New Account</v-btn>
+            <v-btn v-on:click="switchForms(false)" mx-2 color="grey" id="SwitchToRegister">Create New Account</v-btn>
             <v-spacer/>
             <a href="#" style="color: grey;">Forgot your password?</a>
           </div>
 
-          <div v-show="!loggingIn">
+          <div v-show="!loggingIn" id="RegisterForm">
             <Form
               email
               password
