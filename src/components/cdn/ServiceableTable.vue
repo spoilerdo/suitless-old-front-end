@@ -1,7 +1,7 @@
 <template>
   <v-layout column>
     <v-flex style="overflow: auto">
-      <v-data-table :headers="headers" :items="serviceables" hide-actions class="elevation-1">
+      <v-data-table v-if="serviceables != null" :headers="headers" :items="serviceables" hide-actions class="elevation-1">
         <template slot="items" slot-scope="props">
           <td>{{ props.item.name }}</td>
           <td>{{ props.item.size }}</td>
@@ -10,7 +10,7 @@
 
             <v-dialog :lazy=true>
               <template v-slot:activator="{ on }">
-                <v-btn color="blue lighten-2" small v-on="on">view</v-btn>
+                <v-btn color="info" small v-on="on">view</v-btn>
               </template>
               <v-card class="fullscreen">
                 <v-card-title class="headline grey lighten-2" primary-title>{{ props.item.name }}</v-card-title>
@@ -18,7 +18,7 @@
               </v-card>
             </v-dialog>
 
-            <v-btn color="danger" small @click="deleteContent(props.item)">Delete</v-btn>
+            <v-btn color="danger" small @click="deleteImage(props.item)">Delete</v-btn>
           </td>
         </template>
       </v-data-table>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import cdn from "@/store/modules/cdn/server";
+import { mapActions, mapState } from "vuex";
 
 export default {
   data() {
@@ -37,23 +37,20 @@ export default {
         { text: "Size (KB)", value: "size" },
         { text: "Type", value: "type" },
         { text: "Actions", sortable: false }
-      ],
-      serviceables: []
+      ]
     };
   },
+  computed: {
+    ...mapState("cdn/", ["serviceables"])
+  },
   methods: {
-    deleteContent(serviceable) {
-      cdn.actions.delete(serviceable);
-    },
-    getAllContent() {
-      this.serviceables = cdn.actions.getAllData(this.serviceables);
-    },
+    ...mapActions("cdn/", ["getAllData", "getData", "deleteImage"]),
     addServiceable(serviceable){
       this.serviceables.push(serviceable);
     }
   },
   mounted() {
-    this.getAllContent();
+    this.getAllData();
   }
 };
 </script>

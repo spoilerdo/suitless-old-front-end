@@ -6,6 +6,7 @@ import survey from './modules/survey/survey';
 import answer from './modules/survey/answer/answer';
 import progress from './modules/survey/progress/progress';
 import flowcharteditor from './modules/flowcharteditor/flowcharteditor';
+import cdn from "./modules/cdn/server";
 
 Vue.use(Vuex);
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
         survey,
         answer,
         progress,
-        flowcharteditor
+        flowcharteditor,
+        cdn
     },
     strict: debug
 })

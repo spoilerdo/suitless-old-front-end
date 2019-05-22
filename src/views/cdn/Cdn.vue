@@ -1,7 +1,7 @@
 <template>
   <v-layout justify-center wrap class="fillScreen">
     <div class="ServiceableRow stretch">
-      <ServiceableTopbar v-on:serviceable="addServiceable($event)" class="ServiceableRow form"/>
+      <ServiceableTopbar class="ServiceableRow form"/>
       <ServiceableTable ref="table" class="ServiceableRow data"/>
     </div>
   </v-layout>
@@ -22,10 +22,7 @@ export default {
   data: () => ({}),
   methods: {
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
-    addServiceable(serviceable) {
-      console.log(serviceable);
-      this.$refs.table.addServiceable(serviceable);
-    }
+    ...mapActions("cdn/", ["addServiceable"])
   },
   created() {
     //when created call the action to get the survey with the id in the props.
