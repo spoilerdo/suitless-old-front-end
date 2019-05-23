@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import GenericView from "./genericView/GenericView";
 
 export default {
@@ -24,12 +25,23 @@ export default {
             }
         }
     },
+    computed: {
+        ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
+    },
     components: {
         GenericView
     },
     methods: {
         changeProps(newForm){
             this.form = newForm;
+        }
+    },
+    watch: {
+        selectedCell: function(newValue, oldValue) {
+            if(newValue != null && this.formatBarType == this.$data.nodeEnum.Choice && newValue.lincData.length > 0){
+                this.form.nodeName = newValue.value;
+                this.form.name = newValue.lincData[0].value;
+            }
         }
     }
 }

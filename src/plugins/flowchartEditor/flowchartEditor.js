@@ -8,7 +8,7 @@ export default {
         Vue.mixin({
             methods: {
                 //Map the actions that will change the Vue store values
-                ...mapActions("flowcharteditor/", ["setDialog", "setFormatBarType"]),
+                ...mapActions("flowcharteditor/", ["setDialog", "setFormatBarType", "setSelectedCell"]),
                 startEditor() {
                     flowchartEditor.startEditor();
                     let setDialogmethod = this.setDialogState;
@@ -25,6 +25,11 @@ export default {
                     state.activeFormatBar.registerListener(function(val){
                         setActiveFormatBarmethod(val);
                     })
+
+                    let setSelectedCellmethod = this.setnewSelectedCell;
+                    state.newCell.registerListener(function(val){
+                        setSelectedCellmethod(val);
+                    })
                 },
                 setDialogState(val) {
                     this.setDialog(val);
@@ -33,6 +38,10 @@ export default {
                 //Function for the flowchart plugin callbacks
                 setActiveFormatBar(val) {
                     this.setFormatBarType(val);
+                },
+
+                setnewSelectedCell(val){
+                    this.setSelectedCell(val);
                 },
 
                 setFlowchartState(val) {

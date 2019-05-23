@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     props: {
         nameLabel: {
@@ -41,9 +43,20 @@ export default {
             }
         }
     },
+    computed: {
+        ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
+    },
     methods: {
         changeProps(){
             this.$emit("onChange", this.form);
+        }
+    },
+    watch: {
+        selectedCell: function(newValue, oldValue) {
+            if(newValue != null && newValue.lincData.length > 0){
+                this.form.nodeName = newValue.value;
+                this.form.name = newValue.lincData[0].value;
+            }
         }
     }
 }

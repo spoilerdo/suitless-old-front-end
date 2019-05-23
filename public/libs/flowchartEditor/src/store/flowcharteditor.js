@@ -55,6 +55,22 @@ export const state = {
     */
     editor: null,
     selectedCell: null,
+
+    newCell: {
+        newCellInternal: null,
+        newCellListener: function (val) { },
+        set set(val) {
+            this.newCellInternal = val;
+            this.newCellListener(val);
+        },
+        get get() {
+            return this.newCellInternal;
+        },
+        registerListener: function (listener) {
+            this.newCellListener = listener;
+        }
+    },
+
     model: null,
 
     /*
@@ -110,6 +126,7 @@ export const methods = {
                     "value": "this is a choice"
                 }]
                 genericAddVertex(graph, state.selectedCell, null, NodeEnum.Choice, data, 80, 40, 10, (70 + i * 50), 'shape=' + NodeEnum.MultipleChoice + ';movable=0');
+
             }
         }else if(childerenCount > amountOfChoices){
             //delete some cells

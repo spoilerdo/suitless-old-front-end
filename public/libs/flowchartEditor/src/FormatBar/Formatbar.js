@@ -34,6 +34,25 @@ function showFormatBar(editor, selectedCell, model){
         //change the state values
         state.editor = editor;
         state.selectedCell = selectedCell;
+        let t = {...selectedCell}
+        let v = t.value;
+        let l = t.lincData;
+        let c = t.children;
+        console.log(v);
+        let newC = {
+            "value": JSON.stringify(v, null, "\t"),
+            "lincData": JSON.parse(JSON.stringify(l, null, "\t")),
+            "children": JSON.stringify(c, null, "\t")
+        };
+
+        console.log({
+            "value": "value",
+            "lincData": "linc",
+            "children": "dchad"
+        })
+
+        console.log(newC);
+        state.newCell.set = newC;
         state.model = model;
 
         state.activeFormatBar.set = selectedCell.lincType;
