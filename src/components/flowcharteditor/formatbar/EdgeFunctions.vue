@@ -32,7 +32,7 @@
                         flat 
                         icon 
                         color="success" 
-                        v-bind:class="{selectedColor: form.implicationLevel == theme.success}"
+                        v-bind:class="{selectedColor: form.implicationColor == theme.success}"
                         @click="setSelected('success', theme.success)"
                     >
                         <v-icon>mdi-checkbox-blank</v-icon>
@@ -41,7 +41,7 @@
                         flat 
                         icon 
                         color="info"
-                        v-bind:class="{selectedColor: form.implicationLevel == theme.info}"
+                        v-bind:class="{selectedColor: form.implicationColor == theme.info}"
                         @click="setSelected('info', theme.info)"
                     >
                         <v-icon>mdi-checkbox-blank</v-icon>
@@ -50,7 +50,7 @@
                         flat 
                         icon 
                         color="warning"
-                        v-bind:class="{selectedColor: form.implicationLevel == theme.warning}"
+                        v-bind:class="{selectedColor: form.implicationColor == theme.warning}"
                         @click="setSelected('warning', theme.warning)"
                     >
                         <v-icon>mdi-checkbox-blank</v-icon>
@@ -59,7 +59,7 @@
                         flat 
                         icon 
                         color="primary"
-                        v-bind:class="{selectedColor: form.implicationLevel == theme.primary}"
+                        v-bind:class="{selectedColor: form.implicationColor == theme.primary}"
                         @click="setSelected('primary', theme.primary)"
                     >
                         <v-icon>mdi-checkbox-blank</v-icon>
