@@ -1,25 +1,56 @@
+let progresses = [
+    'width: 9.09091%;',
+    'width: 18.1818%;',
+    'width: 27.2727%;',
+]
+
+let index = 0;
+
 module.exports = {
-    'Login': function (browser) {
+    before: function (browser) {
+        //login and load the survey
         let loginPage = browser.page.loginPage();
     
-        loginPage.login("admin@admin.admin", "admin1234")
+        loginPage.login("martijn.dormans@gmail.com", "12345678")
     
         browser
-        .url('http://localhost:8080/survey/5cb71cdb3fc9910008f9f2f4')
+        .url('http://localhost:8080/survey/5ce511506401640008fe5a29')
         .waitForElementVisible('body', 1000)
     },
 
-    'Loading Survey check': function(browser) {
+    afterEach: function(browser, done) {
+        //check the progress bar
         browser
-        .waitForElementVisible('#question-7', 1000)
-        .click('#question-7>div')
-        .pause(10000)
-        browser.expect.element('#question-7').to.have.css('questionCard v-card v-sheet theme--light selectedCard')
-        browser.end()
+        .click('#next-btn')
+        browser.expect.element('.v-progress-linear__bar__determinate').to.have.attribute('style').which.contains(progresses[index])
+        index++;
+        done();
     },
 
-    /*'Answer first question': function(browser) {
+    /**TODO; make it so that you have 2 methods you call for every question */
+
+    'Click first question': function(browser) {
         browser
-        
-    }*/
+        .waitForElementVisible('#question-13', 1000)
+        .click('#question-13>div')
+        .assert.cssClassPresent('#question-13', 'selectedCard')
+    },
+
+    'Click second question': function(browser) {
+        browser
+        .waitForElementVisible('#question-13', 1000)
+        .click('#question-13>div')
+        .assert.cssClassPresent('#question-13', 'selectedCard')
+    },
+
+    'Click third question': function(browser) {
+        browser
+        .waitForElementVisible('#question-13', 1000)
+        .click('#question-13>div')
+        .assert.cssClassPresent('#question-13', 'selectedCard')
+        .end()
+    },
+
+    //TODO: after the questionaire check if you will be redirected to the result page.
+    //print the PDF and check if it contains the correct answers
 }
