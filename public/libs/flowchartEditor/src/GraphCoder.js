@@ -37,7 +37,8 @@ export let GraphCoder = {
         }
 
         console.log(JSON.stringify(module, null, "\t"))
-        apiCall('post', "http://ironsm4sh.nl:3303/modules/", JSON.stringify(module, null, "\t"));
+        //apiCall('post', "http://ironsm4sh.nl:3303/modules/", JSON.stringify(module, null, "\t"));
+        return JSON.stringify(module, null, "\t")
     },
 
     checkEdges(cell){

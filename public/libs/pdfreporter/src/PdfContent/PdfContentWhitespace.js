@@ -6,15 +6,15 @@
  * @since 12-03-2019
  */
 
- import { pdfContent } from "./PdfContent"
+import { pdfContent } from "./PdfContent"
 import { pdfContentEnum } from "./PdfContentEnum";
 
-export class pdfContentWarning extends pdfContent {
+export class pdfContentWhitespace extends pdfContent {
 
-    constructor(data){
+    constructor(){
         super();
         this.type = pdfContentEnum.warning;
-        this.data = data;
+        this.data = "";
     }
 
     /**
@@ -31,7 +31,7 @@ export class pdfContentWarning extends pdfContent {
      * object
      */
     getOffset() {
-        return 0.2;
+        return 0.5;
     }
 }
 

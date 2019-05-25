@@ -6,10 +6,10 @@
  * @since 12-03-2019
  */
 
- import { pdfContent } from "./PdfContent"
+import { pdfContent } from "./PdfContent"
 import { pdfContentEnum } from "./PdfContentEnum";
 
-export class pdfContentWarning extends pdfContent {
+export class pdfContentSuccess extends pdfContent {
 
     constructor(data){
         super();
@@ -21,7 +21,7 @@ export class pdfContentWarning extends pdfContent {
      * sets the text color appropriate for the type.
      */
     setStyle(doc) {
-        doc.setTextColor(250, 51, 51);
+        doc.setTextColor(76, 175, 80);
         doc.setFontSize(11);
         doc.setFont("Times","normal");
     }

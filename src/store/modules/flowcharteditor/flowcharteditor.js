@@ -26,6 +26,14 @@ const actions = {
         }catch (e){
             console.log(e);
         }
+    },
+
+    async saveFlowchart({commit}, flowchart) {
+        try {
+            return await asyncApiCall('post', `${API_URL}/modules/`, flowchart);
+        } catch(e) {
+            return e;
+        }
     }
 }
 
