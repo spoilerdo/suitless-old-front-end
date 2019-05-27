@@ -2,19 +2,15 @@
     <v-layout row justify-center>
         <v-form>
             <v-layout column>
-                <h6 class="body-2">Multiple choice Title</h6>
-                <v-textarea
+                <h6 class="subheading">Multiple choice Title</h6>
+                <v-text-field
                     v-model="form.multipleChoiceNode"
-                    auto-grow
-                    box
-                    color="primary"
                     label="Title"
-                    rows="1"
                     v-validate="'required'"
                     name="title"
                 />
                 <span>{{ errors.first('title') }}</span>
-                <h6 class="body-2">The question you want to ask</h6>
+                <h6 class="subheading">The question you want to ask</h6>
                 <v-textarea
                     v-model="form.multipleChoice"
                     auto-grow
@@ -26,7 +22,7 @@
                     name="question"
                 />
                 <span>{{ errors.first('question') }}</span>
-                <h6 class="body-2">The amount of choices</h6>
+                <h6 class="subheading">The amount of choices</h6>
                 <v-text-field
                     v-model="form.amountOfChoices"
                     type="number"

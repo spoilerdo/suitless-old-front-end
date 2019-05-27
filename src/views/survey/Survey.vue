@@ -23,6 +23,11 @@
           :isMobile="isMobile"
           :options="options"
         />
+        <EndPage 
+          v-else-if="progress === 100"
+          :answers="answer"
+          v-on:printPDF="printPDF"
+        />
         <Notification
           v-if="notification != null"
           v-bind:value="notification.value"
@@ -42,6 +47,7 @@ import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
 import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
+import EndPage from "@/components/survey/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
@@ -52,7 +58,8 @@ export default {
     ProgressBar,
     Notification,
     MultipleChoice,
-    Info
+    Info,
+    EndPage
   },
   computed: {
     ...mapState("survey/", {
@@ -82,7 +89,7 @@ export default {
   methods: {
     ...mapActions("survey/", ["getSurveyByID"]),
     ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion"]),
-    ...mapActions("progress/", ["fillProgress", "setCurrentQuestion", "fillCurrentQuestionBacklog"]),
+    ...mapActions("progress/", ["fillProgress", "setCurrentQuestion", "fillCurrentQuestionBacklog", "clearCurrentQuestionBacklog", "fillsubQuestionBackLog", "clearSubQuestionBackLog"]),
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
 
     answeredQuestion(answer) {
@@ -91,43 +98,64 @@ export default {
         question: this.currentquestion
       });
 
-      console.log(this.survey.nodes[answer.targetID].style);
-
-      if(this.survey.nodes[answer.targetID].style == this.$data.nodeEnum.End){
-        this.setCurrentQuestion({ question: null, nodes: this.survey.nodes });
-      }else {
-        this.setCurrentQuestion({ question: this.survey.nodes[answer.targetID], nodes: this.survey.nodes });
-      }
+      let nextQuestion = this.survey.nodes[answer.targetID];
       
-      this.fillProgress({ addedDepth: 1, survey: this.survey });      
+      this.setCurrentQuestion({ question: nextQuestion, nodes: this.survey.nodes });
+      this.fillProgress({ addedDepth: 1, survey: this.survey });   
     },
     renderPreviousQuestion(question) {
-      this.fillProgress({ addedDepth: -1, survey: this.survey });
 
-      //get previous answer
+      //get previous answer(s) and convert them to an array.
       let prevAnswer = this.getAnswerByQuestionID(question);
-      //check if previous question is a notification, if so go one more back.
-      while(this.survey.nodes[prevAnswer.questionID].style == 5) {
-        this.renderPreviousQuestion(this.survey.nodes[prevAnswer]);
+      if(!Array.isArray(prevAnswer)) {
+        prevAnswer = Array.of(prevAnswer);
+      } else {
+        //make sure to clear the backlog so the flow of the survey doesnt mess up.
+        this.clearCurrentQuestionBacklog();
+        this.clearSubQuestionBackLog();
       }
-      //select the previouse question
-      this.setCurrentQuestion({question: this.survey.nodes[prevAnswer.questionID], nodes: this.survey.nodes });
-      this.deleteLastAnswer();
+
+      prevAnswer.forEach(prev => {
+          //reset progress for each previous answer
+          this.fillProgress({ addedDepth: -1, survey: this.survey });
+      });
+
+      let previousQuestionID = prevAnswer[0].questionID;
+
+        //check if previous question is a notification, if so go one more back.
+        while(this.survey.nodes[previousQuestionID].style == 5) {
+          this.renderPreviousQuestion(this.survey.nodes[prevAnswer[0]]);
+        }
+        //select the previous question
+        this.setCurrentQuestion({question: this.survey.nodes[previousQuestionID], nodes: this.survey.nodes });
+        this.deleteLastAnswer();
     },
-    answeredMultiChoiceQuestion(answers) {
+    answeredMultiChoiceQuestion({answers, questions}) {
+        //add answer to list of given answers.
         this.answerQuestion({
           answer: answers,
           question: this.currentquestion
         });
 
-        let questions = [];
-        answers.forEach(answer => {
-          if(answer.flows.length > 0){
-            questions.push(this.survey.nodes[answer.flows[0].targetID])
+        //add the future sub questions to the PRIORITY sub question backlog (skip the first one since it will be handled by the fillcurrentquestionbacklog)
+        answers.slice(1).forEach(ans => {
+          if(ans.flows.length > 0) {
+            this.fillsubQuestionBackLog(this.survey.nodes[ans.flows[0].targetID]);
           }
         });
+    
+        let firstSubQuestion = null;
+        if(answers[0].flows.length > 0) {
+          firstSubQuestion = this.survey.nodes[answers[0].flows[0].targetID];
+        }
+        let backLogQuestion = null;
+        if(questions.flows.length > 0) {
+            backLogQuestion = this.survey.nodes[questions.flows[0].targetID];
+        }
 
-        this.fillCurrentQuestionBacklog({questions, nodes: this.survey.nodes});
+
+        //add the first question to come after finishing all multiple choice sub questions to the backlog.
+        this.fillCurrentQuestionBacklog({firstSubQuestion: firstSubQuestion, backLogQuestion: backLogQuestion, nodes: this.survey.nodes});
 
         this.fillProgress({addedDepth: 1, survey: this.survey});
     },
@@ -156,6 +184,7 @@ export default {
       for (let i = 0; i < this.answer.length; i++) {
         //check if the question to be printed is multi or single choice
         let currentAnswer = this.answer[i];
+        console.log(currentAnswer);
 
         if(Array.isArray(currentAnswer)) {
           //print relevant question based on first answer given
@@ -171,21 +200,56 @@ export default {
               tempAnswer += " ";
           });
           pdfContents.push(this.pdfContentReply(tempAnswer));
-          console.log(pdfContents);
+
+          let implications = this.fillImplications(currentAnswer);
+
+          implications.forEach(impl => {
+            pdfContents.push(impl);
+          });
+
         } else if(currentAnswer.answerValue != null) {
           //single choice answer
           pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
           pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
-        } else {
-          //no answer found, print error.
-          pdfContents.push(this.pdfContentWarning(this.answer[i].questionValue));
-          console.error("Error while printing to the PDF");
-          console.error(this.answer[i]);
+          let implications = this.fillImplications(Array.of(this.answer[i]));
+          implications.forEach(impl => {
+            pdfContents.push(impl);
+          });
         }
       }
-
       return pdfContents;
     },
+    fillImplications(flows) {
+      let implicationContents = [];
+      flows.forEach(flow => {
+          switch(flow.answerImplicationLevel) {
+            case "success" :
+            implicationContents.push(this.pdfContentSuccess("Success : "));
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
+            break;
+          case "warning" :
+            implicationContents.push(this.pdfContentWarning("Warning : "));
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
+            break;
+          case "info" :
+            implicationContents.push(this.pdfContentInfo("Info : "));
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
+            break;
+          case "primary" : 
+            implicationContents.push(this.pdfContentSub(flow.answerImplication));
+            implicationContents.push(this.pdfContentWhitespace());
+            break;
+          default:
+            break;
+          }
+      });
+
+        return implicationContents;
+    },
+
     printPDF() {
       let pdfOptions = {
         orientation: "portrait",
@@ -216,8 +280,6 @@ export default {
     progress: function(newValue, oldValue) {
       //watch for completion of survey, then print pdf
       if (newValue === 100) {
-        this.printPDF();
-        this.$router.push('/dashboard');
         this.setCurrentQuestion({ question: null, nodes: this.survey.nodes });
       }
     }

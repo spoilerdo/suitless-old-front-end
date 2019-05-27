@@ -23,16 +23,17 @@
 
       <v-card-title primary-title class="grow mb-3">
         <v-layout align-center justify-center row>
-          <h3 class="headline mb-0">{{question.value}}</h3>
+          <h3 class="headline mb-0">{{question.lincData.find(data => data.key === "question").value}}</h3>
         </v-layout>
       </v-card-title>
       <v-card-actions class="action-card">
-        <v-layout align-center justify-center row wrap>
+        <div class="layout row wrap" style="justify-content: center">
           <!-- question card for single answer questions -->
           <QuestionCard
             v-on:selectedAnswer="selectAnswer"
             v-for="answer in question.flows"
             :key="answer.targetID"
+            :id="'question-' + answer.targetID"
             :text="answer.value"
             :answer="answer"
             image="http://ironsm4sh.nl:3303/cdn/man"
@@ -41,7 +42,7 @@
             ref="question"
           />
           <!-- multiple choice TODO -->
-        </v-layout>
+        </div>
       </v-card-actions>
 
 
@@ -65,6 +66,7 @@
           bottom
           class="action-btn"
           @click="answerQuestion()"
+          id="next-btn"
         >
            <v-icon color="secondary" x-large right>mdi-chevron-right</v-icon>
         </v-btn>

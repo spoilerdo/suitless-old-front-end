@@ -90,6 +90,10 @@
 export default {
   name: "ListCard",
   props: {
+    imageWidth: {
+      type: String,
+      default: "100%"
+    },
     redirecturl: String,
     imagename: String,
     imageWidth: {

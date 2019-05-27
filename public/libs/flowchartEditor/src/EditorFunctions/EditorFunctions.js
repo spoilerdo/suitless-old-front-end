@@ -6,7 +6,7 @@
  */
 import { NodeEnum } from "../NodeEnum";
 import { GraphCoder } from "../GraphCoder";
-import {addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice, genericAddVertex} from "./PrivateFunctions";
+import { addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice } from "./PrivateFunctions";
 
 import { mxGraph, mxGraphModel, mxConstants, mxEllipse, mxHexagon, mxSwimlane } from "../MxGraph";
 
@@ -76,7 +76,26 @@ export let editorFunctions = {
             let firstCell = selectedCells[0];
             let secondCell = selectedCells[1];
 
-            graph.insertEdge(parent, null, value, firstCell, secondCell, "edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;");
+            let edge = graph.createEdge(parent, null, value, firstCell, secondCell, "edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;");
+
+            edge.lincType = NodeEnum.Edge;
+
+            let data = [
+                {
+                    "key": "implication",
+                    "value": "Implication of the answer"
+                },
+                {
+                    "key": "implicationLevel",
+                    "value": "Info"
+                }
+            ]
+
+            edge.lincData = data;
+
+            graph.addEdge(edge, parent, firstCell, secondCell);
+
+            //graph.insertEdge(parent, null, value, firstCell, secondCell, "edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;");
             this.updateDepth(secondCell, firstCell);
             this.checkDepth(secondCell, null);
         }
@@ -92,14 +111,14 @@ export let editorFunctions = {
      */
     addCustomShapes(graph) {
         //Ellipse that represents the start node
-        function ellipse() { };
+        function ellipse() { }
         ellipse.prototype = new mxEllipse();
         ellipse.prototype.constructor = ellipse;
 
         registerCustomShape(graph, ellipse, NodeEnum.Start);
 
         //Dotted ellipse that represents a module you can refer to
-        function dottedEllipse() { };
+        function dottedEllipse() { }
         dottedEllipse.prototype = new mxEllipse();
         dottedEllipse.prototype.constructor = dottedEllipse;
         dottedEllipse.prototype.isDashed = true;
@@ -107,19 +126,16 @@ export let editorFunctions = {
         registerCustomShape(graph, dottedEllipse, NodeEnum.Module);
 
         //Dotted hexagon that represents a notification you can refer to
-        function hexagon() { };
+        function hexagon() { }
         hexagon.prototype = new mxHexagon();
         hexagon.prototype.constructor = hexagon;
 
         registerCustomShape(graph, hexagon, NodeEnum.Notification);
 
         //Swimlane that represents a multiple choice node you can refer to
-        function swimLane() { };
+        function swimLane() { }
         swimLane.prototype = new mxSwimlane();
         swimLane.prototype.constructor = swimLane;
-        swimLane.prototype.editable = 0;
-        swimLane.prototype.resizable = false;
-
 
         registerCustomShape(graph, swimLane, NodeEnum.MultipleChoice);
     },
@@ -129,7 +145,7 @@ export let editorFunctions = {
     * @param {mxGraph} graph
     */
     exportChart(graph, name, description) {
-        GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth);
+        return GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth);
     },
 
     /**

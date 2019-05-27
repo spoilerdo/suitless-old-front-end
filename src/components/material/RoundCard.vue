@@ -41,7 +41,7 @@ export default {
     imageSize: String,
     imageWidth: {
       type: String,
-      default: '100%'
+      default: "100%"
     },
     imageHeight: String,
     direction: String

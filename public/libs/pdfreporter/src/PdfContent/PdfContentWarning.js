@@ -31,7 +31,7 @@ export class pdfContentWarning extends pdfContent {
      * object
      */
     getOffset() {
-        return 0.5;
+        return 0.2;
     }
 }
 
