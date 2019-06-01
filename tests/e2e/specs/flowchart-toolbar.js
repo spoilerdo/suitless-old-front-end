@@ -1,18 +1,18 @@
 module.exports = {
-    beforeEach: function (browser) {    //  All test from this file while start with the following function
-        let loginPage = browser.page.loginPage();       //  specify loginPage
-
-        loginPage.login("admin@admin.admin", "admin1234");      // Login as admin user
-
-        browser.url('http://localhost:8080/flowchart')      // Go to the flowchart editor
-        browser.pause(1000)     // Give page time to reload
-        browser.waitForElementVisible('body', 1000)     // What until page is finished
+    beforeEach: function (browser) {                      //  All test from this file while start with the following function
+        let loginPage = browser.page.loginPage()            //  specify loginPage
+    
+        loginPage.login("admin@admin.admin", "admin1234")   // Login as admin user
+    
+        browser.url('http://localhost:8080/flowchart')                  // Go to the flowchart editor
+        browser.pause(1000)                                             // Give page time to reload
+        browser.waitForElementVisible('body', 1000)                     // What until page is finished
         browser.assert.urlEquals('http://localhost:8080/flowchart')     // Check current page is correct.
-
+    
         browser.waitForElementVisible('ellipse', 1000)      // Wait for the start node.
         browser.expect.element('ellipse').to.be.present     // Check if the start node is present in the html
         browser.assert.visible('ellipse')                   // Check if the start node is also visible
-    },
+      },
 
     'Cut Toolbox Simple' : function (browser) {
         browser.expect.element('img[title="Cut"]').to.be.present    //  Check if cut button is present in the html
@@ -47,28 +47,28 @@ module.exports = {
 
         browser.expect.element('ellipse').to.be.present         //  Start node should be back again
         browser.assert.visible('ellipse')                       //  Start node is also visible
-        browser.end()
+        browser.end()       //  Close browser
     },
 
     'Delete Toolbox Simple' : function(browser){
-        browser.expect.element('img[title="Delete"]').to.be.present
-        browser.expect.element('img[title="Paste"]').to.be.present
-        browser.assert.visible('img[title="Delete"]')
-        browser.assert.visible('img[title="Paste"]')
+        browser.expect.element('img[title="Delete"]').to.be.present     //  Check if the delete button is present
+        browser.expect.element('img[title="Paste"]').to.be.present      // Check if the paste button is present
+        browser.assert.visible('img[title="Delete"]')                   // Check if delete button is also visible
+        browser.assert.visible('img[title="Paste"]')                    // Check if paste button is also visible
 
-        browser.moveToElement('ellipse', 20, 20)
-        browser.mouseButtonClick('left')
-        browser.moveToElement('img[title="Delete"]', 10, 10)
-        browser.mouseButtonClick('left')
+        browser.moveToElement('ellipse', 20, 20)                // Move mouse to start node
+        browser.mouseButtonClick('left')                        // Select start node
+        browser.moveToElement('img[title="Delete"]', 10, 10)    // Move mouse to delete button
+        browser.mouseButtonClick('left')                        // Click the delete button
 
-        browser.expect.element('ellipse').not.to.be.present
+        browser.expect.element('ellipse').not.to.be.present     // Start node should now be delete and not be present any more
 
-        browser.moveToElement('img[title="Paste"]', 10, 10)
-        browser.mouseButtonClick('left')
+        browser.moveToElement('img[title="Paste"]', 10, 10)     // Move mouse to paste button
+        browser.mouseButtonClick('left')                        // Click the paste button
 
-        browser.expect.element('ellipse').not.to.be.present
+        browser.expect.element('ellipse').not.to.be.present     // The paste functio shouldn't have any effect, so start node shouldn't be present
 
-        browser.end()
+        browser.end()       //  Close browser
     },
 }
 
