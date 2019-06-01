@@ -1,107 +1,74 @@
 module.exports = {
-    beforeEach: function (browser) {
-        let loginPage = browser.page.loginPage();
+    beforeEach: function (browser) {    //  All test from this file while start with the following function
+        let loginPage = browser.page.loginPage();       //  specify loginPage
 
-        loginPage.login("admin@admin.admin", "admin1234");
+        loginPage.login("admin@admin.admin", "admin1234");      // Login as admin user
 
-        browser.url('http://localhost:8080/flowchart')
-        browser.pause(1000)
-        browser.waitForElementVisible('body', 1000)
-        browser.assert.urlEquals('http://localhost:8080/flowchart')
+        browser.url('http://localhost:8080/flowchart')      // Go to the flowchart editor
+        browser.pause(1000)     // Give page time to reload
+        browser.waitForElementVisible('body', 1000)     // What until page is finished
+        browser.assert.urlEquals('http://localhost:8080/flowchart')     // Check current page is correct.
+
+        browser.waitForElementVisible('ellipse', 1000)      // Wait for the start node.
+        browser.expect.element('ellipse').to.be.present     // Check if the start node is present in the html
+        browser.assert.visible('ellipse')                   // Check if the start node is also visible
     },
 
     'Cut Toolbox Simple' : function (browser) {
-        browser.expect.element('img[title="Cut"]').to.be.present
-        browser.expect.element('ellipse').to.be.present
+        browser.expect.element('img[title="Cut"]').to.be.present    //  Check if cut button is present in the html
+        browser.assert.visible('img[title="Cut"]')                  //  Check if the cut button is also visible
 
-        browser.assert.visible('img[title="Cut"]')
-        browser.assert.visible('ellipse')
+        browser.moveToElement('ellipse', 20, 20)                    //  Move mouse to start node
+        browser.mouseButtonClick('left')                            //  Click element ones
+        browser.moveToElement('img[title="Cut"]', 10, 10)           //  Move mouse to cut button
+        browser.mouseButtonClick('left')                            //  Click button ones
 
-        browser.pause(1000)
-
-        browser.moveToElement('ellipse', 20, 20)
-        browser.mouseButtonClick('left')
-        browser.pause(1000)
-        browser.moveToElement('img[title="Cut"]', 10, 10)
-        browser.mouseButtonClick('left')
-        browser.pause(1000)
-
-        browser.expect.element('ellipse').not.to.be.present
-
-
-        browser.end()
+        browser.expect.element('ellipse').not.to.be.present         //  Start node shouldn't be present anymore after cutting it.
+        browser.end()       // Close browser
     },
     
 
-    // 'copy' : function (browser){
-    //      browser.expect.element('img[title="Copy"]').to.be.present
-    //     browser.expect.element('ellipse').to.be.present   
-    // },
+    'Paste Toolbox Simple' : function (browser){
+        browser.expect.element('img[title="Cut"]').to.be.present    //  Check if the cut button is present in the html
+        browser.expect.element('img[title="Paste"]').to.be.present  //  Check if the paste button is present in the html
+        browser.assert.visible('img[title="Cut"]')                  //  Check if the cut button is also visible
+        browser.assert.visible('img[title="Paste"]')                //  Check if the paste button is also visible
+        
 
-    'Generate question node v1': function (browser) {
+        browser.moveToElement('ellipse', 20, 20)                //  Move mouse to the start node
+        browser.mouseButtonClick('left')                        //  Click the element ones
+        browser.moveToElement('img[title="Cut"]', 10, 10)       //  Move mouse to the cut button
+        browser.mouseButtonClick('left')                        //  Click the cut button ones
 
-        browser.waitForElementVisible('ellipse', 1000)
-        browser.assert.visible('ellipse')
+        browser.expect.element('ellipse').not.to.be.present     //  Selected start node shouldn't be present anymore
 
-        var xOffset = 65
-        var yOffset = 65
+        browser.moveToElement('img[title="Paste"]', 10, 10)     //  Move mouse to the paste button
+        browser.mouseButtonClick('left')                        //  Click the paste button ones
 
-        browser.getCssProperty('ellipse', "rx", function (rx) { xOffset = (parseInt(rx.value) * 2) })
-        browser.getCssProperty('ellipse', "ry", function (ry) { yOffset = (parseInt(ry.value) * 1) })
-
-        browser.perform(function () {
-            browser.moveToElement('ellipse', xOffset, yOffset)
-            browser.mouseButtonDown('left')
-            browser.pause(1000)
-            browser.moveToElement('ellipse', 300, 300)
-            browser.pause(1000)
-            browser.mouseButtonUp('left')
-            browser.pause(1000)
-
-            browser.moveToElement('table', 50, 35)
-            browser.pause(1000)
-            browser.mouseButtonDown('left')
-            browser.mouseButtonUp('left')
-            browser.pause(1000)
-
-            browser.waitForElementVisible('rect', 1000)
-            browser.assert.visible('rect')
-
-            browser.end()
-        })
+        browser.expect.element('ellipse').to.be.present         //  Start node should be back again
+        browser.assert.visible('ellipse')                       //  Start node is also visible
+        browser.end()
     },
 
-    'Generate question node v2': function (browser) {
+    'Delete Toolbox Simple' : function(browser){
+        browser.expect.element('img[title="Delete"]').to.be.present
+        browser.expect.element('img[title="Paste"]').to.be.present
+        browser.assert.visible('img[title="Delete"]')
+        browser.assert.visible('img[title="Paste"]')
 
-        browser.waitForElementVisible('ellipse', 1000)
-        browser.assert.visible('ellipse')
+        browser.moveToElement('ellipse', 20, 20)
+        browser.mouseButtonClick('left')
+        browser.moveToElement('img[title="Delete"]', 10, 10)
+        browser.mouseButtonClick('left')
 
-        browser.getCssProperty('ellipse', "rx", function (rx) {
-            this.getCssProperty('ellipse', "ry", function (ry) {
-                
-                var xOffset = parseInt(rx.value)*2
-                var yOffset = parseInt(ry.value)*1
+        browser.expect.element('ellipse').not.to.be.present
 
-                this.moveToElement('ellipse', xOffset, yOffset)
-                this.mouseButtonDown('left')
-                this.pause(1000)
-                this.moveToElement('ellipse', 300, 300)
-                this.pause(1000)
-                this.mouseButtonUp('left')
-                this.pause(1000)
+        browser.moveToElement('img[title="Paste"]', 10, 10)
+        browser.mouseButtonClick('left')
 
-                this.moveToElement('table', 50, 35)
-                this.pause(1000)
-                this.mouseButtonDown('left')
-                this.mouseButtonUp('left')
-                this.pause(1000)
+        browser.expect.element('ellipse').not.to.be.present
 
-                this.waitForElementVisible('rect', 1000)
-                this.assert.visible('rect')
-
-                this.end()
-            })
-        })
-    }
+        browser.end()
+    },
 }
 
