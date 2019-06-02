@@ -5,7 +5,7 @@ module.exports = {
         loginPage.login("admin@admin.admin", "admin1234")   // Login as admin user
     
         browser.url('http://localhost:8080/flowchart')                  // Go to the flowchart editor
-        browser.pause(1000)                                             // Give page time to reload
+        browser.pause(2000)                                             // Give page time to reload
         browser.waitForElementVisible('body', 1000)                     // What until page is finished
         browser.assert.urlEquals('http://localhost:8080/flowchart')     // Check current page is correct.
     
