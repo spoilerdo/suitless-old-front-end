@@ -64,7 +64,7 @@ let router = new Router({
     },
     {
       path: '/flowchart',
-      name: 'test',
+      name: 'Flowchart',
       component: FlowchartEditor,
       meta: { requiresAuth: true, requiresAdmin: true }
     },
