@@ -8,7 +8,7 @@ var config = {
             acceptSslCerts: true,
             nativeEvents: true,
             chromeOptions : {
-              "args" : ["headless", "disable-gpu", "no-sandbox"]
+              "args" : ["headless" ,"disable-gpu", "no-sandbox"]
             }
           }
       }
