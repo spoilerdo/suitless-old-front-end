@@ -82,12 +82,17 @@ export default {
   },
   created() {
     //when created call the action to get the survey with the id in the props.
-    this.getSurveyByID(this.surveyID);
+    if(process.env.VUE_APP_SECRET == "test"){
+      //Vue.js is being controlled by a e2e test so use a test survey
+      this.getTestSurveyByID(this.surveyID);
+    }else{
+      this.getSurveyByID(this.surveyID);
+    }
     this.setBackground("#eee");
     this.setFooterColor("#c01833");
   },
   methods: {
-    ...mapActions("survey/", ["getSurveyByID"]),
+    ...mapActions("survey/", ["getSurveyByID", "getTestSurveyByID"]),
     ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion"]),
     ...mapActions("progress/", ["fillProgress", "setCurrentQuestion", "fillCurrentQuestionBacklog", "clearCurrentQuestionBacklog", "fillsubQuestionBackLog", "clearSubQuestionBackLog"]),
     ...mapActions("app/", ["setBackground", "setFooterColor"]),

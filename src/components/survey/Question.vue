@@ -53,6 +53,7 @@
           v-on:click="$emit('renderPreviousQuestion', question)"
           flat
           class="action-btn"
+          id="previouse-btn"
         >
           <v-icon color="secondary" x-large left>mdi-chevron-left</v-icon>
         </v-btn>

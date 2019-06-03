@@ -36,7 +36,12 @@ const actions = {
             commit(SET_SURVEY, req.module);
         }));
     },
-
+    getTestSurveyByID({ commit }, surveyID) {
+        apiCall('get', `${API_URL}/modules/test/${surveyID}`, null)
+        .then((req => {
+            commit(SET_SURVEY, req.module);
+        }));
+    }
 }
 
 const mutations = {
