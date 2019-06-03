@@ -26,8 +26,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="secondary" @click="setDialog(false)">Close</v-btn>
-          <v-btn color="primary" @click="importFlowchart">Import</v-btn>
+          <v-btn id="btn_cancel_import_flowchart_dialog" color="secondary" @click="setDialog(false)">Close</v-btn>
+          <v-btn id="btn_import_flowchart_dialog" color="primary" @click="importFlowchart">Import</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

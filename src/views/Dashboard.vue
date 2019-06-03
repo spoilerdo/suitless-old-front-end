@@ -3,6 +3,7 @@
     <v-layout row wrap>
       <v-flex xs12>
         <div v-if="role == 'ADMIN'">
+          <Drawer/>
           <AllSurveys id="AllSurveys_Component"/>
         </div>
         <div v-else style="display: flex; flex-wrap: wrap;">
@@ -27,13 +28,15 @@ import AllSurveys from "@/components/dashboard-home/AllSurveys";
 import IncompleteSurveys from "@/components/dashboard-home/IncompleteSurveys";
 import LatestReports from "@/components/dashboard-home/LatestReports";
 import { mapActions } from "vuex";
+import Drawer from "@/components/core/Drawer";
 
 export default {
   components: {
     RecommendedSurveys,
     AllSurveys,
     IncompleteSurveys,
-    LatestReports
+    LatestReports,
+    Drawer
   },
   mounted() {
     //when created call the action to get all products from api and put it in the store

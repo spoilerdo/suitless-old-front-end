@@ -16,18 +16,9 @@
           label="Reason"
           rows="1"
         />
-        <h6 class="subheading">The implication of the question</h6>
-        <v-textarea
-          v-model="form.implication"
-          auto-grow
-          box
-          color="primary"
-          label="Implication"
-          rows="1"
-        />
       </v-layout>
       <v-layout align-center justify-center row>
-        <v-btn color="primary" @click="changeQuestionNode(form.questionNode, form.question, form.reason, form.implication)">Apply</v-btn>
+        <v-btn color="primary" @click="changeQuestionNode(form.questionNode, form.question, form.reason)">Apply</v-btn>
       </v-layout>
     </v-form>
   </v-layout>
@@ -42,8 +33,7 @@ export default {
       form: {
         questionNode: null,
         question: null,
-        reason: null,
-        implication: null
+        reason: null
       }
     };
   },
