@@ -41,7 +41,6 @@
             style="margin:10px"
             ref="question"
           />
-          <!-- multiple choice TODO -->
         </div>
       </v-card-actions>
 

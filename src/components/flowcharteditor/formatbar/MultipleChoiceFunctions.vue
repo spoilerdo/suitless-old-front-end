@@ -76,7 +76,6 @@ export default {
             if(newValue != null && this.formatBarType == this.$data.nodeEnum.MultipleChoice){
                 this.form.multipleChoiceNode = newValue.value;
                 this.form.multipleChoice = newValue.lincData[0].value;
-                console.log(newValue);
                 this.form.amountOfChoices = newValue.children;
             }
         }

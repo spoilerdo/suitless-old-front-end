@@ -8,7 +8,7 @@
 
 import { NodeEnum } from "../NodeEnum";
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
-import { genericAddVertex } from "../EditorFunctions/PrivateFunctions";
+import { genericAddVertex, addSubVertexes } from "../EditorFunctions/PrivateFunctions";
 import { mxConstants } from "../MxGraph";
 
 /**
@@ -126,14 +126,7 @@ export const methods = {
 
         if(childerenCount < amountOfChoices){
             //add some choices because the user wants more than he already has
-            for (let i = childerenCount; i < amountOfChoices; i++) {
-                let data = [{
-                    "key": "choice",
-                    "value": "this is a choice"
-                }]
-                genericAddVertex(graph, state.selectedCell, null, NodeEnum.Choice, data, 80, 40, 10, (70 + i * 50), 'shape=' + NodeEnum.MultipleChoice + ';movable=0');
-
-            }
+            addSubVertexes(graph, state.selectedCell, null, amountOfChoices, childerenCount);
         }else if(childerenCount > amountOfChoices){
             //delete some cells because the user wants less then he already has
 

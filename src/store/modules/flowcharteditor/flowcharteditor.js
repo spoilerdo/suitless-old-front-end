@@ -39,7 +39,7 @@ const actions = {
 
     async saveFlowchart({commit}, flowchart) {
         try {
-            return await asyncApiCall('post', `${API_URL}/modules/`, flowchart);
+            //return await asyncApiCall('post', `${API_URL}/modules/`, flowchart);
         } catch(e) {
             return e;
         }
