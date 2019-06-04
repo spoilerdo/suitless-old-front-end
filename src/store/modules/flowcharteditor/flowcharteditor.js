@@ -63,7 +63,7 @@ const mutations = {
             children: null
         };
         if(cellState.children != null){
-            state.selectedCell.children = cellState.children.length;
+            state.selectedCell.children = cellState.children;
         }
         if(cellState.lincData != null){
             state.selectedCell.lincData = cellState.lincData;
