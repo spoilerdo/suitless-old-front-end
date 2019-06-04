@@ -60,8 +60,8 @@ export default {
                 genericChangeNode(nodeName, name){
                     methods.genericChangeNode(nodeName, name);
                 },
-                changeMultipleChoiceNode(nodeName, title, amountOfChoices){
-                    methods.changeMultipleChoiceNode(nodeName, title, amountOfChoices);
+                changeMultipleChoiceNode(nodeName, title, amountOfChoices, reason, loopSubQuestions){
+                    methods.changeMultipleChoiceNode(nodeName, title, amountOfChoices, reason, loopSubQuestions);
                 },
                 changeEdge(name, implication, implicationLevel, implicationColor){
                     methods.changeEdge(name, implication, implicationLevel, implicationColor);

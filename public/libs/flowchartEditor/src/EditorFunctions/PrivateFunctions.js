@@ -23,11 +23,11 @@ export function addQuestion(graph, parent, json, x, y) {
     let data = [
         {
             "key": "question",
-            "value": "Question"
+            "value": ""
         },
         {
             "key": "reason",
-            "value": "Reason for the question"
+            "value": ""
         }
     ]
     return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, 80, x, y, 'shape=' + NodeEnum.Question);
@@ -60,7 +60,7 @@ export function addModule(graph, parent, json, x, y) {
 
     let data = [{
         "key": "module",
-        "value": "Module name"
+        "value": ""
     }]
     return genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, 80, x, y, 'shape=' + NodeEnum.Module + ';perimeter=ellipsePerimeter;');
 }
@@ -92,7 +92,7 @@ export function addNotification(graph, parent, json, x, y) {
 
     let data = [{
         "key": "notify",
-        "value": "this is a notification"
+        "value": ""
     }]
     return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, 80, x, y, 'shape=' + NodeEnum.Notification + ';perimeter=ellipsePerimeter;');
 }
@@ -125,10 +125,20 @@ export function addNote(graph, parent, json, x, y) {
 export function addMultipleChoice(graph, parent, json, x, y) {
     editorFunctions.setCustomShape(graph, NodeEnum.MultipleChoice);
 
-    let data = [{
-        "key": "question",
-        "value": "this is the multiplechoice question"
-    }]
+    let data = [
+        {
+            "key": "question",
+            "value": ""
+        },
+        {
+            "key": "reason",
+            "value": ""
+        },
+        {
+            "key": "loopsubQuestions",
+            "value": true
+        }
+    ]
 
     let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, data, 300, 300, x, y, 'shape=' + NodeEnum.MultipleChoice);
     addSubVertexes(graph, parentSwimlane, json);
