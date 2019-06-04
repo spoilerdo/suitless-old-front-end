@@ -22,6 +22,14 @@
                     name="question"
                 />
                 <span>{{ errors.first('question') }}</span>
+                <v-textarea
+                    v-model="form.reason"
+                    auto-grow
+                    box
+                    color="primary"
+                    label="Reason"
+                    rows="1"
+                />
                 <h6 class="subheading">The amount of choices</h6>
                 <v-text-field
                     v-model="form.amountOfChoices"
@@ -31,9 +39,15 @@
                     name="amount of choices"
                 />
                 <span>{{ errors.first('amount of choices') }}</span>
+                <v-checkbox
+                    v-model="form.loopSubQuestions"
+                    label="Ask the same subquestions more than once"
+                    hide-details
+                    color="primary"
+                />
             </v-layout>
             <v-layout align-center justify-center row>
-                <v-btn color="primary" @click="changeMultipleChoiceNode(form.multipleChoiceNode, form.multipleChoice, form.amountOfChoices)">Apply</v-btn>
+                <v-btn color="primary" @click="changeMultipleChoiceNode(form.multipleChoiceNode, form.multipleChoice, form.amountOfChoices, form.reason, form.loopSubQuestions)">Apply</v-btn>
             </v-layout>
         </v-form>
     </v-layout>
@@ -46,9 +60,11 @@ export default {
             form: {
                 multipleChoiceNode: null,
                 multipleChoice: null,
-                amountOfChoices: 3
+                amountOfChoices: 3,
+                reason: null,
+                loopSubQuestions: true
             }
         }
-    }
+    },
 }
 </script>
