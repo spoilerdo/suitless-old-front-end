@@ -61,9 +61,6 @@
         <v-btn
           large
           flat
-          round
-          icon
-          bottom
           class="action-btn"
           @click="answerQuestion()"
           id="next-btn"
