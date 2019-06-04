@@ -83,15 +83,17 @@ export let editorFunctions = {
             let data = [
                 {
                     "key": "implication",
-                    "value": "Implication of the answer"
+                    "value": ""
                 },
                 {
                     "key": "implicationLevel",
-                    "value": "Info"
+                    "value": "default"
                 }
             ]
 
-            edge.lincData = data;
+            if(firstCell.lincType != NodeEnum.Start){
+                edge.lincData = data;
+            }
 
             graph.addEdge(edge, parent, firstCell, secondCell);
 

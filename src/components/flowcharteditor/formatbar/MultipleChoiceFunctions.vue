@@ -26,7 +26,7 @@
                 <v-text-field
                     v-model="form.amountOfChoices"
                     type="number"
-                    value="3"
+                    :value="form.amountOfChoices"
                     v-validate="'required'"
                     name="amount of choices"
                 />
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     data() {
         return {
@@ -47,6 +49,19 @@ export default {
                 multipleChoiceNode: null,
                 multipleChoice: null,
                 amountOfChoices: 3
+            }
+        }
+    },
+    computed: {
+        ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
+    },
+    watch: {
+        selectedCell: function(newValue, oldValue) {
+            if(newValue != null && this.formatBarType == this.$data.nodeEnum.MultipleChoice){
+                this.form.multipleChoiceNode = newValue.value;
+                this.form.multipleChoice = newValue.lincData[0].value;
+                console.log(newValue);
+                this.form.amountOfChoices = newValue.children;
             }
         }
     }
