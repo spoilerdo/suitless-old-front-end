@@ -22,12 +22,19 @@
                     color="primary"
                     label="Implication"
                     rows="1"
-                    v-validate="'required'"
                     name="implication"
                 />
-                <span>{{ errors.first('implication') }}</span>
                 <h6 class="subheading">Select the implication level</h6>
                 <v-layout align-center justify-center row>
+                    <v-btn
+                        flat
+                        icon
+                        color='default'
+                        v-bind:class="{selectedColor: form.implicationColor == theme.default}"
+                        @click="setSelected('default', theme.default)"
+                    >
+                        <v-icon>mdi-checkbox-blank</v-icon>
+                    </v-btn>
                     <v-btn 
                         flat 
                         icon 
@@ -81,7 +88,9 @@
 
 
 <script>
+import { mapState } from 'vuex';
 import theme from "@/plugins/vuetify/theme";
+
 export default {
     data() {
         return {
@@ -94,10 +103,22 @@ export default {
             theme
         }
     },
+    computed: {
+        ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
+    },
     methods: {
         setSelected(selected, color){
             this.form.implicationLevel = selected;
             this.form.implicationColor = color;
+        }
+    },
+    watch: {
+        selectedCell: function(newValue, oldValue) {
+            if(newValue != null && this.formatBarType == this.$data.nodeEnum.Edge && newValue.lincData.length > 0){
+                this.form.answer = newValue.value;
+                this.form.implication = newValue.lincData[0].value;
+                this.form.implicationLevel = newValue.lincData[1].value;
+            }
         }
     }
 }

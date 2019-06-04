@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import GenericView from "./genericView/GenericView";
 
 export default {
@@ -37,13 +38,24 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
+  },
   components: {
     GenericView
   },
   methods: {
+    ...mapActions("flowcharteditor/", ["setSelectedCell"]),
     changeProps(newForm){
       this.form.questionNode = newForm.nodeName;
       this.form.question = newForm.name;
+    }
+  },
+  watch: {
+    selectedCell: function(newValue, oldValue) {
+      if(newValue != null && this.formatBarType == this.$data.nodeEnum.Question){
+          this.form.reason = newValue.lincData[1].value;
+      }
     }
   }
 };

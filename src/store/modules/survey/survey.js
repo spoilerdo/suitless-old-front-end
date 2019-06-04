@@ -40,12 +40,12 @@ const actions = {
 }
 
 const mutations = {
-    SET_SURVEY(state, survey) {
+    [SET_SURVEY](state, survey) {
         state.all = survey;
         //makes an object array with the node ID as key
         state.all.nodes = _.mapKeys(survey.nodes, 'id');
     },
-    SET_SURVEYS(state, surveys) {
+    [SET_SURVEYS](state, surveys) {
         state.all = surveys._embedded.moduleList;
     }
 }
