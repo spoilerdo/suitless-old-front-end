@@ -3,12 +3,12 @@
     <v-layout row wrap>
       <v-flex md6 sm8 xs12>
         <materialCard color="primary" title="Student Legal Health Check" :text="loginText">
-          <v-alert :value="alert.message !=null" :type="alert.type" outline>{{alert.message}}</v-alert>
+          <v-alert id="alert" :value="alert.message !=null" :type="alert.type" outline>{{alert.message}}</v-alert>
 
           <div v-show="loggingIn" id="LoginForm">
             <Form email password name="loginForm" ref="loginForm" :onclick="loginUser"/>
             <v-btn id="btn_login" @click="$refs.loginForm.validatedSubmit()" mx-2 color="primary">Login</v-btn>
-            <v-btn v-on:click="switchForms(false)" mx-2 color="grey">Create New Account</v-btn>
+            <v-btn id="btn_SwitchToRegister" v-on:click="switchForms(false)" mx-2 color="grey">Create New Account</v-btn>
             <v-spacer/>
             <a href="#" style="color: grey;">Forgot your password?</a>
           </div>
@@ -26,8 +26,9 @@
               :callback="successfulRegister"
             />
 
-            <v-btn @click="$refs.registerForm.validatedSubmit()" mx2 color="primary">Register</v-btn>
+            <v-btn id="btn_register" @click="$refs.registerForm.validatedSubmit()" mx2 color="primary">Register</v-btn>
             <v-btn
+            id="btn_SwitchToLogin"
               v-on:click="switchForms(true)"
               class="mx-2"
               color="grey"

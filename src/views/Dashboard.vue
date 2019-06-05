@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height fluid grid-list-sm>
     <v-layout row wrap>
-      <v-flex xs12>
+      <v-flex xs12 id="dashboard">
         <div v-if="role == 'ADMIN'">
           <Drawer/>
           <AllSurveys/>

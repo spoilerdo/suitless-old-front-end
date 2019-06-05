@@ -24,6 +24,7 @@
                 v-validate="'required|min:8'"
                 type='password'
                 name="password"
+                ref="password"
               ></v-text-field>
               <span v-if="password">{{ errors.first(`${name}.password`)}}</span>
             <!-- /password input -->
