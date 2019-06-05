@@ -16,7 +16,7 @@
   </v-layout>
 </template>
 
-<style>
+<style scoped>
 .LatestSurveyDiv {
   display: flex;
   align-items: center;

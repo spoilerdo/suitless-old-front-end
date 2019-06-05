@@ -69,7 +69,6 @@ export default {
       answer: state => state.all
     }),
     ...mapState("progress/", ["currentquestion", "progress", "notification", "options"]),
-    ...mapState("app/", ["footerColor"]),
     ...mapGetters({
       firsQuestionID: "survey/getFirstQuestionID",
       getAnswerByQuestionID: "answer/getAnswerByQuestionID"

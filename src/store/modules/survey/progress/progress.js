@@ -1,12 +1,26 @@
 import { SET_CURRENTQUESTION, SET_PROGRESS, SET_DEPTH, SET_NOTIFICATION, SET_OPTIONS, PUSH_OPTION, ADD_CURRENTQBACKLOG, DELETE_FIRST_CURRENTBACKLOG_QUESTION, ADD_CURRENTQBACKLOG_ARRAY,CLEAR_CURRENTBACKLOG, ADD_CURRENTSUBQUESTIONBACKLOG, CLEAR_CURRENTSUBQUESTIONBACKLOG, DELETE_FIRST_SUBQUESTION_BACKLOG } from '../mutation-types';
 
+/**
+ * The Progress module contains the progress of the survey 
+ * and the backlog of questions that need to be asked to the user.
+ * It also has some extra states that are node specific (e.g. notification and options)
+ * This submodule is used in the following view:
+ * - Survey (mapState currentquestion, progress, notification, options
+ *      	   and mapActions fillProgress, setCurrenQuestion, fillCurrentQuestionBacklog, clearSubQuestionBacklog)
+ */
+
 const state = {
   progress: 0,
   depth: 0,
+  //currentquestion asked by the user (this will be obtained by the question flow or the backlog)
   currentquestion: null,
+  //if a notification is the next current "question" than stored it in here and it will be shown
   notification: null,
+  //it current question is multple choice than the options are stored in here
   options: [],
+  //backlog of all the question that aren't subquestion
   currentquestionBacklog: [],
+  //backlog of all the subquestions (these get priority) and are obtained by a subpath of an option
   subQuestionBackLog: []
 }
 

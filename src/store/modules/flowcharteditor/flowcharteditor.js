@@ -2,6 +2,17 @@ import { asyncApiCall } from '../../../api/api'
 import { API_URL } from '../../serverconstants';
 import { SET_DIALOG, SET_FLOWCHART, SET_FORMATBAR, SET_CELL } from './mutation-types';
 
+/**
+ * The flowcharteditor module contains methods and states used for displaying 
+ * the right UI component (Formatbar) and also saving and import a flowchart from the module service
+ * This submodule is used in the following views:
+ * - FlowchartEditor (mapState formatBarType)
+ * - FlowchartForm (mapState dialog, flowchart and mapActions setDialog, getFlowchartByName)
+ * - GeneralFunction (mapActions saveFlowchart)
+ * - All the other components (mapState selectedCell, formatBarType)
+ * - plugins/flowchareditor script (mapActions setDialog, setFormatBarType, setSelectedCell)
+ */
+
 const state = {
     dialog: false,
     flowchart: null,
@@ -16,38 +27,53 @@ const state = {
 const getters = {}
 
 const actions = {
-    setDialog({commit}, dialogState){
+    /**
+     * The following actions are called from the plugin/flowcharteditor script 
+     * who gets its info from the flowcharteditor store in the libs folder.
+     * We chose to do it this way so that you have a lose connection between the flowcharteditor plugin and Vue.js (like using an interface in Java)
+     * But if you want to seperate the flowchart editor and Vue.js completly you cant use Vuetify to render the formatbar
+     * and you would be forced to generate HTML within js which will get large and messy.
+     * A downside of this design choice is that the library is not completly seperated/SOLID
+     */
+
+    //Sets the dialog window of the import button
+    setDialog({ commit }, dialogState) {
         commit(SET_DIALOG, dialogState);
     },
-
-    setFormatBarType({commit}, newType){
+    setFormatBarType({ commit }, newType) {
         commit(SET_FORMATBAR, newType);
     },
-
-    setSelectedCell({commit}, newCell) {
+    setSelectedCell({ commit }, newCell) {
         commit(SET_CELL, newCell);
     },
-    
-    async getFlowchartByName({commit}, name){
-        try{
+
+    /**
+     * This actions returns a flowchart. 
+     * The FlowchartForm view will pass this from the plugins/flowcharteditor to the flowchart editor plugin.
+     */
+    async getFlowchartByName({ commit }, name) {
+        try {
             const req = await asyncApiCall('get', `${API_URL}/modules/name/${encodeURI(name)}`);
             commit(SET_FLOWCHART, req);
-        }catch (e){
+        } catch (e) {
             console.log(e);
         }
     },
 
-    async saveFlowchart({commit}, flowchart) {
+    /**
+     * Vue.js gets the flowchart JSON from the plugin and make the API call to the module service
+     */
+    async saveFlowchart({ commit }, flowchart) {
         try {
-            //return await asyncApiCall('post', `${API_URL}/modules/`, flowchart);
-        } catch(e) {
+            return await asyncApiCall('post', `${API_URL}/modules/`, flowchart);
+        } catch (e) {
             return e;
         }
     }
 }
 
 const mutations = {
-    [SET_DIALOG](state, dialogState){
+    [SET_DIALOG](state, dialogState) {
         state.dialog = dialogState;
     },
     [SET_FORMATBAR](state, formatBarState) {
@@ -62,10 +88,10 @@ const mutations = {
             lincData: [],
             children: null
         };
-        if(cellState.children != null){
+        if (cellState.children != null) {
             state.selectedCell.children = cellState.children;
         }
-        if(cellState.lincData != null){
+        if (cellState.lincData != null) {
             state.selectedCell.lincData = cellState.lincData;
         }
     }
