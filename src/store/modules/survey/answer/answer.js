@@ -11,7 +11,7 @@ const getters = {
         return state.all;
     },
     getAnswerByQuestionID: (state) => (question) => {
-        var pa = _.find(state.all, (a) => a.targetID === question.ID);
+        var pa = _.find(state.all, (a) => a.targetID === question.id);
         if (pa == null) {
             return _.last(state.all);
         } else {

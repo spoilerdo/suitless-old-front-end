@@ -34,7 +34,6 @@ const actions = {
     commit(SET_DEPTH, depth);
   },
   setCurrentQuestion({ commit, state }, { question, nodes }) {
-    console.log(question);
     //if you do not have a next question, first check if there's more subquestions to be handled
     if(question == null && state.subQuestionBackLog.length > 0 || question != null && question.style == 2 && state.subQuestionBackLog.length > 0) {
       let comingQuestion = state.subQuestionBackLog[0];
