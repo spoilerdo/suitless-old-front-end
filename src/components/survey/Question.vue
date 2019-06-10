@@ -32,7 +32,7 @@
           <QuestionCard
             v-on:selectedAnswer="selectAnswer"
             v-for="answer in question.flows"
-            :key="answer.targetID"
+            :key="answer.targetID + answer.value"
             :id="'question-' + answer.targetID"
             :text="answer.value"
             :answer="answer"
