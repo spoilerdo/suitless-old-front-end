@@ -2,6 +2,7 @@ import flowchartEditor from '../../../public/libs/flowchartEditor/src/Main';
 import { state, methods } from '../../../public/libs/flowchartEditor/src/store/flowcharteditor';
 import { mapActions } from 'vuex';
 import { NodeEnum } from '../../../public/libs/flowchartEditor/src/NodeEnum';
+import { ImplicationEnum } from '../../../public/libs/flowchartEditor/src/ImplicationEnum';
 
 export default {
     install(Vue) {
@@ -69,7 +70,8 @@ export default {
             },
             data: function () {
                 return {
-                    nodeEnum: NodeEnum
+                    nodeEnum: NodeEnum,
+                    implicationEnum: ImplicationEnum
                 };
             }
         })

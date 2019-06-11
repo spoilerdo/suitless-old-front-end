@@ -3,9 +3,9 @@
     <v-layout align-center justify-center row pa-5>
       <ProgressBar ref="progressBar"/>
     </v-layout>
-    <v-layout align-center justify-center row ma-4>
+    <v-layout align-center justify-center row ma-4 v-if="progress !== 100">
       <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
-        <!--currentquestion is a object not an integer-->
+        <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == 1"
           v-on:answerQuestion="answeredQuestion"
@@ -23,17 +23,17 @@
           :isMobile="isMobile"
           :options="options"
         />
-        <EndPage 
-          v-else-if="progress === 100"
-          :answers="answer"
-          v-on:printPDF="printPDF"
-        />
         <Notification
           v-if="notification != null"
           v-bind:value="notification.value"
         />
       </v-flex>
     </v-layout>
+    <EndPage
+      v-else
+      :answers="answer"
+      v-on:printPDF="printPDF"
+    />
     <v-layout align-center justify-center row pa-5>
       <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
           <Info :question="currentquestion"  v-if="!isMobile"/>
@@ -47,7 +47,7 @@ import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
 import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
-import EndPage from "@/components/survey/EndPage.vue";
+import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
