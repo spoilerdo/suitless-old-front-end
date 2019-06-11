@@ -1,5 +1,4 @@
 <template>
-  <v-list-tile class="list-item-height">
     <v-list class="list-width">
       <template v-for="answer in answers">
         <v-flex row wrap xs12 :key="answer.questionID + answer.targetID">
@@ -12,7 +11,6 @@
         >{{ answer.answerImplication }}</v-alert>
       </template>
     </v-list>
-  </v-list-tile>
 </template>
 
 <script>
