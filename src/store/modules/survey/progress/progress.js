@@ -34,7 +34,6 @@ const actions = {
     commit(SET_DEPTH, depth);
   },
   setCurrentQuestion({ commit, state }, { question, nodes }) {
-    console.log(question);
     //if you do not have a next question, first check if there's more subquestions to be handled
     if(question == null && state.subQuestionBackLog.length > 0 || question != null && question.style == 2 && state.subQuestionBackLog.length > 0) {
       let comingQuestion = state.subQuestionBackLog[0];
@@ -45,11 +44,11 @@ const actions = {
     //if you do not hav a next question and there's no more sub questions switch to the normal question flow if it exists.
     else if (question == null && state.currentquestionBacklog.length > 0 || question != null && question.style == 2 && state.currentquestionBacklog.length > 0) {
       let comingQuestion = state.currentquestionBacklog[0];
-      //set the options for the coming question if it is multiple choice
+      //set t he options for the coming question if it is multiple choice
       if(comingQuestion.style == 7) {
         commit(SET_OPTIONS, []);
         let choices = comingQuestion.lincData.filter(c => c.key !== "question");
-        console.log(choices);
+        choices.splice(choices.findIndex(item => item.key === "loopsubQuestions"), 1)
         choices.forEach(choice => {
           commit(PUSH_OPTION, nodes[choice.value]);
         });
@@ -58,21 +57,18 @@ const actions = {
       commit(DELETE_FIRST_CURRENTBACKLOG_QUESTION);
       
     } else if(question == null){
-      console.log(" null part");
       return;
     } else {
       //if the next question is a notification then store it in the notification array and show it on the front-end
       if (question.style == 5) {
-        console.log("notification part");
         commit(SET_NOTIFICATION, question);
         commit(SET_CURRENTQUESTION, nodes[question.flows[0].targetID]);
       }
       //if the next question is a multiple choice node then get the different options
       else if (question.style == 7) {
-        console.log("multi choice part" );
         commit(SET_OPTIONS, []);
         let choices = question.lincData.filter(c => c.key !== "question");
-        console.log(choices);
+        choices.splice(choices.findIndex(item => item.key === "loopsubQuestions"), 1)
         choices.forEach(choice => {
           commit(PUSH_OPTION, nodes[choice.value]);
         });
@@ -80,8 +76,6 @@ const actions = {
       }
       //else just commit the currentquestion
       else {
-        console.log("else part");
-        console.log(question);
         commit(SET_CURRENTQUESTION, question);
       }
     }
