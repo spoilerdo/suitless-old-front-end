@@ -24,7 +24,7 @@ const getters = {
 const actions = {
     async getAllSurveys({ commit }) {
         try {
-            //const modules = await apiCall('get', `${API_URL}/modules`);
+            const modules = await apiCall('get', `${API_URL}/modules`);
             commit(SET_SURVEYS, modules);
         } catch (e) {
             console.log(e);

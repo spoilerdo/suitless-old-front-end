@@ -104,9 +104,9 @@ export default {
       this.fillProgress({ addedDepth: 1, survey: this.survey });   
     },
     renderPreviousQuestion(question) {
-
       //get previous answer(s) and convert them to an array.
       let prevAnswer = this.getAnswerByQuestionID(question);
+
       if(!Array.isArray(prevAnswer)) {
         prevAnswer = Array.of(prevAnswer);
       } else {
@@ -184,7 +184,6 @@ export default {
       for (let i = 0; i < this.answer.length; i++) {
         //check if the question to be printed is multi or single choice
         let currentAnswer = this.answer[i];
-        console.log(currentAnswer);
 
         if(Array.isArray(currentAnswer)) {
           //print relevant question based on first answer given
