@@ -102,6 +102,11 @@ export default {
           this.$emit('answerMultiChoice', {answers: this.answers, questions: this.question});
         }
       }
-    }
+    },
+    watch: {
+      question: function(newValue, oldValue) {
+        this.answers = [];
+      }
+    } 
 }
 </script>

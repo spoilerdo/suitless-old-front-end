@@ -131,18 +131,33 @@ export default {
         this.deleteLastAnswer();
     },
     answeredMultiChoiceQuestion({answers, questions}) {
+      console.log(answers);
         //add answer to list of given answers.
         this.answerQuestion({
           answer: answers,
           question: this.currentquestion
         });
 
-        //add the future sub questions to the PRIORITY sub question backlog (skip the first one since it will be handled by the fillcurrentquestionbacklog)
-        answers.slice(1).forEach(ans => {
-          if(ans.flows.length > 0) {
-            this.fillsubQuestionBackLog(this.survey.nodes[ans.flows[0].targetID]);
-          }
-        });
+        //check if a flag is set for not looping non unique answers
+        let shouldLoopNonUniqueSubQuestions = this.currentquestion.lincData.find(d => d.key === "loopsubQuestions");
+        if(shouldLoopNonUniqueSubQuestions.value == "true") {
+            console.log(answers);
+            //create list of unique sub questions based on targetid and only add these to the backlog (skip first one it will be handled seperately)
+            let uniqueList = [...new Set(answers.slice(1).map(i => i.flows[0].targetID))];
+            uniqueList.forEach(nextQID => {
+                  //make sure we do not get duplicates on the first item we sliced
+                  if(nextQID !== answers[0].flows[0].targetID) {
+                    this.fillsubQuestionBackLog(this.survey.nodes[nextQID]);
+                  }
+            });
+        }else {     
+            //loop through all answers (skip 1st again it will be handled seperately) and add them to the subquestionbakclog  
+            answers.slice(1).forEach(ans => {
+              if(ans.flows.length > 0) {
+                this.fillsubQuestionBackLog(this.survey.nodes[ans.flows[0].targetID]);
+              }
+            });
+        }
     
         let firstSubQuestion = null;
         if(answers[0].flows.length > 0) {
@@ -150,7 +165,8 @@ export default {
         }
         let backLogQuestion = null;
         if(questions.flows.length > 0) {
-            backLogQuestion = this.survey.nodes[questions.flows[0].targetID];
+          backLogQuestion = this.survey.nodes[questions.flows[0].targetID];
+          console.log(backLogQuestion);
         }
 
 
