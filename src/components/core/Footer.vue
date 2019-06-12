@@ -31,7 +31,7 @@ export default {
   data: () => ({
     links: [
       { name: "Landing", Link: "/" },
-      { name: "Home", Link: "/Dashboard" }
+      { name: "Login", Link: "/Dashboard" }
     ],
     calculatedColor: ""
   }),

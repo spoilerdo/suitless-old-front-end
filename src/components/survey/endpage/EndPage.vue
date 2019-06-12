@@ -11,10 +11,7 @@
         <v-layout row wrap justify-center align-center fill-height>
           <v-list class="list-width" three-line>
             <template v-for="answers in structuredAnswers">
-              <v-list-tile
-                class="list-item-height"
-                :key="answers[0].answerImplicationLevel"
-              >
+              <v-list-tile class="list-item-height" :key="answers[0].answerImplicationLevel">
                 <v-layout row wrap justify-center align-center fill-height>
                   <v-flex column xs4 offset-xs2>
                     <!-- detail buttons -->
@@ -131,10 +128,11 @@ export default {
     };
   },
   mounted() {
-    console.log(Object.keys(this.$data.implicationEnum));
+    //console.log(Object.keys(this.$data.implicationEnum));
 
     //make a clone without reference from this.answers, this way we can fix the prop value without breaking the structure which is used for PDF generation.
     let anse = JSON.parse(JSON.stringify(this.answers));
+    console.log(anse);
 
     //get all the implications and push them in an array
     //also make sub arrays in the answers array in order to sort every answer in the implication categories
@@ -158,13 +156,16 @@ export default {
     //store the totalAnswers that have an implication in order to calculate the percentage implication for every category
     let totalAnswers = 0;
 
-    anse.forEach(function(ans, index) {
+    console.log(anse);
+
+    anse.forEach(ans => {
       if (Array.isArray(ans)) {
-        //take the data of the embedded array from the splice
-        let a = anse.splice(index, 1);
-        //take the answer from the array.
-        a[0].forEach(element => {
-          anse.splice(index, 0, element);
+        console.log("is array");
+        ans.forEach(a => {
+          //get every answer and put it into the anse array
+          let index = anse.indexOf(a);
+          anse.splice(index, 1);
+          anse.push(a);
         });
       }
 
@@ -172,6 +173,7 @@ export default {
       if (ans.answerImplicationLevel == null) {
         miscAnswers.push(ans);
       } else {
+        console.log("got an advice");
         //get the implicationTypes index trough the answer's implication
         let impIndex = implicationTypes.indexOf(ans.answerImplicationLevel);
         //because the implicationTypes index is ALWAYS the same as the index within answers
@@ -196,6 +198,8 @@ export default {
         });
       }
     });
+
+    console.log(miscAnswers);
 
     //push the fixed answers to the structuredanswers data.
     this.structuredAnswers = answers;
