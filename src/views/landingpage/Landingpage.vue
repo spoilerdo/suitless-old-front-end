@@ -61,9 +61,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions({
-      setBackground: "app/setBackground"
-    })
+    ...mapActions("app/", ["setBackground"])
   },
   created() {
     this.setBackground("#30002a");
@@ -78,6 +76,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .absolute{
   position: absolute;

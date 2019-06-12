@@ -1,11 +1,28 @@
 import { SET_DRAWER, SET_BACKGROUND, SET_FOOTERCOLOR, SET_NEWUSER } from "./mutation-types";
 
+/**
+ * The app module are some standard methods and states that are used for the look of the site
+ * This submodule is used in the following views:
+ * - CDN (setBackground, setFooterColor)
+ * - FlowchartEditor (setBackground, setFooterColor)
+ * - LandingPage (setBackground)
+ * - Login (setBackground)
+ * - Survey (setBackground, setFooterColor)
+ * - Surveys (setBackground)
+ * - Dashboard (setBackground)
+ * 
+ * The states are watched by the following views and components
+ * - App (background and newUser state, also setBackground)
+ * - Footer (footerColor)
+ * - Drawer (drawerOpen)
+ */
+
 // initial state
 const state = {
     drawerOpen: true,
     background: "#eee",
     footerColor: "#fff",
-    newUser : true
+    newUser: true
 }
 
 // getters
@@ -33,7 +50,6 @@ const actions = {
         commit(SET_BACKGROUND, newBg);
     },
     setFooterColor({commit}, newColor) {
-        console.log(newColor);
         commit(SET_FOOTERCOLOR, newColor);
     },
     setNewUser({ commit}, newUser) {

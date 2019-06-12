@@ -56,9 +56,7 @@ export default {
     ImageCard
   },
   methods: {
-    ...mapActions({
-      setBackground: "app/setBackground"
-    })
+    ...mapActions("app/", ["setBackground"])
   },
   created() {
     this.setBackground("#30002a");

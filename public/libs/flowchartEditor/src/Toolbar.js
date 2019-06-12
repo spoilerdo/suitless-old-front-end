@@ -25,9 +25,6 @@ export function createToolbar(toolbarContainer, editor, model, keyHandler, graph
 
     addDefaultActions(toolbar, editor.graph);
     addKeyActions(keyHandler, editor.graph, graphcontainer, undoManager);
-    
-    // TODO: Removed to enforce a more dynamic workflow.
-    // addDedicatedActions(toolbar, editor, model);
 }
 
 /**
@@ -85,7 +82,7 @@ function addDefaultActions(toolbar, graph) {
  * @param {mxEditor} editor
  * @param {mxGraphModel} model
  */
-function addDedicatedActions(toolbar, editor, model) {
+/*function addDedicatedActions(toolbar, editor, model) {
     toolbar.addItem('Add question node', "http://ironsm4sh.nl:3305/questionNode",
         (click) => {
             editorFunctions.addVertex(NodeEnum.Question, editor.graph, null, null, null);
@@ -98,10 +95,6 @@ function addDedicatedActions(toolbar, editor, model) {
         (click) => {
             editorFunctions.addVertex(NodeEnum.End, editor.graph, null, null, null)
         }, null, "v-icon mdi theme--light mxToolbarItem")
-    /*toolbar.addItem("Add notification node", "http://ironsm4sh.nl:3305/notificationNode",
-        (click) => {
-            graphFunctions.addVertex(NodeEnum.Notification, editor.graph, null, null, null);
-        }, null, "v-icon mdi theme--light mxToolbarItem");*/
     toolbar.addItem("Add notepad node", "http://ironsm4sh.nl:3305/questionNode",
         (click) => {
             editorFunctions.addVertex(NodeEnum.MultipleChoice, editor.graph, null, null, null);
@@ -110,4 +103,4 @@ function addDedicatedActions(toolbar, editor, model) {
         (click) => {
             editorFunctions.addEdge(editor.graph, null);
         }, null, "v-icon mdi theme--light mxToolbarItem");
-}
+}*/

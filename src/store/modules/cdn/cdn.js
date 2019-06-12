@@ -1,6 +1,13 @@
 import * as api from "@/api/api";
 import { CDN_URL } from "@/store/serverconstants"
 
+/**
+ * The cdn module contains actions that make API calls to the CDN Service
+ * This sub module is used in the following components
+ * - ServiceableTable (getAllData, delete)
+ * - ServiceableTopbar (uploadImage)
+ */
+
 const actions = {
     getAllData(list) {
         api.apiCall("GET", CDN_URL + "meta/all").then(data => {
