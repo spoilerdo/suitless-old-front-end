@@ -1,8 +1,16 @@
 import _ from 'lodash';
 import { ADD_ANSWER, DELETE_LAST_ANSWER } from '../mutation-types';
 
+/**
+ * The answer module contians all the answers of the survey that has been made
+ * These answers will be used for the PDF generation and can be stored in the questionaire service
+ * This submodule is used in the following views:
+ * - Survey (mapState all and mapActions deleteLastAnswer, answerQuestion)
+ */
+
 //initial state
 const state = {
+    //all the answers in 1 array
     all: []
 }
 
@@ -11,7 +19,7 @@ const getters = {
         return state.all;
     },
     getAnswerByQuestionID: (state) => (question) => {
-        var pa = _.find(state.all, (a) => a.targetID === question.ID);
+        var pa = _.find(state.all, (a) => a.targetID === question.id);
         if (pa == null) {
             return _.last(state.all);
         } else {

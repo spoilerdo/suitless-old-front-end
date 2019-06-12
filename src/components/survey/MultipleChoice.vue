@@ -59,9 +59,6 @@
         <v-btn
           large
           flat
-          round
-          icon
-          bottom
           class="action-btn"
           @click="answerQuestion()"
         >
@@ -102,6 +99,11 @@ export default {
           this.$emit('answerMultiChoice', {answers: this.answers, questions: this.question});
         }
       }
-    }
+    },
+    watch: {
+      question: function(newValue, oldValue) {
+        this.answers = [];
+      }
+    } 
 }
 </script>

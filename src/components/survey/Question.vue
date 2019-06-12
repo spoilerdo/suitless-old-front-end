@@ -32,7 +32,8 @@
           <QuestionCard
             v-on:selectedAnswer="selectAnswer"
             v-for="answer in question.flows"
-            :key="answer.targetID"
+            :key="answer.targetID + answer.value"
+            :id="'question-' + answer.targetID"
             :text="answer.value"
             :answer="answer"
             image="http://ironsm4sh.nl:3303/cdn/man"
@@ -40,7 +41,6 @@
             style="margin:10px"
             ref="question"
           />
-          <!-- multiple choice TODO -->
         </div>
       </v-card-actions>
 
@@ -60,11 +60,9 @@
         <v-btn
           large
           flat
-          round
-          icon
-          bottom
           class="action-btn"
           @click="answerQuestion()"
+          id="next-btn"
         >
            <v-icon color="secondary" x-large right>mdi-chevron-right</v-icon>
         </v-btn>

@@ -32,7 +32,7 @@
 
 <script>
 import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
-import cdn from "@/store/modules/cdn/server";
+import cdn from "@/store/modules/cdn/cdn";
 
 export default {
   data() {
@@ -73,7 +73,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .ServiceableTopbar {
   background: white;
 }

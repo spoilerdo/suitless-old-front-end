@@ -2,13 +2,14 @@ import flowchartEditor from '../../../public/libs/flowchartEditor/src/Main';
 import { state, methods } from '../../../public/libs/flowchartEditor/src/store/flowcharteditor';
 import { mapActions } from 'vuex';
 import { NodeEnum } from '../../../public/libs/flowchartEditor/src/NodeEnum';
+import { ImplicationEnum } from '../../../public/libs/flowchartEditor/src/ImplicationEnum';
 
 export default {
     install(Vue) {
         Vue.mixin({
             methods: {
                 //Map the actions that will change the Vue store values
-                ...mapActions("flowcharteditor/", ["setDialog", "setFormatBarType"]),
+                ...mapActions("flowcharteditor/", ["setDialog", "setFormatBarType", "setSelectedCell"]),
                 startEditor() {
                     flowchartEditor.startEditor();
                     let setDialogmethod = this.setDialogState;
@@ -25,6 +26,11 @@ export default {
                     state.activeFormatBar.registerListener(function(val){
                         setActiveFormatBarmethod(val);
                     })
+
+                    let setSelectedCellmethod = this.setnewSelectedCell;
+                    state.newCell.registerListener(function(val){
+                        setSelectedCellmethod(val);
+                    })
                 },
                 setDialogState(val) {
                     this.setDialog(val);
@@ -33,6 +39,10 @@ export default {
                 //Function for the flowchart plugin callbacks
                 setActiveFormatBar(val) {
                     this.setFormatBarType(val);
+                },
+
+                setnewSelectedCell(val){
+                    this.setSelectedCell(val);
                 },
 
                 setFlowchartState(val) {
@@ -51,8 +61,8 @@ export default {
                 genericChangeNode(nodeName, name){
                     methods.genericChangeNode(nodeName, name);
                 },
-                changeMultipleChoiceNode(nodeName, title, amountOfChoices){
-                    methods.changeMultipleChoiceNode(nodeName, title, amountOfChoices);
+                changeMultipleChoiceNode(nodeName, title, amountOfChoices, reason, loopSubQuestions){
+                    methods.changeMultipleChoiceNode(nodeName, title, amountOfChoices, reason, loopSubQuestions);
                 },
                 changeEdge(name, implication, implicationLevel, implicationColor){
                     methods.changeEdge(name, implication, implicationLevel, implicationColor);
@@ -60,7 +70,8 @@ export default {
             },
             data: function () {
                 return {
-                    nodeEnum: NodeEnum
+                    nodeEnum: NodeEnum,
+                    implicationEnum: ImplicationEnum
                 };
             }
         })

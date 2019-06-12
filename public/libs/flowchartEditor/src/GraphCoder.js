@@ -1,7 +1,7 @@
 import { apiCall } from "../../../../src/api/api";
 
 /**
- * Saves your flowchart to convert it to JSON
+ * Saves your flowchart to convert it to JSON and return it to the EditorFunctions.js script
  * @author Marco Driessen, Martijn Dormans
  * @version 1.0
  * @since 27-02-2019
@@ -16,13 +16,25 @@ export let GraphCoder = {
                 n.children.forEach(child => {
                     //add child-node to the nodes array
                     nodes.push(this.createNode(child));
-                    
-                    //add some lincdata to the parent node in order to save the child
-                    //it will save the child-node's name and id in order to get a reference to
-                    n.lincData.push({
-                        "key": child.value,
-                        "value": child.id
-                    });
+
+                    //Add some lincdata to the parent node in order to save the child.
+                    //It will save the child-node's name and id in order to get a reference to in the survey front-end.
+
+                    //But first we need to check if the node already contains the choice data.
+                    //If so than you will need to update these
+                    console.log(n.lincData.filter(c => c.value === child.id));
+                    let oldChoice = n.lincData.filter(c => c.value === child.id);
+                    if(oldChoice.length != 0){
+                        let newChoice = oldChoice[0].key = child.value;
+                        let index = n.lincData.indexOf(oldChoice);
+                        n.lincData[index] = newChoice;
+                    }else {
+                        //If it's new than just push it
+                        n.lincData.push({
+                            "key": child.value,
+                            "value": child.id
+                        });
+                    }
                 })
             }
 
@@ -49,9 +61,13 @@ export let GraphCoder = {
                    output.push({
                        targetID: cell.edges[i].target.id,
                        value: cell.edges[i].value,
-                       implication: cell.edges[i].lincData[0].value,
-                       implicationLevel: cell.edges[i].lincData[1].value
-                   }) 
+                   })
+                   if(cell.edges[i].lincData != null){
+                        output.push({
+                            implication: cell.edges[i].lincData[0].value,
+                            implicationLevel: cell.edges[i].lincData[1].value
+                        })
+                   }
                 }
             }
         }

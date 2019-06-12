@@ -8,7 +8,7 @@
 
 import { NodeEnum } from "../NodeEnum";
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
-import { genericAddVertex } from "../EditorFunctions/PrivateFunctions";
+import { genericAddVertex, addSubVertexes } from "../EditorFunctions/PrivateFunctions";
 import { mxConstants } from "../MxGraph";
 
 /**
@@ -55,6 +55,22 @@ export const state = {
     */
     editor: null,
     selectedCell: null,
+
+    newCell: {
+        newCellInternal: null,
+        newCellListener: function (val) { },
+        set set(val) {
+            this.newCellInternal = val;
+            this.newCellListener(val);
+        },
+        get get() {
+            return this.newCellInternal;
+        },
+        registerListener: function (listener) {
+            this.newCellListener = listener;
+        }
+    },
+
     model: null,
 
     /*
@@ -96,33 +112,33 @@ export const methods = {
         if(state.selectedCell.lincData != null && state.selectedCell.lincData[1].key === "reason")
         state.selectedCell.lincData[1].value = reason
     },
-    changeMultipleChoiceNode(nodeName, title, amountOfChoices){
+    changeMultipleChoiceNode(nodeName, title, amountOfChoices, reason, loopSubQuestions){
         let graph = state.editor.graph;
 
-        this.genericChangeNode(nodeName, title);
+        //change the generic values of a node (node value and question of the multi choice)
+        this.genericChangeNode(nodeName, title, reason);
+        
+        //get the child count (amount of choices)
         let childerenCount = state.selectedCell.getChildCount();
 
-        if(childerenCount < amountOfChoices){
-            //add some cells
-            for (let i = childerenCount; i < amountOfChoices; i++) {
-                let data = [{
-                    "key": "choice",
-                    "value": "this is a choice"
-                }]
-                genericAddVertex(graph, state.selectedCell, null, NodeEnum.Choice, data, 80, 40, 10, (70 + i * 50), 'shape=' + NodeEnum.MultipleChoice + ';movable=0');
-            }
-        }else if(childerenCount > amountOfChoices){
-            //delete some cells
+        //change the loopSubQuestions data of the multi choice node
+        state.selectedCell.lincData[2].value = loopSubQuestions;
 
-            //get the amount of cells that needs to be removed
+        if(childerenCount < amountOfChoices){
+            //add some choices because the user wants more than he already has
+            addSubVertexes(graph, state.selectedCell, null, amountOfChoices, childerenCount);
+        }else if(childerenCount > amountOfChoices){
+            //delete some cells because the user wants less then he already has
+
+            //get the amount of cells that need to be removed
             let children = state.selectedCell.children;
             let maxAmountOfChilderen = state.selectedCell.children.length;
             let cellToBeRemoved = maxAmountOfChilderen - amountOfChoices;
 
             let childrenToBeRemoved = [];
-            //loop trough the amount of cells that needs to be removed in order to remove the cells
+            //loop trough the amount of cells that need to be removed in order to remove the cells
             for (let i = 1; i <= cellToBeRemoved; i++) {
-                //get the index of the cell that needs to be removed
+                //get the index of the cell that need to be removed
                 let index = maxAmountOfChilderen - i;
                 childrenToBeRemoved.push(children[index]);
             }

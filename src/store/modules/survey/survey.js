@@ -1,8 +1,16 @@
-
 import _ from 'lodash';
 import { SET_SURVEY, SET_SURVEYS } from './mutation-types';
 import { apiCall } from '../../../api/api';
 import { API_URL } from '../../serverconstants';
+
+/**
+ * The survey module contains the survey that the user wants to make 
+ * and also the first question that needs to be asked because a flowchart can start with a start node 
+ * or something else instead of a question (or multichoice, etc.) node
+ * This submodule is used in the following views/ components:
+ * - Survey (mapState all and mapGetters getFirstQuestionID and mapActions getSurveyByID)
+ * - AllSurveys/ IncompleteSurveys/ LatestReports (mapState all, mapActions getAllSurveys)
+ */
 
 // initial state
 const state = {
@@ -40,12 +48,12 @@ const actions = {
 }
 
 const mutations = {
-    SET_SURVEY(state, survey) {
+    [SET_SURVEY](state, survey) {
         state.all = survey;
         //makes an object array with the node ID as key
         state.all.nodes = _.mapKeys(survey.nodes, 'id');
     },
-    SET_SURVEYS(state, surveys) {
+    [SET_SURVEYS](state, surveys) {
         state.all = surveys._embedded.moduleList;
     }
 }

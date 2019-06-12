@@ -3,9 +3,9 @@
     <v-layout align-center justify-center row pa-5>
       <ProgressBar ref="progressBar"/>
     </v-layout>
-    <v-layout align-center justify-center row ma-4>
+    <v-layout align-center justify-center row ma-4 v-if="progress !== 100">
       <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
-        <!--currentquestion is a object not an integer-->
+        <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == 1"
           v-on:answerQuestion="answeredQuestion"
@@ -23,17 +23,17 @@
           :isMobile="isMobile"
           :options="options"
         />
-        <EndPage 
-          v-else-if="progress === 100"
-          :answers="answer"
-          v-on:printPDF="printPDF"
-        />
         <Notification
           v-if="notification != null"
           v-bind:value="notification.value"
         />
       </v-flex>
     </v-layout>
+    <EndPage
+      v-else
+      :answers="answer"
+      v-on:printPDF="printPDF"
+    />
     <v-layout align-center justify-center row pa-5>
       <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
           <Info :question="currentquestion"  v-if="!isMobile"/>
@@ -47,7 +47,7 @@ import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
 import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
-import EndPage from "@/components/survey/EndPage.vue";
+import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
@@ -69,7 +69,6 @@ export default {
       answer: state => state.all
     }),
     ...mapState("progress/", ["currentquestion", "progress", "notification", "options"]),
-    ...mapState("app/", ["footerColor"]),
     ...mapGetters({
       firsQuestionID: "survey/getFirstQuestionID",
       getAnswerByQuestionID: "answer/getAnswerByQuestionID"
@@ -104,9 +103,9 @@ export default {
       this.fillProgress({ addedDepth: 1, survey: this.survey });   
     },
     renderPreviousQuestion(question) {
-
       //get previous answer(s) and convert them to an array.
       let prevAnswer = this.getAnswerByQuestionID(question);
+
       if(!Array.isArray(prevAnswer)) {
         prevAnswer = Array.of(prevAnswer);
       } else {
@@ -131,18 +130,33 @@ export default {
         this.deleteLastAnswer();
     },
     answeredMultiChoiceQuestion({answers, questions}) {
+      console.log(answers);
         //add answer to list of given answers.
         this.answerQuestion({
           answer: answers,
           question: this.currentquestion
         });
 
-        //add the future sub questions to the PRIORITY sub question backlog (skip the first one since it will be handled by the fillcurrentquestionbacklog)
-        answers.slice(1).forEach(ans => {
-          if(ans.flows.length > 0) {
-            this.fillsubQuestionBackLog(this.survey.nodes[ans.flows[0].targetID]);
-          }
-        });
+        //check if a flag is set for not looping non unique answers
+        let shouldLoopNonUniqueSubQuestions = this.currentquestion.lincData.find(d => d.key === "loopsubQuestions");
+        if(shouldLoopNonUniqueSubQuestions.value == "true") {
+            console.log(answers);
+            //create list of unique sub questions based on targetid and only add these to the backlog (skip first one it will be handled seperately)
+            let uniqueList = [...new Set(answers.slice(1).map(i => i.flows[0].targetID))];
+            uniqueList.forEach(nextQID => {
+                  //make sure we do not get duplicates on the first item we sliced
+                  if(nextQID !== answers[0].flows[0].targetID) {
+                    this.fillsubQuestionBackLog(this.survey.nodes[nextQID]);
+                  }
+            });
+        }else {     
+            //loop through all answers (skip 1st again it will be handled seperately) and add them to the subquestionbakclog  
+            answers.slice(1).forEach(ans => {
+              if(ans.flows.length > 0) {
+                this.fillsubQuestionBackLog(this.survey.nodes[ans.flows[0].targetID]);
+              }
+            });
+        }
     
         let firstSubQuestion = null;
         if(answers[0].flows.length > 0) {
@@ -150,7 +164,8 @@ export default {
         }
         let backLogQuestion = null;
         if(questions.flows.length > 0) {
-            backLogQuestion = this.survey.nodes[questions.flows[0].targetID];
+          backLogQuestion = this.survey.nodes[questions.flows[0].targetID];
+          console.log(backLogQuestion);
         }
 
 
@@ -184,7 +199,6 @@ export default {
       for (let i = 0; i < this.answer.length; i++) {
         //check if the question to be printed is multi or single choice
         let currentAnswer = this.answer[i];
-        console.log(currentAnswer);
 
         if(Array.isArray(currentAnswer)) {
           //print relevant question based on first answer given

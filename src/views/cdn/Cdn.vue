@@ -19,11 +19,9 @@ export default {
     ServiceableTable,
     ServiceableTopbar
   },
-  data: () => ({}),
   methods: {
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
     addServiceable(serviceable) {
-      console.log(serviceable);
       this.$refs.table.addServiceable(serviceable);
     }
   },
@@ -33,14 +31,11 @@ export default {
   },
   beforeDestroy() {
     this.setFooterColor("#fff");
-  },
-  computed: {
-    ...mapState("app/", ["footerColor"])
   }
 };
 </script>
 
-<style>
+<style scoped>
 .ServiceableRow {
   width: 100%;
   margin-bottom: 4px;

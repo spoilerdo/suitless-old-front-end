@@ -3,6 +3,13 @@ import { API_URL } from '../../serverconstants';
 import router from '@/router/router'
 import { SET_LOGGING_IN, SET_LOGIN_TEXT, SET_ALERT } from './mutation-types';
 
+/**
+ * The login module contains the login/ register API calls to the account service
+ * and contians feedback of these calls and if the user wants to register or login
+ * This submodule is used in the following view:
+ * - Login (mapState loggingIn, logginrText, alert and MapActions registerUser, loginUser, switchForms)
+ */
+
 // initial state
 const state = {
     loggingIn: true,
@@ -22,6 +29,10 @@ const getters = {
 
 // actions
 const actions = {
+    /**
+     * If an action succeeded or fails the user gets an alert within the form
+     */
+    
     registerUser ({commit}, registerData) {
         apiCall('post', `${API_URL}/accounts/`, {email: registerData.email, firstName: registerData.firstName, lastName: registerData.lastName, password: registerData.password})
         .then((req => {
