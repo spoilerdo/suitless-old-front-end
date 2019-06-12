@@ -32,7 +32,7 @@
           <QuestionCard
             v-on:selectedAnswer="selectAnswer"
             v-for="answer in question.flows"
-            :key="answer.targetID"
+            :key="answer.targetID + answer.value"
             :id="'question-' + answer.targetID"
             :text="answer.value"
             :answer="answer"
@@ -60,9 +60,6 @@
         <v-btn
           large
           flat
-          round
-          icon
-          bottom
           class="action-btn"
           @click="answerQuestion()"
           id="next-btn"
