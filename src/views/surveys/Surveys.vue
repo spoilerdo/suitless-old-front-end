@@ -50,6 +50,11 @@ import ImageCard from "@/components/material/ImageCard";
 
 import { mapActions } from "vuex";
 
+/**
+ * Returns the page where new users get offered recommended surveys.
+ * @memberof view
+ * @todo make the recommended surveys dynamic
+ */
 export default {
   components: {
     Animatedbackground,

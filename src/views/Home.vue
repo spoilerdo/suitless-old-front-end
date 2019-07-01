@@ -23,6 +23,11 @@ import { createNamespacedHelpers } from 'vuex';
 const { mapState, mapActions,mapGetters } = createNamespacedHelpers('news/')
 
 
+/**
+ * Is a leftover page from the original template
+ * @memberof view
+ * @depricated Will be removed in a future version.
+ */
 export default {
   name: 'home',
   computed: mapState({

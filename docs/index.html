@@ -37,9 +37,9 @@
                     <li class='h5'><span>Static members</span></li>
                     
                       <li><a
-                        href='#componentlandingpage'
+                        href='#componentcore'
                         class='regular pre-open'>
-                        .Landingpage
+                        .Core
                       </a></li>
                     
                       <li><a
@@ -61,9 +61,9 @@
                       </a></li>
                     
                       <li><a
-                        href='#componentcore'
+                        href='#componentlandingpage'
                         class='regular pre-open'>
-                        .Core
+                        .Landingpage
                       </a></li>
                     
                       <li><a
@@ -125,6 +125,12 @@
                       </a></li>
                     
                       <li><a
+                        href='#plugintheme'
+                        class='regular pre-open'>
+                        .theme
+                      </a></li>
+                    
+                      <li><a
                         href='#pluginflowcharteditor'
                         class='regular pre-open'>
                         .flowchartEditor
@@ -147,21 +153,77 @@
               
                 
                 <li><a
-                  href='#theme'
-                  class="">
-                  theme
-                  
+                  href='#view'
+                  class=" toggle-sibling">
+                  view
+                  <span class='icon'>▸</span>
                 </a>
                 
-                </li>
-              
-                
-                <li><a
-                  href='#use'
-                  class="">
-                  use
+                <div class='toggle-target display-none'>
                   
-                </a>
+                  <ul class='list-reset py1-ul pl1'>
+                    <li class='h5'><span>Static members</span></li>
+                    
+                      <li><a
+                        href='#viewloginlanding'
+                        class='regular pre-open'>
+                        .LoginLanding
+                      </a></li>
+                    
+                      <li><a
+                        href='#viewcdn'
+                        class='regular pre-open'>
+                        .Cdn
+                      </a></li>
+                    
+                      <li><a
+                        href='#viewlogin'
+                        class='regular pre-open'>
+                        .Login
+                      </a></li>
+                    
+                      <li><a
+                        href='#viewsurveys'
+                        class='regular pre-open'>
+                        .Surveys
+                      </a></li>
+                    
+                      <li><a
+                        href='#viewhome'
+                        class='regular pre-open'>
+                        .Home
+                      </a></li>
+                    
+                      <li><a
+                        href='#viewdashboard'
+                        class='regular pre-open'>
+                        .Dashboard
+                      </a></li>
+                    
+                      <li><a
+                        href='#viewsurvey'
+                        class='regular pre-open'>
+                        .Survey
+                      </a></li>
+                    
+                      <li><a
+                        href='#viewflowcharteditor'
+                        class='regular pre-open'>
+                        .FlowchartEditor
+                      </a></li>
+                    
+                      <li><a
+                        href='#viewlandingpage'
+                        class='regular pre-open'>
+                        .Landingpage
+                      </a></li>
+                    
+                    </ul>
+                  
+                  
+                  
+                  
+                </div>
                 
                 </li>
               
@@ -257,6 +319,16 @@
                 
                 </li>
               
+                
+                <li><a
+                  href='#router'
+                  class="">
+                  router
+                  
+                </a>
+                
+                </li>
+              
             </ul>
           </div>
           <div class='mt1 h6 quiet'>
@@ -307,11 +379,11 @@
     <div class='py1 quiet mt1 prose-big'>Static Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='componentlandingpage'>
+    <div class='border-bottom' id='componentcore'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>Landingpage</span>
+            <span class='code strong strong truncate'>Core</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -319,9 +391,9 @@
 
   
 
-  <p>The components used in the landingpage view.</p>
+  <p>The core components.</p>
 
-    <div class='pre p1 fill-light mt0'>Landingpage</div>
+    <div class='pre p1 fill-light mt0'>Core</div>
   
   
 
@@ -346,11 +418,11 @@
     <div class='py1 quiet mt1 prose-big'>Static Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='componentlandingpagewhatwedo'>
+    <div class='border-bottom' id='componentcoreview'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>WhatWeDo</span>
+            <span class='code strong strong truncate'>View</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -358,9 +430,9 @@
 
   
 
-  <p>Provides part of the landing page's information.</p>
+  <p>Returns the core-view used in the root component</p>
 
-    <div class='pre p1 fill-light mt0'>WhatWeDo</div>
+    <div class='pre p1 fill-light mt0'>View</div>
   
   
 
@@ -393,11 +465,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentlandingpagewhythissite'>
+    <div class='border-bottom' id='componentcorefooter'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>WhyThisSite</span>
+            <span class='code strong strong truncate'>Footer</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -405,33 +477,21 @@
 
   
 
-  <p>Provides part of the landing page's information.</p>
+  <p>Returns the footer with links to other places.</p>
 
-    <div class='pre p1 fill-light mt0'>WhyThisSite</div>
-  
-  
-
-  
-  
-  
-  
+    <div class='pre p1 fill-light mt0'>Footer</div>
   
   
 
   
+  
+  
+  
+  
+  
 
   
-    <div class='py1 quiet mt1 prose-big'>Properties</div>
-    <div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>stats</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          : an image from the cdn
 
-          
-        </div>
-      
-    </div>
   
 
   
@@ -452,11 +512,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentlandingpagehowwedoit'>
+    <div class='border-bottom' id='componentcoredrawer'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>HowWeDoIt</span>
+            <span class='code strong strong truncate'>Drawer</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -464,47 +524,69 @@
 
   
 
-  <p>Provides part of the landing page's information.</p>
+  <p>Returns the drawer that is used in the dashboard.</p>
 
-    <div class='pre p1 fill-light mt0'>HowWeDoIt</div>
-  
-  
-
-  
-  
-  
-  
+    <div class='pre p1 fill-light mt0'>Drawer</div>
   
   
 
   
+  
+  
+  
+  
+  
 
   
-    <div class='py1 quiet mt1 prose-big'>Properties</div>
-    <div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>Students</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          : an image from the cdn.
 
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>Startups</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          : an image from the cdn.
+  
 
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>LawFirms</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          : an image from the cdn.
+  
 
-          
-        </div>
-      
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
     </div>
+  
+    <div class='border-bottom' id='componentcoretoolbar'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>Toolbar</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>returns a topbar that contains common things like notifications, accounts, etc</p>
+
+    <div class='pre p1 fill-light mt0'>Toolbar</div>
+  
+  
+
+  <div>Deprecated: this is no longer used.
+</div>
+  
+  
+  
+  
+  
+
+  
+
   
 
   
@@ -794,106 +876,6 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentmateriallistcard'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>ListCard</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Returns a list cards.</p>
-
-    <div class='pre p1 fill-light mt0'>ListCard</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Properties</div>
-    <div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>imageWidth</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>redirecturl</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>imagename</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>title</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>description</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>orientation</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>progress</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-          
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
     <div class='border-bottom' id='componentmaterialimagecard'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -969,6 +951,106 @@
       
         <div class='space-bottom0'>
           <span class='code bold'>direction</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='componentmateriallistcard'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>ListCard</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns a list cards.</p>
+
+    <div class='pre p1 fill-light mt0'>ListCard</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>imageWidth</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>redirecturl</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>imagename</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>title</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>description</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>orientation</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>progress</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
           
           
         </div>
@@ -1477,11 +1559,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentsurveyendpage'>
+    <div class='border-bottom' id='componentsurveyprogress'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>EndPage</span>
+            <span class='code strong strong truncate'>Progress</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1489,9 +1571,9 @@
 
   
 
-  <p>Returns an 'endpage' view used after the survey.</p>
+  <p>Returns an 'progress' view used in the survey.</p>
 
-    <div class='pre p1 fill-light mt0'>EndPage</div>
+    <div class='pre p1 fill-light mt0'>Progress</div>
   
   
 
@@ -1524,11 +1606,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentsurveyprogress'>
+    <div class='border-bottom' id='componentsurveyendpage'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>Progress</span>
+            <span class='code strong strong truncate'>EndPage</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1536,9 +1618,9 @@
 
   
 
-  <p>Returns an 'progress' view used in the survey.</p>
+  <p>Returns an 'endpage' view used after the survey.</p>
 
-    <div class='pre p1 fill-light mt0'>Progress</div>
+    <div class='pre p1 fill-light mt0'>EndPage</div>
   
   
 
@@ -1920,11 +2002,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentcore'>
+    <div class='border-bottom' id='componentlandingpage'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>Core</span>
+            <span class='code strong strong truncate'>Landingpage</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1932,9 +2014,9 @@
 
   
 
-  <p>The core components.</p>
+  <p>The components used in the landingpage view.</p>
 
-    <div class='pre p1 fill-light mt0'>Core</div>
+    <div class='pre p1 fill-light mt0'>Landingpage</div>
   
   
 
@@ -1959,11 +2041,11 @@
     <div class='py1 quiet mt1 prose-big'>Static Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='componentcoreview'>
+    <div class='border-bottom' id='componentlandingpagewhatwedo'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>View</span>
+            <span class='code strong strong truncate'>WhatWeDo</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1971,9 +2053,9 @@
 
   
 
-  <p>Returns the core-view used in the root component</p>
+  <p>Provides part of the landing page's information.</p>
 
-    <div class='pre p1 fill-light mt0'>View</div>
+    <div class='pre p1 fill-light mt0'>WhatWeDo</div>
   
   
 
@@ -2006,11 +2088,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentcorefooter'>
+    <div class='border-bottom' id='componentlandingpagewhythissite'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>Footer</span>
+            <span class='code strong strong truncate'>WhyThisSite</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2018,21 +2100,33 @@
 
   
 
-  <p>Returns the footer with links to other places.</p>
+  <p>Provides part of the landing page's information.</p>
 
-    <div class='pre p1 fill-light mt0'>Footer</div>
-  
-  
-
-  
-  
-  
-  
+    <div class='pre p1 fill-light mt0'>WhyThisSite</div>
   
   
 
   
+  
+  
+  
+  
+  
 
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>stats</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          : an image from the cdn
+
+          
+        </div>
+      
+    </div>
   
 
   
@@ -2053,11 +2147,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentcoredrawer'>
+    <div class='border-bottom' id='componentlandingpagehowwedoit'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>Drawer</span>
+            <span class='code strong strong truncate'>HowWeDoIt</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2065,69 +2159,47 @@
 
   
 
-  <p>Returns the drawer that is used in the dashboard.</p>
+  <p>Provides part of the landing page's information.</p>
 
-    <div class='pre p1 fill-light mt0'>Drawer</div>
-  
-  
-
-  
-  
-  
-  
+    <div class='pre p1 fill-light mt0'>HowWeDoIt</div>
   
   
 
+  
+  
+  
+  
+  
   
 
   
 
   
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>Students</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          : an image from the cdn.
 
-  
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>Startups</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          : an image from the cdn.
 
-  
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>LawFirms</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+          : an image from the cdn.
 
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
+          
+        </div>
+      
     </div>
-  
-    <div class='border-bottom' id='componentcoretoolbar'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>Toolbar</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>returns a topbar that contains common things like notifications, accounts, etc</p>
-
-    <div class='pre p1 fill-light mt0'>Toolbar</div>
-  
-  
-
-  <div>Deprecated: this is no longer used.
-</div>
-  
-  
-  
-  
-  
-
-  
-
   
 
   
@@ -2390,11 +2462,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentdashboardlatestreports'>
+    <div class='border-bottom' id='componentdashboardlatestsurveys'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>LatestReports</span>
+            <span class='code strong strong truncate'>LatestSurveys</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2402,9 +2474,9 @@
 
   
 
-  <p>Returns a view containing all of the latest reports, this is currently all mock data.</p>
+  <p>Returns a view containing all of the latest surveys, this is currently all mock data.</p>
 
-    <div class='pre p1 fill-light mt0'>LatestReports</div>
+    <div class='pre p1 fill-light mt0'>LatestSurveys</div>
   
   
 
@@ -2437,11 +2509,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentdashboardlatestsurveys'>
+    <div class='border-bottom' id='componentdashboardlatestreports'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>LatestSurveys</span>
+            <span class='code strong strong truncate'>LatestReports</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2449,9 +2521,9 @@
 
   
 
-  <p>Returns a view containing all of the latest surveys, this is currently all mock data.</p>
+  <p>Returns a view containing all of the latest reports, this is currently all mock data.</p>
 
-    <div class='pre p1 fill-light mt0'>LatestSurveys</div>
+    <div class='pre p1 fill-light mt0'>LatestReports</div>
   
   
 
@@ -2537,65 +2609,6 @@
     <div class='py1 quiet mt1 prose-big'>Static Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='componentcdnserviceabletable'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>ServiceableTable</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Returns the table used in the CDN page. displays serviceables</p>
-
-    <div class='pre p1 fill-light mt0'>ServiceableTable</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Properties</div>
-    <div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>serviceables</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;Serviceable>)</code>
-          : the serviceables that are going to be displayed
-
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
     <div class='border-bottom' id='componentcdnserviceablefilepicker'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -2644,6 +2657,65 @@
         <div class='space-bottom0'>
           <span class='code bold'>imageFile</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
           : file object
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='componentcdnserviceabletable'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>ServiceableTable</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns the table used in the CDN page. displays serviceables</p>
+
+    <div class='pre p1 fill-light mt0'>ServiceableTable</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>serviceables</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;Serviceable>)</code>
+          : the serviceables that are going to be displayed
 
           
         </div>
@@ -2785,6 +2857,53 @@
   
     <div class='py1 quiet mt1 prose-big'>Static Members</div>
     <div class="clearfix">
+  
+    <div class='border-bottom' id='componentflowchartformgenericview'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>GenericView</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Generic flowchart form view.</p>
+
+    <div class='pre p1 fill-light mt0'>GenericView</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
   
     <div class='border-bottom' id='componentflowchartformmodulefunctions'>
       <div class="clearfix small pointer toggle-sibling">
@@ -2974,53 +3093,6 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentflowchartformgenericview'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>GenericView</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Generic flowchart form view.</p>
-
-    <div class='pre p1 fill-light mt0'>GenericView</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
     <div class='border-bottom' id='componentflowchartformedgefunctions'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -3068,11 +3140,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentflowchartformquestionfunctions'>
+    <div class='border-bottom' id='componentflowchartformchoicefunctions'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>QuestionFunctions</span>
+            <span class='code strong strong truncate'>ChoiceFunctions</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3080,9 +3152,9 @@
 
   
 
-  <p>View used for 'Question' cells.</p>
+  <p>View used for 'Choice' cells.</p>
 
-    <div class='pre p1 fill-light mt0'>QuestionFunctions</div>
+    <div class='pre p1 fill-light mt0'>ChoiceFunctions</div>
   
   
 
@@ -3115,11 +3187,11 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='componentflowchartformchoicefunctions'>
+    <div class='border-bottom' id='componentflowchartformquestionfunctions'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>ChoiceFunctions</span>
+            <span class='code strong strong truncate'>QuestionFunctions</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -3127,9 +3199,9 @@
 
   
 
-  <p>View used for 'Choice' cells.</p>
+  <p>View used for 'Question' cells.</p>
 
-    <div class='pre p1 fill-light mt0'>ChoiceFunctions</div>
+    <div class='pre p1 fill-light mt0'>QuestionFunctions</div>
   
   
 
@@ -3471,6 +3543,53 @@ Calls the showNotification function of that component.</p>
     </div>
   
 </div>
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='plugintheme'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>theme</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Exports the theme with default colours</p>
+
+    <div class='pre p1 fill-light mt0'>theme</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
   
 
@@ -4983,17 +5102,56 @@ this function will be called in order to update the Vue store</p>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='theme'>
-      theme
+    <h3 class='fl m0' id='view'>
+      view
     </h3>
     
     
   </div>
   
 
-  <p>Exports the theme with default colours</p>
+  <p>The components are used in Vue views to make up a web page.</p>
 
-    <div class='pre p1 fill-light mt0'>theme</div>
+    <div class='pre p1 fill-light mt0'>view</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='viewloginlanding'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>LoginLanding</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>returns the login landing page, asking the user wether they want to create an account.</p>
+
+    <div class='pre p1 fill-light mt0'>LoginLanding</div>
   
   
 
@@ -5023,35 +5181,32 @@ this function will be called in order to update the Vue store</p>
   
 </section>
 
-          
-        
-          
-          <section class='p2 mb2 clearfix bg-white minishadow'>
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='viewcdn'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>Cdn</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='use'>
-      use
-    </h3>
-    
-    
-  </div>
-  
 
-  <p>Exports Vuetify so that it can be used.</p>
+  <p>Returns the CDN page, where the user can upload and delete serviceables</p>
 
-    <div class='pre p1 fill-light mt0'>use</div>
-  
-  
-
-  
-  
-  
-  
+    <div class='pre p1 fill-light mt0'>Cdn</div>
   
   
 
+  
+  
+  
+  
+  
   
 
   
@@ -5061,6 +5216,351 @@ this function will be called in order to update the Vue store</p>
   
 
   
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='viewlogin'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>Login</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns the login page, where the user can login or register</p>
+
+    <div class='pre p1 fill-light mt0'>Login</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='viewsurveys'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>Surveys</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns the page where new users get offered recommended surveys.</p>
+
+    <div class='pre p1 fill-light mt0'>Surveys</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='viewhome'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>Home</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Is a leftover page from the original template</p>
+
+    <div class='pre p1 fill-light mt0'>Home</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='viewdashboard'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>Dashboard</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns the dashboard page where users will go to after logging in.</p>
+
+    <div class='pre p1 fill-light mt0'>Dashboard</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='viewsurvey'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>Survey</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns the survey page, where the user can answere questions to fill in a survey.</p>
+
+    <div class='pre p1 fill-light mt0'>Survey</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='viewflowcharteditor'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>FlowchartEditor</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns the flowchart page, where the user can create and edit flowcharts</p>
+
+    <div class='pre p1 fill-light mt0'>FlowchartEditor</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='viewlandingpage'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>Landingpage</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Returns the landing page, the page most users see when the open the website.</p>
+
+    <div class='pre p1 fill-light mt0'>Landingpage</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
 
   
 
@@ -8709,6 +9209,55 @@ The FlowchartForm view will pass this from the plugins/flowcharteditor to the fl
     </div>
   
 </div>
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='router'>
+      router
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>The router used to serve the user the correct views
+the authentication and admin requirements are also set here per page.</p>
+
+    <div class='pre p1 fill-light mt0'>router</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
   
 

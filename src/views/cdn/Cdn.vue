@@ -13,6 +13,10 @@ import ServiceableTable from "@/components/cdn/ServiceableTable";
 import ServiceableTopbar from "@/components/cdn/ServiceableTopbar";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
+/**
+ * Returns the CDN page, where the user can upload and delete serviceables
+ * @memberof view
+ */
 export default {
   name: "cdn",
   components: {

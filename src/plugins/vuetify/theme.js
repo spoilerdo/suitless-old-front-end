@@ -1,5 +1,6 @@
 /**
  * Exports the theme with default colours
+ * @memberof plugin
  */
 export default {
     primary: '#c01833',

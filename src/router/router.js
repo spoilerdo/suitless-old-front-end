@@ -11,6 +11,10 @@ import Dashboard from '../views/Dashboard.vue'
 
 Vue.use(Router)
 
+/**
+ * The router used to serve the user the correct views
+ * the authentication and admin requirements are also set here per page.
+ */
 let router = new Router({
   routes: [
     {
@@ -54,7 +58,8 @@ let router = new Router({
     {
       path: '/cdn',
       name: 'Cdn',
-      component: Cdn
+      component: Cdn,
+      meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
       path: '/about',

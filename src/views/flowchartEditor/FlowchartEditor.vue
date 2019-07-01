@@ -239,6 +239,10 @@ import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/Mult
 import ChoiceFunctions from "@/components/flowcharteditor/formatbar/ChoiceFunctions";
 import EdgeFunctions from "@/components/flowcharteditor/formatbar/EdgeFunctions";
 
+/**
+ * Returns the flowchart page, where the user can create and edit flowcharts
+ * @memberof view
+ */
 export default {
     components: {
         FlowchartForm,
