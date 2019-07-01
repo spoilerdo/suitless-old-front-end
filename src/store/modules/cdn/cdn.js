@@ -7,13 +7,13 @@ import { CDN_URL } from "@/store/serverconstants"
  * - ServiceableTable (getAllData, delete)
  * - ServiceableTopbar (uploadImage)
  * @name cdn
- * @namespace
+ * @memberof store
  */
 
 const actions = {
     /**
      * Retrieves all metadata from the CDN service
-     * @memberof cdn
+     * @memberof store.cdn
      */
     getAllData(list) {
         api.apiCall("GET", CDN_URL + "meta/all").then(data => {
@@ -30,7 +30,7 @@ const actions = {
     },
     /**
      * Retrieves the metadata from a specific ID in the cdn service
-     * @memberof cdn
+     * @memberof store.cdn
      */
     getData(id) {
         return new Promise((resolve, reject) => {
@@ -48,14 +48,14 @@ const actions = {
     },
     /**
      * Attempts to delete an serviceable from the CDN service
-     * @memberof cdn
+     * @memberof store.cdn
      */
     delete(serviceable) {
         api.apiCall("DELETE", CDN_URL + serviceable.name);
     },
     /**
      * Attempts to push a new serviceable to the CDN service
-     * @memberof cdn
+     * @memberof store.cdn
      */
     uploadImage(file, name, type) {
         let data = new FormData();

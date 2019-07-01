@@ -17,7 +17,7 @@ import { SET_DRAWER, SET_BACKGROUND, SET_FOOTERCOLOR, SET_NEWUSER } from "./muta
  * - Drawer (drawerOpen)
  * 
  * @name app
- * @namespace
+ * @memberof store
  */
 
 // initial state
@@ -32,14 +32,14 @@ const state = {
 const getters = {
     /**
      * Returns the drawer from the state
-     * @memberof app
+     * @memberof store.app
      */
     getDrawer: (state) => () => {
         return state.drawerOpen;
     },
     /**
      * Returns the background from the state
-     * @memberof app
+     * @memberof store.app
      */
     getBackground: (state) => () => {
         return state.background;
@@ -47,7 +47,7 @@ const getters = {
 
     /**
      * Returns the new user from the state
-     * @memberof app
+     * @memberof store.app
      */
     getNewUser: (state) => () => {
         return state.newUser;
@@ -55,7 +55,7 @@ const getters = {
 
     /**
      * Returns the footer colour
-     * @memberof app
+     * @memberof store.app
      */
     getFooterColor: (state) => () => {
         return state.footerColor;
@@ -66,28 +66,28 @@ const getters = {
 const actions = {
     /**
      * Sets the drawer to the state
-     * @memberof app
+     * @memberof store.app
      */
     setDrawer({ commit }, drawerOpen) {
         commit(SET_DRAWER, drawerOpen);
     },
     /**
      * Sets the background to the state
-     * @memberof app
+     * @memberof store.app
      */
     setBackground({ commit }, newBg) {
         commit(SET_BACKGROUND, newBg);
     },
     /**
      * Sets the footer colour to the state
-     * @memberof app
+     * @memberof store.app
      */
     setFooterColor({ commit }, newColor) {
         commit(SET_FOOTERCOLOR, newColor);
     },
     /**
      * Sets the new user to the state
-     * @memberof app
+     * @memberof store.app
      */
     setNewUser({ commit }, newUser) {
         commit(SET_NEWUSER, newUser);

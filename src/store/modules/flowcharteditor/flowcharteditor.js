@@ -19,7 +19,7 @@ import { SET_DIALOG, SET_FLOWCHART, SET_FORMATBAR, SET_CELL } from './mutation-t
  * and you would be forced to generate HTML within js which will get large and messy.
  * A downside of this design choice is that the library is not completly seperated/SOLID
  * @name flowcharteditor
- * @namespace
+ * @memberof store
  */
 
 const state = {
@@ -38,7 +38,7 @@ const getters = {}
 const actions = {
     /**
      * Sets the new dialog, attached to the import button.
-     * @memberof flowcharteditor
+     * @memberof store.flowcharteditor
      */
     setDialog({ commit }, dialogState) {
         commit(SET_DIALOG, dialogState);
@@ -46,7 +46,7 @@ const actions = {
 
     /**
      * Sets the formatbar type
-     * @memberof flowcharteditor
+     * @memberof store.flowcharteditor
      */
     setFormatBarType({ commit }, newType) {
         commit(SET_FORMATBAR, newType);
@@ -54,7 +54,7 @@ const actions = {
 
     /**
      * sets the new selected cell in the flowchart editor
-     * @memberof flowcharteditor
+     * @memberof store.flowcharteditor
      */
     setSelectedCell({ commit }, newCell) {
         commit(SET_CELL, newCell);
@@ -63,7 +63,7 @@ const actions = {
     /**
      * This actions returns a flowchart. 
      * The FlowchartForm view will pass this from the plugins/flowcharteditor to the flowchart editor plugin.
-     * @memberof flowcharteditor
+     * @memberof store.flowcharteditor
      */
     async getFlowchartByName({ commit }, name) {
         try {
@@ -76,7 +76,7 @@ const actions = {
 
     /**
      * Vue.js gets the flowchart JSON from the plugin and make the API call to the module service
-     * @memberof flowcharteditor
+     * @memberof store.flowcharteditor
      */
     async saveFlowchart({ commit }, flowchart) {
         try {

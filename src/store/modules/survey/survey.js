@@ -11,8 +11,8 @@ import { API_URL } from '../../serverconstants';
  * This submodule is used in the following views/ components:
  * - Survey (mapState all and mapGetters getFirstQuestionID and mapActions getSurveyByID)
  * - AllSurveys/ IncompleteSurveys/ LatestReports (mapState all, mapActions getAllSurveys)
+ * @memberof store
  * @name survey
- * @namespace
  */
 const state = {
     all: []
@@ -21,7 +21,7 @@ const state = {
 const getters = {
     /**
      * Gets the first upcoming questionID out of the current state.
-     * @memberof survey
+     * @memberof store.survey
      */
     getFirstQuestionID: (state) => {
         //get the second node and return its ID
@@ -37,7 +37,7 @@ const getters = {
 const actions = {
     /**
      * Retrieves all available surveys from the server.
-     * @memberof survey
+     * @memberof store.survey
      */
     async getAllSurveys({ commit }) {
         try {
@@ -49,7 +49,7 @@ const actions = {
     },
     /**
      * Retrieves a survey by ID from the server.
-     * @memberof survey
+     * @memberof store.survey
      */
     getSurveyByID({ commit }, surveyID) {
         apiCall('get', `${API_URL}/modules/${surveyID}`, null)

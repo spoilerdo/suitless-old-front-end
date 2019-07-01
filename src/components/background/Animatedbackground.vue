@@ -17,6 +17,10 @@
 </template>
 
 <script>
+/**
+ * returns a nice animated background with moving particles that are connected to each other.
+ * This is used on the landing page.
+ */
 export default {
   props: {
     colorA: {

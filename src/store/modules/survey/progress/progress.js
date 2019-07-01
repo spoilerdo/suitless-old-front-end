@@ -8,7 +8,7 @@ import { SET_CURRENTQUESTION, SET_PROGRESS, SET_DEPTH, SET_NOTIFICATION, SET_OPT
  * - Survey (mapState currentquestion, progress, notification, options
  *      	   and mapActions fillProgress, setCurrenQuestion, fillCurrentQuestionBacklog, clearSubQuestionBacklog)
  * @name progress
- * @namespace
+ * @memberof store
  */
 
 const state = {
@@ -32,7 +32,7 @@ const getters = {
 const actions = {
   /**
    * Calculates the new progress and sets the progress bar
-   * @memberof progress
+   * @memberof store.progress
    */
   fillProgress({ commit, state }, { addedDepth, survey }) {
     let depth = state.depth;
@@ -56,7 +56,7 @@ const actions = {
 
   /**
    * Sets the current question that the user can answere
-   * @memberof progress
+   * @memberof store.progress
    */
   setCurrentQuestion({ commit, state }, { question, nodes }) {
     //if you do not have a next question, first check if there's more subquestions to be handled
@@ -107,7 +107,7 @@ const actions = {
   },
   /**
    * Fills the current question backlog
-   * @memberof progress
+   * @memberof store.progress
    */
   fillCurrentQuestionBacklog({ commit, dispatch }, { firstSubQuestion, backLogQuestion, nodes }) {
     //add the first question (if any) to come after the subquestions are done to the backlog
@@ -121,14 +121,14 @@ const actions = {
   },
   /**
    * Clears the current question backlog
-   * @memberof progress
+   * @memberof store.progress
    */
   clearCurrentQuestionBacklog({commit, dispatch}) {
     commit(CLEAR_CURRENTBACKLOG);
   },
   /**
    * Fills the sub-question backlog
-   * @memberof progress
+   * @memberof store.progress
    */
   fillsubQuestionBackLog({commit, dispatch}, futureSubQuestions) {
     //add subquestions to come in the future 
@@ -136,7 +136,7 @@ const actions = {
   },
   /**
    * Clears the current sub-question backlog
-   * @memberof progress
+   * @memberof store.progress
    */
   clearSubQuestionBackLog({commit, dispatch}) {
     commit(CLEAR_CURRENTSUBQUESTIONBACKLOG);
