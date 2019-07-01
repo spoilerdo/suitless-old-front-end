@@ -11,7 +11,6 @@ import Dashboard from '../views/Dashboard.vue'
 
 Vue.use(Router)
 
-
 let router = new Router({
   routes: [
     {
