@@ -15,6 +15,9 @@ import { SET_DRAWER, SET_BACKGROUND, SET_FOOTERCOLOR, SET_NEWUSER } from "./muta
  * - App (background and newUser state, also setBackground)
  * - Footer (footerColor)
  * - Drawer (drawerOpen)
+ * 
+ * @name app
+ * @namespace
  */
 
 // initial state
@@ -27,15 +30,33 @@ const state = {
 
 // getters
 const getters = {
+    /**
+     * Returns the drawer from the state
+     * @memberof app
+     */
     getDrawer: (state) => () => {
         return state.drawerOpen;
     },
+    /**
+     * Returns the background from the state
+     * @memberof app
+     */
     getBackground: (state) => () => {
         return state.background;
     },
+
+    /**
+     * Returns the new user from the state
+     * @memberof app
+     */
     getNewUser: (state) => () => {
         return state.newUser;
     },
+
+    /**
+     * Returns the footer colour
+     * @memberof app
+     */
     getFooterColor: (state) => () => {
         return state.footerColor;
     }
@@ -43,32 +64,48 @@ const getters = {
 
 // actions
 const actions = {
-    setDrawer ({ commit}, drawerOpen) {
-       commit(SET_DRAWER, drawerOpen);
+    /**
+     * Sets the drawer to the state
+     * @memberof app
+     */
+    setDrawer({ commit }, drawerOpen) {
+        commit(SET_DRAWER, drawerOpen);
     },
-    setBackground({commit}, newBg) {
+    /**
+     * Sets the background to the state
+     * @memberof app
+     */
+    setBackground({ commit }, newBg) {
         commit(SET_BACKGROUND, newBg);
     },
-    setFooterColor({commit}, newColor) {
+    /**
+     * Sets the footer colour to the state
+     * @memberof app
+     */
+    setFooterColor({ commit }, newColor) {
         commit(SET_FOOTERCOLOR, newColor);
     },
-    setNewUser({ commit}, newUser) {
+    /**
+     * Sets the new user to the state
+     * @memberof app
+     */
+    setNewUser({ commit }, newUser) {
         commit(SET_NEWUSER, newUser);
     }
 }
 
 // mutations
 const mutations = {
-    [SET_DRAWER] (state, drawerOpen) {
+    [SET_DRAWER](state, drawerOpen) {
         state.drawerOpen = drawerOpen;
     },
-    [SET_BACKGROUND] (state, newBg) {
+    [SET_BACKGROUND](state, newBg) {
         state.background = newBg;
     },
-    [SET_FOOTERCOLOR] (state, newColor){
+    [SET_FOOTERCOLOR](state, newColor) {
         state.footerColor = newColor;
     },
-    [SET_NEWUSER] (state, newUser) {
+    [SET_NEWUSER](state, newUser) {
         state.newUser = newUser;
     }
 }

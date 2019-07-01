@@ -6,9 +6,15 @@ import { CDN_URL } from "@/store/serverconstants"
  * This sub module is used in the following components
  * - ServiceableTable (getAllData, delete)
  * - ServiceableTopbar (uploadImage)
+ * @name cdn
+ * @namespace
  */
 
 const actions = {
+    /**
+     * Retrieves all metadata from the CDN service
+     * @memberof cdn
+     */
     getAllData(list) {
         api.apiCall("GET", CDN_URL + "meta/all").then(data => {
             data.metadataList.forEach(serviceable => {
@@ -22,6 +28,10 @@ const actions = {
         });
         return list;
     },
+    /**
+     * Retrieves the metadata from a specific ID in the cdn service
+     * @memberof cdn
+     */
     getData(id) {
         return new Promise((resolve, reject) => {
             return api.apiCall("GET", CDN_URL + "meta/id/" + id).then(data => {
@@ -36,9 +46,17 @@ const actions = {
             });
         });
     },
+    /**
+     * Attempts to delete an serviceable from the CDN service
+     * @memberof cdn
+     */
     delete(serviceable) {
         api.apiCall("DELETE", CDN_URL + serviceable.name);
     },
+    /**
+     * Attempts to push a new serviceable to the CDN service
+     * @memberof cdn
+     */
     uploadImage(file, name, type) {
         let data = new FormData();
         data.set('file', file);
