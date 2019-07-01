@@ -5,7 +5,7 @@
       @click="pickFile"
       v-model="imageName"
       prepend-icon="attach_file"
-      :readonly=true
+      :readonly="true"
       id="fileField"
     ></v-text-field>
     <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
@@ -21,42 +21,44 @@
  * @property {Object} imageFile file object
  */
 export default {
-    data: () => ({
-        title: "Image Upload",
-        dialog: false,
-		imageName: '',
-		imageUrl: '',
-		imageFile: ''
-    }),
+  data: () => ({
+    title: "Image Upload",
+    dialog: false,
+    imageName: "",
+    imageUrl: "",
+    imageFile: ""
+  }),
 
-    methods: {
-        pickFile () {
-            this.$refs.image.click ()
-        },
-		
-		onFilePicked (e) {
-			const files = e.target.files
-			if(files[0] !== undefined) {
-				this.imageName = files[0].name
-				if(this.imageName.lastIndexOf('.') <= 0) {
-					return
-				}
-				const fr = new FileReader ()
-				fr.readAsDataURL(files[0])
-				fr.addEventListener('load', () => {
-					this.imageUrl = fr.result
-          this.imageFile = files[0] // this is an image file that can be sent to server...
+  methods: {
+    pickFile() {
+      this.$refs.image.click();
+    },
+    onFilePicked(e) {
+      const files = e.target.files;
+      if (files[0] !== undefined) {
+        this.imageName = files[0].name;
+        if (this.imageName.lastIndexOf(".") <= 0) {
+          return;
+        }
+        const fr = new FileReader();
+        fr.readAsDataURL(files[0]);
+        fr.addEventListener("load", () => {
+          this.imageUrl = fr.result;
+          this.imageFile = files[0]; // this is an image file that can be sent to server...
 
-          this.$emit('Base64', this.imageUrl.substring(this.imageUrl.indexOf(',')+1));
-          this.$emit('Type', this.imageFile.type);
-				})
-			} else {
-				this.imageName = ''
-				this.imageFile = ''
-				this.imageUrl = ''
-            }
-            document.activeElement.blur();
-		}
+          this.$emit("Base64", this.imageUrl.substring(this.imageUrl.indexOf(",") + 1));
+          this.$emit("Type", this.imageFile.type);
+        });
+      } else {
+        clearInputs();
+      }
+      document.activeElement.blur();
+    },
+    clearInputs(){
+      this.imageName = "";
+      this.imageFile = "";
+      this.imageUrl = "";
     }
-}
+  }
+};
 </script>

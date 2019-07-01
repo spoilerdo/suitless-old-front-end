@@ -1,5 +1,6 @@
 <template>
   <v-layout justify-center wrap class="fillScreen">
+    <Drawer/>
     <div class="ServiceableRow stretch">
       <ServiceableTopbar v-on:serviceable="addServiceable($event)" class="ServiceableRow form"/>
       <ServiceableTable ref="table" class="ServiceableRow data"/>
@@ -11,6 +12,7 @@
 // @ is an alias to /src
 import ServiceableTable from "@/components/cdn/ServiceableTable";
 import ServiceableTopbar from "@/components/cdn/ServiceableTopbar";
+import Drawer from "@/components/core/Drawer";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 /**
@@ -21,7 +23,8 @@ export default {
   name: "cdn",
   components: {
     ServiceableTable,
-    ServiceableTopbar
+    ServiceableTopbar,
+    Drawer
   },
   methods: {
     ...mapActions("app/", ["setBackground", "setFooterColor"]),

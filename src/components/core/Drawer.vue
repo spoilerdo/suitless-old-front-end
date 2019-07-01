@@ -1,8 +1,7 @@
 <template>
   <v-navigation-drawer
     id="app-drawer"
-    v-model="inputValue"
-    :mini-variant="mini"
+    :mini-variant="drawerOpen"
     app
     dark
     floating
@@ -16,7 +15,7 @@
           <v-list-tile-avatar>
             <v-img :src="logoehvlinc" fill/>
           </v-list-tile-avatar>
-          <v-flex v-if="!mini" style="display: flex; justify-content: center;">
+          <v-flex v-if="!drawerOpen" style="display: flex; justify-content: center;">
             <v-list-tile-title class="title">ehvLINC</v-list-tile-title>
             <v-icon v-if="window.width > 991" style="padding-right: 50px;" @click="toggleMini()">mdi-chevron-left</v-icon>
           </v-flex>
@@ -36,9 +35,9 @@
           <v-list-tile-action>
             <v-icon>{{ link.icon }}</v-icon>
           </v-list-tile-action>
-          <v-list-tile-title v-if="!mini" v-text="link.text"/>
+          <v-list-tile-title v-if="!drawerOpen" v-text="link.text"/>
         </v-list-tile>
-        <v-list-tile v-if="mini">
+        <v-list-tile v-if="drawerOpen">
           <v-icon v-if="window.width > 991" @click="toggleMini()" style="margin: 0px 15px">mdi-chevron-right</v-icon>
         </v-list-tile>
         <v-list-tile
@@ -69,7 +68,6 @@ export default {
       logoehvlinc: require("@/assets/img/logoehvlinc.png"),
       backgroundImage: require("@/assets/img/BackgroundMenu.png"),
       responsive: false,
-      mini: false,
       window: {
         width: 0,
         height: 0
@@ -77,15 +75,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["drawerOpen"]),
-    inputValue: {
-      get() {
-        return this.drawerOpen;
-      },
-      set(val) {
-        this.setDrawer(val);
-      }
-    }
+    ...mapState(["drawerOpen"])
   },
   created() {
     window.addEventListener("resize", this.handleResize);
@@ -102,16 +92,6 @@ export default {
     window.removeEventListener("resize", this.onResponsiveInverted);
   },
   beforeMount() {
-    // THIS IMPORTS EVERY ROUTE AVAILABLE ON THE WEBSITE INTO THE DRAWER
-    // this.$router.options.routes.forEach(route => {
-    //   this.links.push({
-    //       to: route.path,
-    //       icon: route.icon,
-    //       text: route.name
-    //   })
-    // })
-
-    //THIS IMPORTS ONLY THE IMPORTANT ROUTES INTO THE DRAWER
     this.links.push({
       to: "dashboard",
       icon: "mdi-view-dashboard",
@@ -127,7 +107,7 @@ export default {
     this.links.push({
       to: "cdn",
       icon: "mdi-folder-multiple-image",
-      text: "cdn"
+      text: "file manager"
     });
   },
   methods: {
@@ -148,8 +128,7 @@ export default {
     },
 
     toggleMini() {
-      this.mini = !this.mini;
-      console.log('mini toggled')
+      this.setDrawer(!this.drawerOpen);
     }
   }
 };

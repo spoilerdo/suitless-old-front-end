@@ -18,7 +18,7 @@
               </v-card>
             </v-dialog>
 
-            <v-btn color="danger" small @click="deleteContent(props.item)">Delete</v-btn>
+            <v-btn color="danger" small @click="deleteData(props.item)">Delete</v-btn>
           </td>
         </template>
       </v-data-table>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import cdn from "@/store/modules/cdn/cdn";
+import { mapState, mapActions } from "vuex";
 
 /**
  * Returns the table used in the CDN page. displays serviceables
@@ -42,23 +42,17 @@ export default {
         { text: "Size (KB)", value: "size" },
         { text: "Type", value: "type" },
         { text: "Actions", sortable: false }
-      ],
-      serviceables: []
+      ]
     };
   },
+  computed: {
+    ...mapState("cdn/", ["serviceables"])
+  },
   methods: {
-    deleteContent(serviceable) {
-      cdn.actions.delete(serviceable);
-    },
-    getAllContent() {
-      this.serviceables = cdn.actions.getAllData(this.serviceables);
-    },
-    addServiceable(serviceable){
-      this.serviceables.push(serviceable);
-    }
+    ...mapActions("cdn/", ["getAllData", "deleteData"]),
   },
   mounted() {
-    this.getAllContent();
+    this.getAllData();
   }
 };
 </script>
