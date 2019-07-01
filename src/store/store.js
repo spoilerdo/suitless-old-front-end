@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import app from './modules/app/app';
+import notificationHandler from './modules/notificationHandler/notificationHandler';
 import cdn from './modules/cdn/cdn';
 import login from './modules/login/login'
 import survey from './modules/survey/survey';
@@ -21,6 +22,7 @@ const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
     modules: {
         app,
+        notificationHandler,
         cdn,
         login,
         survey,

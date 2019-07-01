@@ -4,11 +4,10 @@
     bottom
     right
     dark
-    color="primary"
+    :color="type"
   >
-    <v-icon color="white" class="mr-3">mdi-bell-plus</v-icon>
+    <v-icon color="white" class="mr-3">{{ icon }}</v-icon>
     <div>
-      Information:
       {{value}}
     </div>
     <v-icon size="16" @click="activated = false">mdi-close-circle</v-icon>
@@ -25,15 +24,34 @@ export default {
   data(){
     return {
       value: "",
-      activated: false
+      activated: false,
+      icon: "mdi-bell-plus",
+      type: "primary",
     }
   },
   methods: {
-    showNotification(value) {
+    showNotification(value, type) {
       this.activated = false;
+
+      console.log(type);
+
+      switch(type) {
+        case "warning":
+          this.icon = "mdi-alert"
+          break;
+        case "error":
+          this.icon = "mdi-alert-circle"
+          break;
+        case "success":
+          this.icon = "mdi-check-bold"
+          break;
+        default:
+          this.icon = "mdi-bell-plus";
+      }
 
       setTimeout(() => {
         this.value = value;
+        if(type) this.type = type;
         this.activated = true;
     }, 100);
   }

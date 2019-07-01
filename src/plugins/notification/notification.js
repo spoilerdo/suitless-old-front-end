@@ -12,8 +12,8 @@ export default {
                  * Calls the showNotification function of that component.
                  * @memberof plugin.notification
                 */
-                showNotification(message) {
-                    this.$root.$children[0].$refs.notification.showNotification(message)
+                showNotification(message, type) {
+                    this.$root.$children[0].$refs.notification.showNotification(message, type)
                 }
             }
         })
