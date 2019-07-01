@@ -8,6 +8,8 @@ import { stat } from "fs";
  * This sub module is used in the following components
  * - ServiceableTable (getAllData, delete)
  * - ServiceableTopbar (uploadImage)
+ * @name cdn
+ * @memberof store
  */
 
 const state = {
@@ -19,6 +21,10 @@ const getters = {
 }
 
 const actions = {
+    /**
+     * Retrieves all metadata from the CDN service
+     * @memberof store.cdn
+     */
     getAllData({ commit }) {
         apiCall("GET", CDN_URL + "meta/all")
         .then(data => {
@@ -26,6 +32,10 @@ const actions = {
             commit(ADD_METADATA, data);
         });
     },
+    /**
+     * Retrieves the metadata from a specific ID in the cdn service
+     * @memberof store.cdn
+     */
     getData({ commit, state }, id) {
         apiCall("GET", `${CDN_URL}meta/id/${id}`)
         .then(data => {
@@ -40,12 +50,20 @@ const actions = {
             }
         })
     },
+    /** 
+     * Attempts to delete an serviceable from the CDN service
+     * @memberof store.cdn
+     */
     deleteData({ commit }, serviceable) {
         apiCall("DELETE", CDN_URL + serviceable.name) 
         .then(() => {
             commit(DELETE_METADATA, serviceable);
         });
     },
+    /**
+     * Attempts to push a new serviceable to the CDN service
+     * @memberof store.cdn
+     */
     async uploadImage({ dispatch }, { file, name, type }) {
         let data = new FormData();
         data.set('file', file);

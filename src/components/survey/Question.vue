@@ -92,6 +92,10 @@
 import QuestionCard from "@/components/material/QuestionCard.vue";
 import Info from "@/components/survey/Info.vue";
 
+/**
+ * Returns an 'question' view used in the survey.
+ * @memberof component.Survey
+ */
 export default {
   components: {
     QuestionCard,

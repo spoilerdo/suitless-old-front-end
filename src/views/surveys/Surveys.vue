@@ -8,14 +8,14 @@
       </v-flex>
       <v-layout align-center justify-center row wrap>
         <ImageCard
-          redirecturl="/survey/5ce5208f6401640008fe5a2a"
+          redirecturl="/survey/5cf4c7f87fa73a0006d320ac"
           imagename="trademark"
           text="Trademark"
           cardWidth="xs6 sm4 md3"
           direction="column"
         />
         <ImageCard
-          redirecturl="/survey/5ce511506401640008fe5a29"
+          redirecturl="/survey/5cf4c8017fa73a0006d320ad"
           imagename="software"
           text="Software IP"
           cardWidth="xs6 sm4 md3"
@@ -50,6 +50,11 @@ import ImageCard from "@/components/material/ImageCard";
 
 import { mapActions } from "vuex";
 
+/**
+ * Returns the page where new users get offered recommended surveys.
+ * @memberof view
+ * @todo make the recommended surveys dynamic
+ */
 export default {
   components: {
     Animatedbackground,

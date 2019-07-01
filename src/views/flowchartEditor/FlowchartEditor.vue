@@ -242,9 +242,12 @@ import NotificationFunctions from "@/components/flowcharteditor/formatbar/Notifi
 import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/MultipleChoiceFunctions";
 import ChoiceFunctions from "@/components/flowcharteditor/formatbar/ChoiceFunctions";
 import EdgeFunctions from "@/components/flowcharteditor/formatbar/EdgeFunctions";
-
 import Drawer from "@/components/core/Drawer";
 
+/**
+ * Returns the flowchart page, where the user can create and edit flowcharts
+ * @memberof view
+ */
 export default {
     components: {
         Drawer,

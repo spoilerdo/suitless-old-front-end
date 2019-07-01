@@ -31,6 +31,11 @@
 import Card from "@/components/material/Card";
 import ListCard from "@/components/material/ListCard";
 
+/**
+ * Returns a view containing all of the recommended surveys, these are currently hard-coded.
+ * @memberof component.Dashboard
+ * @todo remove mock data
+ */
 export default {
   components: {
     Card,

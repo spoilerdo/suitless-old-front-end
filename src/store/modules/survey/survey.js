@@ -3,6 +3,7 @@ import { SET_SURVEY, SET_SURVEYS } from './mutation-types';
 import { apiCall } from '../../../api/api';
 import { API_URL } from '../../serverconstants';
 
+
 /**
  * The survey module contains the survey that the user wants to make 
  * and also the first question that needs to be asked because a flowchart can start with a start node 
@@ -10,14 +11,18 @@ import { API_URL } from '../../serverconstants';
  * This submodule is used in the following views/ components:
  * - Survey (mapState all and mapGetters getFirstQuestionID and mapActions getSurveyByID)
  * - AllSurveys/ IncompleteSurveys/ LatestReports (mapState all, mapActions getAllSurveys)
+ * @memberof store
+ * @name survey
  */
-
-// initial state
 const state = {
     all: []
 }
 
 const getters = {
+    /**
+     * Gets the first upcoming questionID out of the current state.
+     * @memberof store.survey
+     */
     getFirstQuestionID: (state) => {
         //get the second node and return its ID
         let id = 0;
@@ -30,6 +35,10 @@ const getters = {
 }
 
 const actions = {
+    /**
+     * Retrieves all available surveys from the server.
+     * @memberof store.survey
+     */
     async getAllSurveys({ commit }) {
         try {
             const modules = await apiCall('get', `${API_URL}/modules`);
@@ -38,11 +47,15 @@ const actions = {
             console.log(e);
         }
     },
+    /**
+     * Retrieves a survey by ID from the server.
+     * @memberof store.survey
+     */
     getSurveyByID({ commit }, surveyID) {
         apiCall('get', `${API_URL}/modules/${surveyID}`, null)
-        .then((req => {
-            commit(SET_SURVEY, req.module);
-        }));
+            .then((req => {
+                commit(SET_SURVEY, req.module);
+            }));
     },
 
 }

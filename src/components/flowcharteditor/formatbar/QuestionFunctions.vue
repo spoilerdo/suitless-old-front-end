@@ -28,6 +28,10 @@
 import { mapState, mapActions } from 'vuex';
 import GenericView from "./genericView/GenericView";
 
+/**
+ * View used for 'Question' cells.
+ * @memberof component.FlowchartForm
+ */
 export default {
   data() {
     return {

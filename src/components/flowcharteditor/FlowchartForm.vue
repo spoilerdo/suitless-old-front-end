@@ -37,6 +37,10 @@
 <script>
 import { mapState, mapActions } from "vuex";
 
+/**
+ * The form used in the flowchart editor.
+ * @memberof component
+ */
 export default {
   data() {
     return {
