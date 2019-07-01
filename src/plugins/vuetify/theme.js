@@ -1,3 +1,6 @@
+/**
+ * Exports the theme with default colours
+ */
 export default {
     primary: '#c01833',
     secondary: '#424242',
