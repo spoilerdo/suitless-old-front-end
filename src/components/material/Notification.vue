@@ -15,6 +15,11 @@
 </template>
 
 <script>
+/**
+ * Returns a temporary notification
+ * @memberof component.Material
+ * @property {boolean} activated
+ */
 export default {
   data(){
     return {

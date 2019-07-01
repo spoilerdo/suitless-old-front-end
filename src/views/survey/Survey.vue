@@ -51,6 +51,10 @@ import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
+/**
+ * Returns the survey page, where the user can answere questions to fill in a survey.
+ * @memberof view
+ */
 export default {
   props: ["surveyID"],
   components: {

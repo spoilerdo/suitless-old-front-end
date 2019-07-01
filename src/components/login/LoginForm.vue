@@ -47,6 +47,17 @@
 </template>
 
 <script>
+/**
+ * Returns the login form.
+ * @memberof component.Login
+ * @property {function} onclick
+ * @property {function} callback
+ * @property {String} name
+ * @property {Boolean} email
+ * @property {Boolean} firstname
+ * @property {Boolean} password
+ * @property {Boolean} confirmpassword
+ */
 export default {
     name: "Form",
     data() {

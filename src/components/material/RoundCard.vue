@@ -31,6 +31,18 @@
 </style>
 
 <script>
+/**
+ * Returns a round card.
+ * @memberof component.Material
+ * @property {String} redirecturl
+ * @property {String} imagename
+ * @property {String} text
+ * @property {String} cardWidth
+ * @property {String} imageSize
+ * @property {String} imageWidth
+ * @property {String} imageHeight
+ * @property {String} direction
+ */
 export default {
   name: "RoundCard",
   props: {

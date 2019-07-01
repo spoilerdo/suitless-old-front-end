@@ -29,6 +29,11 @@
 <script>
 import { mapState, mapActions } from "vuex";
 
+/**
+ * Returns the table used in the CDN page. displays serviceables
+ * @memberof component.CDN
+ * @property {Array<Serviceable>} serviceables the serviceables that are going to be displayed
+ */
 export default {
   data() {
     return {

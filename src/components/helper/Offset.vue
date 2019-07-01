@@ -9,6 +9,12 @@
 </template>
 
 <script>
+/**
+ * Provided an offset in a view
+ * @memberof component
+ * @param {boolean} fullWidth
+ * @param {number} offset
+ */
 export default {
   props: {
     fullWidth: {

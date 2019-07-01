@@ -31,6 +31,10 @@
 <script>
 import { mapActions } from "vuex";
 
+/**
+ * View used for general action / no cells.
+ * @memberof component.FlowchartForm
+ */
 export default {
     data(){
         return {

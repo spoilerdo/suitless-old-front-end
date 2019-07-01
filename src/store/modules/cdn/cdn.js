@@ -7,6 +7,8 @@ import { SET_METADATA, UPDATE_METADATA, DELETE_METADATA, ADD_METADATA } from "./
  * This sub module is used in the following components:
  * - ServiceableTable (getAllData, delete)
  * - ServiceableTopbar (uploadImage)
+ * @name cdn
+ * @memberof store
  */
 
 const state = {
@@ -18,6 +20,10 @@ const getters = {
 }
 
 const actions = {
+    /**
+     * Retrieves all metadata from the CDN service
+     * @memberof store.cdn
+     */
     getAllData({ commit, dispatch }) {
         apiCall("GET", `${CDN_URL}/meta/all`)
         .then(data => {
@@ -27,6 +33,10 @@ const actions = {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         });
     },
+    /**
+     * Retrieves the metadata from a specific ID in the cdn service
+     * @memberof store.cdn
+     */
     getData({ commit, state, dispatch }, id) {
         apiCall("GET", `${CDN_URL}/meta/id/${id}`)
         .then(data => {
@@ -44,6 +54,10 @@ const actions = {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true })
         });
     },
+    /** 
+     * Attempts to delete an serviceable from the CDN service
+     * @memberof store.cdn
+     */
     deleteData({ commit, dispatch }, serviceable) {
         apiCall("DELETE", `${CDN_URL}/${serviceable.name}`) 
         .then(() => {
@@ -54,6 +68,10 @@ const actions = {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         });
     },
+    /**
+     * Attempts to push a new serviceable to the CDN service
+     * @memberof store.cdn
+     */
     async uploadImage({ dispatch }, { file, name, type }) {
         let data = new FormData();
         data.set('file', file);

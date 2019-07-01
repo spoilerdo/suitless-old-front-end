@@ -9,6 +9,10 @@
 </template>
 
 <script>
+/**
+ * Returns the logo used on the login page.
+ * @memberof component.Login
+ */
 export default {
     name:"logo",
     data() {

@@ -1,3 +1,7 @@
+/**
+ * Exports the theme with default colours
+ * @memberof plugin
+ */
 export default {
     primary: '#c01833',
     secondary: '#424242',

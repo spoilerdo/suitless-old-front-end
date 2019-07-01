@@ -52,6 +52,10 @@ import Form from "@/components/login/LoginForm";
 import Logo from "@/components/login/Logo";
 import { mapState, mapActions } from "vuex";
 
+/**
+ * Returns the login page, where the user can login or register
+ * @memberof view
+ */
 export default {
   name: "login",
   components: {
