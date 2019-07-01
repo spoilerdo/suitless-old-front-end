@@ -7,19 +7,27 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import { createNamespacedHelpers } from 'vuex';
-//can be used if you will only need to access ONE module in this component, will auto append app/ before actions.
-const { mapState, mapActions } = createNamespacedHelpers('app/')
+const { mapState, mapActions } = createNamespacedHelpers('app/');
 
 import CoreView from "./components/core/View";
-import Toolbar from './components/core/Toolbar'
+import Toolbar from './components/core/Toolbar';
 import Notification from "@/components/material/Notification.vue";
 
+/**
+ * The root component, all over components get interpolated into this.
+ */
 export default {
+  /**
+   * The app compenent requeres three components
+   * these components are loaded in every page
+   */
   components: {
+    /**The toolbar is on the left of the view. */
     Toolbar,
+    /**The coreview will be replaced with the stack of other components */
     CoreView,
+    /**The notification can be called from scripts to display a notification on every page. */
     Notification
   },
   date() {
@@ -50,7 +58,6 @@ export default {
 <style lang="scss">
 @import "@/styles/index.scss";
 
-/* Remove in 1.2 */
 .v-datatable thead th.column.sortable i {
   vertical-align: unset;
 }
