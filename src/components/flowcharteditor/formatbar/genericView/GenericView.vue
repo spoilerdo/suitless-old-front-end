@@ -28,6 +28,10 @@
 <script>
 import { mapState } from 'vuex';
 
+/**
+ * Generic flowchart form view.
+ * @memberof component.FlowchartForm
+ */
 export default {
     props: {
         nameLabel: {

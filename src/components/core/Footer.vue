@@ -27,6 +27,10 @@
 import { createNamespacedHelpers } from 'vuex';
 const { mapState } = createNamespacedHelpers('app/')
 
+/**
+ * Returns the footer with links to other places.
+ * @memberof component
+ */
 export default {
   data: () => ({
     links: [

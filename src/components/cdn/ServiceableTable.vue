@@ -29,6 +29,11 @@
 <script>
 import cdn from "@/store/modules/cdn/cdn";
 
+/**
+ * Returns the table used in the CDN page. displays serviceables
+ * @memberof component
+ * @property {Array<Serviceable>} serviceables the serviceables that are going to be displayed
+ */
 export default {
   data() {
     return {

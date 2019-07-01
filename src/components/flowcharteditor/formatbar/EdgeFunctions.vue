@@ -91,6 +91,10 @@
 import { mapState } from 'vuex';
 import theme from "@/plugins/vuetify/theme";
 
+/**
+ * View used for 'Edge' cells.
+ * @memberof component.FlowchartForm
+ */
 export default {
     data() {
         return {

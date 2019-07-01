@@ -36,6 +36,11 @@ import Card from "@/components/material/Card";
 import RoundCard from "@/components/material/RoundCard";
 import { mapState, mapGetters } from "vuex";
 
+/**
+ * Returns a view containing all of the latest surveys, this is currently all mock data.
+ * @memberof component
+ * @todo remove mock data
+ */
 export default {
   components: {
     Card,

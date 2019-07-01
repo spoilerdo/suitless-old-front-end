@@ -34,6 +34,12 @@
 import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
 import cdn from "@/store/modules/cdn/cdn";
 
+/**
+ * Returns the top-bar used in the CDN page, this contains a small form with a name field and a filepicker
+ * @memberof component
+ * @property {boolean} valid
+ * @property {topbarForm} form
+ */
 export default {
   data() {
     return {

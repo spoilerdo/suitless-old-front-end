@@ -12,6 +12,10 @@
 <script>
 import Footer from './Footer';
 
+/**
+ * Returns the core-view used in the root component
+ * @memberof component
+ */
 export default {
   components: {
     Footer

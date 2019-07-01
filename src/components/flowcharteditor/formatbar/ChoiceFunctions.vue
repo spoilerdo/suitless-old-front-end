@@ -16,6 +16,10 @@
 import { mapState } from 'vuex';
 import GenericView from "./genericView/GenericView";
 
+/**
+ * View used for 'Choice' cells.
+ * @memberof component.FlowchartForm
+ */
 export default {
     data(){
         return {

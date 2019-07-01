@@ -56,6 +56,10 @@
 <script>
 import { mapState } from 'vuex';
 
+/**
+ * View used for 'MultipleChoice' cells.
+ * @memberof component.FlowchartForm
+ */
 export default {
     data() {
         return {

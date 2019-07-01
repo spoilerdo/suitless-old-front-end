@@ -35,6 +35,10 @@ import Card from "@/components/material/Card";
 import ListCard from "@/components/material/ListCard";
 import { mapState, mapGetters } from "vuex";
 
+/**
+ * Returns a view containing all surveys.
+ * @memberof component
+ */
 export default {
   components: {
     Card,

@@ -58,6 +58,10 @@ import { createNamespacedHelpers } from "vuex";
 //can be used if you will only need to access ONE module in this component, will auto append /app before actions.
 const { mapState, mapActions } = createNamespacedHelpers("app/");
 
+/**
+ * Returns the drawer that is used in the dashboard.
+ * @memberof component
+ */
 export default {
   data: function() {
     return {
