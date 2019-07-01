@@ -1,0 +1,5 @@
+export const SET_METADATA = "SET_METADATA";
+export const ADD_METADATA = "ADD_METADATA";
+export const UPDATE_METADATA = "UPDATE_METADATA";
+export const DELETE_METADATA = "DELETE_METADATA";
+export const SET_ALERT = "SET_ALERT";

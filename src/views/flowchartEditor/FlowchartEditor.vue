@@ -1,5 +1,6 @@
 <template>
-  <v-layout fluid align-space-around justify-start row fill-height>
+  <v-layout fluid align-space-around justify-start row>
+    <Drawer/>
     <div id="toolbarContainer" class="toolbar"></div>
     <v-layout id="flowchartContainer" class="flowchart"/>
     <div id="formatbarContainer" class="format">
@@ -16,6 +17,9 @@
 </template>
 
 <style>
+#core-view {
+    padding-bottom: 0;
+}
 .toolbar{
     width: 60px;
     height: 100%;
@@ -239,8 +243,12 @@ import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/Mult
 import ChoiceFunctions from "@/components/flowcharteditor/formatbar/ChoiceFunctions";
 import EdgeFunctions from "@/components/flowcharteditor/formatbar/EdgeFunctions";
 
+import Drawer from "@/components/core/Drawer";
+
 export default {
     components: {
+        Drawer,
+
         FlowchartForm,
         GeneralFunctions,
         QuestionFunctions,
