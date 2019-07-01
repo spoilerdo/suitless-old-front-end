@@ -18,16 +18,9 @@ import Notification from "@/components/material/Notification.vue";
  * The root component, all over components get interpolated into this.
  */
 export default {
-  /**
-   * The app compenent requeres three components
-   * these components are loaded in every page
-   */
   components: {
-    /**The toolbar is on the left of the view. */
     Toolbar,
-    /**The coreview will be replaced with the stack of other components */
     CoreView,
-    /**The notification can be called from scripts to display a notification on every page. */
     Notification
   },
   date() {
