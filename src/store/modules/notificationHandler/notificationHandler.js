@@ -10,6 +10,8 @@ import { ADD_NOTIFICATION, CLEAR_NOTIFICATIONS } from "./mutation-types";
  * - login.js (addNotification)
  * - progress.js (addNotification)
  * - survey.js (addNotification)
+ * @name notificationHandler
+ * @memberof store
  */
 
 const state = {
@@ -26,6 +28,10 @@ const getters = {
 }
 
 const actions = {
+    /**
+     * Adds notification to the notifications array and shows it to the user
+     * @memberof store.notificationHandler
+     */
     addNotification({ commit }, newNotification) {
         //check if it contains a response message from the back-end. If so use that one instead
         if (newNotification.message.response && newNotification.message.response.data.message) {
@@ -33,6 +39,10 @@ const actions = {
         }
         commit(ADD_NOTIFICATION, newNotification);
     },
+    /**
+     * Clears all the notifications from the array
+     * @memberof store.notificationHandler
+     */
     clearNotification({ commit }) {
         commit(CLEAR_NOTIFICATIONS);
     }
