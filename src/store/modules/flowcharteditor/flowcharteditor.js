@@ -1,5 +1,5 @@
 import { asyncApiCall } from '../../../api/api'
-import { API_URL } from '../../serverconstants';
+import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 import { SET_DIALOG, SET_FLOWCHART, SET_FORMATBAR, SET_CELL } from './mutation-types';
 
 /**
@@ -51,23 +51,28 @@ const actions = {
      * This actions returns a flowchart. 
      * The FlowchartForm view will pass this from the plugins/flowcharteditor to the flowchart editor plugin.
      */
-    async getFlowchartByName({ commit }, name) {
+    async getFlowchartByName({ commit, dispatch }, name) {
         try {
             const req = await asyncApiCall('get', `${API_URL}/modules/name/${encodeURI(name)}`);
             commit(SET_FLOWCHART, req);
         } catch (e) {
             console.log(e);
+            dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         }
     },
 
     /**
      * Vue.js gets the flowchart JSON from the plugin and make the API call to the module service
      */
-    async saveFlowchart({ commit }, flowchart) {
+    async saveFlowchart({ commit, dispatch }, flowchart) {
         try {
-            return await asyncApiCall('post', `${API_URL}/modules/`, flowchart);
+            const req = await asyncApiCall('post', `${API_URL}/modules/`, flowchart);
+            if(req && req.module != null) {
+                dispatch(NOTIFICATION_HANDLER, { message: "Flowchart saved", type: "success" }, { root:true })
+            };
         } catch (e) {
-            return e;
+            console.log(e);
+            dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         }
     }
 }

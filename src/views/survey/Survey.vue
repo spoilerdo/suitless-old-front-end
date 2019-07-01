@@ -130,7 +130,6 @@ export default {
         this.deleteLastAnswer();
     },
     answeredMultiChoiceQuestion({answers, questions}) {
-      console.log(answers);
         //add answer to list of given answers.
         this.answerQuestion({
           answer: answers,
@@ -140,7 +139,6 @@ export default {
         //check if a flag is set for not looping non unique answers
         let shouldLoopNonUniqueSubQuestions = this.currentquestion.lincData.find(d => d.key === "loopsubQuestions");
         if(shouldLoopNonUniqueSubQuestions.value == "true") {
-            console.log(answers);
             //create list of unique sub questions based on targetid and only add these to the backlog (skip first one it will be handled seperately)
             let uniqueList = [...new Set(answers.slice(1).map(i => i.flows[0].targetID))];
             uniqueList.forEach(nextQID => {
@@ -165,7 +163,6 @@ export default {
         let backLogQuestion = null;
         if(questions.flows.length > 0) {
           backLogQuestion = this.survey.nodes[questions.flows[0].targetID];
-          console.log(backLogQuestion);
         }
 
 

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { SET_SURVEY, SET_SURVEYS } from './mutation-types';
-import { apiCall } from '../../../api/api';
-import { API_URL } from '../../serverconstants';
+import { apiCall, asyncApiCall } from '../../../api/api';
+import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 
 /**
  * The survey module contains the survey that the user wants to make 
@@ -30,19 +30,23 @@ const getters = {
 }
 
 const actions = {
-    async getAllSurveys({ commit }) {
+    async getAllSurveys({ commit, dispatch }) {
         try {
-            const modules = await apiCall('get', `${API_URL}/modules`);
-            commit(SET_SURVEYS, modules);
+            const modules = await asyncApiCall('get', `${API_URL}/modules`);
+            if(modules) commit(SET_SURVEYS, modules);
         } catch (e) {
             console.log(e);
+            dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         }
     },
-    getSurveyByID({ commit }, surveyID) {
+    getSurveyByID({ commit, dispatch }, surveyID) {
         apiCall('get', `${API_URL}/modules/${surveyID}`, null)
-        .then((req => {
+        .then(req => {
             commit(SET_SURVEY, req.module);
-        }));
+        }).catch(e => {
+            console.log(e);
+            dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
+        });
     },
 
 }

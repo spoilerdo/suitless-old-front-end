@@ -1,5 +1,5 @@
 import {apiCall, setToken} from '../../../api/api'
-import { API_URL } from '../../serverconstants';
+import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 import router from '@/router/router'
 import { SET_LOGGING_IN, SET_LOGIN_TEXT, SET_ALERT } from './mutation-types';
 
@@ -33,27 +33,30 @@ const actions = {
      * If an action succeeded or fails the user gets an alert within the form
      */
     
-    registerUser ({commit}, registerData) {
+    registerUser ({ commit, dispatch }, registerData) {
         apiCall('post', `${API_URL}/accounts/`, {email: registerData.email, firstName: registerData.firstName, lastName: registerData.lastName, password: registerData.password})
         .then((req => {
-            commit(SET_ALERT, {type:"success", message:"Successfully created account!"})
+            commit(SET_ALERT, {type:"success", message: "Successfully created account!"})
+            dispatch(NOTIFICATION_HANDLER, { message: "Successfully created account", type: "success", noSnackbar: true }, { root:true });
         })).catch(e => {
-            commit(SET_ALERT, {type:"error", message:e.message});
+            commit(SET_ALERT, {type:"error", message: e.response.data.message});
+            dispatch(NOTIFICATION_HANDLER, { message: e, type: "error", noSnackbar: true }, { root:true });
         })
     },
 
-    loginUser({commit}, loginData) {
+    loginUser({ commit, dispatch }, loginData) {
         apiCall('post', `${API_URL}/login`, {email: loginData.email, password: loginData.password})
             .then((req => {
                 localStorage.setItem('jwtToken', req.token);
                 setToken(req.token);
                 router.push("/dashboard");
             })).catch(e => {
-                commit(SET_ALERT, {type:"error", message: "email or password invalid"});
+                commit(SET_ALERT, {type:"error", message: "Email or password invalid"});
+                dispatch(NOTIFICATION_HANDLER, { message: e, type: "error", noSnackbar: true }, { root:true });
             });
     },
 
-    switchForms({commit}, loggingIn) {
+    switchForms({ commit }, loggingIn) {
         if(state.loggingIn){
             commit(SET_LOGIN_TEXT, "Register");
         } else {
