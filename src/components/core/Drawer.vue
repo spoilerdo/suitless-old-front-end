@@ -60,7 +60,7 @@ const { mapState, mapActions } = createNamespacedHelpers("app/");
 
 /**
  * Returns the drawer that is used in the dashboard.
- * @memberof component
+ * @memberof component.Core
  */
 export default {
   data: function() {

@@ -91,6 +91,10 @@
 <script>
 import ImplicationList from "@/components/survey/endpage/ImplicationList";
 
+/**
+ * Returns an 'endpage' view used after the survey.
+ * @memberof component.Survey
+ */
 export default {
   props: {
     answers: {

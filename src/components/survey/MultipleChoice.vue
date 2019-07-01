@@ -73,6 +73,10 @@
 <script>
 import Info from "@/components/survey/Info.vue";
 
+/**
+ * Returns an 'multiplechoice' view used in the survey.
+ * @memberof component.Survey
+ */
 export default {
     components: {
         Info

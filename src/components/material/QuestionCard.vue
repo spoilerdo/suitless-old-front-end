@@ -51,6 +51,13 @@
 
 
 <script>
+/**
+ * Returns a question card.
+ * @memberof component.Material
+ * @property {String} text
+ * @property {String} image
+ * @property {Object} answer
+ */
 export default {
   props: {
     text: String,

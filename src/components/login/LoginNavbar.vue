@@ -5,6 +5,10 @@
 </template>
 
 <script>
+/**
+ * Returns the Login navbar
+ * @memberof component.Login
+ */
 export default {
   data: () => ({
   })

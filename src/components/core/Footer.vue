@@ -29,7 +29,7 @@ const { mapState } = createNamespacedHelpers('app/')
 
 /**
  * Returns the footer with links to other places.
- * @memberof component
+ * @memberof component.Core
  */
 export default {
   data: () => ({

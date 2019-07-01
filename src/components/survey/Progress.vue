@@ -13,6 +13,10 @@
 <script>
 import { mapState, mapActions } from "vuex";
 
+/**
+ * Returns an 'progress' view used in the survey.
+ * @memberof component.Survey
+ */
 export default {
   computed: {
     ...mapState('survey', {

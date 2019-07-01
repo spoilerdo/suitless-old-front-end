@@ -20,7 +20,7 @@
 <script>
 /**
  * Marco/Sueño garbage, nobody really knows its purpose.
- * @memberof component
+ * @memberof component.Dashboard
  * @deprecated removed in the next version.
  */
 export default {

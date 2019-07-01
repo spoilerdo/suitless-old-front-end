@@ -15,7 +15,7 @@
 <script>
 /**
  * This is a textfield modded to act like a filepicker.
- * @memberof component
+ * @memberof component.CDN
  * @property {string} imageName name of the image
  * @property {string} imageUrl Base64 string
  * @property {Object} imageFile file object

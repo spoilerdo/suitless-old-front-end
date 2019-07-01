@@ -56,6 +56,13 @@
 </template>
 
 <script>
+/**
+ * Provides part of the landing page's information.
+ * @memberof component.Landingpage
+ * @property {String} Students an image from the cdn.
+ * @property {String} Startups an image from the cdn.
+ * @property {String} LawFirms an image from the cdn.
+ */
 export default {
   data: () => {
     return {

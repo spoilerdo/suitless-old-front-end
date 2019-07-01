@@ -37,7 +37,7 @@ import { mapState, mapGetters } from "vuex";
 
 /**
  * Returns a view containing all surveys.
- * @memberof component
+ * @memberof component.Dashboard
  */
 export default {
   components: {

@@ -16,6 +16,10 @@
 </template>
 
 <script>
+/**
+ * Returns an 'info' view used in the survey.
+ * @memberof component.Survey
+ */
 export default {
     data() {
         return {

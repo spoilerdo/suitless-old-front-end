@@ -91,7 +91,7 @@ const {mapState,mapMutations } = createNamespacedHelpers('app/')
 
 /**
  * returns a topbar that contains common things like notifications, accounts, etc
- * @memberof component
+ * @memberof component.Core
  * @deprecated this is no longer used.
  */
 export default {

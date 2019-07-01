@@ -36,7 +36,7 @@ import cdn from "@/store/modules/cdn/cdn";
 
 /**
  * Returns the top-bar used in the CDN page, this contains a small form with a name field and a filepicker
- * @memberof component
+ * @memberof component.CDN
  * @property {boolean} valid
  * @property {topbarForm} form
  */

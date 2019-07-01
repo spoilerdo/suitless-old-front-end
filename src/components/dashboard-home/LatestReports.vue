@@ -34,7 +34,7 @@ import { mapState, mapGetters } from "vuex";
 
 /**
  * Returns a view containing all of the latest reports, this is currently all mock data.
- * @memberof component
+ * @memberof component.Dashboard
  * @todo remove mock data
  */
 export default {
