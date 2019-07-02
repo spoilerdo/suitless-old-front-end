@@ -56,6 +56,7 @@ const actions = {
   /**
    * Sets the current question that the user can answere
    * @memberof store.progress
+   * @todo REFACTOR THIS!!!!
    */
   setCurrentQuestion({ commit, state }, { question, nodes }) {
     //if you do not have a next question, first check if there's more subquestions to be handled
@@ -71,7 +72,7 @@ const actions = {
       //set the options for the coming question if it is multiple choice
       if(comingQuestion.style == 7) {
         commit(SET_OPTIONS, []);
-        let choices = comingQuestion.lincData.filter(c => c.key !== "question");
+        let choices = comingQuestion.lincData.filter(c => c.key !== "question" && c.key !== "reason");
         choices.splice(choices.findIndex(item => item.key === "loopsubQuestions"), 1)
         choices.forEach(choice => {
           commit(PUSH_OPTION, nodes[choice.value]);
@@ -91,7 +92,7 @@ const actions = {
       //if the next question is a multiple choice node then get the different options
       else if (question.style == 7) {
         commit(SET_OPTIONS, []);
-        let choices = question.lincData.filter(c => c.key !== "question");
+        let choices = question.lincData.filter(c => c.key !== "question" && c.key !== "reason");
         choices.splice(choices.findIndex(item => item.key === "loopsubQuestions"), 1)
         choices.forEach(choice => {
           commit(PUSH_OPTION, nodes[choice.value]);
