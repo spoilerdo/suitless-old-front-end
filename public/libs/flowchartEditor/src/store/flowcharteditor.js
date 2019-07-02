@@ -89,7 +89,14 @@ export const state = {
         registerListener: function (listener) {
             this.activeFormatBarListener = listener;
         }
-    }
+    },
+
+    /*
+    The theme is used in order to import the correct colors from Vuetify.
+    This is manly used at the moment for the edge color imports.
+    The advantage is that you can change the color by changing the theme, even when you import an older flowchart
+    */
+   theme: null
 };
 
 export const methods = {

@@ -133,6 +133,9 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
 
         StartFlowchart(graph);
 
+        /**
+         * When a new flowchart has been set this will trigger and activate the import function
+         */
         state.flowchart.registerListener(function (val) {
             editorFunctions.importChart(graph, val.nodes, model);
         })

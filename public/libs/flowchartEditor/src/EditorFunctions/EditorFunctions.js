@@ -6,6 +6,7 @@
  */
 import { NodeEnum } from "../NodeEnum";
 import { GraphCoder } from "../GraphCoder";
+import { state } from "../store/flowcharteditor";
 import { addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice } from "./PrivateFunctions";
 
 import { mxGraph, mxGraphModel, mxConstants, mxEllipse, mxHexagon, mxSwimlane } from "../MxGraph";
@@ -97,9 +98,10 @@ export let editorFunctions = {
 
             graph.addEdge(edge, parent, firstCell, secondCell);
 
-            //graph.insertEdge(parent, null, value, firstCell, secondCell, "edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;");
             this.updateDepth(secondCell, firstCell);
             this.checkDepth(secondCell, null);
+
+            return edge;
         }
         finally {
             // Updates the display
@@ -196,9 +198,36 @@ export let editorFunctions = {
                     targetCell,
                     value: f.value
                 }
-                this.addEdge(graph, flow);
+                let edge = this.addEdge(graph, flow, f.implicationLevel);
+                this.changeEdgeColor(edge, f.implicationLevel);
             })
         })
+    },
+
+    /**
+     * Changes the edge color by the implication level.
+     * Watch out that the theme in the store is not null otherwise the method will not work proparly 
+     * @param {mxEdge} edge 
+     * @param {String} implicationLevel 
+     */
+    changeEdgeColor(edge, implicationLevel) {
+        if(state.theme == null || implicationLevel == null){return;}
+
+        if(edge.style.includes("strokeColor")){
+            //the first index are the styles that you want to reuse
+            //the second index is the part that you want to replace
+            let styles = edge.style.split("strokeColor");
+            edge.style = styles[0];
+        }
+
+        let levels = Object.getOwnPropertyNames(state.theme);
+        if(levels == null){return;}
+
+        let index = levels.indexOf(implicationLevel.toLowerCase());
+        let level = Object.values(state.theme)[index];
+
+        edge.style += "strokeColor=" + level;
+        state.editor.graph.refresh();
     },
 
     /**
