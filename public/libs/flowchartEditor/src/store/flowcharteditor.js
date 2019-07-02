@@ -116,7 +116,7 @@ export const methods = {
         let graph = state.editor.graph;
 
         //change the generic values of a node (node value and question of the multi choice)
-        this.genericChangeNode(nodeName, title, reason);
+        this.changeQuestionNode(nodeName, title, reason);
         
         //get the child count (amount of choices)
         let childerenCount = state.selectedCell.getChildCount();

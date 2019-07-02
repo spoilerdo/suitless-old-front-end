@@ -58,7 +58,7 @@ export default {
   watch: {
     selectedCell: function(newValue, oldValue) {
       if(newValue != null && this.formatBarType == this.$data.nodeEnum.Question){
-          this.form.reason = newValue.lincData[1].value;
+          this.form.reason = newValue.lincData.find(data => data.key === "question").value;
       }
     }
   }

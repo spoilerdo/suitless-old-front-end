@@ -120,8 +120,8 @@ export default {
         selectedCell: function(newValue, oldValue) {
             if(newValue != null && this.formatBarType == this.$data.nodeEnum.Edge && newValue.lincData.length > 0){
                 this.form.answer = newValue.value;
-                this.form.implication = newValue.lincData[0].value;
-                this.form.implicationLevel = newValue.lincData[1].value;
+                this.form.implication = newValue.lincData.find(data => data.key === "implication").value;
+                this.form.implicationLevel = newValue.lincData.find(data => data.key === "implicationLevel").value;
             }
         }
     }
