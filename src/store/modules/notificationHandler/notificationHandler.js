@@ -8,7 +8,6 @@ import { ADD_NOTIFICATION, CLEAR_NOTIFICATIONS } from "./mutation-types";
  * - cdn.js (addNotification)
  * - flowcharteditor.js (addNotification)
  * - login.js (addNotification)
- * - progress.js (addNotification)
  * - survey.js (addNotification)
  * @name notificationHandler
  * @memberof store

@@ -7,6 +7,7 @@ import login from './modules/login/login'
 import survey from './modules/survey/survey';
 import answer from './modules/survey/answer/answer';
 import progress from './modules/survey/progress/progress';
+import pdf from './modules/survey/pdf/pdf';
 import flowcharteditor from './modules/flowcharteditor/flowcharteditor';
 
 Vue.use(Vuex);
@@ -28,6 +29,7 @@ export default new Vuex.Store({
         survey,
         answer,
         progress,
+        pdf,
         flowcharteditor
     },
     strict: debug
