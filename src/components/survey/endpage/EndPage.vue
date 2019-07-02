@@ -63,6 +63,11 @@
         </v-layout>
       </v-card-text>
 
+      <ArrowControls
+        v-on:previousButtonClick="$emit('renderPreviousQuestion', question)"
+        :progress="progress"
+      />
+
       <v-card-actions>
         <!-- print pdf button -->
         <v-layout align-center justify-center row>
@@ -90,6 +95,7 @@
 
 <script>
 import ImplicationList from "@/components/survey/endpage/ImplicationList";
+import ArrowControls from "@/components/survey/ArrowControls.vue";
 
 /**
  * Returns an 'endpage' view used after the survey.
@@ -100,10 +106,16 @@ export default {
     answers: {
       type: Array,
       required: true
-    }
+    },
+    question: {
+      type: Object,
+      required: true
+    },
+    progress: Number
   },
   components: {
-    ImplicationList
+    ImplicationList,
+    ArrowControls
   },
   methods: {
     printPDF() {
@@ -132,11 +144,8 @@ export default {
     };
   },
   mounted() {
-    //console.log(Object.keys(this.$data.implicationEnum));
-
     //make a clone without reference from this.answers, this way we can fix the prop value without breaking the structure which is used for PDF generation.
     let anse = JSON.parse(JSON.stringify(this.answers));
-    console.log(anse);
 
     //get all the implications and push them in an array
     //also make sub arrays in the answers array in order to sort every answer in the implication categories
@@ -160,11 +169,8 @@ export default {
     //store the totalAnswers that have an implication in order to calculate the percentage implication for every category
     let totalAnswers = 0;
 
-    console.log(anse);
-
     anse.forEach(ans => {
       if (Array.isArray(ans)) {
-        console.log("is array");
         ans.forEach(a => {
           //get every answer and put it into the anse array
           let index = anse.indexOf(a);
@@ -177,7 +183,6 @@ export default {
       if (ans.answerImplicationLevel == null) {
         miscAnswers.push(ans);
       } else {
-        console.log("got an advice");
         //get the implicationTypes index trough the answer's implication
         let impIndex = implicationTypes.indexOf(ans.answerImplicationLevel);
         //because the implicationTypes index is ALWAYS the same as the index within answers
@@ -202,8 +207,6 @@ export default {
         });
       }
     });
-
-    console.log(miscAnswers);
 
     //push the fixed answers to the structuredanswers data.
     this.structuredAnswers = answers;
