@@ -6,7 +6,7 @@
     </v-btn>
 
     <!-- next arrow -->
-    <v-btn large flat class="action-btn" @click="nextButtonClick()">
+    <v-btn v-if="progress < 100" large flat class="action-btn" @click="nextButtonClick()">
       <v-icon color="secondary" x-large right>mdi-chevron-right</v-icon>
     </v-btn>
   </v-layout>

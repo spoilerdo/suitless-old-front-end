@@ -63,6 +63,11 @@
         </v-layout>
       </v-card-text>
 
+      <ArrowControls
+        v-on:previousButtonClick="$emit('renderPreviousQuestion', question)"
+        :progress="progress"
+      />
+
       <v-card-actions>
         <!-- print pdf button -->
         <v-layout align-center justify-center row>
@@ -90,6 +95,7 @@
 
 <script>
 import ImplicationList from "@/components/survey/endpage/ImplicationList";
+import ArrowControls from "@/components/survey/ArrowControls.vue";
 
 /**
  * Returns an 'endpage' view used after the survey.
@@ -100,10 +106,16 @@ export default {
     answers: {
       type: Array,
       required: true
-    }
+    },
+    question: {
+      type: Object,
+      required: true
+    },
+    progress: Number
   },
   components: {
-    ImplicationList
+    ImplicationList,
+    ArrowControls
   },
   methods: {
     printPDF() {
@@ -134,7 +146,6 @@ export default {
   mounted() {
     //make a clone without reference from this.answers, this way we can fix the prop value without breaking the structure which is used for PDF generation.
     let anse = JSON.parse(JSON.stringify(this.answers));
-    console.log(anse);
 
     //get all the implications and push them in an array
     //also make sub arrays in the answers array in order to sort every answer in the implication categories

@@ -43,11 +43,11 @@ const actions = {
       depth = d;
     }
 
-    //TODO: this check doesn't work
-    if (currentquestion.flows.length > 0) {
+    //TODO: check if the progress works now
+    if (currentquestion.flows.length > 0 || state.currentquestionBacklog.length !== 0 || state.subQuestionBackLog.length !== 0) {
       //bump up the progress
       commit(SET_PROGRESS, (depth / survey.maxDepth) * 100);
-    } else if(state.currentquestionBacklog.length == 0 && state.subQuestionBackLog.length == 0) {
+    } else {
       commit(SET_PROGRESS, 100);
     }
 
