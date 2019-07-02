@@ -1,6 +1,6 @@
 <template>
   <v-container fluid pa-0 ma-o>
-    <v-layout align-center justify-center row pa-5>
+    <v-layout align-center justify-center row pa-2>
       <ProgressBar ref="progressBar" />
     </v-layout>
     <v-layout align-center justify-center row ma-4 v-if="progress !== 100">
