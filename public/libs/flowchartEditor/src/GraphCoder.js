@@ -8,10 +8,10 @@ import { apiCall } from "../../../../src/api/api";
  */
 export let GraphCoder = {
     encodeGraphToJSON(graph, name, description, maxDepth) {
-        let cells =  graph.getChildVertices(graph.getDefaultParent())
+        let cells = graph.getChildVertices(graph.getDefaultParent())
         let nodes = [];
         cells.forEach(n => {
-            if(n.children != null && n.children.length > 0){
+            if (n.children != null && n.children.length > 0) {
                 //the node contains children that need to be exported correctly
                 n.children.forEach(child => {
                     //add child-node to the nodes array
@@ -24,11 +24,11 @@ export let GraphCoder = {
                     //If so than you will need to update these
                     console.log(n.lincData.filter(c => c.value === child.id));
                     let oldChoice = n.lincData.filter(c => c.value === child.id);
-                    if(oldChoice.length != 0){
+                    if (oldChoice.length != 0) {
                         let newChoice = oldChoice[0].key = child.value;
                         let index = n.lincData.indexOf(oldChoice);
                         n.lincData[index] = newChoice;
-                    }else {
+                    } else {
                         //If it's new than just push it
                         n.lincData.push({
                             "key": child.value,
@@ -45,7 +45,7 @@ export let GraphCoder = {
             name,
             description,
             maxDepth,
-            nodes   
+            nodes
         }
 
         console.log(JSON.stringify(module, null, "\t"))
@@ -53,28 +53,31 @@ export let GraphCoder = {
         return JSON.stringify(module, null, "\t")
     },
 
-    checkEdges(cell){
+    checkEdges(cell) {
         let output = [];
-        if(cell.edges !== null){
+        if (cell.edges !== null) {
             for (var i = 0; i < cell.edges.length; i++) {
-                if(cell.id === cell.edges[i].source.id && cell.edges[i].target.id !== null){
-                   output.push({
-                       targetID: cell.edges[i].target.id,
-                       value: cell.edges[i].value,
-                   })
-                   if(cell.edges[i].lincData != null){
+                if (cell.id === cell.edges[i].source.id && cell.edges[i].target.id !== null) {
+                    if (cell.edges[i].lincData != null) {
                         output.push({
+                            targetID: cell.edges[i].target.id,
+                            value: cell.edges[i].value,
                             implication: cell.edges[i].lincData[0].value,
                             implicationLevel: cell.edges[i].lincData[1].value
                         })
-                   }
+                    } else {
+                        output.push({
+                            targetID: cell.edges[i].target.id,
+                            value: cell.edges[i].value,
+                        })
+                    }
                 }
             }
         }
         return output;
     },
 
-    createNode(node){
+    createNode(node) {
         return {
             id: parseInt(node.id),
             style: node.lincType,

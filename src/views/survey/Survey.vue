@@ -32,7 +32,7 @@
     <EndPage
       v-else
       :answers="answer"
-      v-on:printPDF="printPDF"
+      v-on:printPDF="generatePDF"
     />
     <v-layout align-center justify-center row pa-5>
       <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
@@ -106,6 +106,7 @@ export default {
       this.setCurrentQuestion({ question: nextQuestion, nodes: this.survey.nodes });
       this.fillProgress({ addedDepth: 1, survey: this.survey });   
     },
+
     renderPreviousQuestion(question) {
       //get previous answer(s) and convert them to an array.
       let prevAnswer = this.getAnswerByQuestionID(question);
@@ -133,6 +134,7 @@ export default {
         this.setCurrentQuestion({question: this.survey.nodes[previousQuestionID], nodes: this.survey.nodes });
         this.deleteLastAnswer();
     },
+
     answeredMultiChoiceQuestion({answers, questions}) {
         //add answer to list of given answers.
         this.answerQuestion({
@@ -175,106 +177,16 @@ export default {
 
         this.fillProgress({addedDepth: 1, survey: this.survey});
     },
-    getFormattedDate() {
-      var myDate = new Date();
-      var month = ("0" + (myDate.getMonth() + 1)).slice(-2);
-      var date = ("0" + myDate.getDate()).slice(-2);
-      var year = myDate.getFullYear();
-      return year + "/" + month + "/" + date;
-    },
-    getPDFContent() {
-      let pdfContents = [];
 
-      var today = new Date();
-      pdfContents.push(
-        this.pdfContentTitle(
-          "ehvLINC REPORT  " +
-            today.getFullYear() +
-            "-" +
-            (today.getMonth() + 1) +
-            "-" +
-            today.getDate()
-        )
-      );
-
-      for (let i = 0; i < this.answer.length; i++) {
-        //check if the question to be printed is multi or single choice
-        let currentAnswer = this.answer[i];
-
-        if(Array.isArray(currentAnswer)) {
-          //print relevant question based on first answer given
-          
-          pdfContents.push(this.pdfContentQuestion(currentAnswer[0].questionValue));
-
-          //temp variable for text to put as answers to the question
-          let tempAnswer = "";
-          //multi choice answer
-          currentAnswer.forEach(ans => {
-              //add all answers to a string.
-              tempAnswer += ans.answerValue;
-              tempAnswer += " ";
-          });
-          pdfContents.push(this.pdfContentReply(tempAnswer));
-
-          let implications = this.fillImplications(currentAnswer);
-
-          implications.forEach(impl => {
-            pdfContents.push(impl);
-          });
-
-        } else if(currentAnswer.answerValue != null) {
-          //single choice answer
-          pdfContents.push(this.pdfContentQuestion(this.answer[i].questionValue));
-          pdfContents.push(this.pdfContentReply(this.answer[i].answerValue));
-          let implications = this.fillImplications(Array.of(this.answer[i]));
-          implications.forEach(impl => {
-            pdfContents.push(impl);
-          });
-        }
-      }
-      return pdfContents;
-    },
-    fillImplications(flows) {
-      let implicationContents = [];
-      flows.forEach(flow => {
-          switch(flow.answerImplicationLevel) {
-            case "success" :
-            implicationContents.push(this.pdfContentSuccess("Success : "));
-            implicationContents.push(this.pdfContentSub(flow.answerImplication));
-            implicationContents.push(this.pdfContentWhitespace());
-            break;
-          case "warning" :
-            implicationContents.push(this.pdfContentWarning("Warning : "));
-            implicationContents.push(this.pdfContentSub(flow.answerImplication));
-            implicationContents.push(this.pdfContentWhitespace());
-            break;
-          case "info" :
-            implicationContents.push(this.pdfContentInfo("Info : "));
-            implicationContents.push(this.pdfContentSub(flow.answerImplication));
-            implicationContents.push(this.pdfContentWhitespace());
-            break;
-          case "primary" : 
-            implicationContents.push(this.pdfContentSub(flow.answerImplication));
-            implicationContents.push(this.pdfContentWhitespace());
-            break;
-          default:
-            break;
-          }
-      });
-
-        return implicationContents;
-    },
-
-    printPDF() {
+    generatePDF(){
       let pdfOptions = {
         orientation: "portrait",
         unit: "cm"
-      };
-      let pdfContents = this.getPDFContent();
-      let name = "report " + this.getFormattedDate();
+      }
 
-      this.generatePdf(pdfOptions, pdfContents, name);
+      this.printPDF(pdfOptions, this.answer);
     },
+
     onResize () {
       this.isMobile = window.innerWidth < 600
     }
@@ -282,9 +194,9 @@ export default {
   updated() {
     //only on the first ever update since this page
     if (this.currentquestion == null) {
-      let tetsdatax = this.survey.nodes[this.firsQuestionID];
-      let xxx = this.survey.nodes;
-      this.setCurrentQuestion({ question: tetsdatax, nodes: xxx });
+      let firstquestion = this.survey.nodes[this.firsQuestionID];
+      let allNodes = this.survey.nodes;
+      this.setCurrentQuestion({ question: firstquestion, nodes: allNodes });
     }
   },
   mounted() {

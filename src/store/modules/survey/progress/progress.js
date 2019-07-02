@@ -1,5 +1,4 @@
 import { SET_CURRENTQUESTION, SET_PROGRESS, SET_DEPTH, SET_NOTIFICATION, SET_OPTIONS, PUSH_OPTION, ADD_CURRENTQBACKLOG, DELETE_FIRST_CURRENTBACKLOG_QUESTION, ADD_CURRENTQBACKLOG_ARRAY,CLEAR_CURRENTBACKLOG, ADD_CURRENTSUBQUESTIONBACKLOG, CLEAR_CURRENTSUBQUESTIONBACKLOG, DELETE_FIRST_SUBQUESTION_BACKLOG } from '../mutation-types';
-import { NOTIFICATION_HANDLER } from "../../../generalconstants"
 
 /**
  * The Progress module contains the progress of the survey 
@@ -58,7 +57,7 @@ const actions = {
    * Sets the current question that the user can answere
    * @memberof store.progress
    */
-  setCurrentQuestion({ commit, state, dispatch }, { question, nodes }) {
+  setCurrentQuestion({ commit, state }, { question, nodes }) {
     //if you do not have a next question, first check if there's more subquestions to be handled
     if(question == null && state.subQuestionBackLog.length > 0 || question != null && question.style == 2 && state.subQuestionBackLog.length > 0) {
       let comingQuestion = state.subQuestionBackLog[0];
@@ -82,7 +81,6 @@ const actions = {
       commit(DELETE_FIRST_CURRENTBACKLOG_QUESTION);
       
     } else if(question == null){
-      dispatch(NOTIFICATION_HANDLER, { message: "something went wrong: question is null", type: "error" }, { root:true });
       return;
     } else {
       //if the next question is a notification then store it in the notification array and show it on the front-end

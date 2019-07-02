@@ -3,7 +3,6 @@ import { SET_SURVEY, SET_SURVEYS } from './mutation-types';
 import { apiCall, asyncApiCall } from '../../../api/api';
 import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 
-
 /**
  * The survey module contains the survey that the user wants to make 
  * and also the first question that needs to be asked because a flowchart can start with a start node 

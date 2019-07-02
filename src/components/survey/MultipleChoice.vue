@@ -44,27 +44,11 @@
         </v-container>
       </v-card-actions>
 
-      <!-- previous arrow -->
-      <v-layout align-center justify-center row>
-        <v-btn
-          v-if="progress > 0"
-          v-on:click="$emit('renderPreviousQuestion', question)"
-          flat
-          class="action-btn"
-        >
-          <v-icon color="secondary" x-large left>mdi-chevron-left</v-icon>
-        </v-btn>
-
-        <!-- next arrow -->
-        <v-btn
-          large
-          flat
-          class="action-btn"
-          @click="answerQuestion()"
-        >
-          <v-icon color="secondary" x-large right>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-layout>
+      <ArrowControls 
+        v-on:nextButtonClick="answerQuestion"
+        v-on:previousButtonClick="$emit('renderPreviousQuestion', question)"  
+        :progress="progress"
+      />
 
     </v-card>
   </v-scale-transition>
@@ -72,6 +56,7 @@
 
 <script>
 import Info from "@/components/survey/Info.vue";
+import ArrowControls from "@/components/survey/ArrowControls.vue";
 
 /**
  * Returns an 'multiplechoice' view used in the survey.
@@ -79,7 +64,8 @@ import Info from "@/components/survey/Info.vue";
  */
 export default {
     components: {
-        Info
+        Info,
+        ArrowControls
     },
     props: ["question", "progress", "isMobile", "options"],
     data() {
