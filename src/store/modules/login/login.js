@@ -35,9 +35,6 @@ const getters = {
 
 // actions
 const actions = {
-    /**
-     * If an action succeeded or fails the user gets an alert within the form
-     */
     
      /**
       * Attempts to create a new account at the server from the user data
