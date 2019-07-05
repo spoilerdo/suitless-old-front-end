@@ -23,7 +23,7 @@
           :isMobile="isMobile"
           :options="options"
         />
-        <Notification v-if="notification != null" v-bind:value="notification.value" />
+        <Notification ref="surveyNotification" :timeVisible="0"/>
       </v-flex>
     </v-layout>
     <EndPage
@@ -108,6 +108,8 @@ export default {
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
 
     answeredQuestion(answer) {
+      this.closeNotification();
+
       this.answerQuestion({
         answer,
         question: this.currentquestion
@@ -123,6 +125,8 @@ export default {
     },
 
     renderPreviousQuestion(question) {
+      this.closeNotification();
+
       let prevAnswer = null;
 
       //get previous answer(s) and convert them to an array.
@@ -156,6 +160,8 @@ export default {
     },
 
     answeredMultiChoiceQuestion({ answers, questions }) {
+      this.closeNotification();
+      
       //add answer to list of given answers.
       this.answerQuestion({
         answer: answers,
@@ -207,6 +213,12 @@ export default {
       this.fillProgress({ addedDepth: 1, survey: this.survey });
     },
 
+    closeNotification(){
+      if(this.$refs.surveyNotification != null){
+        this.$refs.surveyNotification.closeNotification(); 
+      }
+    },
+
     generatePDF() {
       let pdfOptions = {
         orientation: "portrait",
@@ -226,6 +238,15 @@ export default {
       let firstquestion = this.survey.nodes[this.firsQuestionID];
       let allNodes = this.survey.nodes;
       this.setCurrentQuestion({ question: firstquestion, nodes: allNodes });
+    }
+  },
+  watch: {
+    notification: function(val) {
+      if(this.$refs.surveyNotification != null){
+        if(val.message != null){
+          this.$refs.surveyNotification.showNotification(val.message, val.type);
+        }
+      }
     }
   },
   mounted() {

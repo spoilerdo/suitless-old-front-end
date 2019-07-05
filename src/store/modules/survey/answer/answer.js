@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { ADD_ANSWER, DELETE_LAST_ANSWER } from '../mutation-types';
+import { SURVEY_NOTIFICATION_HANDLER } from '../../../generalconstants';
 
 /**
  * The answer module contians all the answers of the survey that has been made
@@ -43,7 +44,7 @@ const actions = {
      * Pushes an answere to the store. This should also contain the user's entered data.
      * @memberof store.answer
      */
-    answerQuestion({ commit }, { answer, question }) {
+    answerQuestion({ commit, dispatch }, { answer, question }) {
         //check if the answer given is multiple choice (an array)
         if(Array.isArray(answer)) {
             //multi choice question answered
@@ -76,6 +77,11 @@ const actions = {
                         answerImplication: flow.implication,
                         answerImplicationLevel: flow.implicationLevel
                     };
+
+                    //Notify the user of the implication they just received from the survey.
+                    if(a.answerImplication != null){
+                        dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
+                    }
     
                     temp.push(a);
                 })
@@ -96,6 +102,12 @@ const actions = {
                 answerImplication: answer.implication,
                 answerImplicationLevel: answer.implicationLevel
             };
+
+            //Notify the user of the implication they just received from the survey.
+            if(a.answerImplication != null){
+                dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
+            }
+
             commit(ADD_ANSWER, a);
         }
     },

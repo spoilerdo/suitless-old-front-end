@@ -2,7 +2,7 @@
   <v-app :style="{background: this.background }">
     <Toolbar v-if="!newUser"/>
     <CoreView/>
-    <Notification ref="notification"/>
+    <Notification :timeVisible="2500" ref="notification"/>
   </v-app>
 </template>
 
