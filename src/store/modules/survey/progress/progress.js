@@ -17,7 +17,7 @@ const state = {
   //currentquestion asked by the user (this will be obtained by the question flow or the backlog)
   currentquestion: null,
   //if a notification is the next current "question" than stored it in here and it will be shown
-  notification: null,
+  notification: { type: null, message: null },
   //it current question is multple choice than the options are stored in here
   options: [],
   //backlog of all the question that aren't subquestion
@@ -86,7 +86,8 @@ const actions = {
     } else {
       //if the next question is a notification then store it in the notification array and show it on the front-end
       if (question.style == 5) {
-        commit(SET_NOTIFICATION, question);
+        console.log("We got a notification")
+        commit(SET_NOTIFICATION, {message: question.value});
         commit(SET_CURRENTQUESTION, nodes[question.flows[0].targetID]);
       }
       //if the next question is a multiple choice node then get the different options
@@ -123,14 +124,14 @@ const actions = {
    * Clears the current question backlog
    * @memberof store.progress
    */
-  clearCurrentQuestionBacklog({commit, dispatch}) {
+  clearCurrentQuestionBacklog({ commit }) {
     commit(CLEAR_CURRENTBACKLOG);
   },
   /**
    * Fills the sub-question backlog
    * @memberof store.progress
    */
-  fillsubQuestionBackLog({commit, dispatch}, futureSubQuestions) {
+  fillsubQuestionBackLog({ commit }, futureSubQuestions) {
     //add subquestions to come in the future 
     commit(ADD_CURRENTSUBQUESTIONBACKLOG, futureSubQuestions);
   },
@@ -138,8 +139,15 @@ const actions = {
    * Clears the current sub-question backlog
    * @memberof store.progress
    */
-  clearSubQuestionBackLog({commit, dispatch}) {
+  clearSubQuestionBackLog({ commit }) {
     commit(CLEAR_CURRENTSUBQUESTIONBACKLOG);
+  },
+  /**
+   * Sets a new notification
+   * @memberof store.progress
+   */
+  setNotification({ commit }, notification) {
+    commit(SET_NOTIFICATION, notification);
   }
 }
 
@@ -154,7 +162,12 @@ const mutations = {
     state.depth = depth;
   },
   [SET_NOTIFICATION](state, notification) {
-    state.notification = notification;
+    let type = notification.type || "info";
+    let newNotification = {
+      type: type,
+      message: notification.message
+    }
+    state.notification = newNotification;
   },
   [SET_OPTIONS](state, options) {
     state.options = options;

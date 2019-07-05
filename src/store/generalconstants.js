@@ -5,3 +5,4 @@ export const ACCOUT_URL = `${API_URL}/accounts`;
 export const PROFILE_URL = `${API_URL}/profiles`;
 
 export const NOTIFICATION_HANDLER = 'notificationHandler/addNotification';
+export const SURVEY_NOTIFICATION_HANDLER = 'progress/setNotification';

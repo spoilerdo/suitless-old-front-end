@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { ADD_ANSWER, DELETE_LAST_ANSWER } from '../mutation-types';
-import { NOTIFICATION_HANDLER } from '../../../generalconstants';
+import { SURVEY_NOTIFICATION_HANDLER } from '../../../generalconstants';
 
 /**
  * The answer module contians all the answers of the survey that has been made
@@ -79,7 +79,9 @@ const actions = {
                     };
 
                     //Notify the user of the implication they just received from the survey.
-                    dispatch(NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
+                    if(a.answerImplication != null){
+                        dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
+                    }
     
                     temp.push(a);
                 })
@@ -101,8 +103,10 @@ const actions = {
                 answerImplicationLevel: answer.implicationLevel
             };
 
-            //Notify the user of the implication they just received from the survey.'
-            dispatch(NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
+            //Notify the user of the implication they just received from the survey.
+            if(a.answerImplication != null){
+                dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
+            }
 
             commit(ADD_ANSWER, a);
         }

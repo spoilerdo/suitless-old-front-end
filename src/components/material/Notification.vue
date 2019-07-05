@@ -27,7 +27,7 @@ export default {
       value: "",
       activated: false,
       icon: "mdi-bell-plus",
-      type: "primary",
+      type: "primary"
     }
   },
   props: {
@@ -59,6 +59,10 @@ export default {
         if(type) this.type = type;
         this.activated = true;
     }, this.timeVisible);
+  },
+
+  closeNotification() {
+    this.activated = false;
   }
 }
 };
