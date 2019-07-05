@@ -8,6 +8,7 @@ import { pdfContentSuccess } from "./PdfContent/PdfContentSuccess"
 import { pdfContentError } from "./PdfContent/PdfContentError";
 import { pdfContentSub } from "./PdfContent/PdfContentSub"
 import { pdfContentWhitespace } from "./PdfContent/PdfContentWhitespace"
+import { pdfContentListItem } from "./PdfContent/PdfContentListItem";
 
 
 export let PdfContentQuestion = function(content) {
@@ -48,4 +49,8 @@ export let PdfContentSub = function(content) {
 
 export let PdfContentWhitespace = function() {
     return new pdfContentWhitespace();
+}
+
+export let PdfContentListItem = function(content) {
+    return new pdfContentListItem(content);
 }

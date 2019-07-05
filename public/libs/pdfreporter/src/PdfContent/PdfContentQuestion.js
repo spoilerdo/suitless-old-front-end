@@ -6,10 +6,10 @@
  * @since 12-03-2019
  */
 
- import { pdfContent } from "./PdfContent"
+import { pdfContent } from "./PdfContent"
 import { pdfContentEnum } from "./PdfContentEnum";
 
-export class pdfContentQuestion extends pdfContent {
+export class pdfContentQuestion extends pdfContent  {
 
     constructor(data){
         super();
