@@ -7,7 +7,7 @@
 
 import { getDefaultPdfOptions } from "./PdfOptions"
 import { getDemoPdfContents } from "./DemoPDF"
-import { PdfContentQuestion, PdfContentReply, PdfContentResult, PdfContentTitle, PdfContentWarning, PdfContentInfo, PdfContentSuccess, PdfContentError, PdfContentSub, PdfContentWhitespace } from "./PdfContentInitializer";
+import { PdfContentQuestion, PdfContentReply, PdfContentResult, PdfContentTitle, PdfContentWarning, PdfContentInfo, PdfContentSuccess, PdfContentError, PdfContentSub, PdfContentWhitespace, PdfContentListItem } from "./PdfContentInitializer";
 import jsPDF from 'jspdf'
 
 
@@ -98,15 +98,12 @@ function getPDFContent(answers) {
 
             pdfContents.push(PdfContentQuestion(currentAnswer[0].questionValue));
 
-            //temp variable for text to put as answers to the question
-            let tempAnswer = "";
             //multi choice answer
             currentAnswer.forEach(ans => {
-                //add all answers to a string.
-                tempAnswer += ans.answerValue;
-                tempAnswer += " ";
+                //add all answers as a list to the PDF
+                pdfContents.push(PdfContentListItem("- " + ans.answerValue));
+                pdfContents.push(PdfContentWhitespace());
             });
-            pdfContents.push(PdfContentReply(tempAnswer));
 
             let implications = fillImplications(currentAnswer);
 

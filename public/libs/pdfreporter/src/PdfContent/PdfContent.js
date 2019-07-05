@@ -21,11 +21,14 @@ export class pdfContent {
         
         let internalOffset = 0;
         lines.forEach(line => {
-            doc.text(line, 1, offset+internalOffset);
+            doc.text(line, this.getX(), offset+internalOffset);
             internalOffset += lineOffset;
         });
 
         return this.getOffset() + (lines.length*lineOffset);
     }
 
+    getX(){
+        return 1;
+    }
 }
