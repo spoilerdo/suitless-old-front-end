@@ -23,7 +23,7 @@
           :isMobile="isMobile"
           :options="options"
         />
-        <Notification v-if="notification != null" v-bind:value="notification.value" />
+        <Notification v-if="notification != null" :timeVisible="20000" v-bind:value="notification.value" />
       </v-flex>
     </v-layout>
     <EndPage

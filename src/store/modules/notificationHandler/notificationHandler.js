@@ -9,6 +9,7 @@ import { ADD_NOTIFICATION, CLEAR_NOTIFICATIONS } from "./mutation-types";
  * - flowcharteditor.js (addNotification)
  * - login.js (addNotification)
  * - survey.js (addNotification)
+ * - answer.js (addNotification) Hoort dit in deze handler of is het beter om dit apart te houden aangezien dit niet bij het systeem hoort maar een bepaalde user zijn survey
  * @name notificationHandler
  * @memberof store
  */

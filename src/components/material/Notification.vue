@@ -5,6 +5,7 @@
     right
     dark
     :color="type"
+    :timeout="timeVisible"
   >
     <v-icon color="white" class="mr-3">{{ icon }}</v-icon>
     <div>
@@ -29,11 +30,15 @@ export default {
       type: "primary",
     }
   },
+  props: {
+    timeVisible: {
+      type: Number,
+      required: true
+    }
+  },
   methods: {
     showNotification(value, type) {
       this.activated = false;
-
-      console.log(type);
 
       switch(type) {
         case "warning":
@@ -53,7 +58,7 @@ export default {
         this.value = value;
         if(type) this.type = type;
         this.activated = true;
-    }, 100);
+    }, this.timeVisible);
   }
 }
 };
