@@ -34,6 +34,11 @@
 <script>
 import Animatedbackground from "@/components/background/Animatedbackground";
 import ImageCard from "@/components/material/ImageCard";
+
+/**
+ * returns the login landing page, asking the user wether they want to create an account.
+ * @memberof view
+ */
 export default {
   components: {
     Animatedbackground,

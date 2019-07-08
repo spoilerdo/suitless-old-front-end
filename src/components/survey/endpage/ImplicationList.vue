@@ -14,6 +14,10 @@
 </template>
 
 <script>
+/**
+ * Returns a list containing all implications.
+ * @memberof component.Survey
+ */
 export default {
   props: {
     answers: {

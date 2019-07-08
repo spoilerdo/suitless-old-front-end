@@ -89,6 +89,11 @@ import { createNamespacedHelpers } from 'vuex';
 //can be used if you will only need to access ONE module in this component, will auto append /app before actions.
 const {mapState,mapMutations } = createNamespacedHelpers('app/')
 
+/**
+ * returns a topbar that contains common things like notifications, accounts, etc
+ * @memberof component.Core
+ * @deprecated this is no longer used.
+ */
 export default {
   data: () => ({
     notifications: [

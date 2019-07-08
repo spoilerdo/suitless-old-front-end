@@ -1,15 +1,17 @@
 {
-  "name": "test-vue",
+  "name": "ehvlinc-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --max_old_space_size=4096",
     "lint": "vue-cli-service lint",
-    "test:e2e": "vue-cli-service test:e2e"
+    "test:e2e": "vue-cli-service test:e2e",
+    "docs": "documentation build src/**/*.{js,vue} -f html -o docs --shallow"
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "documentation": "^11.0.1",
     "jspdf": "^1.5.3",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",

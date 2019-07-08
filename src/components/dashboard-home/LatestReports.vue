@@ -32,6 +32,11 @@ import Card from "@/components/material/Card";
 import ListCard from "@/components/material/ListCard";
 import { mapState, mapGetters } from "vuex";
 
+/**
+ * Returns a view containing all of the latest reports, this is currently all mock data.
+ * @memberof component.Dashboard
+ * @todo remove mock data
+ */
 export default {
   components: {
     Card,

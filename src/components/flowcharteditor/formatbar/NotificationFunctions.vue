@@ -15,6 +15,10 @@
 <script>
 import GenericView from "./genericView/GenericView";
 
+/**
+ * View used for 'Notification' cells.
+ * @memberof component.FlowchartForm
+ */
 export default {
     data(){
         return {

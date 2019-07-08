@@ -29,7 +29,7 @@ if (localStorage.jwtToken) {
   setToken(localStorage.jwtToken);
 }
 
-new Vue({
+export const VueInstance = new Vue({
   store,
   router,
   render: h => h(App)

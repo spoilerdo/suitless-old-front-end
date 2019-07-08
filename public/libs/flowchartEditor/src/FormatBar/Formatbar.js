@@ -41,7 +41,6 @@ function showFormatBar(editor, selectedCell, model){
         state.editor = editor;
         state.selectedCell = selectedCell;
 
-
         let children = 3;
         if(selectedCell.children != null){
             children = selectedCell.children.length;

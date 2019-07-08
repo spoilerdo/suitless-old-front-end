@@ -7,15 +7,16 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import { createNamespacedHelpers } from 'vuex';
-//can be used if you will only need to access ONE module in this component, will auto append app/ before actions.
-const { mapState, mapActions } = createNamespacedHelpers('app/')
+const { mapState, mapActions } = createNamespacedHelpers('app/');
 
 import CoreView from "./components/core/View";
-import Toolbar from './components/core/Toolbar'
+import Toolbar from './components/core/Toolbar';
 import Notification from "@/components/material/Notification.vue";
 
+/**
+ * The root component, all over components get interpolated into this.
+ */
 export default {
   components: {
     Toolbar,
@@ -50,7 +51,6 @@ export default {
 <style lang="scss">
 @import "@/styles/index.scss";
 
-/* Remove in 1.2 */
 .v-datatable thead th.column.sortable i {
   vertical-align: unset;
 }

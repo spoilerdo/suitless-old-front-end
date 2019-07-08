@@ -25,9 +25,6 @@
     </v-layout>
     <div class="text-xs-center">
       <v-layout align-center justify-center row>
-        <!-- <v-btn color="primary" large href="/dashboard">
-          <v-icon dark>close</v-icon>&nbsp; No thanks, i'll find my own surveys.
-        </v-btn>-->
         <v-btn color="grey" large>
           <v-icon dark>close</v-icon>&nbsp; No thanks, i'll find my own surveys.
         </v-btn>
@@ -50,6 +47,11 @@ import ImageCard from "@/components/material/ImageCard";
 
 import { mapActions } from "vuex";
 
+/**
+ * Returns the page where new users get offered recommended surveys.
+ * @memberof view
+ * @todo make the recommended surveys dynamic
+ */
 export default {
   components: {
     Animatedbackground,

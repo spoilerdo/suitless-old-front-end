@@ -7,6 +7,8 @@ import { SET_CURRENTQUESTION, SET_PROGRESS, SET_DEPTH, SET_NOTIFICATION, SET_OPT
  * This submodule is used in the following view:
  * - Survey (mapState currentquestion, progress, notification, options
  *      	   and mapActions fillProgress, setCurrenQuestion, fillCurrentQuestionBacklog, clearSubQuestionBacklog)
+ * @name progress
+ * @memberof store
  */
 
 const state = {
@@ -28,6 +30,10 @@ const getters = {
 }
 
 const actions = {
+  /**
+   * Calculates the new progress and sets the progress bar
+   * @memberof store.progress
+   */
   fillProgress({ commit, state }, { addedDepth, survey }) {
     let depth = state.depth;
     const currentquestion = state.currentquestion;
@@ -37,16 +43,21 @@ const actions = {
       depth = d;
     }
 
-    //TODO: this check doesn't work
-    if (currentquestion.flows.length > 0) {
+    //TODO: check if the progress works now
+    if (currentquestion.flows.length > 0 || state.currentquestionBacklog.length !== 0 || state.subQuestionBackLog.length !== 0) {
       //bump up the progress
       commit(SET_PROGRESS, (depth / survey.maxDepth) * 100);
-    } else if(state.currentquestionBacklog.length == 0 && state.subQuestionBackLog.length == 0) {
+    } else {
       commit(SET_PROGRESS, 100);
     }
 
     commit(SET_DEPTH, depth);
   },
+  /**
+   * Sets the current question that the user can answere
+   * @memberof store.progress
+   * @todo REFACTOR THIS!!!!
+   */
   setCurrentQuestion({ commit, state }, { question, nodes }) {
     //if you do not have a next question, first check if there's more subquestions to be handled
     if(question == null && state.subQuestionBackLog.length > 0 || question != null && question.style == 2 && state.subQuestionBackLog.length > 0) {
@@ -58,10 +69,10 @@ const actions = {
     //if you do not have a next question and there's no more sub questions switch to the normal question flow if it exists.
     else if (question == null && state.currentquestionBacklog.length > 0 || question != null && question.style == 2 && state.currentquestionBacklog.length > 0) {
       let comingQuestion = state.currentquestionBacklog[0];
-      //set t he options for the coming question if it is multiple choice
+      //set the options for the coming question if it is multiple choice
       if(comingQuestion.style == 7) {
         commit(SET_OPTIONS, []);
-        let choices = comingQuestion.lincData.filter(c => c.key !== "question");
+        let choices = comingQuestion.lincData.filter(c => c.key !== "question" && c.key !== "reason");
         choices.splice(choices.findIndex(item => item.key === "loopsubQuestions"), 1)
         choices.forEach(choice => {
           commit(PUSH_OPTION, nodes[choice.value]);
@@ -81,7 +92,7 @@ const actions = {
       //if the next question is a multiple choice node then get the different options
       else if (question.style == 7) {
         commit(SET_OPTIONS, []);
-        let choices = question.lincData.filter(c => c.key !== "question");
+        let choices = question.lincData.filter(c => c.key !== "question" && c.key !== "reason");
         choices.splice(choices.findIndex(item => item.key === "loopsubQuestions"), 1)
         choices.forEach(choice => {
           commit(PUSH_OPTION, nodes[choice.value]);
@@ -94,6 +105,10 @@ const actions = {
       }
     }
   },
+  /**
+   * Fills the current question backlog
+   * @memberof store.progress
+   */
   fillCurrentQuestionBacklog({ commit, dispatch }, { firstSubQuestion, backLogQuestion, nodes }) {
     //add the first question (if any) to come after the subquestions are done to the backlog
     if(backLogQuestion !== null) {
@@ -104,13 +119,25 @@ const actions = {
     dispatch('setCurrentQuestion', {question: firstSubQuestion, nodes });
     
   },
+  /**
+   * Clears the current question backlog
+   * @memberof store.progress
+   */
   clearCurrentQuestionBacklog({commit, dispatch}) {
     commit(CLEAR_CURRENTBACKLOG);
   },
+  /**
+   * Fills the sub-question backlog
+   * @memberof store.progress
+   */
   fillsubQuestionBackLog({commit, dispatch}, futureSubQuestions) {
     //add subquestions to come in the future 
     commit(ADD_CURRENTSUBQUESTIONBACKLOG, futureSubQuestions);
   },
+  /**
+   * Clears the current sub-question backlog
+   * @memberof store.progress
+   */
   clearSubQuestionBackLog({commit, dispatch}) {
     commit(CLEAR_CURRENTSUBQUESTIONBACKLOG);
   }

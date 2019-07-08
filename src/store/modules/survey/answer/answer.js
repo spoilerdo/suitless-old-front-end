@@ -6,6 +6,8 @@ import { ADD_ANSWER, DELETE_LAST_ANSWER } from '../mutation-types';
  * These answers will be used for the PDF generation and can be stored in the questionaire service
  * This submodule is used in the following views:
  * - Survey (mapState all and mapActions deleteLastAnswer, answerQuestion)
+ * @name answer
+ * @memberof store
  */
 
 //initial state
@@ -15,9 +17,17 @@ const state = {
 }
 
 const getters = {
+    /**
+     * Retrieves all answeres from the store
+     * @memberof store.answer
+     */
     getAnswers: (state) => () => {
         return state.all;
     },
+    /**
+     * Retrieves a question from the store with a specific ID
+     * @memberof store.answer
+     */
     getAnswerByQuestionID: (state) => (question) => {
         var pa = _.find(state.all, (a) => a.targetID === question.id);
         if (pa == null) {
@@ -29,6 +39,10 @@ const getters = {
 }
 
 const actions = {
+    /**
+     * Pushes an answere to the store. This should also contain the user's entered data.
+     * @memberof store.answer
+     */
     answerQuestion({ commit }, { answer, question }) {
         //check if the answer given is multiple choice (an array)
         if(Array.isArray(answer)) {
@@ -85,6 +99,10 @@ const actions = {
             commit(ADD_ANSWER, a);
         }
     },
+    /**
+     * Removes the last pushed answere from the store.
+     * @memberof store.answer
+     */
     deleteLastAnswer({ commit }) {
         commit(DELETE_LAST_ANSWER);
     }

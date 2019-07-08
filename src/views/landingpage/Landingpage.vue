@@ -43,6 +43,10 @@ import { mapActions } from "vuex";
 //can be used if you will only need to access ONE module in this component, will auto append /app before actions.
 const { mapState } = createNamespacedHelpers("app/");
 
+/**
+ * Returns the landing page, the page most users see when the open the website.
+ * @memberof view
+ */
 export default {
   name: "landingPage",
   components: {

@@ -16,6 +16,10 @@
 import { mapState } from 'vuex';
 import GenericView from "./genericView/GenericView";
 
+/**
+ * View used for 'Choice' cells.
+ * @memberof component.FlowchartForm
+ */
 export default {
     data(){
         return {
@@ -40,7 +44,7 @@ export default {
         selectedCell: function(newValue, oldValue) {
             if(newValue != null && this.formatBarType == this.$data.nodeEnum.Choice && newValue.lincData.length > 0){
                 this.form.nodeName = newValue.value;
-                this.form.name = newValue.lincData[0].value;
+                this.form.name = newValue.lincData.find(data => data.key === "choice").value;
             }
         }
     }

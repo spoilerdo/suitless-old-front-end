@@ -27,6 +27,15 @@
   </v-container>
 </template>
 
+<script>
+/**
+ * Provides part of the landing page's information.
+ * @memberof component.Landingpage
+ */
+export default {
+};
+</script>
+
 <style>
 .textSize {
   font-size: 1.4em;

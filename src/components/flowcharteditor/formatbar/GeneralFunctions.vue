@@ -31,6 +31,10 @@
 <script>
 import { mapActions } from "vuex";
 
+/**
+ * View used for general action / no cells.
+ * @memberof component.FlowchartForm
+ */
 export default {
     data(){
         return {
@@ -45,13 +49,7 @@ export default {
         prepareSaveFlowchart(name, description) {
             let flowchart = this.getFlowchart(name, description);
 
-            this.saveFlowchart(flowchart).then(req => {
-                if (req != undefined && req.module != null) {
-                    this.showNotification("Flowchart saved!");
-                } else {
-                    this.showNotification("Error during flowchart save");
-                }
-            })
+            this.saveFlowchart(flowchart);
         }
     }
 }

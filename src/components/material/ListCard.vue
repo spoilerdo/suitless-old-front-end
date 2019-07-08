@@ -87,6 +87,18 @@
 </style>
 
 <script>
+/**
+ * Returns a list cards.
+ * @memberof component.Material
+ * @property {String} imageWidth
+ * @property {String} redirecturl
+ * @property {String} imagename
+ * @property {String} text
+ * @property {String} title
+ * @property {String} description
+ * @property {String} orientation
+ * @property {String} progress
+ */
 export default {
   name: "RoundCard",
   props: {

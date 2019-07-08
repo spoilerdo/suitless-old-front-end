@@ -16,6 +16,18 @@
     </v-card>
   </v-flex>
 </template>
+
+<script>
+/**
+ * Marco/Sueño garbage, nobody really knows its purpose.
+ * @memberof component.Dashboard
+ * @deprecated removed in the next version.
+ */
+export default {
+}
+</script>
+
+
 <style lang="stylus">
 .rouned-card{
   border-radius:35px;

@@ -1,5 +1,5 @@
 import {apiCall, setToken} from '../../../api/api'
-import { API_URL } from '../../serverconstants';
+import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 import router from '@/router/router'
 import { SET_LOGGING_IN, SET_LOGIN_TEXT, SET_ALERT } from './mutation-types';
 
@@ -8,6 +8,8 @@ import { SET_LOGGING_IN, SET_LOGIN_TEXT, SET_ALERT } from './mutation-types';
  * and contians feedback of these calls and if the user wants to register or login
  * This submodule is used in the following view:
  * - Login (mapState loggingIn, logginrText, alert and MapActions registerUser, loginUser, switchForms)
+ * @name login
+ * @memberof store
  */
 
 // initial state
@@ -22,6 +24,10 @@ const state = {
 
 // getters
 const getters = {
+    /**
+     * Returns the isLogging in boolean which is false if the user is attempting to register.
+     * @memberof store.login
+     */
     GetloggingIn: (state) => () => {
         return state.loggingIn;
     }
@@ -29,31 +35,43 @@ const getters = {
 
 // actions
 const actions = {
-    /**
-     * If an action succeeded or fails the user gets an alert within the form
-     */
     
-    registerUser ({commit}, registerData) {
+     /**
+      * Attempts to create a new account at the server from the user data
+      * @memberof store.login
+      */
+    registerUser ({ commit, dispatch }, registerData) {
         apiCall('post', `${API_URL}/accounts/`, {email: registerData.email, firstName: registerData.firstName, lastName: registerData.lastName, password: registerData.password})
         .then((req => {
-            commit(SET_ALERT, {type:"success", message:"Successfully created account!"})
+            commit(SET_ALERT, {type:"success", message: "Successfully created account!"})
+            dispatch(NOTIFICATION_HANDLER, { message: "Successfully created account", type: "success", noSnackbar: true }, { root:true });
         })).catch(e => {
-            commit(SET_ALERT, {type:"error", message:e.message});
+            commit(SET_ALERT, {type:"error", message: e.response.data.message});
+            dispatch(NOTIFICATION_HANDLER, { message: e, type: "error", noSnackbar: true }, { root:true });
         })
     },
 
-    loginUser({commit}, loginData) {
+    /**
+     * Attempts to log the user in based on the entered information.
+     * @memberof store.login
+     */
+    loginUser({ commit, dispatch }, loginData) {
         apiCall('post', `${API_URL}/login`, {email: loginData.email, password: loginData.password})
             .then((req => {
                 localStorage.setItem('jwtToken', req.token);
                 setToken(req.token);
                 router.push("/dashboard");
             })).catch(e => {
-                commit(SET_ALERT, {type:"error", message: "email or password invalid"});
+                commit(SET_ALERT, {type:"error", message: "Email or password invalid"});
+                dispatch(NOTIFICATION_HANDLER, { message: e, type: "error", noSnackbar: true }, { root:true });
             });
     },
 
-    switchForms({commit}, loggingIn) {
+    /**
+     * Displays the correct form based on the loggingIn boolean.
+     * @memberof store.login
+     */
+    switchForms({ commit }, loggingIn) {
         if(state.loggingIn){
             commit(SET_LOGIN_TEXT, "Register");
         } else {
