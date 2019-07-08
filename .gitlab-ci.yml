@@ -19,7 +19,7 @@ stages:
 #   - 'npm run test:e2e'
 #   artifacts:
 #     paths:
-#     - /builds/I386965/ehvlinc-frontend/tests/e2e/reports/
+#     - tests/e2e/reports/
 
 build_pages:
   stage: build
@@ -27,7 +27,7 @@ build_pages:
   only:
   - master
   script:
-  - 'npm i'
+  - 'npm ci'
   - 'npm run pages'
   artifacts:
     paths:
