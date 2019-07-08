@@ -14,11 +14,18 @@ stages:
 build_VueJS:
   stage: build
   image: node:10.16.0
+  retry: 2
   only:
   - master
   script:
   - 'npm ci'
   - 'npm run build'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+        - .m2/repository
+        - node_modules/
   artifacts:
     paths:
     - dist/
@@ -26,9 +33,16 @@ build_VueJS:
 docker_compose:
   stage: docker
   image: tmaier/docker-compose:latest
+  retry: 2
   only:
   - master
   before_script:
   - 'docker info'
   script:
   - 'docker-compose up -d --build'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+        - .m2/repository
+        - node_modules/
