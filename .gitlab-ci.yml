@@ -11,16 +11,6 @@ stages:
 # - test
 - docker
 
-# test_VueJS:
-#   stage: test
-#   image: nightwatch:latest
-#   script:
-#   - 'npm i'
-#   - 'npm run test:e2e'
-#   artifacts:
-#     paths:
-#     - /builds/I386965/ehvlinc-frontend/tests/e2e/reports/
-
 build_VueJS:
   stage: build
   image: node:latest
@@ -31,7 +21,7 @@ build_VueJS:
   - 'npm run build'
   artifacts:
     paths:
-    - /builds/I386965/ehvlinc-frontend/dist/
+    - dist/
 
 docker_compose:
   stage: docker
@@ -41,5 +31,4 @@ docker_compose:
   before_script:
   - 'docker info'
   script:
-  - 'cd /builds/I386965/ehvlinc-frontend/'
   - 'docker-compose up -d --build'
