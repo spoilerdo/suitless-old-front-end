@@ -1,4 +1,5 @@
-import { SET_CURRENTQUESTION, SET_PROGRESS, SET_DEPTH, SET_NOTIFICATION, SET_OPTIONS, PUSH_OPTION, ADD_CURRENTQBACKLOG, DELETE_FIRST_CURRENTBACKLOG_QUESTION, ADD_CURRENTQBACKLOG_ARRAY,CLEAR_CURRENTBACKLOG, ADD_CURRENTSUBQUESTIONBACKLOG, CLEAR_CURRENTSUBQUESTIONBACKLOG, DELETE_FIRST_SUBQUESTION_BACKLOG } from '../mutation-types';
+import { VueInstance as V } from '../../../../main';
+import { SET_CURRENTQUESTION, SET_PROGRESS, SET_DEPTH, SET_NOTIFICATION, SET_OPTIONS, PUSH_OPTIONS, ADD_CURRENTQBACKLOG, DELETE_FIRST_CURRENTBACKLOG_QUESTION, CLEAR_CURRENTBACKLOG, ADD_CURRENTSUBQUESTIONBACKLOG, CLEAR_CURRENTSUBQUESTIONBACKLOG, DELETE_FIRST_SUBQUESTION_BACKLOG } from '../mutation-types';
 
 /**
  * The Progress module contains the progress of the survey 
@@ -43,7 +44,6 @@ const actions = {
       depth = d;
     }
 
-    //TODO: check if the progress works now
     if (currentquestion.flows.length > 0 || state.currentquestionBacklog.length !== 0 || state.subQuestionBackLog.length !== 0) {
       //bump up the progress
       commit(SET_PROGRESS, (depth / survey.maxDepth) * 100);
@@ -59,24 +59,25 @@ const actions = {
    * @todo REFACTOR THIS!!!!
    */
   setCurrentQuestion({ commit, state }, { question, nodes }) {
+    //Get the nodeEnum from the Vue.js Instance
+    let nodeEnum = V.$data.nodeEnum;
+
     //if you do not have a next question, first check if there's more subquestions to be handled
-    if(question == null && state.subQuestionBackLog.length > 0 || question != null && question.style == 2 && state.subQuestionBackLog.length > 0) {
+    if(question == null && state.subQuestionBackLog.length > 0 || question != null && question.style == nodeEnum.End && state.subQuestionBackLog.length > 0) {
       let comingQuestion = state.subQuestionBackLog[0];
       
       commit(SET_CURRENTQUESTION, comingQuestion);
       commit(DELETE_FIRST_SUBQUESTION_BACKLOG);
     }
     //if you do not have a next question and there's no more sub questions switch to the normal question flow if it exists.
-    else if (question == null && state.currentquestionBacklog.length > 0 || question != null && question.style == 2 && state.currentquestionBacklog.length > 0) {
+    else if (question == null && state.currentquestionBacklog.length > 0 || question != null && question.style == nodeEnum.End && state.currentquestionBacklog.length > 0) {
       let comingQuestion = state.currentquestionBacklog[0];
       //set the options for the coming question if it is multiple choice
-      if(comingQuestion.style == 7) {
+      if(comingQuestion.style == nodeEnum.MultipleChoice) {
         commit(SET_OPTIONS, []);
         let choices = comingQuestion.lincData.filter(c => c.key !== "question" && c.key !== "reason");
-        choices.splice(choices.findIndex(item => item.key === "loopsubQuestions"), 1)
-        choices.forEach(choice => {
-          commit(PUSH_OPTION, nodes[choice.value]);
-        });
+        commit(PUSH_OPTIONS, { options: choices, nodes });
+        console.log("Pushing options");
       }
       commit(SET_CURRENTQUESTION, comingQuestion);
       commit(DELETE_FIRST_CURRENTBACKLOG_QUESTION);
@@ -85,19 +86,16 @@ const actions = {
       return;
     } else {
       //if the next question is a notification then store it in the notification array and show it on the front-end
-      if (question.style == 5) {
-        console.log("We got a notification")
-        commit(SET_NOTIFICATION, {message: question.value});
+      if (question.style == nodeEnum.Notification) {
+        commit(SET_NOTIFICATION, { message: question.value });
         commit(SET_CURRENTQUESTION, nodes[question.flows[0].targetID]);
       }
       //if the next question is a multiple choice node then get the different options
-      else if (question.style == 7) {
+      else if (question.style == nodeEnum.MultipleChoice) {
         commit(SET_OPTIONS, []);
         let choices = question.lincData.filter(c => c.key !== "question" && c.key !== "reason");
-        choices.splice(choices.findIndex(item => item.key === "loopsubQuestions"), 1)
-        choices.forEach(choice => {
-          commit(PUSH_OPTION, nodes[choice.value]);
-        });
+        commit(PUSH_OPTIONS, { options: choices, nodes });
+
         commit(SET_CURRENTQUESTION, question);
       }
       //else just commit the currentquestion
@@ -118,7 +116,6 @@ const actions = {
   
     //set the first sub question as current question
     dispatch('setCurrentQuestion', {question: firstSubQuestion, nodes });
-    
   },
   /**
    * Clears the current question backlog
@@ -172,8 +169,11 @@ const mutations = {
   [SET_OPTIONS](state, options) {
     state.options = options;
   },
-  [PUSH_OPTION](state, option) {
-    state.options.push(option);
+  [PUSH_OPTIONS](state, { options, nodes }) {
+    options.splice(options.findIndex(item => item.key === "loopsubQuestions"), 1)
+    options.forEach(option => {
+      state.options.push(nodes[option.value]);
+    });
   },
   [ADD_CURRENTQBACKLOG](state, backlog) {
     state.currentquestionBacklog = state.currentquestionBacklog.concat(backlog);
