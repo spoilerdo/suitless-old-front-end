@@ -27,7 +27,7 @@ build_VueJS:
   only:
   - master
   script:
-  - 'npm ci'
+  - 'npm i'
   - 'npm run build'
   artifacts:
     paths:
