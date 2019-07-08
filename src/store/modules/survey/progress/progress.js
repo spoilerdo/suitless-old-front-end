@@ -77,7 +77,6 @@ const actions = {
         commit(SET_OPTIONS, []);
         let choices = comingQuestion.lincData.filter(c => c.key !== "question" && c.key !== "reason");
         commit(PUSH_OPTIONS, { options: choices, nodes });
-        console.log("Pushing options");
       }
       commit(SET_CURRENTQUESTION, comingQuestion);
       commit(DELETE_FIRST_CURRENTBACKLOG_QUESTION);

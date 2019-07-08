@@ -49,7 +49,7 @@ import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
 import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 /**
  * Returns the survey page, where the user can answere questions to fill in a survey.
@@ -153,7 +153,7 @@ export default {
       });
       this.deleteLastAnswer();
 
-      prevAnswer.forEach(prev => {
+      prevAnswer.forEach(() => {
         //reset progress for each previous answer
         this.fillProgress({ addedDepth: -1, survey: this.survey });
       });

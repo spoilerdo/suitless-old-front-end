@@ -22,7 +22,7 @@
 </style>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 
 /**
  * Returns an 'progress' view used in the survey.

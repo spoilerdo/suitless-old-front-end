@@ -70,7 +70,6 @@ const actions = {
             const req = await asyncApiCall('get', `${API_URL}/modules/name/${encodeURI(name)}`);
             commit(SET_FLOWCHART, req);
         } catch (e) {
-            console.log(e);
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         }
     },
@@ -79,14 +78,13 @@ const actions = {
      * Vue.js gets the flowchart JSON from the plugin and make the API call to the module service
      * @memberof store.flowcharteditor
      */
-    async saveFlowchart({ commit, dispatch }, flowchart) {
+    async saveFlowchart({ dispatch }, flowchart) {
         try {
             const req = await asyncApiCall('post', `${API_URL}/modules/`, flowchart);
             if(req && req.module != null) {
                 dispatch(NOTIFICATION_HANDLER, { message: "Flowchart saved", type: "success" }, { root:true })
-            };
+            }
         } catch (e) {
-            console.log(e);
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         }
     }
