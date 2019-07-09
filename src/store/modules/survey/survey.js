@@ -43,7 +43,6 @@ const actions = {
             const modules = await asyncApiCall('get', `${API_URL}/modules`);
             if(modules) commit(SET_SURVEYS, modules);
         } catch (e) {
-            console.log(e);
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         }
     },
@@ -56,7 +55,6 @@ const actions = {
         .then(req => {
             commit(SET_SURVEY, req.module);
         }).catch(e => {
-            console.log(e);
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         });
     },

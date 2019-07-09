@@ -160,7 +160,7 @@ export default {
             data: function () {
                 return {
                     /**
-                     * The nodeEnum can be used to alter between node format bar types
+                     * The nodeEnum can be used to alter between node format bar types or just to specify a certain node type
                      */
                     nodeEnum: NodeEnum,
                     /**

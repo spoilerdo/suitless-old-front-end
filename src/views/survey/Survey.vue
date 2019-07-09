@@ -7,7 +7,7 @@
       <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
         <!--currentquestion is an object not an integer-->
         <Question
-          v-if="currentquestion.style == 1"
+          v-if="currentquestion.style == $data.nodeEnum.Question"
           v-on:answerQuestion="answeredQuestion"
           v-on:renderPreviousQuestion="renderPreviousQuestion"
           :question="currentquestion"
@@ -15,7 +15,7 @@
           :isMobile="isMobile"
         />
         <MultipleChoice
-          v-else-if="currentquestion.style == 7"
+          v-else-if="currentquestion.style == $data.nodeEnum.MultipleChoice"
           v-on:answerMultiChoice="answeredMultiChoiceQuestion"
           v-on:renderPreviousQuestion="renderPreviousQuestion"
           :question="currentquestion"
@@ -49,7 +49,7 @@ import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
 import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 /**
  * Returns the survey page, where the user can answere questions to fill in a survey.
@@ -143,7 +143,7 @@ export default {
       let previousQuestionID = prevAnswer[0].questionID;
 
       //check if previous question is a notification, if so go one more back.
-      while (this.survey.nodes[previousQuestionID].style == 5) {
+      while (this.survey.nodes[previousQuestionID].style == this.$data.Notification) {
         this.renderPreviousQuestion(this.survey.nodes[prevAnswer[0]]);
       }
       //select the previous question
@@ -153,7 +153,7 @@ export default {
       });
       this.deleteLastAnswer();
 
-      prevAnswer.forEach(prev => {
+      prevAnswer.forEach(() => {
         //reset progress for each previous answer
         this.fillProgress({ addedDepth: -1, survey: this.survey });
       });

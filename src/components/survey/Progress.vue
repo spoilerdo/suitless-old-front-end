@@ -1,6 +1,6 @@
 <template>
   <v-container fixed align-content-center>
-    <v-toolbar dense fixed :inverted-scroll="true" scroll-threshold="80" class="small-toolbar">
+    <v-toolbar dense fixed :inverted-scroll="true" :scroll-threshold="80" class="small-toolbar">
         <v-flex d-flex xs12>
           <v-progress-linear class="progress-bar" color="primary" height="10" :value="progress"></v-progress-linear>
         </v-flex>
@@ -22,7 +22,7 @@
 </style>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 
 /**
  * Returns an 'progress' view used in the survey.

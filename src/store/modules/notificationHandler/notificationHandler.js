@@ -37,6 +37,8 @@ const actions = {
         if (newNotification.message.response && newNotification.message.response.data.message) {
             newNotification.message = newNotification.message.response.data.message;
         }
+        //display the error also in the console of the webbrowser
+        console.log(newNotification.message);
         commit(ADD_NOTIFICATION, newNotification);
     },
     /**

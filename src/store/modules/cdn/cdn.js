@@ -50,7 +50,6 @@ const actions = {
                 commit(ADD_METADATA, data);
             }
         }). catch(e => {
-            console.log(e);
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true })
         });
     },
@@ -64,7 +63,6 @@ const actions = {
             dispatch(NOTIFICATION_HANDLER, { message: "succesfully deleted", type: "success" }, { root:true });
             commit(DELETE_METADATA, serviceable);
         }).catch(e => {
-            console.log(e);
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         });
     },
@@ -85,7 +83,6 @@ const actions = {
                 dispatch(NOTIFICATION_HANDLER, { message: "file uploaded", type: "success" }, { root:true });
             }
         } catch (e) {
-            console.log(e);
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         }
     }
