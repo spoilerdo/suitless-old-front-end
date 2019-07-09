@@ -1,5 +1,5 @@
 <template>
-  <v-form :data-vv-scope="'Form'" class="ServiceableTopbar">
+  <v-form data-vv-scope="Form" class="ServiceableTopbar">
     <v-container>
       <p>
         <b>Create a new serviceable</b>
@@ -73,7 +73,6 @@ export default {
           this.uploadImage({ file: this.form.file, name: this.form.name, type: this.form.type })
           .then(() => {
             this.$refs.filePicker.clearInputs();
-            this.showNotification("Upload succeeded");
           })
         }
       });
