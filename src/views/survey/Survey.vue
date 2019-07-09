@@ -4,7 +4,7 @@
       <ProgressBar ref="progressBar" />
     </v-layout>
     <v-layout align-center justify-center row ma-4 v-if="progress !== 100">
-      <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
+      <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null && surveyStarted">
         <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == $data.nodeEnum.Question"
@@ -25,6 +25,13 @@
         />
         <Notification ref="surveyNotification" :timeVisible="0"/>
       </v-flex>
+      <!--add the start of the survey this component will give some information about the survey-->
+      <SurveyInformation 
+        v-else-if="surveyStarted === false && survey.name != null" 
+        :title="survey.name" 
+        :description="survey.description"
+        v-on:startSurvey="startSurvey"
+      />
     </v-layout>
     <EndPage
       v-else
@@ -35,7 +42,7 @@
       v-on:printPDF="generatePDF"
     />
     <v-layout align-center justify-center row pa-5>
-      <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null">
+      <v-flex d-flex md8 xs12 v-if="surveyStarted && survey.nodes != null && currentquestion.reason != null">
         <Info :question="currentquestion" v-if="!isMobile" />
       </v-flex>
     </v-layout>
@@ -43,6 +50,7 @@
 </template>
 
 <script>
+import SurveyInformation from "@/components/survey/SurveyInformation.vue";
 import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
 import Notification from "@/components/material/Notification.vue";
@@ -58,6 +66,7 @@ import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   props: ["surveyID"],
   components: {
+    SurveyInformation,
     Question,
     ProgressBar,
     Notification,
@@ -85,7 +94,8 @@ export default {
   },
   data() {
     return {
-      isMobile: false
+      isMobile: false,
+      surveyStarted: false
     };
   },
   created() {
@@ -106,6 +116,10 @@ export default {
       "clearSubQuestionBackLog"
     ]),
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
+
+    startSurvey(){
+      this.surveyStarted = true;
+    },
 
     answeredQuestion(answer) {
       this.closeNotification();
