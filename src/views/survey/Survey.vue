@@ -1,5 +1,9 @@
 <template>
   <v-container fluid pa-0 ma-o>
+
+    <!--dialog that shows a disclaimer that the user has to agree to in order to start the survey-->
+    <DisclaimerDialog v-on:agreeDisclaimer="agreeDisclaimer"/>
+
     <v-layout align-center justify-center row pa-2>
       <ProgressBar ref="progressBar" />
     </v-layout>
@@ -51,6 +55,7 @@
 
 <script>
 import SurveyInformation from "@/components/survey/SurveyInformation.vue";
+import DisclaimerDialog from "@/components/material/DisclaimerDialog.vue";
 import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
 import Notification from "@/components/material/Notification.vue";
@@ -67,6 +72,7 @@ export default {
   props: ["surveyID"],
   components: {
     SurveyInformation,
+    DisclaimerDialog,
     Question,
     ProgressBar,
     Notification,
@@ -116,6 +122,13 @@ export default {
       "clearSubQuestionBackLog"
     ]),
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
+
+    agreeDisclaimer(choice){
+      if(choice === false){
+        console.log("go back!!!");
+        this.$router.go(-1);
+      }
+    },
 
     startSurvey(){
       this.surveyStarted = true;
