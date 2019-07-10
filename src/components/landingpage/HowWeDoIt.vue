@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { CDN_URL } from "@/store/generalconstants";
 /**
  * Provides part of the landing page's information.
  * @memberof component.Landingpage
@@ -66,9 +67,9 @@
 export default {
   data: () => {
     return {
-      Students: "http://ironsm4sh.nl:3305/Students",
-      Startups: "http://ironsm4sh.nl:3305/Startups",
-      LawFirms: "http://ironsm4sh.nl:3305/LawFirms"
+      Students: `${CDN_URL}/Students`,
+      Startups: `${CDN_URL}/Startups`,
+      LawFirms: `${CDN_URL}/LawFirms`
     };
   }
 };

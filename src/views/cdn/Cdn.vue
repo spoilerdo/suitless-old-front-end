@@ -13,7 +13,7 @@
 import ServiceableTable from "@/components/cdn/ServiceableTable";
 import ServiceableTopbar from "@/components/cdn/ServiceableTopbar";
 import Drawer from "@/components/core/Drawer";
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import { mapActions } from "vuex";
 
 /**
  * Returns the CDN page, where the user can upload and delete serviceables

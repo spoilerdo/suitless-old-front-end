@@ -2,8 +2,6 @@
   <v-container fluid pa-0 ma-0>
     <Animatedbackground/>
 
-    <introToolbar/>
-
     <v-layout align-center justify-center class="background-content-container" row wrap fill-height>
       <v-flex grow xs10>
         <div class="display-2 text-xs-center white--text pb-3">Would you like to create an account?</div>

@@ -16,7 +16,7 @@
         >
           <ListCard
             :redirecturl="`/survey/${s.moduleID}`"
-            imagename="IP.svg"
+            :imagename="s.name"
             percentage="0"
             :title="s.name"
             :description="s.description"

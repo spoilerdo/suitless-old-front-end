@@ -1,6 +1,6 @@
 import { apiCall, asyncApiCall } from "@/api/api";
 import { CDN_URL, NOTIFICATION_HANDLER } from "../../generalconstants"
-import { SET_METADATA, UPDATE_METADATA, DELETE_METADATA, ADD_METADATA } from "./mutation-types";
+import { SET_SERVCEABLES, UPDATE_SERVICEABLES, DELETE_SERVICEABLES, ADD_SERVICEABLES, ADD_SERVICEABLESBYNAME } from "./mutation-types";
 
 /**
  * The cdn module contains actions that make API calls to the CDN Service
@@ -12,11 +12,18 @@ import { SET_METADATA, UPDATE_METADATA, DELETE_METADATA, ADD_METADATA } from "./
  */
 
 const state = {
-    serviceables: []
+    //all the meta data from files that are obtained by the API. Used for the CDN manager
+    serviceables: [],
 }
 
 const getters = {
-
+    /**
+     * Returns the specific data with a specific name from the serviceables array
+     * @memberof store.cdn
+     */
+    getServiceablesDataByName: (state) => (name) => {
+        return state.serviceables.find(metadata => metadata.name === name);
+    },
 }
 
 const actions = {
@@ -27,8 +34,8 @@ const actions = {
     getAllData({ commit, dispatch }) {
         apiCall("GET", `${CDN_URL}/meta/all`)
         .then(data => {
-            commit(SET_METADATA, []);
-            commit(ADD_METADATA, data);
+            commit(SET_SERVCEABLES, []);
+            commit(ADD_SERVICEABLES, data);
         }).catch(e => {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         });
@@ -37,17 +44,17 @@ const actions = {
      * Retrieves the metadata from a specific ID in the cdn service
      * @memberof store.cdn
      */
-    getData({ commit, state, dispatch }, id) {
+    getData({ commit, dispatch, getters }, id) {
         apiCall("GET", `${CDN_URL}/meta/id/${id}`)
         .then(data => {
-            let oldMetadata = state.serviceables.find(metadata => metadata.name === data.metadataList[0].tag)
+            let oldMetadata = getters.getServiceablesDataByName(data.metadataList[0].tag);
 
             if(oldMetadata != null){
                 //metadata already exists in the list but is maybe outdated so update it
-                commit(UPDATE_METADATA, { data, oldMetadata });
+                commit(UPDATE_SERVICEABLES, { data, oldMetadata });
             }else {
                 //metadata is new so add it to the bottom of the list
-                commit(ADD_METADATA, data);
+                commit(ADD_SERVICEABLES, data);
             }
         }). catch(e => {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true })
@@ -61,7 +68,7 @@ const actions = {
         apiCall("DELETE", `${CDN_URL}/${serviceable.name}`) 
         .then(() => {
             dispatch(NOTIFICATION_HANDLER, { message: "succesfully deleted", type: "success" }, { root:true });
-            commit(DELETE_METADATA, serviceable);
+            commit(DELETE_SERVICEABLES, serviceable);
         }).catch(e => {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         });
@@ -89,10 +96,10 @@ const actions = {
 }
 
 const mutations = {
-    [SET_METADATA](state, data) {
+    [SET_SERVCEABLES](state, data) {
         state.serviceables = data;
     },
-    [ADD_METADATA](state, data){
+    [ADD_SERVICEABLES](state, data){
         data.metadataList.forEach(serviceable => {
             state.serviceables.push({
                 name: serviceable.tag,
@@ -102,7 +109,7 @@ const mutations = {
             });
         });
     },
-    [UPDATE_METADATA](state, payload) {      
+    [UPDATE_SERVICEABLES](state, payload) {      
         let index = state.serviceables.findIndex(payload.oldMetadata);
         state.serviceables[index] = {
             name: payload.data.metadataList[0].tag,
@@ -111,7 +118,7 @@ const mutations = {
             baseURL: CDN_URL + payload.data.metadataList[0].tag
         }
     },
-    [DELETE_METADATA](state, data) {
+    [DELETE_SERVICEABLES](state, data) {
         state.serviceables = state.serviceables.filter(metadata => metadata.name !== data.name);
     }
 }
