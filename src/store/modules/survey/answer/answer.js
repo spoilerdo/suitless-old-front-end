@@ -1,11 +1,14 @@
 import _ from 'lodash';
 import { ADD_ANSWER, DELETE_LAST_ANSWER } from '../mutation-types';
+import { SURVEY_NOTIFICATION_HANDLER } from '../../../generalconstants';
 
 /**
  * The answer module contians all the answers of the survey that has been made
  * These answers will be used for the PDF generation and can be stored in the questionaire service
  * This submodule is used in the following views:
  * - Survey (mapState all and mapActions deleteLastAnswer, answerQuestion)
+ * @name answer
+ * @memberof store
  */
 
 //initial state
@@ -15,9 +18,17 @@ const state = {
 }
 
 const getters = {
+    /**
+     * Retrieves all answeres from the store
+     * @memberof store.answer
+     */
     getAnswers: (state) => () => {
         return state.all;
     },
+    /**
+     * Retrieves a question from the store with a specific ID
+     * @memberof store.answer
+     */
     getAnswerByQuestionID: (state) => (question) => {
         var pa = _.find(state.all, (a) => a.targetID === question.id);
         if (pa == null) {
@@ -29,7 +40,11 @@ const getters = {
 }
 
 const actions = {
-    answerQuestion({ commit }, { answer, question }) {
+    /**
+     * Pushes an answere to the store. This should also contain the user's entered data.
+     * @memberof store.answer
+     */
+    answerQuestion({ commit, dispatch }, { answer, question }) {
         //check if the answer given is multiple choice (an array)
         if(Array.isArray(answer)) {
             //multi choice question answered
@@ -62,6 +77,11 @@ const actions = {
                         answerImplication: flow.implication,
                         answerImplicationLevel: flow.implicationLevel
                     };
+
+                    //Notify the user of the implication they just received from the survey.
+                    if(a.answerImplication != null){
+                        dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
+                    }
     
                     temp.push(a);
                 })
@@ -82,9 +102,19 @@ const actions = {
                 answerImplication: answer.implication,
                 answerImplicationLevel: answer.implicationLevel
             };
+
+            //Notify the user of the implication they just received from the survey.
+            if(a.answerImplication != null){
+                dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
+            }
+
             commit(ADD_ANSWER, a);
         }
     },
+    /**
+     * Removes the last pushed answere from the store.
+     * @memberof store.answer
+     */
     deleteLastAnswer({ commit }) {
         commit(DELETE_LAST_ANSWER);
     }

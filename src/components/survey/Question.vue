@@ -36,7 +36,7 @@
             :id="'question-' + answer.targetID"
             :text="answer.value"
             :answer="answer"
-            image="http://ironsm4sh.nl:3303/cdn/man"
+            imageName="man"
             color="primary" 
             style="margin:10px"
             ref="question"
@@ -44,29 +44,12 @@
         </div>
       </v-card-actions>
 
+      <ArrowControls 
+        v-on:nextButtonClick="answerQuestion"
+        v-on:previousButtonClick="$emit('renderPreviousQuestion', question)"  
+        :progress="progress"
+      />
 
-      <!-- previous arrow -->
-      <v-layout align-center justify-center row>
-        <v-btn
-          v-if="progress > 0"
-          v-on:click="$emit('renderPreviousQuestion', question)"
-          flat
-          class="action-btn"
-        >
-          <v-icon color="secondary" x-large left>mdi-chevron-left</v-icon>
-        </v-btn>
-
-        <!-- next arrow -->
-        <v-btn
-          large
-          flat
-          class="action-btn"
-          @click="answerQuestion()"
-          id="next-btn"
-        >
-           <v-icon color="secondary" x-large right>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-layout>
     </v-card>
   </v-scale-transition>
 </template>
@@ -91,11 +74,17 @@
 <script>
 import QuestionCard from "@/components/material/QuestionCard.vue";
 import Info from "@/components/survey/Info.vue";
+import ArrowControls from "@/components/survey/ArrowControls.vue";
 
+/**
+ * Returns an 'question' view used in the survey.
+ * @memberof component.Survey
+ */
 export default {
   components: {
     QuestionCard,
-    Info
+    Info,
+    ArrowControls
   },
   props: {
       question: {

@@ -56,6 +56,10 @@
 <script>
 import { mapState } from 'vuex';
 
+/**
+ * View used for 'MultipleChoice' cells.
+ * @memberof component.FlowchartForm
+ */
 export default {
     data() {
         return {
@@ -75,7 +79,9 @@ export default {
         selectedCell: function(newValue, oldValue) {
             if(newValue != null && this.formatBarType == this.$data.nodeEnum.MultipleChoice){
                 this.form.multipleChoiceNode = newValue.value;
-                this.form.multipleChoice = newValue.lincData[0].value;
+                this.form.multipleChoice = newValue.lincData.find(data => data.key === "question").value;
+                this.form.reason = newValue.lincData.find(data => data.key === "reason").value;
+                this.form.loopSubQuestions = newValue.lincData.find(data => data.key === "loopsubQuestions")
                 this.form.amountOfChoices = newValue.children;
             }
         }

@@ -6,7 +6,7 @@
     class="rouned-card flex xs5 md3"
     style="margin: 2% 2%; padding: 1%;"
   >
-    <v-img :src="`http://ironsm4sh.nl:3303/cdn/${imagename}`"></v-img>
+    <v-img :src="image" @error="imageLoadError"></v-img>
 
     <div style="padding-top: 15px;">
       <p class="card-text">{{ text }}</p>
@@ -33,6 +33,19 @@
 </style>
 
 <script>
+import { CDN_URL } from "@/store/generalconstants";
+/**
+ * Returns a card containing an image
+ * @memberof component.Material
+ * @property {String} redirecturl
+ * @property {String} imagename
+ * @property {String} text
+ * @property {String} cardWidth
+ * @property {String} imageSize
+ * @property {String} imageWidth
+ * @property {String} imageHeight
+ * @property {String} direction
+ */
 export default {
   name: "ImageCard",
   props: {
@@ -44,6 +57,16 @@ export default {
     imageWidth: String,
     imageHeight: String,
     direction: String
+  },
+  data() {
+    return {
+      image: `${CDN_URL}/${this.imagename}`,
+    }
+  },
+  methods: {
+    imageLoadError(){
+      this.image = require("@/assets/img/image-placeholder.svg");
+    }
   }
 };
 </script>

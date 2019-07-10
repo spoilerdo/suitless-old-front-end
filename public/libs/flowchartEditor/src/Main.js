@@ -15,7 +15,6 @@ import { createFormatbar } from "./FormatBar/Formatbar"
 //Scripts that contains the main functions to draw lines between nodes 
 //and giving a small menu when drawing a line without connecting it to a node
 import { createRubberband } from "./MxNative/Rubberband"
-import { snapToFixedPoint } from "./MxNative/Snapping";
 import { createSnapPoints } from "./MxNative/SnapPoints";
 import { vertexOnDraw } from "./MxNative/CreateVertexOnDraw";
 
@@ -36,6 +35,9 @@ import { clipBoardFunctions } from "./MxNative/Clipboard";
 
 //Script that contains the main resize cells functionality
 import { autoResizeCells } from "./MxNative/AutoResizeCell";
+
+//Script that contains some connection handler functionality
+import { connectionHandlerFunctions } from "./MxNative/MxConnectionHandler";
 
 //Script that is the store of the flowchart editor this script contains some general information 
 //about the flowchart that will be shared with Vue trough the plugin script
@@ -72,20 +74,6 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         mxUtils.error('Browser is not supported!', 200, false);
     }
     else {
-        // Snaps to fixed points
-        mxConstraintHandler.prototype.intersects = function (icon, point, source, existingEdge) {
-            return (!source || existingEdge) || mxUtils.intersects(icon.bounds, point);
-        };
-        // Special case: Snaps source of new connections to fixed points
-        var mxConnectionHandlerUpdateEdgeState = mxConnectionHandler.prototype.updateEdgeState;
-        mxConnectionHandler.prototype.updateEdgeState = function (pt) {
-            snapToFixedPoint(pt, this);
-            mxConnectionHandlerUpdateEdgeState.apply(this, arguments);
-        };
-
-        mxConnectionHandler.prototype.createTarget = true;
-        mxConnectionHandler.prototype.linePreview = true;
-
         // Creates the graph inside the given container
         let editor = new mxEditor();
         let model = new mxGraphModel();
@@ -93,9 +81,11 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         let keyHandler = new mxKeyHandler(graph);
         let undoManager = new mxUndoManager();
 
+        
+
         let undoListener = function (sender, evt) {
             undoManager.undoableEditHappened(evt.getProperty('edit'));
-        }        
+        }
         vertexOnDraw(mxEvent, graph);
 
         editor.graph = graph;
@@ -108,6 +98,8 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         graph.getModel().addListener(mxEvent.UNDO, undoListener)
         graph.getView().addListener(mxEvent.UNDO, undoListener)
 
+        connectionHandlerFunctions();
+
         createSnapPoints(graph, model);
 
         // Enables rubberband selection
@@ -116,7 +108,7 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         mxConstants.WORD_WRAP = 'break-word';
 
         editorFunctions.addCustomShapes(graph);
-        
+
         createToolbar(toolbarContainer, editor, model, keyHandler, window, undoManager);
         createFormatbar(editor, model);
 
@@ -133,6 +125,9 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
 
         StartFlowchart(graph);
 
+        /**
+         * When a new flowchart has been set this will trigger and activate the import function
+         */
         state.flowchart.registerListener(function (val) {
             editorFunctions.importChart(graph, val.nodes, model);
         })

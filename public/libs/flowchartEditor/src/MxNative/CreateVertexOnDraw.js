@@ -10,7 +10,7 @@
 import { NodeEnum } from "../NodeEnum";
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
 
-import { mxConnectionHandler, mxPoint } from "../MxGraph";
+import { mxConnectionHandler, mxPoint, mxLog } from "../MxGraph";
 
 /**
  * When drawing a line this code will show a popup menu so you can chose which node you want to create
@@ -208,7 +208,6 @@ export function vertexOnDraw(mxEvent, graph) {
                     style = this.edgeState.cell.style;
                 }
 
-                //edge = this.insertEdge(parent, null, value, source, target, style);
                 edge = editorFunctions.addEdge(graph, { fromCell: source, targetCell: target, value: null });
 
                 if (edge != null) {
@@ -276,8 +275,7 @@ export function vertexOnDraw(mxEvent, graph) {
                 }
             }
             catch (e) {
-                mxLog.show();
-                mxLog.debug(e.message);
+                
             }
             finally {
                 model.endUpdate();
@@ -296,8 +294,6 @@ export function vertexOnDraw(mxEvent, graph) {
             if (mouseThis != null && currentPoint != null) {
                 selectedvertexType = NodeEnum.Question;
                 mouseThis.connect(mouseSource, mouseTarget, mouseMe.getEvent());
-                //editorFunctions.addEdge(graph, { fromCell: mouseSource, targetCell: mouseTarget, value: null });
-                //addSelectedVertex(mouseSource, mouseTarget, mouseMe.getEvent(), mouseThis, graph);
             }
         });
 

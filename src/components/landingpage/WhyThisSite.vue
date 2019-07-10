@@ -13,10 +13,16 @@
 </template>
 
 <script>
+import { CDN_URL } from "@/store/generalconstants";
+/**
+ * Provides part of the landing page's information.
+ * @memberof component.Landingpage
+ * @property {String} stats an image from the cdn
+ */
 export default {
   data: () => {
     return {
-      stats: "http://ironsm4sh.nl:3305/Stats"
+      stats: `${CDN_URL}/Stats`
     };
   }
 }

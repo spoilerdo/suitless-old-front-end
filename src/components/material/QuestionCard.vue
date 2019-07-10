@@ -46,15 +46,20 @@
     text-align: center;
   }
 }
-
 </style>
-
-
 <script>
+import { CDN_URL } from "@/store/generalconstants";
+/**
+ * Returns a question card.
+ * @memberof component.Material
+ * @property {String} text
+ * @property {String} image
+ * @property {Object} answer
+ */
 export default {
   props: {
     text: String,
-    image: {
+    imageName: {
       type: String,
       default: undefined
     },
@@ -64,7 +69,8 @@ export default {
   },
   data() {
     return {
-      selected: false
+      selected: false,
+      image: `${CDN_URL}/${this.imageName}`
     };
   },
   methods: {

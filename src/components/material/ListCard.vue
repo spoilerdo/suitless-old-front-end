@@ -14,16 +14,16 @@
           color="primary"
         >
           <v-img
-            :src="require(`@/assets/img/illustrations/${imagename}`)"
-            :min-width="imageWidth"
+            :src="image" @error="imageLoadError"
+            :width="imageWidth"
             class="gradient flex xs12"
           ></v-img>
         </v-progress-circular>
       </div>
       <div v-else class="flex xs3 md2 lg1">
         <v-img
-          :src="require(`@/assets/img/illustrations/${imagename}`)"
-          :min-width="imageWidth"
+          :src="image" @error="imageLoadError"
+          :width="imageWidth"
           class="gradient flex xs12"
         ></v-img>
       </div>
@@ -37,8 +37,8 @@
     </div>
     <div v-else class="flex xs12">
       <v-img
-        :src="require(`@/assets/img/illustrations/${imagename}`)"
-        :min-width="imageWidth"
+        :src="image" @error="imageLoadError"
+        :width="imageWidth"
         class="gradient flex xs12"
       ></v-img>
       <div class="card-text flex xs12">
@@ -87,6 +87,19 @@
 </style>
 
 <script>
+import { CDN_URL } from "@/store/generalconstants";
+/**
+ * Returns a list cards.
+ * @memberof component.Material
+ * @property {String} imageWidth
+ * @property {String} redirecturl
+ * @property {String} imagename
+ * @property {String} text
+ * @property {String} title
+ * @property {String} description
+ * @property {String} orientation
+ * @property {String} progress
+ */
 export default {
   name: "RoundCard",
   props: {
@@ -104,6 +117,16 @@ export default {
     progress: {
       type: String,
       default: undefined
+    }
+  },
+  data() {
+    return {
+      image: `${CDN_URL}/${this.imagename}`,
+    }
+  },
+  methods: {
+    imageLoadError(){
+      this.image = require("@/assets/img/image-placeholder.svg");
     }
   }
 };

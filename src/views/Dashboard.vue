@@ -30,6 +30,10 @@ import LatestReports from "@/components/dashboard-home/LatestReports";
 import { mapActions } from "vuex";
 import Drawer from "@/components/core/Drawer";
 
+/**
+ * Returns the dashboard page where users will go to after logging in.
+ * @memberof view
+ */
 export default {
   components: {
     RecommendedSurveys,

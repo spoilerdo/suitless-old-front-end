@@ -93,9 +93,3 @@
     padding: $padding-small;
   }
 }
-
-.v-btn--active:before,
-.v-btn:focus:before,
-.v-btn:hover:before {
-  background-color: transparent;
-}

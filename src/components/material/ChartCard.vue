@@ -24,6 +24,16 @@
 </template>
 
 <script>
+/**
+ * Returns a card that contains a chart.
+ * @memberof component.Material
+ * @property {Object} data
+ * @property {Array} eventHandlers
+ * @property {Object} options
+ * @property {String} ratio
+ * @property {Array} responsiveOptions
+ * @property {String} type
+ */
 export default {
   inheritAttrs: false,
 

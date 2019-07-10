@@ -45,6 +45,18 @@
 <script>
 import Offset from "@/components/helper/Offset";
 
+/**
+ * Returns a material design card to be used in other components
+ * @memberof component.Material
+ * @property {String} color
+ * @property {Number} elevation
+ * @property {Boolean} inline
+ * @property {Boolean} fullWidth
+ * @property {Number} offset
+ * @property {String} title
+ * @property {String} text
+ * @property {String} icon
+ */
 export default {
   inheritAttrs: false,
 

@@ -16,7 +16,7 @@
         >
           <ListCard
             :redirecturl="`/survey/${s.moduleID}`"
-            imagename="IP.svg"
+            :imagename="s.name"
             percentage="0"
             :title="s.name"
             :description="s.description"
@@ -35,6 +35,10 @@ import Card from "@/components/material/Card";
 import ListCard from "@/components/material/ListCard";
 import { mapState, mapGetters } from "vuex";
 
+/**
+ * Returns a view containing all surveys.
+ * @memberof component.Dashboard
+ */
 export default {
   components: {
     Card,

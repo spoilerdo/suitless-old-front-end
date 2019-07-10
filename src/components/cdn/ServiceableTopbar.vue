@@ -1,16 +1,16 @@
 <template>
-  <v-form :data-vv-scope="'Form'" class="ServiceableTopbar">
+  <v-form data-vv-scope="Form" class="ServiceableTopbar">
     <v-container>
       <p>
         <b>Create a new serviceable</b>
       </p>
-      <v-layout class="center">
+      <v-layout align-center justify-center>
         <v-flex xs12 md4>
           <v-text-field
             v-model="form.name"
-            v-validate="'required|min:3|alpha'"
+            v-validate="'required|min:3'"
             :counter="255"
-            label="tag"
+            label="Tag"
             name="tag"
             required
             id="nameField"
@@ -19,11 +19,15 @@
         </v-flex>
 
         <v-flex xs12 md4>
-          <ServiceableFilePicker v-on:Base64="setFile($event)" v-on:Type="setType($event)"/>
+          <ServiceableFilePicker 
+            v-on:Base64="setFile($event)"
+            v-on:Type="setType($event)"
+            ref="filePicker"
+          />
         </v-flex>
 
         <v-flex xs5 md1>
-          <v-btn color="info" id="uploadBtn" @click="uploadImage">upload</v-btn>
+          <v-btn color="info" id="uploadBtn" @click="validateAndUploadImage">upload</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -32,8 +36,14 @@
 
 <script>
 import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
-import cdn from "@/store/modules/cdn/cdn";
+import { mapState, mapActions } from "vuex";
 
+/**
+ * Returns the top-bar used in the CDN page, this contains a small form with a name field and a filepicker
+ * @memberof component.CDN
+ * @property {boolean} valid
+ * @property {topbarForm} form
+ */
 export default {
   data() {
     return {
@@ -50,22 +60,20 @@ export default {
     ServiceableFilePicker
   },
   methods: {
+    ...mapActions("cdn/", ["uploadImage"]),
     setFile(file) {
       this.form.file = file;
     },
     setType(type) {
       this.form.type = type;
     },
-    uploadImage() {
+    validateAndUploadImage() {
       this.$validator.validateAll("Form").then(valid => {
         if (valid) {
-          let serviceable = cdn.actions
-            .uploadImage(this.form.file, this.form.name, this.form.type)
-            .then(serviceable => {
-              if (serviceable != null) {
-                this.$emit("serviceable", serviceable);
-              }
-            });
+          this.uploadImage({ file: this.form.file, name: this.form.name, type: this.form.type })
+          .then(() => {
+            this.$refs.filePicker.clearInputs();
+          })
         }
       });
     }
@@ -76,10 +84,5 @@ export default {
 <style scoped>
 .ServiceableTopbar {
   background: white;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
 }
 </style>

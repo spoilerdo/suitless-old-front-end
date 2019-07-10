@@ -38,11 +38,16 @@ import LoginNavbar from "@/components/login/LoginNavbar";
 import WhyThisSite from "@/components/landingpage/WhyThisSite";
 import WhatWeDo from "@/components/landingpage/WhatWeDo";
 import HowWeDoIt from "@/components/landingpage/HowWeDoIt";
+import { CDN_URL } from "@/store/generalconstants";
 import { mapActions } from "vuex";
 
 //can be used if you will only need to access ONE module in this component, will auto append /app before actions.
 const { mapState } = createNamespacedHelpers("app/");
 
+/**
+ * Returns the landing page, the page most users see when the open the website.
+ * @memberof view
+ */
 export default {
   name: "landingPage",
   components: {
@@ -54,7 +59,7 @@ export default {
   },
   data: () => {
     return {
-      ehvLogo: "http://ironsm4sh.nl:3303/cdn/LogoWhite",
+      ehvLogo: `${CDN_URL}/LogoWhite`,
       options: {
         anchors: ['Landing', 'Intro', 'WhatWeDo', 'HowWeDoIt']
       }
