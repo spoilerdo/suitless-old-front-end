@@ -1,45 +1,43 @@
 before_script:
 - export GRADLE_USER_HOME=`pwd`/.gradle
 
-cache:
-  paths:
-  - .m2/repository
-  - node_modules/
-
 stages:
 - build
 # - test
 - docker
 
-# test_VueJS:
-#   stage: test
-#   image: nightwatch:latest
-#   script:
-#   - 'npm i'
-#   - 'npm run test:e2e'
-#   artifacts:
-#     paths:
-#     - /builds/I386965/ehvlinc-frontend/tests/e2e/reports/
-
 build_VueJS:
   stage: build
-  image: node:latest
+  image: node:10.16.0
+  retry: 2
   only:
   - master
   script:
   - 'npm ci'
   - 'npm run build'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+        - .m2/repository
+        - node_modules/
   artifacts:
     paths:
-    - /builds/I386965/ehvlinc-frontend/dist/
+    - dist/
 
 docker_compose:
   stage: docker
   image: tmaier/docker-compose:latest
+  retry: 2
   only:
   - master
   before_script:
   - 'docker info'
   script:
-  - 'cd /builds/I386965/ehvlinc-frontend/'
   - 'docker-compose up -d --build'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+        - .m2/repository
+        - node_modules/
