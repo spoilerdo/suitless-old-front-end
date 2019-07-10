@@ -1,5 +1,5 @@
 <template>
-  <v-form :data-vv-scope="'Form'" class="ServiceableTopbar">
+  <v-form data-vv-scope="Form" class="ServiceableTopbar">
     <v-container>
       <p>
         <b>Create a new serviceable</b>
@@ -8,7 +8,7 @@
         <v-flex xs12 md4>
           <v-text-field
             v-model="form.name"
-            v-validate="'required|min:3|alpha'"
+            v-validate="'required|min:3'"
             :counter="255"
             label="Tag"
             name="tag"
@@ -73,7 +73,6 @@ export default {
           this.uploadImage({ file: this.form.file, name: this.form.name, type: this.form.type })
           .then(() => {
             this.$refs.filePicker.clearInputs();
-            this.showNotification("Upload succeeded");
           })
         }
       });

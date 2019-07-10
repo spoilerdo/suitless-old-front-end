@@ -36,7 +36,7 @@
             :id="'question-' + answer.targetID"
             :text="answer.value"
             :answer="answer"
-            image="http://startupseindhoven.nl:3303/cdn/man"
+            imageName="man"
             color="primary" 
             style="margin:10px"
             ref="question"

@@ -16,7 +16,7 @@
         />
         <ImageCard
           redirecturl="/survey/5cf4c8017fa73a0006d320ad"
-          imagename="software"
+          imagename="software ip"
           text="Software IP"
           cardWidth="xs6 sm4 md3"
           direction="column"
@@ -44,7 +44,6 @@
 <script>
 import Animatedbackground from "@/components/background/Animatedbackground";
 import ImageCard from "@/components/material/ImageCard";
-
 import { mapActions } from "vuex";
 
 /**
