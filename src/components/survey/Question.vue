@@ -36,7 +36,7 @@
             :id="'question-' + answer.targetID"
             :text="answer.value"
             :answer="answer"
-            imageName="man"
+            :imageName="answer.value + answer.targetID"
             color="primary" 
             style="margin:10px"
             ref="question"
@@ -87,6 +87,9 @@ export default {
     ArrowControls
   },
   props: {
+      /**
+       * The current question (default node values + question node lincData)
+       */
       question: {
           type: Object,
           required: true
@@ -101,6 +104,8 @@ export default {
   },
   methods: {
     selectAnswer(selectAnswer) {
+      //TODO: check if the question object contains value and id from an edge
+      console.log(this.question);
       //loop through all answers and deselect any that do not match
       this.$refs.question.forEach(child => {
         //only to get components which contain the needed method

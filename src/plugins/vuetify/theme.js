@@ -3,7 +3,7 @@
  * @memberof plugin
  */
 export default {
-    primary: '#c01833',
+    primary: '#892834',
     secondary: '#424242',
     success: '#4caf50',
     info: '#2196f3',

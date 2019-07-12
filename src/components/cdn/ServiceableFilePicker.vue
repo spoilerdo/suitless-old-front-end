@@ -11,7 +11,6 @@
     <input type="file" style="display: none" ref="image" accept="image/*" @change="onFilePicked">
   </v-flex>
 </template>
-
 <script>
 /**
  * This is a textfield modded to act like a filepicker.
@@ -28,7 +27,6 @@ export default {
     imageUrl: "",
     imageFile: ""
   }),
-
   methods: {
     pickFile() {
       this.$refs.image.click();
@@ -44,7 +42,7 @@ export default {
         fr.readAsDataURL(files[0]);
         fr.addEventListener("load", () => {
           this.imageUrl = fr.result;
-          this.imageFile = files[0]; // this is an image file that can be sent to server...
+          this.imageFile = files[0]; //this is an image file that can be sent to server...
 
           this.$emit("Base64", this.imageUrl.substring(this.imageUrl.indexOf(",") + 1));
           this.$emit("Type", this.imageFile.type);

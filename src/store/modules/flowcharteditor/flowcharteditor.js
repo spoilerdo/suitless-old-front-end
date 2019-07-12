@@ -1,6 +1,6 @@
-import { asyncApiCall } from '../../../api/api'
+import { asyncApiCall } from '@/services/api'
 import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
-import { SET_DIALOG, SET_FLOWCHART, SET_FORMATBAR, SET_CELL } from './mutation-types';
+import { SET_IMPORT_DIALOG, SET_FLOWCHART, SET_FORMATBAR, SET_CELL, SET_FILE_DIALOG, SET_IMAGE } from './mutation-types';
 
 /**
  * The flowcharteditor module contains methods and states used for displaying 
@@ -23,14 +23,22 @@ import { SET_DIALOG, SET_FLOWCHART, SET_FORMATBAR, SET_CELL } from './mutation-t
  */
 
 const state = {
-    dialog: false,
+    //State of the import dialog
+    importDialog: false,
+
+    //state of the file picker dialog
+    fileDialog: false,
+    //image name that has been selected by the file dialog
+    imageName: null,
+
     flowchart: null,
     formatBarType: null,
     selectedCell: {
         value: null,
         lincData: [],
         children: []
-    }
+    },
+    
 }
 
 const getters = {}
@@ -40,8 +48,24 @@ const actions = {
      * Sets the new dialog, attached to the import button.
      * @memberof store.flowcharteditor
      */
-    setDialog({ commit }, dialogState) {
-        commit(SET_DIALOG, dialogState);
+    setImportDialog({ commit }, dialogState) {
+        commit(SET_IMPORT_DIALOG, dialogState);
+    },
+
+    /**
+     * Sets the new dialog, attached to the image button.
+     * @memberof store.flowcharteditor
+     */
+    setFileDialog({ commit }, dialogState) {
+        commit(SET_FILE_DIALOG, dialogState);
+    },
+
+    /**
+     * Sets the new image name
+     * @memberof store.flowchareditor 
+     */
+    setImageName({ commit }, imageName) {
+        commit(SET_IMAGE, imageName);
     },
 
     /**
@@ -91,8 +115,14 @@ const actions = {
 }
 
 const mutations = {
-    [SET_DIALOG](state, dialogState) {
-        state.dialog = dialogState;
+    [SET_IMPORT_DIALOG](state, dialogState) {
+        state.importDialog = dialogState;
+    },
+    [SET_FILE_DIALOG](state, dialogState) {
+        state.fileDialog = dialogState;
+    },
+    [SET_IMAGE](state, imageName) {
+        state.imageName = imageName
     },
     [SET_FORMATBAR](state, formatBarState) {
         state.formatBarType = formatBarState;

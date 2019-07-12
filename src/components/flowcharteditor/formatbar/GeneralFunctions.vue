@@ -18,10 +18,7 @@
           label="Description"
           rows="1"
         />
-        <ServiceableFilePicker
-          v-on:Base64="setFile($event)"
-          v-on:Type="setType($event)"
-        />
+        <v-btn color="primary">Select Image</v-btn>
       </v-layout>
       <v-layout align-center justify-center row>
         <v-btn
@@ -29,7 +26,7 @@
           color="primary"
           @click="prepareSaveFlowchart(form.title, form.description)"
         >Save</v-btn>
-        <v-btn id="btn_import_flowchart" color="primary" @click="setDialog(true)">Import</v-btn>
+        <v-btn id="btn_import_flowchart" color="primary" @click="setImportDialog(true)">Import</v-btn>
         <v-btn color="primary">Test</v-btn>
       </v-layout>
     </v-form>
@@ -37,7 +34,6 @@
 </template>
 
 <script>
-import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
 import { mapActions } from "vuex";
 
 /**
@@ -45,9 +41,6 @@ import { mapActions } from "vuex";
  * @memberof component.FlowchartForm
  */
 export default {
-  components: {
-    ServiceableFilePicker
-  },
   data() {
     return {
       form: {
@@ -61,7 +54,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("flowcharteditor/", ["setDialog", "saveFlowchart"]),
+    ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart"]),
     ...mapActions("cdn/", ["uploadImage"]),
     setFile(file) {
       this.image.file = file;
@@ -75,7 +68,11 @@ export default {
           let flowchart = this.getFlowchart(name, description);
           this.saveFlowchart(flowchart);
 
-          this.uploadImage({ file: this.image.file, name: this.form.title, type: this.image.type})
+          this.uploadImage({
+            file: this.image.file,
+            name: "flowcharteditor." + this.form.title,
+            type: this.image.type
+          });
         }
       });
     }

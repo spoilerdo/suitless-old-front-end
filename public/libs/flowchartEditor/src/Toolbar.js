@@ -33,31 +33,31 @@ export function createToolbar(toolbarContainer, editor, model, keyHandler, graph
  * @param {mxDefaultToolbar} toolbar 
  */
 function addDefaultActions(toolbar, graph) {
-    toolbar.addItem('Copy', "http://startupseindhoven.nl:3305/Copy", mxUtils.bind(this, function () {
+    toolbar.addItem('Copy', "http://startupseindhoven.nl/api/cdn/Copy", mxUtils.bind(this, function () {
         mxClipboard.copy(graph);
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Paste', "http://startupseindhoven.nl:3305/Paste", mxUtils.bind(this, function () {
+    toolbar.addItem('Paste', "http://startupseindhoven.nl/api/cdn/Paste", mxUtils.bind(this, function () {
         mxClipboard.paste(graph);
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Delete', "http://startupseindhoven.nl:3305/Delete", mxUtils.bind(this, function () {
+    toolbar.addItem('Delete', "http://startupseindhoven.nl/api/cdn/Delete", mxUtils.bind(this, function () {
         graph.removeCells();
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Cut', "http://startupseindhoven.nl:3305/Cut", mxUtils.bind(this, function () {
+    toolbar.addItem('Cut', "http://startupseindhoven.nl/api/cdn/Cut", mxUtils.bind(this, function () {
         mxClipboard.cut(graph);
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Zoom out', "http://startupseindhoven.nl:3305/MagnifyMinus", mxUtils.bind(this, function () {
+    toolbar.addItem('Zoom out', "http://startupseindhoven.nl/api/cdn/MagnifyMinus", mxUtils.bind(this, function () {
         graph.zoomOut();
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Zoom In', "http://startupseindhoven.nl:3305/MagnifyPlus", mxUtils.bind(this, function () {
+    toolbar.addItem('Zoom In', "http://startupseindhoven.nl/api/cdn//MagnifyPlus", mxUtils.bind(this, function () {
         graph.zoomIn();
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('To Front', "http://startupseindhoven.nl:3305/ToFront", mxUtils.bind(this, function () {
+    toolbar.addItem('To Front', "http://startupseindhoven.nl/api/cdn//ToFront", mxUtils.bind(this, function () {
         graph.orderCells(false);
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('To Back', "http://startupseindhoven.nl:3305/ToBack", mxUtils.bind(this, function () {
+    toolbar.addItem('To Back', "http://startupseindhoven.nl/api/cdn//ToBack", mxUtils.bind(this, function () {
         graph.orderCells(true);
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Fit screen', "http://startupseindhoven.nl:3305/Fit", mxUtils.bind(this, function () {
+    toolbar.addItem('Fit screen', "http://startupseindhoven.nl/api/cdn//Fit", mxUtils.bind(this, function () {
         graph.fit();
     }), null, "v-icon mdi theme--light mxToolbarItem");
 }

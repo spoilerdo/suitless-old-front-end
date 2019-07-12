@@ -13,6 +13,7 @@
         <EdgeFunctions v-show="formatBarType == this.$data.nodeEnum.Edge"/>
     </div>
     <FlowchartForm id="importForm"/>
+    <ImageSelectorDialog/>
   </v-layout>
 </template>
 
@@ -235,6 +236,7 @@ table.mxPopupMenu tr {
 <script>
 import { mapState, mapActions } from "vuex";
 import FlowchartForm from "@/components/flowcharteditor/FlowchartForm";
+import ImageSelectorDialog from "@/components/cdn/ImageSelectorDialog";
 import GeneralFunctions from "@/components/flowcharteditor/formatbar/GeneralFunctions";
 import QuestionFunctions from "@/components/flowcharteditor/formatbar/QuestionFunctions";
 import ModuleFunctions from "@/components/flowcharteditor/formatbar/ModuleFunctions";
@@ -251,7 +253,7 @@ import Drawer from "@/components/core/Drawer";
 export default {
     components: {
         Drawer,
-
+        ImageSelectorDialog,
         FlowchartForm,
         GeneralFunctions,
         QuestionFunctions,

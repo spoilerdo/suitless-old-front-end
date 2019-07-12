@@ -13,7 +13,7 @@ import './plugins/vuetify/vuetify'
 import App from './App.vue'
 import store from './store/store'
 import router from './router/router'
-import {setToken} from '@/api/api'
+import {setToken} from '@/services/api'
 
 Vue.config.productionTip = false
 Vue.use(VueParticles);

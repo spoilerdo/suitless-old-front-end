@@ -149,8 +149,8 @@ export default {
                  * @param {String} implicationLevel the level of the implication (warning, info, etc...)
                  * @param {String} implicationColor the hex color you want to turn the edge into
                 */
-                changeEdge(name, implication, implicationLevel, implicationColor){
-                    methods.changeEdge(name, implication, implicationLevel, implicationColor);
+                changeEdge(name, implication, implicationLevel, implicationColor, imageName){
+                    methods.changeEdge(name, implication, implicationLevel, implicationColor, imageName);
                 }
             },
             /**

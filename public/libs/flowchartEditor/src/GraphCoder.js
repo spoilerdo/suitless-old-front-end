@@ -1,4 +1,4 @@
-import { apiCall } from "../../../../src/api/api";
+import { apiCall } from "../../../../src/services/api";
 
 /**
  * Saves your flowchart to convert it to JSON and return it to the EditorFunctions.js script
@@ -49,7 +49,6 @@ export let GraphCoder = {
         }
 
         console.log(JSON.stringify(module, null, "\t"))
-        //apiCall('post', "http://ironsm4sh.nl:3303/modules/", JSON.stringify(module, null, "\t"));
         return JSON.stringify(module, null, "\t")
     },
 
@@ -63,7 +62,8 @@ export let GraphCoder = {
                             targetID: cell.edges[i].target.id,
                             value: cell.edges[i].value,
                             implication: cell.edges[i].lincData[0].value,
-                            implicationLevel: cell.edges[i].lincData[1].value
+                            implicationLevel: cell.edges[i].lincData[1].value,
+                            imageName: cell.edges[i].lincData[2].value
                         })
                     } else {
                         output.push({

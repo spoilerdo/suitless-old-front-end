@@ -1,4 +1,4 @@
-import { apiCall, asyncApiCall } from "@/api/api";
+import { apiCall, asyncApiCall } from "@/services/api";
 import { CDN_URL, NOTIFICATION_HANDLER } from "../../generalconstants"
 import { SET_SERVCEABLES, UPDATE_SERVICEABLES, DELETE_SERVICEABLES, ADD_SERVICEABLES, ADD_SERVICEABLESBYNAME } from "./mutation-types";
 
@@ -34,6 +34,7 @@ const actions = {
     getAllData({ commit, dispatch }) {
         apiCall("GET", `${CDN_URL}/meta/all`)
         .then(data => {
+            console.log(data);
             commit(SET_SERVCEABLES, []);
             commit(ADD_SERVICEABLES, data);
         }).catch(e => {
@@ -105,7 +106,7 @@ const mutations = {
                 name: serviceable.tag,
                 size: (serviceable.size / 1000).toFixed(2), //Byte to KB
                 type: serviceable.type,
-                baseURL: CDN_URL + serviceable.tag
+                baseURL: CDN_URL + "/" + serviceable.tag
             });
         });
     },
