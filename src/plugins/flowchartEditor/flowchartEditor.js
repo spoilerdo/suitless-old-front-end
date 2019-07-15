@@ -100,9 +100,10 @@ export default {
                  * @memberof plugin.flowchartEditor
                  * @param {String} name of the flowchart
                  * @param {String} description of the flowchart
+                 * @param {String} imageName of the illustration that belongs to this flowchart
                  */
-                getFlowchart(name, description) {
-                    return methods.getFlowchart(name, description);
+                getFlowchart(name, description, imageName) {
+                    return methods.getFlowchart(name, description, imageName);
                 },
 
                 /**

@@ -7,7 +7,7 @@ import { apiCall } from "../../../../src/services/api";
  * @since 27-02-2019
  */
 export let GraphCoder = {
-    encodeGraphToJSON(graph, name, description, maxDepth) {
+    encodeGraphToJSON(graph, name, description, maxDepth, imageName) {
         let cells = graph.getChildVertices(graph.getDefaultParent())
         let nodes = [];
         cells.forEach(n => {
@@ -45,6 +45,7 @@ export let GraphCoder = {
             name,
             description,
             maxDepth,
+            imageName,
             nodes
         }
 

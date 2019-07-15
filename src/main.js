@@ -7,6 +7,7 @@ import VueFullPage from 'vue-fullpage.js'
 import pdfreporter from './plugins/pdfreporter/pdfreporter'
 import flowchartEditor from './plugins/flowchartEditor/flowchartEditor';
 import notification from './plugins/notification/notification';
+import cdnUploader from './plugins/cdnUploader/cdnUploader';
 
 
 import './plugins/vuetify/vuetify'
@@ -23,6 +24,7 @@ Vue.use(VueFullPage);
 Vue.use(pdfreporter);
 Vue.use(flowchartEditor);
 Vue.use(notification)
+Vue.use(cdnUploader);
 
 if (localStorage.jwtToken) {
   //restore axios default header sessions

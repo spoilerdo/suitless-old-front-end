@@ -24,6 +24,7 @@
           rows="1"
           name="implication"
         />
+        <v-btn color="primary" @click="setFileDialog(true)">Select Image</v-btn>
         <h6 class="subheading">Select the implication level</h6>
         <v-layout align-center justify-center row>
           <v-btn
@@ -89,7 +90,7 @@
 
 <script>
 import ImageSelectorDialog from "@/components/cdn/ImageSelectorDialog";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import theme from "@/plugins/vuetify/theme";
 
 /**
@@ -115,6 +116,7 @@ export default {
     ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
   },
   methods: {
+    ...mapActions("cdn/", "setFileDialog"),
     setSelected(selected, color) {
       this.form.implicationLevel = selected;
       this.form.implicationColor = color;

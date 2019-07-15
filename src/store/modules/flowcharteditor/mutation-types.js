@@ -1,5 +1,4 @@
 export const SET_IMPORT_DIALOG = "SET_IMPORT_DIALOG";
-export const SET_FILE_DIALOG = "SET_FILE_DIALOG";
 export const SET_IMAGE = "SET_IMAGE";
 export const SET_FLOWCHART = "SET_FLOWCHART";
 export const SET_FORMATBAR = "SET_FORMATBARTYPE";

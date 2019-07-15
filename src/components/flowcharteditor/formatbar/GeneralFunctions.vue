@@ -18,13 +18,13 @@
           label="Description"
           rows="1"
         />
-        <v-btn color="primary">Select Image</v-btn>
+        <v-btn color="primary" @click="setFileDialog(true)">Select Image</v-btn>
       </v-layout>
       <v-layout align-center justify-center row>
         <v-btn
           id="btn_save_flowchart"
           color="primary"
-          @click="prepareSaveFlowchart(form.title, form.description)"
+          @click="prepareSaveFlowchart(form.title, form.description, form.flowchartImageName)"
         >Save</v-btn>
         <v-btn id="btn_import_flowchart" color="primary" @click="setImportDialog(true)">Import</v-btn>
         <v-btn color="primary">Test</v-btn>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 /**
  * View used for general action / no cells.
@@ -45,36 +45,31 @@ export default {
     return {
       form: {
         title: "",
-        description: null
-      },
-      image: {
-        file: "",
-        type: ""
+        description: null,
+        flowchartImageName: ""
       }
     };
   },
+  computed: {
+    ...mapState("flowcharteditor/", ["imageName"])
+  },
   methods: {
     ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart"]),
-    ...mapActions("cdn/", ["uploadImage"]),
-    setFile(file) {
-      this.image.file = file;
-    },
-    setType(type) {
-      this.image.type = type;
-    },
-    prepareSaveFlowchart(name, description) {
+    ...mapActions("cdn/", ["setFileDialog"]),
+    prepareSaveFlowchart(name, description, flowchartImageName) {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if (valid) {
-          let flowchart = this.getFlowchart(name, description);
+          console.log(this.form.flowchartImageName);
+          let flowchart = this.getFlowchart(name, description, flowchartImageName);
           this.saveFlowchart(flowchart);
-
-          this.uploadImage({
-            file: this.image.file,
-            name: "flowcharteditor." + this.form.title,
-            type: this.image.type
-          });
         }
       });
+    }
+  },
+  watch: {
+    imageName: function(newVal) {
+      console.log("watcher");
+      this.form.flowchartImageName = newVal.serviceable.tag;
     }
   }
 };

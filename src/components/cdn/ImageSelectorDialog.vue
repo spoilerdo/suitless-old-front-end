@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="500">
+  <v-dialog v-model="fileDialog" @input="setFileDialog(false);" max-width="500">
     <v-card>
       <v-card-title class="headline">Image selector</v-card-title>
 
@@ -65,11 +65,10 @@ export default {
     ServiceableFilePicker
   },
   computed: {
-    ...mapState("cdn/", ["serviceables"])
+    ...mapState("cdn/", ["fileDialog", "serviceables", "newServiceable"])
   },
   data() {
     return {
-      dialog: false,
       images: [
         {
           name: String,
@@ -85,7 +84,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("cdn/", ["getAllData"]),
+    ...mapActions("cdn/", ["getAllData", "setFileDialog"]),
     setFile(file) {
       this.image.file = file;
     },
@@ -101,18 +100,17 @@ export default {
     },
     useImage() {
       //if an image is selected use that image, otherwise upload the image from the serviceableFilePicker
-      if (this.image.name != "") {
+      console.log(this.image);
+      if (this.image.name === "") {
         this.showNotification("no name given for the image");
       } else {
         if (this.selected === null) {
-          this.uploadImage({
-            file: this.image.file,
-            name: this.image.name,
-            type: this.image.type
-          });
+          this.tryUploadingNewServiceable(this.image);
+        } else{
+          console.log("new serviceable uploaded");
+          this.$emit("fileName", this.image.name);
         }
-        this.$emit("newImageName", this.image.name);
-        dialog = false;
+        this.setFileDialog(false);
       }
     }
   },
@@ -124,6 +122,10 @@ export default {
       val.forEach(file => {
         this.images.push({ name: file.name, url: file.baseURL });
       });
+    },
+    newServiceable: function(val) {
+      console.log("WATCHER: new serviceable!!");
+      this.$emit("fileName", val);
     }
   }
 };

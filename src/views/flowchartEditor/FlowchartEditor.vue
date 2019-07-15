@@ -13,7 +13,7 @@
         <EdgeFunctions v-show="formatBarType == this.$data.nodeEnum.Edge"/>
     </div>
     <FlowchartForm id="importForm"/>
-    <ImageSelectorDialog/>
+    <ImageSelectorDialog v-on:fileName="setImageName($event)"/>
   </v-layout>
 </template>
 
@@ -268,6 +268,7 @@ export default {
     },
     methods: {
         ...mapActions("app/", ["setBackground", "setFooterColor"]),
+        ...mapActions("flowcharteditor/", ["setImageName"])
     },
     beforeMount() {
         this.setBackground("transparent");
