@@ -36,7 +36,7 @@
 
 <script>
 import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
-import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 
 /**
  * Returns the top-bar used in the CDN page, this contains a small form with a name field and a filepicker

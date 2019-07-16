@@ -48,7 +48,7 @@ export default {
           this.$emit("Type", this.imageFile.type);
         });
       } else {
-        clearInputs();
+        this.clearInputs();
       }
       document.activeElement.blur();
     },

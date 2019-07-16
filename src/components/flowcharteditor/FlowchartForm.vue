@@ -57,7 +57,7 @@ export default {
     importFlowchart() {
       this.setImportDialog(false);
 
-      this.getFlowchartByName(this.form.moduleName).then(req => {
+      this.getFlowchartByName(this.form.moduleName).then(() => {
         this.setFlowchart();
       });
     },

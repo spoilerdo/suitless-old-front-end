@@ -57,7 +57,7 @@ export default {
     }
   },
   watch: {
-    selectedCell: function(newValue, oldValue) {
+    selectedCell: function(newValue) {
       if (
         newValue != null &&
         this.formatBarType == this.$data.nodeEnum.Question
