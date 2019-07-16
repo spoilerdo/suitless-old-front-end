@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { SET_SURVEY, SET_SURVEYS } from './mutation-types';
-import { apiCall, asyncApiCall } from '../../../api/api';
+import { apiCall, asyncApiCall } from '@/services/api';
 import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 
 /**

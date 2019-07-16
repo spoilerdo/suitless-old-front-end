@@ -70,10 +70,7 @@ export default {
     validateAndUploadImage() {
       this.$validator.validateAll("Form").then(valid => {
         if (valid) {
-          this.uploadImage({ file: this.form.file, name: this.form.name, type: this.form.type })
-          .then(() => {
-            this.$refs.filePicker.clearInputs();
-          })
+          this.tryUploadingNewServiceable(this.form);
         }
       });
     }

@@ -1,5 +1,3 @@
-import { apiCall } from "../../../../src/api/api";
-
 /**
  * Saves your flowchart to convert it to JSON and return it to the EditorFunctions.js script
  * @author Marco Driessen, Martijn Dormans
@@ -7,7 +5,7 @@ import { apiCall } from "../../../../src/api/api";
  * @since 27-02-2019
  */
 export let GraphCoder = {
-    encodeGraphToJSON(graph, name, description, maxDepth) {
+    encodeGraphToJSON(graph, name, description, maxDepth, lincData) {
         let cells = graph.getChildVertices(graph.getDefaultParent())
         let nodes = [];
         cells.forEach(n => {
@@ -22,7 +20,6 @@ export let GraphCoder = {
 
                     //But first we need to check if the node already contains the choice data.
                     //If so than you will need to update these
-                    console.log(n.lincData.filter(c => c.value === child.id));
                     let oldChoice = n.lincData.filter(c => c.value === child.id);
                     if (oldChoice.length != 0) {
                         let newChoice = oldChoice[0].key = child.value;
@@ -45,11 +42,11 @@ export let GraphCoder = {
             name,
             description,
             maxDepth,
+            lincData,
             nodes
         }
 
         console.log(JSON.stringify(module, null, "\t"))
-        //apiCall('post', "http://ironsm4sh.nl:3303/modules/", JSON.stringify(module, null, "\t"));
         return JSON.stringify(module, null, "\t")
     },
 
@@ -59,12 +56,21 @@ export let GraphCoder = {
             for (var i = 0; i < cell.edges.length; i++) {
                 if (cell.id === cell.edges[i].source.id && cell.edges[i].target.id !== null) {
                     if (cell.edges[i].lincData != null) {
-                        output.push({
-                            targetID: cell.edges[i].target.id,
-                            value: cell.edges[i].value,
-                            implication: cell.edges[i].lincData[0].value,
-                            implicationLevel: cell.edges[i].lincData[1].value
-                        })
+                        if(cell.edges[i].lincData[0] != ""){
+                            output.push({
+                                targetID: cell.edges[i].target.id,
+                                value: cell.edges[i].value,
+                                implication: cell.edges[i].lincData[0].value,
+                                implicationLevel: cell.edges[i].lincData[1].value,
+                                imageName: cell.edges[i].lincData[2].value
+                            })
+                        } else {
+                            output.push({
+                                targetID: cell.edges[i].target.id,
+                                value: cell.edges[i].value,
+                                imageName: cell.edges[i].lincData[2].value
+                            })
+                        }
                     } else {
                         output.push({
                             targetID: cell.edges[i].target.id,

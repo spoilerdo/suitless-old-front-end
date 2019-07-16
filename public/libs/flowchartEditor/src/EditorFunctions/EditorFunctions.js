@@ -9,7 +9,7 @@ import { GraphCoder } from "../GraphCoder";
 import { state } from "../store/flowcharteditor";
 import { addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice } from "./PrivateFunctions";
 
-import { mxGraph, mxGraphModel, mxConstants, mxEllipse, mxHexagon, mxSwimlane } from "../MxGraph";
+import { mxConstants, mxEllipse, mxHexagon, mxSwimlane } from "../MxGraph";
 
 /**
  * This is the max depth of a flowchart AKA what is the longest path of a flowchart.
@@ -89,6 +89,10 @@ export let editorFunctions = {
                 {
                     "key": "implicationLevel",
                     "value": "default"
+                },
+                {
+                    "key": "imageName",
+                    "value": ""
                 }
             ]
 
@@ -148,8 +152,8 @@ export let editorFunctions = {
     * Export chart to a json string.
     * @param {mxGraph} graph
     */
-    exportChart(graph, name, description) {
-        return GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth);
+    exportChart(graph, name, description, lincData) {
+        return GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth, lincData);
     },
 
     /**
@@ -267,7 +271,7 @@ export let editorFunctions = {
      * It checks if the depth of the new node is bigger than the maxDepth of the flowchart.
      * If so than the maxDepth = the depth of the node
      */
-    checkDepth(cell, source) {
+    checkDepth(cell) {
         if (cell.lincType === NodeEnum.Question || cell.lincType === NodeEnum.Notification || cell.lincType === NodeEnum.MultipleChoice || cell.lincType === NodeEnum.Choice) {
             //the connected edge is a question so get the depth from it
             //if it is a notification node than the depth of it is equal to the priour connected question node

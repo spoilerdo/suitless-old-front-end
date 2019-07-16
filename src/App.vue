@@ -2,7 +2,10 @@
   <v-app :style="{background: this.background }">
     <Toolbar v-if="!newUser"/>
     <CoreView/>
-    <Notification :timeVisible="2500" ref="notification"/>
+    <!-- Universal Notification component for the notificationHandler module (error handling) -->
+    <Notification :timeVisible="6000" ref="notification"/>
+    <!-- Universal CDN Uploader for uploading files -->
+    <ServiceableUploaderDialog ref="cdnUploader"/>
   </v-app>
 </template>
 
@@ -13,6 +16,7 @@ const { mapState, mapActions } = createNamespacedHelpers('app/');
 import CoreView from "./components/core/View";
 import Toolbar from './components/core/Toolbar';
 import Notification from "@/components/material/Notification.vue";
+import ServiceableUploaderDialog from "@/components/cdn/ServiceableUploaderDialog.vue";
 
 /**
  * The root component, all over components get interpolated into this.
@@ -21,7 +25,8 @@ export default {
   components: {
     Toolbar,
     CoreView,
-    Notification
+    Notification,
+    ServiceableUploaderDialog
   },
   date() {
     return {

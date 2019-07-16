@@ -1,7 +1,7 @@
 <template>
   <v-layout column>
     <v-flex style="overflow: auto">
-      <v-data-table :headers="headers" :items="serviceables" hide-actions class="elevation-1">
+      <v-data-table :headers="headers" :items="serviceables" item-key="name" hide-actions class="elevation-1">
         <template slot="items" slot-scope="props">
           <td>{{ props.item.name }}</td>
           <td>{{ props.item.size }}</td>

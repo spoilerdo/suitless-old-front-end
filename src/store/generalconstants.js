@@ -1,4 +1,4 @@
-export const API_URL = 'http://startupseindhoven.nl:3303';
+export const API_URL = 'http://startupseindhoven.nl/api';
 export const CDN_URL = `${API_URL}/cdn`;
 export const MODULE_URL = `${API_URL}/modules`;
 export const ACCOUT_URL = `${API_URL}/accounts`;

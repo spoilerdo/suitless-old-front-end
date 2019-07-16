@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="importdialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
           <span class="headline">Open flowchart</span>
@@ -50,12 +50,12 @@ export default {
     };
   },
   computed: {
-    ...mapState("flowcharteditor/", ["dialog", "flowchart"])
+    ...mapState("flowcharteditor/", ["importdialog", "flowchart"])
   },
   methods: {
-    ...mapActions("flowcharteditor/", ["setDialog", "getFlowchartByName"]),
+    ...mapActions("flowcharteditor/", ["setImportDialog", "getFlowchartByName"]),
     importFlowchart() {
-      this.setDialog(false);
+      this.setImportDialog(false);
 
       this.getFlowchartByName(this.form.moduleName).then(req => {
         this.setFlowchart();

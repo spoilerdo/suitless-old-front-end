@@ -18,18 +18,15 @@
           label="Description"
           rows="1"
         />
-        <ServiceableFilePicker
-          v-on:Base64="setFile($event)"
-          v-on:Type="setType($event)"
-        />
+        <v-btn color="primary" @click="setFileDialog(true)">Select Image</v-btn>
       </v-layout>
       <v-layout align-center justify-center row>
         <v-btn
           id="btn_save_flowchart"
           color="primary"
-          @click="prepareSaveFlowchart(form.title, form.description)"
+          @click="prepareSaveFlowchart(form.title, form.description, form.flowchartImageName)"
         >Save</v-btn>
-        <v-btn id="btn_import_flowchart" color="primary" @click="setDialog(true)">Import</v-btn>
+        <v-btn id="btn_import_flowchart" color="primary" @click="setImportDialog(true)">Import</v-btn>
         <v-btn color="primary">Test</v-btn>
       </v-layout>
     </v-form>
@@ -37,47 +34,52 @@
 </template>
 
 <script>
-import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 /**
  * View used for general action / no cells.
  * @memberof component.FlowchartForm
  */
 export default {
-  components: {
-    ServiceableFilePicker
-  },
   data() {
     return {
       form: {
         title: "",
-        description: null
-      },
-      image: {
-        file: "",
-        type: ""
+        description: null,
+        flowchartImageName: ""
       }
     };
   },
+  computed: {
+    ...mapState("flowcharteditor/", ["imageName"])
+  },
   methods: {
-    ...mapActions("flowcharteditor/", ["setDialog", "saveFlowchart"]),
-    ...mapActions("cdn/", ["uploadImage"]),
-    setFile(file) {
-      this.image.file = file;
-    },
-    setType(type) {
-      this.image.type = type;
-    },
-    prepareSaveFlowchart(name, description) {
+    ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart"]),
+    ...mapActions("cdn/", ["setFileDialog"]),
+    prepareSaveFlowchart(name, description, flowchartImageName) {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if (valid) {
-          let flowchart = this.getFlowchart(name, description);
+          let lincData = [];
+          if (flowchartImageName !== "") {
+            lincData = [{
+                key: "imageName",
+                value: flowchartImageName
+              }];
+          } else {
+            lincData = [{
+              key: "imageName",
+              value: "DefaultFlowchartImage"
+            }]
+          }
+          let flowchart = this.getFlowchart(name, description, lincData);
           this.saveFlowchart(flowchart);
-
-          this.uploadImage({ file: this.image.file, name: this.form.title, type: this.image.type})
         }
       });
+    }
+  },
+  watch: {
+    imageName: function(newVal) {
+      this.form.flowchartImageName = newVal;
     }
   }
 };
