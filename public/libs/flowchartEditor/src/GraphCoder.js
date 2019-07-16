@@ -7,7 +7,7 @@ import { apiCall } from "../../../../src/services/api";
  * @since 27-02-2019
  */
 export let GraphCoder = {
-    encodeGraphToJSON(graph, name, description, maxDepth, imageName) {
+    encodeGraphToJSON(graph, name, description, maxDepth, lincData) {
         let cells = graph.getChildVertices(graph.getDefaultParent())
         let nodes = [];
         cells.forEach(n => {
@@ -22,7 +22,6 @@ export let GraphCoder = {
 
                     //But first we need to check if the node already contains the choice data.
                     //If so than you will need to update these
-                    console.log(n.lincData.filter(c => c.value === child.id));
                     let oldChoice = n.lincData.filter(c => c.value === child.id);
                     if (oldChoice.length != 0) {
                         let newChoice = oldChoice[0].key = child.value;
@@ -45,7 +44,7 @@ export let GraphCoder = {
             name,
             description,
             maxDepth,
-            imageName,
+            lincData,
             nodes
         }
 

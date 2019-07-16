@@ -1,9 +1,9 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="290">
     <v-card>
-      <v-card-title class="headline">Upadte or Upload?</v-card-title>
+      <v-card-title class="headline">Update or Upload?</v-card-title>
 
-      <v-card-text>A file with that tag already exists. Do you want update it or upload as a new file?</v-card-text>
+      <v-card-text>A file with that name already exists. Do you want update it or upload as a new file?</v-card-text>
 
       <v-card-actions>
         <v-spacer></v-spacer>

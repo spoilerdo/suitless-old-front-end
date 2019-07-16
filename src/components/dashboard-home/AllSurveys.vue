@@ -16,7 +16,7 @@
         >
           <ListCard
             :redirecturl="`/survey/${s.moduleID}`"
-            :imagename="s.name"
+            :imagename="s.lincData[0].value"
             percentage="0"
             :title="s.name"
             :description="s.description"
@@ -57,7 +57,7 @@ export default {
     return {
       role: null,
       limit: 2,
-      buttonText: "Show more"
+      buttonText: "Show more",
     };
   },
 

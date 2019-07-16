@@ -100,10 +100,10 @@ export default {
                  * @memberof plugin.flowchartEditor
                  * @param {String} name of the flowchart
                  * @param {String} description of the flowchart
-                 * @param {String} imageName of the illustration that belongs to this flowchart
+                 * @param {String} lincData an array of mesceleanous data that can be used by the front-end
                  */
-                getFlowchart(name, description, imageName) {
-                    return methods.getFlowchart(name, description, imageName);
+                getFlowchart(name, description, lincData) {
+                    return methods.getFlowchart(name, description, lincData);
                 },
 
                 /**

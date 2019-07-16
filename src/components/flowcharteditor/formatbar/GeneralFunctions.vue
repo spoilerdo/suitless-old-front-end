@@ -59,8 +59,19 @@ export default {
     prepareSaveFlowchart(name, description, flowchartImageName) {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if (valid) {
-          console.log(this.form.flowchartImageName);
-          let flowchart = this.getFlowchart(name, description, flowchartImageName);
+          let lincData = [];
+          if (flowchartImageName !== "") {
+            lincData = [{
+                key: "imageName",
+                value: flowchartImageName
+              }];
+          } else {
+            lincData = [{
+              key: "imageName",
+              value: "DefaultFlowchartImage"
+            }]
+          }
+          let flowchart = this.getFlowchart(name, description, lincData);
           this.saveFlowchart(flowchart);
         }
       });

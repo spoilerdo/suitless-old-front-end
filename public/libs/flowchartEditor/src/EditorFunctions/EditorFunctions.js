@@ -152,8 +152,8 @@ export let editorFunctions = {
     * Export chart to a json string.
     * @param {mxGraph} graph
     */
-    exportChart(graph, name, description, imageName) {
-        return GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth, imageName);
+    exportChart(graph, name, description, lincData) {
+        return GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth, lincData);
     },
 
     /**
