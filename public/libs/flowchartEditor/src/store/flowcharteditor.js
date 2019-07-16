@@ -6,10 +6,8 @@
  * @since 17-04-2019
  */
 
-import { NodeEnum } from "../NodeEnum";
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
-import { genericAddVertex, addSubVertexes } from "../EditorFunctions/PrivateFunctions";
-import { mxConstants } from "../MxGraph";
+import { addSubVertexes } from "../EditorFunctions/PrivateFunctions";
 
 /**
  * All general variables that can be communicated to Vue
@@ -21,7 +19,7 @@ export const state = {
         //private variable
         dialogInternal: false,
         //Listenere (Vue plugin script) that will be calledback whenever the variable state changes
-        dialogListener: function (val) { },
+        dialogListener: function () { },
         //set a new value for the variable and callback to the listener
         set set(val) {
             this.dialogInternal = val;
@@ -38,7 +36,7 @@ export const state = {
     },
     flowchart: {
         flowchartInternal: null,
-        flowchartListener: function (val) { },
+        flowchartListener: function () { },
         set set(val) {
             this.flowchartInternal = val;
             this.flowchartListener(val);
@@ -58,7 +56,7 @@ export const state = {
 
     newCell: {
         newCellInternal: null,
-        newCellListener: function (val) { },
+        newCellListener: function () { },
         set set(val) {
             this.newCellInternal = val;
             this.newCellListener(val);
@@ -78,7 +76,7 @@ export const state = {
     */
     activeFormatBar: {
         activeFormatBarInternal: null,
-        activeFormatBarListener: function (val) { },
+        activeFormatBarListener: function () { },
         set set(val) {
             this.activeFormatBarInternal = val;
             this.activeFormatBarListener(val);

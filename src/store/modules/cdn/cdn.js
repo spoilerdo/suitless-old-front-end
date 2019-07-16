@@ -100,7 +100,6 @@ const actions = {
             const req = await asyncApiCall("GET", `${CDN_URL}/${tag}`)
             if (req) {
                 if (req != null) {
-                    console.log("EXISTS");
                     commit(SET_SERVICEABLE_EXISTS, true);
                 } else {
                     commit(SET_SERVICEABLE_EXISTS, false);
@@ -137,7 +136,7 @@ const actions = {
      * Attempts to update a serviceable to the CDN service
      * @memberof store.cdn
      */
-    async updateServiceable({ dispatch }, { file, name, type }) {
+    async updateServiceable({ dispatch, commit }, { file, name, type }) {
         let data = new FormData();
         data.set('file', file);
         data.set('fileType', type);
@@ -163,7 +162,6 @@ const mutations = {
         state.fileDialog = dialogState;
     },
     [SET_SERVCEABLES](state, data) {
-        console.log("SET new serviceable");
         state.serviceables = data;
     },
     [ADD_SERVICEABLES](state, data) {

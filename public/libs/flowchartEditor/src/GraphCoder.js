@@ -1,5 +1,3 @@
-import { apiCall } from "../../../../src/services/api";
-
 /**
  * Saves your flowchart to convert it to JSON and return it to the EditorFunctions.js script
  * @author Marco Driessen, Martijn Dormans
@@ -58,13 +56,21 @@ export let GraphCoder = {
             for (var i = 0; i < cell.edges.length; i++) {
                 if (cell.id === cell.edges[i].source.id && cell.edges[i].target.id !== null) {
                     if (cell.edges[i].lincData != null) {
-                        output.push({
-                            targetID: cell.edges[i].target.id,
-                            value: cell.edges[i].value,
-                            implication: cell.edges[i].lincData[0].value,
-                            implicationLevel: cell.edges[i].lincData[1].value,
-                            imageName: cell.edges[i].lincData[2].value
-                        })
+                        if(cell.edges[i].lincData[0] != ""){
+                            output.push({
+                                targetID: cell.edges[i].target.id,
+                                value: cell.edges[i].value,
+                                implication: cell.edges[i].lincData[0].value,
+                                implicationLevel: cell.edges[i].lincData[1].value,
+                                imageName: cell.edges[i].lincData[2].value
+                            })
+                        } else {
+                            output.push({
+                                targetID: cell.edges[i].target.id,
+                                value: cell.edges[i].value,
+                                imageName: cell.edges[i].lincData[2].value
+                            })
+                        }
                     } else {
                         output.push({
                             targetID: cell.edges[i].target.id,

@@ -33,7 +33,7 @@
 <script>
 import Card from "@/components/material/Card";
 import ListCard from "@/components/material/ListCard";
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 /**
  * Returns a view containing all surveys.

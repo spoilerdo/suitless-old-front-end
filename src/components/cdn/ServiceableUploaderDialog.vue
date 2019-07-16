@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import { CDN_URL } from "@/store/generalconstants";
 import { mapState, mapActions } from "vuex";
 
 /**
@@ -40,9 +39,7 @@ export default {
         tryUploadingNewServiceable(data){
             this.serviceable = data;
             this.checkServiceableExists(data.name).then(() => {
-                console.log(this.serviceableExists);
                 if(this.serviceableExists){
-                    console.log("Dialog true");
                     //the file already exists so open the dialog and let the use choose to update the file
                     this.dialog = true;
                 }else{

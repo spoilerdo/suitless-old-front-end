@@ -53,7 +53,6 @@
 
 <script>
 import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
-import { CDN_URL } from "@/store/generalconstants";
 import { mapState, mapActions } from "vuex";
 
 /**
@@ -100,15 +99,13 @@ export default {
     },
     useImage() {
       //if an image is selected use that image, otherwise upload the image from the serviceableFilePicker
-      console.log(this.image);
-      if (this.image.name === "") {
+      if (this.image.name === "" && this.selected == null) {
         this.showNotification("no name given for the image");
       } else {
         if (this.selected === null) {
           this.tryUploadingNewServiceable(this.image);
         } else{
-          console.log("new serviceable uploaded");
-          this.$emit("fileName", this.image.name);
+          this.$emit("fileName", this.selected.name);
         }
         this.setFileDialog(false);
       }
@@ -124,8 +121,8 @@ export default {
       });
     },
     newServiceable: function(val) {
-      console.log("WATCHER: new serviceable!!");
-      this.$emit("fileName", val);
+      let imageName = val.serviceable.tag;
+      this.$emit("fileName", imageName);
     }
   }
 };

@@ -79,8 +79,7 @@ export default {
   },
   watch: {
     imageName: function(newVal) {
-      console.log("watcher");
-      this.form.flowchartImageName = newVal.serviceable.tag;
+      this.form.flowchartImageName = newVal;
     }
   }
 };

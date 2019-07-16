@@ -89,7 +89,6 @@
 
 
 <script>
-import ImageSelectorDialog from "@/components/cdn/ImageSelectorDialog";
 import { mapState, mapActions } from "vuex";
 import theme from "@/plugins/vuetify/theme";
 
@@ -98,25 +97,23 @@ import theme from "@/plugins/vuetify/theme";
  * @memberof component.FlowchartForm
  */
 export default {
-  components: {
-    ImageSelectorDialog
-  },
   data() {
     return {
       form: {
         answer: null,
         implication: null,
         implicationLevel: null,
-        implicationColor: null
+        implicationColor: null,
+        imageName: "",
       },
       theme
     };
   },
   computed: {
-    ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
+    ...mapState("flowcharteditor/", ["selectedCell", "formatBarType", "imageName"])
   },
   methods: {
-    ...mapActions("cdn/", "setFileDialog"),
+    ...mapActions("cdn/", ["setFileDialog"]),
     setSelected(selected, color) {
       this.form.implicationLevel = selected;
       this.form.implicationColor = color;
@@ -124,20 +121,28 @@ export default {
     prepareChangeEdge() {
       this.$validator.validateAll("EdgeForm").then(valid => {
         if (valid) {
-            //get the image name from the dialog and save it onto the edge
+          //get the image name from the dialog and save it onto the edge
+
+          if(this.form.imageName === ""){
+            this.form.imageName = "DefaultEdgeImage";
+          }
+
           this.changeEdge(
             this.form.answer,
             this.form.implication,
             this.form.implicationLevel,
             this.form.implicationColor,
-            this.image.name
+            this.form.imageName
           );
+
+          //reset imageName because the image already has been used
+          this.form.imageName = "";
         }
       });
     }
   },
   watch: {
-    selectedCell: function(newValue, oldValue) {
+    selectedCell: function(newValue) {
       if (
         newValue != null &&
         this.formatBarType == this.$data.nodeEnum.Edge &&
@@ -151,6 +156,9 @@ export default {
           data => data.key === "implicationLevel"
         ).value;
       }
+    },
+    imageName: function(newVal) {
+      this.form.imageName = newVal;
     }
   }
 };
