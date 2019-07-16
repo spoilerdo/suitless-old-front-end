@@ -12,8 +12,8 @@ export default {
                  * Calls the tryUploadingNewServiceable function to try uploading a file.
                  * @memberof plugin.cdnUploader
                 */
-                tryUploadingNewServiceable(file) {
-                    this.$root.$children[0].$refs.cdnUploader.tryUploadingNewServiceable(file);
+                tryUploadingNewServiceable(file, cb) {
+                    this.$root.$children[0].$refs.cdnUploader.tryUploadingNewServiceable(file, cb)
                 }
             }
         })

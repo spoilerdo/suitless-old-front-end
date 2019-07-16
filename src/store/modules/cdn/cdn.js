@@ -1,6 +1,6 @@
 import { apiCall, asyncApiCall } from "@/services/api";
 import { CDN_URL, NOTIFICATION_HANDLER } from "../../generalconstants"
-import { SET_SERVCEABLES, UPDATE_SERVICEABLES, DELETE_SERVICEABLES, ADD_SERVICEABLES, SET_FILE_DIALOG, SET_NEW_SERVICEABLES, SET_SERVICEABLE_EXISTS } from "./mutation-types";
+import { SET_SERVCEABLES, UPDATE_SERVICEABLES, DELETE_SERVICEABLES, ADD_SERVICEABLES, SET_FILE_DIALOG, SET_NEW_SERVICEABLES, SET_SERVICEABLE_EXISTS, ADD_IMAGES, SET_IMAGES, ADD_IMAGE } from "./mutation-types";
 
 /**
  * The cdn module contains actions that make API calls to the CDN Service
@@ -14,6 +14,9 @@ import { SET_SERVCEABLES, UPDATE_SERVICEABLES, DELETE_SERVICEABLES, ADD_SERVICEA
 const state = {
     //all the meta data from files that are obtained by the API. Used for the CDN manager
     serviceables: [],
+
+    //all the images from the CDN service
+    images: [],
 
     //the serviceable that has most recently been uploaded
     newServiceable: null,
@@ -59,6 +62,28 @@ const actions = {
             });
     },
     /**
+     * Retrieves all the images from the CDN service
+     * @memberof store.cdn
+     */
+    getAllImagesData({ commit, dispatch }) {
+        apiCall("GET", `${CDN_URL}/meta/image/all`)
+            .then(data => {
+                commit(SET_IMAGES, []);
+                commit(ADD_IMAGES, data);
+            }).catch(e => {
+                dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
+            });
+    },
+
+    /**
+     * Adds an image to the images array
+     * @memberof store.cdn
+     */
+    addImage({ commit }, image) {
+        commit(ADD_IMAGE, image);
+    },
+
+    /**
      * Retrieves the metadata from a specific ID in the cdn service
      * @memberof store.cdn
      */
@@ -78,6 +103,7 @@ const actions = {
                 dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true })
             });
     },
+
     /** 
      * Attempts to delete an serviceable from the CDN service
      * @memberof store.cdn
@@ -91,6 +117,7 @@ const actions = {
                 dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
             });
     },
+
     /**
      * Checks if the serviceable with given id exists.
      * @memberof store.cdn
@@ -109,6 +136,7 @@ const actions = {
             commit(SET_SERVICEABLE_EXISTS, false);
         }
     },
+
     /**
      * Attempts to push a new serviceable to the CDN service
      * @memberof store.cdn
@@ -132,6 +160,7 @@ const actions = {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
         }
     },
+
     /**
      * Attempts to update a serviceable to the CDN service
      * @memberof store.cdn
@@ -160,6 +189,20 @@ const actions = {
 const mutations = {
     [SET_FILE_DIALOG](state, dialogState) {
         state.fileDialog = dialogState;
+    },
+    [SET_IMAGES](state, imageState) {
+        state.images = imageState;
+    },
+    [ADD_IMAGES](state, data) {
+        data.metadataList.forEach(image => {
+            state.images.push({
+                name: image.tag,
+                baseURL: CDN_URL + "/" + image.tag
+            })
+        })
+    },
+    [ADD_IMAGE](state, newImage) {
+        state.images.push(newImage);
     },
     [SET_SERVCEABLES](state, data) {
         state.serviceables = data;

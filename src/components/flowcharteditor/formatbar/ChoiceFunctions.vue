@@ -57,7 +57,6 @@ export default {
         if (valid) {
           this.genericChangeNode(this.form.nodeName, this.form.name);
 
-          console.log(this.form.nodeName + this.selectedCell.id);
           this.uploadImage({
             file: this.image.file,
             name: this.form.nodeName + this.selectedCell.id,
@@ -68,7 +67,7 @@ export default {
     }
   },
   watch: {
-    selectedCell: function(newValue, oldValue) {
+    selectedCell: function(newValue) {
       if (
         newValue != null &&
         this.formatBarType == this.$data.nodeEnum.Choice &&

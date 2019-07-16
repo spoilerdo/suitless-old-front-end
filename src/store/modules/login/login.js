@@ -42,10 +42,10 @@ const actions = {
       */
     registerUser ({ commit, dispatch }, registerData) {
         apiCall('post', `${API_URL}/accounts/`, {email: registerData.email, firstName: registerData.firstName, lastName: registerData.lastName, password: registerData.password})
-        .then((req => {
+        .then(() => {
             commit(SET_ALERT, {type:"success", message: "Successfully created account!"})
             dispatch(NOTIFICATION_HANDLER, { message: "Successfully created account", type: "success", noSnackbar: true }, { root:true });
-        })).catch(e => {
+        }).catch(e => {
             commit(SET_ALERT, {type:"error", message: e.response.data.message});
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error", noSnackbar: true }, { root:true });
         })

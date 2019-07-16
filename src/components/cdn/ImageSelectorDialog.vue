@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="fileDialog" @input="setFileDialog(false);" max-width="500">
+  <v-dialog :value="fileDialog" @input="setFileDialog(false);" max-width="500">
     <v-card>
       <v-card-title class="headline">Image selector</v-card-title>
 
@@ -8,7 +8,7 @@
         <div class="list-container">
           <v-list>
             <v-list-tile
-              v-for="item in serviceables"
+              v-for="item in images"
               :key="item.name"
               avatar
               ripple
@@ -19,7 +19,7 @@
                 <v-icon v-else>mdi-checkbox-blank</v-icon>
               </v-list-tile-action>
               <v-list-tile-avatar size="50" tile>
-                <img :src="images.find(image => image.name === item.name).url" />
+                <v-img :src="item.baseURL" />
               </v-list-tile-avatar>
 
               <v-list-tile-content>
@@ -29,7 +29,11 @@
           </v-list>
         </div>Or upload image:
         <v-text-field label="Image name" v-model="image.name" prepend-icon="mdi-tag" />
-        <ServiceableFilePicker v-on:Base64="setFile($event)" v-on:Type="setType($event)" />
+        <ServiceableFilePicker
+          v-on:Base64="setFile($event)"
+          v-on:Type="setType($event)"
+          ref="filepicker"
+        />
       </v-card-text>
 
       <v-card-actions>
@@ -53,6 +57,7 @@
 
 <script>
 import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
+import { CDN_URL } from "@/store/generalconstants"
 import { mapState, mapActions } from "vuex";
 
 /**
@@ -64,16 +69,10 @@ export default {
     ServiceableFilePicker
   },
   computed: {
-    ...mapState("cdn/", ["fileDialog", "serviceables", "newServiceable"])
+    ...mapState("cdn/", ["fileDialog", "images", "newServiceable"])
   },
   data() {
     return {
-      images: [
-        {
-          name: String,
-          url: String
-        }
-      ],
       image: {
         file: "",
         type: "",
@@ -83,7 +82,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("cdn/", ["getAllData", "setFileDialog"]),
+    ...mapActions("cdn/", ["getAllImagesData", "setFileDialog", "addImage"]),
     setFile(file) {
       this.image.file = file;
     },
@@ -103,23 +102,28 @@ export default {
         this.showNotification("no name given for the image");
       } else {
         if (this.selected === null) {
-          this.tryUploadingNewServiceable(this.image);
-        } else{
+          this.tryUploadingNewServiceable(this.image, this.clearImage);
+        } else {
           this.$emit("fileName", this.selected.name);
         }
         this.setFileDialog(false);
       }
+    },
+    clearImage(newImage) {
+      this.addImage({
+        name: newImage.serviceable.tag,
+        baseURL: CDN_URL + "/" + newImage.serviceable.tag
+      });
+      this.image.file = "";
+      this.image.type = "";
+      this.image.name = "";
+      this.$refs.filepicker.clearInputs();
     }
   },
   mounted() {
-    this.getAllData();
+    this.getAllImagesData();
   },
   watch: {
-    serviceables: function(val) {
-      val.forEach(file => {
-        this.images.push({ name: file.name, url: file.baseURL });
-      });
-    },
     newServiceable: function(val) {
       let imageName = val.serviceable.tag;
       this.$emit("fileName", imageName);

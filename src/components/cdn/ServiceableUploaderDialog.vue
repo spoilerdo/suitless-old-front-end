@@ -8,9 +8,9 @@
       <v-card-actions>
         <v-spacer></v-spacer>
 
-        <v-btn color="info" flat @click="updateFile(serviceable)">Update</v-btn>
+        <v-btn color="info" flat @click="updateFile(serviceable, callback)">Update</v-btn>
 
-        <v-btn color="info" flat @click="uploadFile(serviceable)">Upload</v-btn>
+        <v-btn color="info" flat @click="uploadFile(serviceable, callback)">Upload</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -29,39 +29,43 @@ export default {
         return {
             dialog: false,
             serviceable: null,
+            callback: null,
         }
     },
     computed: {
-        ...mapState("cdn/", ["serviceableExists"])
+        ...mapState("cdn/", ["serviceableExists", "newServiceable"])
     },
     methods: {
         ...mapActions("cdn/", ["uploadServiceable", "updateServiceable", "checkServiceableExists"]),
-        tryUploadingNewServiceable(data){
+        tryUploadingNewServiceable(data, cb){
             this.serviceable = data;
+            this.callback = cb;
             this.checkServiceableExists(data.name).then(() => {
                 if(this.serviceableExists){
                     //the file already exists so open the dialog and let the use choose to update the file
                     this.dialog = true;
                 }else{
-                    this.uploadFile(data);
+                    this.uploadFile(data, cb);
                 }
             })
         },
-        uploadFile(data){
+        uploadFile(data, cb){
             this.dialog = false;
             this.uploadServiceable({
                 file: data.file,
                 name: data.name,
                 type: data.type
-            });
+            }).then(() => {
+                cb(this.newServiceable);
+            });            
         },
-        updateFile(data){
+        updateFile(data, cb){
             this.dialog = false;
             this.updateServiceable({
                 file: data.file,
                 name: data.name,
                 type: data.type
-            });
+            }).then(cb(this.newServiceable));
         }
     }
 };

@@ -5,9 +5,7 @@
  * @since 18-02-2019
  */
 
-import { editorFunctions } from "./EditorFunctions/EditorFunctions"
 import { addKeyActions } from "./MxNative/keyActions"
-import { NodeEnum } from "./NodeEnum";
 import { mxUtils, mxToolbar, mxClipboard } from "./MxGraph";
 
 /**
