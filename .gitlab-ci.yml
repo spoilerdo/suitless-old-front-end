@@ -25,7 +25,10 @@ build_VueJS:
     
 test_VueJS:
   stage: test
-  image: nightwatch:latest
+  image: node:latest
+  services:
+  - name: selenium/standalone-chrome
+    alias: chrome
   script:
   - 'npm i'
   - 'npm run test:e2e'
