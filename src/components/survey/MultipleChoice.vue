@@ -38,6 +38,7 @@
               on-icon="mdi-checkbox-blank"
               color="primary"
               @change="selectChoice(option)"
+              :id="'question-'+option.id"
             />
             </v-flex>
           </v-layout>

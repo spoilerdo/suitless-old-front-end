@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { VueInstance } from '../../../main';
 import { SET_SURVEY, SET_SURVEYS } from './mutation-types';
 import { apiCall, asyncApiCall } from '@/services/api';
 import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
@@ -51,6 +52,11 @@ const actions = {
      * @memberof store.survey
      */
     getSurveyByID({ commit, dispatch }, surveyID) {
+        if(process.env.NODE_ENV == "test"){
+            dispatch("getTestSurveyByID", surveyID);
+            return;
+        }
+
         apiCall('get', `${API_URL}/modules/${surveyID}`, null)
         .then(req => {
             commit(SET_SURVEY, req.module);
@@ -58,7 +64,18 @@ const actions = {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
         });
     },
-
+    /**
+     * Retrieves a test survey by ID used in e2e tests
+     * @memberof store.survey
+     */
+    getTestSurveyByID({ commit }, surveyID) {
+        apiCall('get', `${API_URL}/modules/test/${surveyID}`, null)
+        .then(req => {
+            commit(SET_SURVEY, req.module);
+        }).catch(e => {
+            console.log(e)
+        });
+    }
 }
 
 const mutations = {
