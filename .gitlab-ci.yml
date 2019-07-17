@@ -3,16 +3,15 @@ before_script:
 
 stages:
 - build
-# - test
+- validate
 - docker
 
 build_VueJS:
   stage: build
   image: node:10.16.0
   retry: 2
-  only:
-  - master
   script:
+  - 'npm i'
   - 'npm ci'
   - 'npm run build'
   cache:
@@ -24,6 +23,21 @@ build_VueJS:
   artifacts:
     paths:
     - dist/
+    
+validate_VueJS:
+  stage: validate
+  image: nightwatch:latest
+  script:
+  - 'npm run test:e2e'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+        - .m2/repository
+        - node_modules/
+  artifacts:
+    paths:
+    - /builds/I386965/ehvlinc-frontend/tests/e2e/reports/
 
 docker_compose:
   stage: docker
