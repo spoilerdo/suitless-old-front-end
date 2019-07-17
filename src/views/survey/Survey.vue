@@ -7,8 +7,8 @@
     <v-layout align-center justify-center row pa-2>
       <ProgressBar ref="progressBar" />
     </v-layout>
-    <v-layout align-center justify-center row ma-4 v-if="progress !== 100">
-      <v-flex d-flex md8 xs12 v-if="survey.nodes != null && currentquestion != null && surveyStarted">
+    <v-layout align-start justify-start row ma-4 v-if="progress !== 100">
+      <v-flex xs12 md11 v-if="survey.nodes != null && currentquestion != null && surveyStarted">
         <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == $data.nodeEnum.Question"
@@ -36,6 +36,11 @@
         :description="survey.description"
         v-on:startSurvey="startSurvey"
       />
+
+      <v-flex xs5 md6 pl-5 v-if="surveyStarted && survey.nodes != null">
+        <Info :question="currentquestion" v-if="!isMobile" />
+      </v-flex>
+
     </v-layout>
     <EndPage
       v-else
@@ -46,9 +51,7 @@
       v-on:printPDF="generatePDF"
     />
     <v-layout align-center justify-center row pa-5>
-      <v-flex d-flex md8 xs12 v-if="surveyStarted && survey.nodes != null && currentquestion.reason != null">
-        <Info :question="currentquestion" v-if="!isMobile" />
-      </v-flex>
+      
     </v-layout>
   </v-container>
 </template>
