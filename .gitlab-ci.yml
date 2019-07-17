@@ -11,7 +11,6 @@ build_VueJS:
   image: node:10.16.0
   retry: 2
   script:
-  - 'npm i'
   - 'npm ci'
   - 'npm run build'
   cache:
@@ -28,6 +27,7 @@ validate_VueJS:
   stage: validate
   image: dandersonacro/nightwatch:latest
   script:
+  - 'npm i'
   - 'npm run test:e2e'
   cache:
     key: "$CI_COMMIT_REF_NAME"
