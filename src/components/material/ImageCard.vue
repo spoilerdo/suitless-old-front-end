@@ -2,9 +2,11 @@
   <v-card
     hover
     ripple
+    max-width="400px"
+    max-height="400px"
     :to="redirecturl"
-    class="rouned-card flex xs5 md3"
-    style="margin: 2% 2%; padding: 1%;"
+    class="rouned-card"
+    style="padding: 2%; margin:2%; flex-basis: 100%;"
   >
     <v-img :src="image" @error="imageLoadError"></v-img>
 
@@ -29,6 +31,10 @@
     font-size: 20px !important;
     text-align: center;
   }
+  .rouned-card {
+    max-width: 300px !important;
+    max-height: 300px !important;
+  }
 }
 </style>
 
@@ -40,23 +46,13 @@ import { CDN_URL } from "@/store/generalconstants";
  * @property {String} redirecturl
  * @property {String} imagename
  * @property {String} text
- * @property {String} cardWidth
- * @property {String} imageSize
- * @property {String} imageWidth
- * @property {String} imageHeight
- * @property {String} direction
  */
 export default {
   name: "ImageCard",
   props: {
     redirecturl: String,
     imagename: String,
-    text: String,
-    cardWidth: String,
-    imageSize: String,
-    imageWidth: String,
-    imageHeight: String,
-    direction: String
+    text: String
   },
   data() {
     return {

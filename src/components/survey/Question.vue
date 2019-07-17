@@ -27,7 +27,7 @@
         </v-layout>
       </v-card-title>
       <v-card-actions class="action-card">
-        <div class="layout row wrap" style="justify-content: center">
+        <v-layout row wrap justify-center>
           <!-- question card for single answer questions -->
           <QuestionCard
             v-on:selectedAnswer="selectAnswer"
@@ -40,7 +40,7 @@
             style="margin:10px"
             ref="question"
           />
-        </div>
+        </v-layout>
       </v-card-actions>
 
       <ArrowControls 

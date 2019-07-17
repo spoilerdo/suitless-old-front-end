@@ -9,22 +9,18 @@
           class="subheading text-xs-center white--text pb-3"
         >Creating an account allows us to suggest surveys to you based on your data and submitted surveys!</div>
       </v-flex>
-      <div class="layout row wrap" style="justify-content: center">
+      <v-layout row wrap justify-center>
         <ImageCard
           redirecturl="/login"
           imagename="account"
           text="Create an account"
-          cardWidth="xs6 md3"
-          direction="column"
         />
         <ImageCard
           redirecturl="/surveys"
           imagename="anonymous"
           text="Continue anonymously"
-          cardWidth="xs6 md3"
-          direction="column"
         />
-      </div>
+      </v-layout>
     </v-layout>
   </v-container>
 </template>
