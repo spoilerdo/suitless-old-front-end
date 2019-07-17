@@ -3,7 +3,7 @@ before_script:
 
 stages:
 - build
-- test
+#- test
 - docker
 
 build_VueJS:
@@ -23,18 +23,18 @@ build_VueJS:
     paths:
     - dist/
     
-test_VueJS:
-  stage: test
-  image: node:latest
-  services:
-  - name: selenium/standalone-chrome
-    alias: chrome
-  script:
-  - 'npm i'
-  - 'npm run test:e2e'
-  artifacts:
-    paths:
-    - tests/e2e/reports/
+#test_VueJS:
+#  stage: test
+#  image: node:latest
+#  services:
+#  - name: selenium/standalone-chrome
+#    alias: chrome
+#  script:
+#  - 'npm i'
+#  - 'npm run test:e2e'
+#  artifacts:
+#    paths:
+#    - tests/e2e/reports/
 
 docker_compose:
   stage: docker
