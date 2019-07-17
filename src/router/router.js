@@ -34,7 +34,7 @@ let router = new Router({
       name: 'Survey',
       component: Survey,
       props: true,
-      meta: { requiresAuth: true, requiresAdmin: false }
+      meta: { requiresAuth: false, requiresAdmin: false }
     },
     {
       path: '/login',

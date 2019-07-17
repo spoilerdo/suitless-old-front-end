@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-//TODO settoken functie fixen
 export const setToken = (token) => {
     if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
