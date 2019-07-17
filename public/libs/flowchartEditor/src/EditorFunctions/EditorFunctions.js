@@ -5,11 +5,12 @@
  * @since 18-02-2019
  */
 import { NodeEnum } from "../NodeEnum";
+import { ShapeEnum } from "./ShapeEnum";
 import { GraphCoder } from "../GraphCoder";
 import { state } from "../store/flowcharteditor";
 import { addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice } from "./PrivateFunctions";
 
-import { mxConstants, mxEllipse, mxHexagon, mxSwimlane } from "../MxGraph";
+import { mxConstants, mxEllipse, mxHexagon, mxSwimlane, mxRectangle } from "../MxGraph";
 
 /**
  * This is the max depth of a flowchart AKA what is the longest path of a flowchart.
@@ -96,7 +97,8 @@ export let editorFunctions = {
                 }
             ]
 
-            if(firstCell.lincType != NodeEnum.Start){
+            //Certain edges are not allowed to be added
+            if(firstCell.lincType != NodeEnum.Start && firstCell.lincType != NodeEnum.Notification && firstCell.lincType != NodeEnum.MultipleChoice){
                 edge.lincData = data;
             }
 
@@ -118,34 +120,41 @@ export let editorFunctions = {
      * @param {mxGraph} graph 
      */
     addCustomShapes(graph) {
-        //Ellipse that represents the start node
+        //Rectangle that represents a default node
+        function rectangle() { }
+        rectangle.prototype = new mxRectangle();
+        rectangle.prototype.constructor = rectangle;
+
+        registerCustomShape(graph, rectangle, ShapeEnum.Rectangle);
+
+        //Ellipse that represents a start or end node
         function ellipse() { }
         ellipse.prototype = new mxEllipse();
         ellipse.prototype.constructor = ellipse;
 
-        registerCustomShape(graph, ellipse, NodeEnum.Start);
+        registerCustomShape(graph, ellipse, ShapeEnum.Ellipse);
 
-        //Dotted ellipse that represents a module you can refer to
+        //Dotted ellipse that represents special node with a special functions
         function dottedEllipse() { }
         dottedEllipse.prototype = new mxEllipse();
         dottedEllipse.prototype.constructor = dottedEllipse;
         dottedEllipse.prototype.isDashed = true;
 
-        registerCustomShape(graph, dottedEllipse, NodeEnum.Module);
+        registerCustomShape(graph, dottedEllipse, ShapeEnum.DottedEllipse);
 
-        //Dotted hexagon that represents a notification you can refer to
+        //Dotted hexagon that represents a special node with a special functions
         function hexagon() { }
         hexagon.prototype = new mxHexagon();
         hexagon.prototype.constructor = hexagon;
 
-        registerCustomShape(graph, hexagon, NodeEnum.Notification);
+        registerCustomShape(graph, hexagon, ShapeEnum.Hexagon);
 
-        //Swimlane that represents a multiple choice node you can refer to
+        //Swimlane that represents a special question node with some special functions
         function swimLane() { }
         swimLane.prototype = new mxSwimlane();
         swimLane.prototype.constructor = swimLane;
 
-        registerCustomShape(graph, swimLane, NodeEnum.MultipleChoice);
+        registerCustomShape(graph, swimLane, ShapeEnum.Swimlane);
     },
 
     /**
