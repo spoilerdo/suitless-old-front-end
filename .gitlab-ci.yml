@@ -3,12 +3,12 @@ before_script:
 
 stages:
 - build
-- validate
+- test
 - docker
 
 build_VueJS:
   stage: build
-  image: node:10.16.0
+  image: node:latest
   retry: 2
   script:
   - 'npm ci'
@@ -23,15 +23,15 @@ build_VueJS:
     paths:
     - dist/
     
-validate_VueJS:
-  stage: validate
-  image: dandersonacro/nightwatch:latest
+test_VueJS:
+  stage: test
+  image: nightwatch:latest
   script:
-  - 'npm ci'
+  - 'npm i'
   - 'npm run test:e2e'
   artifacts:
     paths:
-    - /builds/I386965/ehvlinc-frontend/tests/e2e/reports/
+    - tests/e2e/reports/
 
 docker_compose:
   stage: docker
