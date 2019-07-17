@@ -27,13 +27,8 @@ validate_VueJS:
   stage: validate
   image: dandersonacro/nightwatch:latest
   script:
+  - 'npm i'
   - 'npm run test:e2e'
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
-    paths:
-        - .m2/repository
-        - node_modules/
   artifacts:
     paths:
     - /builds/I386965/ehvlinc-frontend/tests/e2e/reports/
