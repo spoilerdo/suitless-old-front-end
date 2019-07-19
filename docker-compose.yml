@@ -5,3 +5,6 @@ services:
     network_mode: "bridge"
     ports:
      - "3301:80"
+    volumes:
+     - "/srv/ssl:/ssl"
+     - "/srv/ssl/.well-known:/app/.well-known"

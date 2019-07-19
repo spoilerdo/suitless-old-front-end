@@ -13,6 +13,7 @@ build_VueJS:
   script:
   - 'npm ci'
   - 'npm run build'
+  - 'npm run docs'
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
