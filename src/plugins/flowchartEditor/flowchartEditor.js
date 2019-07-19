@@ -160,10 +160,12 @@ export default {
             data: function () {
                 return {
                     /**
+                     * @memberof plugin.flowchartEditor
                      * The nodeEnum can be used to alter between node format bar types or just to specify a certain node type
                      */
                     nodeEnum: NodeEnum,
                     /**
+                     * @memberof plugin.flowchartEditor
                      * The implicationEnum can be used to keep track of all the different implications that are avaialble on an edge
                      */
                     implicationEnum: ImplicationEnum

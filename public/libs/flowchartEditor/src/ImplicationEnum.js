@@ -1,15 +1,12 @@
 /**
- * Implication ENUM contains all implication types
+ * ImplicationEnum to store all implication types.
+ * keep the name to value and value to name mappings
+ * in SYNC.
  * @author Martijn Dormans
  * @version 1.0
  * @since 10-6-2019
  */
 
-/**
- * ImplicationEnum to store all implication types.
- * keep the name to value and value to name mappings
- * in SYNC.
- */
 export let ImplicationEnum = {
     /**
      * Name to Value mapping.

@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
-    "docs": "documentation build src/**/*.{js,vue} -f html -o docs --shallow"
+    "docs": "documentation build src/**/*.{js,vue} -f html -o docs --shallow",
+    "readme": "documentation build src/**/*.{js,vue} -f md -o README.md --shallow"
   },
   "dependencies": {
     "axios": "^0.19.0",
