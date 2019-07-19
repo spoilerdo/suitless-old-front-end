@@ -2,7 +2,7 @@
   <v-layout justify-center wrap class="fillScreen">
     <Drawer/>
     <div class="ServiceableRow stretch">
-      <ServiceableTopbar v-on:serviceable="addServiceable($event)" class="ServiceableRow form"/>
+      <ServiceableTopbar id="topbar" v-on:serviceable="addServiceable($event)" class="ServiceableRow form"/>
       <ServiceableTable ref="table" class="ServiceableRow data"/>
     </div>
   </v-layout>

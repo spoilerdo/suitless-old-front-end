@@ -3,15 +3,13 @@ before_script:
 
 stages:
 - build
-# - test
+#- test
 - docker
 
 build_VueJS:
   stage: build
-  image: node:10.16.0
+  image: node:10.16-stretch
   retry: 2
-  only:
-  - master
   script:
   - 'npm ci'
   - 'npm run build'
@@ -25,6 +23,19 @@ build_VueJS:
   artifacts:
     paths:
     - dist/
+    
+#test_VueJS:
+#  stage: test
+#  image: node:latest
+#  services:
+#  - name: selenium/standalone-chrome
+#    alias: chrome
+#  script:
+#  - 'npm i'
+#  - 'npm run test:e2e'
+#  artifacts:
+#    paths:
+#    - tests/e2e/reports/
 
 docker_compose:
   stage: docker

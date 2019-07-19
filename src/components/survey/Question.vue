@@ -36,7 +36,6 @@
             :id="'question-' + answer.targetID"
             :text="answer.value"
             :answer="answer"
-            imageName="man"
             color="primary" 
             style="margin:10px"
             ref="question"
@@ -87,12 +86,15 @@ export default {
     ArrowControls
   },
   props: {
+      /**
+       * The current question (default node values + question node lincData)
+       */
       question: {
           type: Object,
           required: true
       },
       progress: Number,
-      isMobile: Boolean
+      isMobile: Boolean,
   },
   data() {
     return{

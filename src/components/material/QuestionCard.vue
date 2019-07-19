@@ -59,10 +59,6 @@ import { CDN_URL } from "@/store/generalconstants";
 export default {
   props: {
     text: String,
-    imageName: {
-      type: String,
-      default: undefined
-    },
     answer: {
       type: Object
     }
@@ -70,7 +66,7 @@ export default {
   data() {
     return {
       selected: false,
-      image: `${CDN_URL}/${this.imageName}`
+      image: `${CDN_URL}/${this.answer.imageName}`
     };
   },
   methods: {

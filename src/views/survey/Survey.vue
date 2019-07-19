@@ -125,7 +125,6 @@ export default {
 
     agreeDisclaimer(choice){
       if(choice === false){
-        console.log("go back!!!");
         this.$router.go(-1);
       }
     },

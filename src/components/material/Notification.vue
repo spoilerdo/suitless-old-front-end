@@ -5,7 +5,6 @@
     right
     dark
     :color="type"
-    :timeout="timeVisible"
   >
     <v-icon color="white" class="mr-3">{{ icon }}</v-icon>
     <div>

@@ -100,9 +100,10 @@ export default {
                  * @memberof plugin.flowchartEditor
                  * @param {String} name of the flowchart
                  * @param {String} description of the flowchart
+                 * @param {String} lincData an array of mesceleanous data that can be used by the front-end
                  */
-                getFlowchart(name, description) {
-                    return methods.getFlowchart(name, description);
+                getFlowchart(name, description, lincData) {
+                    return methods.getFlowchart(name, description, lincData);
                 },
 
                 /**
@@ -149,8 +150,8 @@ export default {
                  * @param {String} implicationLevel the level of the implication (warning, info, etc...)
                  * @param {String} implicationColor the hex color you want to turn the edge into
                 */
-                changeEdge(name, implication, implicationLevel, implicationColor){
-                    methods.changeEdge(name, implication, implicationLevel, implicationColor);
+                changeEdge(name, implication, implicationLevel, implicationColor, imageName){
+                    methods.changeEdge(name, implication, implicationLevel, implicationColor, imageName);
                 }
             },
             /**

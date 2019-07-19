@@ -6,10 +6,8 @@
  * @since 17-04-2019
  */
 
-import { NodeEnum } from "../NodeEnum";
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
-import { genericAddVertex, addSubVertexes } from "../EditorFunctions/PrivateFunctions";
-import { mxConstants } from "../MxGraph";
+import { addSubVertexes } from "../EditorFunctions/PrivateFunctions";
 
 /**
  * All general variables that can be communicated to Vue
@@ -21,7 +19,7 @@ export const state = {
         //private variable
         dialogInternal: false,
         //Listenere (Vue plugin script) that will be calledback whenever the variable state changes
-        dialogListener: function (val) { },
+        dialogListener: function () { },
         //set a new value for the variable and callback to the listener
         set set(val) {
             this.dialogInternal = val;
@@ -38,7 +36,7 @@ export const state = {
     },
     flowchart: {
         flowchartInternal: null,
-        flowchartListener: function (val) { },
+        flowchartListener: function () { },
         set set(val) {
             this.flowchartInternal = val;
             this.flowchartListener(val);
@@ -58,7 +56,7 @@ export const state = {
 
     newCell: {
         newCellInternal: null,
-        newCellListener: function (val) { },
+        newCellListener: function () { },
         set set(val) {
             this.newCellInternal = val;
             this.newCellListener(val);
@@ -78,7 +76,7 @@ export const state = {
     */
     activeFormatBar: {
         activeFormatBarInternal: null,
-        activeFormatBarListener: function (val) { },
+        activeFormatBarListener: function () { },
         set set(val) {
             this.activeFormatBarInternal = val;
             this.activeFormatBarListener(val);
@@ -106,8 +104,8 @@ export const methods = {
     setFlowchart(val) {
         state.flowchart.set = val;
     },
-    getFlowchart(name, description) {
-        return editorFunctions.exportChart(state.editor.graph, name, description);
+    getFlowchart(name, description, lincData) {
+        return editorFunctions.exportChart(state.editor.graph, name, description, lincData);
     },
 
     /*
@@ -152,7 +150,7 @@ export const methods = {
             graph.removeCells(childrenToBeRemoved, true);
         }
     },
-    changeEdge(name, implication, implicationLevel, implicationColor){
+    changeEdge(name, implication, implicationLevel, implicationColor, imageName){
         state.selectedCell.value = name;
         state.editor.graph.getModel().setValue(state.selectedCell, name);
 
@@ -167,6 +165,7 @@ export const methods = {
 
         state.selectedCell.lincData[0].value = implication;
         state.selectedCell.lincData[1].value = implicationLevel;
+        state.selectedCell.lincData[2].value = imageName;
     },
     //Generic method for a basic node with 2 inputs nodeName (name of the cell) and name of the first lincdata prop (question etc...)
     genericChangeNode(nodeName, name){

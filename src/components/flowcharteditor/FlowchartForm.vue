@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog v-model="importDialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
           <span class="headline">Open flowchart</span>
@@ -26,7 +26,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn id="btn_cancel_import_flowchart_dialog" color="secondary" @click="setDialog(false)">Close</v-btn>
+          <v-btn id="btn_cancel_import_flowchart_dialog" color="secondary" @click="setImportDialog(false)">Close</v-btn>
           <v-btn id="btn_import_flowchart_dialog" color="primary" @click="importFlowchart">Import</v-btn>
         </v-card-actions>
       </v-card>
@@ -50,14 +50,14 @@ export default {
     };
   },
   computed: {
-    ...mapState("flowcharteditor/", ["dialog", "flowchart"])
+    ...mapState("flowcharteditor/", ["importDialog", "flowchart"])
   },
   methods: {
-    ...mapActions("flowcharteditor/", ["setDialog", "getFlowchartByName"]),
+    ...mapActions("flowcharteditor/", ["setImportDialog", "getFlowchartByName"]),
     importFlowchart() {
-      this.setDialog(false);
+      this.setImportDialog(false);
 
-      this.getFlowchartByName(this.form.moduleName).then(req => {
+      this.getFlowchartByName(this.form.moduleName).then(() => {
         this.setFlowchart();
       });
     },

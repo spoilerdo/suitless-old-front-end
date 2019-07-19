@@ -36,7 +36,7 @@
 
 <script>
 import ServiceableFilePicker from "@/components/cdn/ServiceableFilePicker";
-import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 
 /**
  * Returns the top-bar used in the CDN page, this contains a small form with a name field and a filepicker
@@ -70,10 +70,7 @@ export default {
     validateAndUploadImage() {
       this.$validator.validateAll("Form").then(valid => {
         if (valid) {
-          this.uploadImage({ file: this.form.file, name: this.form.name, type: this.form.type })
-          .then(() => {
-            this.$refs.filePicker.clearInputs();
-          })
+          this.tryUploadingNewServiceable(this.form);
         }
       });
     }
