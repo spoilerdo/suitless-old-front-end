@@ -8,7 +8,7 @@ stages:
 
 build_VueJS:
   stage: build
-  image: node:latest
+  image: node:10.16-stretch
   retry: 2
   script:
   - 'npm ci'
