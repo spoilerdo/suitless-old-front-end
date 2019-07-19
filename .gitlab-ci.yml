@@ -2,9 +2,22 @@ before_script:
 - export GRADLE_USER_HOME=`pwd`/.gradle
 
 stages:
+- test
 - build
-#- test
 - docker
+
+test_VueJS:
+ stage: test
+ image: nightwatch:latest
+ services:
+ - name: selenium/standalone-chrome
+   alias: chrome
+ script:
+ - 'npm ci'
+ - 'npm run test:e2e'
+ artifacts:
+   paths:
+   - tests/e2e/reports/
 
 build_VueJS:
   stage: build
@@ -23,19 +36,6 @@ build_VueJS:
   artifacts:
     paths:
     - dist/
-    
-#test_VueJS:
-#  stage: test
-#  image: node:latest
-#  services:
-#  - name: selenium/standalone-chrome
-#    alias: chrome
-#  script:
-#  - 'npm i'
-#  - 'npm run test:e2e'
-#  artifacts:
-#    paths:
-#    - tests/e2e/reports/
 
 docker_compose:
   stage: docker
