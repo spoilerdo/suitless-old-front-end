@@ -29,33 +29,34 @@ export function createToolbar(toolbarContainer, editor, model, keyHandler, graph
  * uses the addItem function of the mxDefaultToolbar to add most basic
  * actions to the toolbar.
  * @param {mxDefaultToolbar} toolbar 
+ * @todo Use a general server constant for these links.
  */
 function addDefaultActions(toolbar, graph) {
-    toolbar.addItem('Copy', "http://startupseindhoven.nl/api/cdn/Copy", mxUtils.bind(this, function () {
+    toolbar.addItem('Copy', "https://startupseindhoven.nl/api/cdn/Copy", mxUtils.bind(this, function () {
         mxClipboard.copy(graph);
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Paste', "http://startupseindhoven.nl/api/cdn/Paste", mxUtils.bind(this, function () {
+    toolbar.addItem('Paste', "https://startupseindhoven.nl/api/cdn/Paste", mxUtils.bind(this, function () {
         mxClipboard.paste(graph);
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Delete', "http://startupseindhoven.nl/api/cdn/Delete", mxUtils.bind(this, function () {
+    toolbar.addItem('Delete', "https://startupseindhoven.nl/api/cdn/Delete", mxUtils.bind(this, function () {
         graph.removeCells();
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Cut', "http://startupseindhoven.nl/api/cdn/Cut", mxUtils.bind(this, function () {
+    toolbar.addItem('Cut', "https://startupseindhoven.nl/api/cdn/Cut", mxUtils.bind(this, function () {
         mxClipboard.cut(graph);
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Zoom out', "http://startupseindhoven.nl/api/cdn/MagnifyMinus", mxUtils.bind(this, function () {
+    toolbar.addItem('Zoom out', "https://startupseindhoven.nl/api/cdn/MagnifyMinus", mxUtils.bind(this, function () {
         graph.zoomOut();
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Zoom In', "http://startupseindhoven.nl/api/cdn//MagnifyPlus", mxUtils.bind(this, function () {
+    toolbar.addItem('Zoom In', "https://startupseindhoven.nl/api/cdn/MagnifyPlus", mxUtils.bind(this, function () {
         graph.zoomIn();
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('To Front', "http://startupseindhoven.nl/api/cdn//ToFront", mxUtils.bind(this, function () {
+    toolbar.addItem('To Front', "https://startupseindhoven.nl/api/cdn/ToFront", mxUtils.bind(this, function () {
         graph.orderCells(false);
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('To Back', "http://startupseindhoven.nl/api/cdn//ToBack", mxUtils.bind(this, function () {
+    toolbar.addItem('To Back', "https://startupseindhoven.nl/api/cdn/ToBack", mxUtils.bind(this, function () {
         graph.orderCells(true);
     }), null, "v-icon mdi theme--light mxToolbarItem");
-    toolbar.addItem('Fit screen', "http://startupseindhoven.nl/api/cdn//Fit", mxUtils.bind(this, function () {
+    toolbar.addItem('Fit screen', "http://startupseindhoven.nl/api/cdn/Fit", mxUtils.bind(this, function () {
         graph.fit();
     }), null, "v-icon mdi theme--light mxToolbarItem");
 }
