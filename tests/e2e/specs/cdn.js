@@ -21,7 +21,7 @@ module.exports = {
         browser
             .useCss()
             .waitForElementVisible('body', 10000)
-            .waitForElementVisible('#topbar', 10000)
+            .waitForElementVisible('#topbar', 50000)
             .assert.visible('#uploadBtn')
             .assert.visible('#nameField')
             .assert.visible('#fileField')

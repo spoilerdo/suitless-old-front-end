@@ -7,9 +7,7 @@ module.exports = {
     
         browser
             .url('http://localhost:8080/flowchart')
-            .waitForElementVisible('body', 10000)
-    
-            .waitForElementVisible('ellipse', 1000)
+            .waitForElementVisible('ellipse', 50000)
             .assert.visible('ellipse')
       },
 

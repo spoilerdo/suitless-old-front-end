@@ -10,19 +10,19 @@ module.exports = {
       .waitForElementVisible('body', 1000)
 
     //wait for the startnode
-      .waitForElementVisible('ellipse', 1000)
+      .waitForElementVisible('ellipse', 50000)
       .assert.visible('ellipse')
   },
 
   'Import flowchart': function (browser) {
     browser
-      .waitForElementVisible('#btn_import_flowchart', 10000)
+      .waitForElementVisible('#btn_import_flowchart', 50000)
       .assert.visible('#btn_import_flowchart')
       .click('#btn_import_flowchart')
-      .waitForElementVisible('#btn_import_flowchart_dialog', 100000)
+      .waitForElementVisible('#btn_import_flowchart_dialog', 500000)
       .assert.visible('#btn_import_flowchart_dialog')
       .click('#btn_cancel_import_flowchart_dialog')
-      .waitForElementNotVisible('#btn_import_flowchart_dialog', 10000)
+      .waitForElementNotVisible('#btn_import_flowchart_dialog', 50000)
       .assert.hidden('#btn_import_flowchart_dialog')
   },
 
@@ -42,12 +42,12 @@ module.exports = {
         this.moveToElement('ellipse', 200, yOffset)
         this.mouseButtonUp('left')
 
-        this.waitForElementVisible('table', 1000)
+        this.waitForElementVisible('table', 50000)
         //Move mouse to dropdown node menu
         this.moveToElement('table', 50, 35)
         this.mouseButtonClick('left')
 
-        this.waitForElementVisible('rect', 1000)
+        this.waitForElementVisible('rect', 50000)
         this.assert.visible('rect')
 
         this.end()
