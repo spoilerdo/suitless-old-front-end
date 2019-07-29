@@ -8,6 +8,7 @@
  * @since 07-05-2019
  */
 import { NodeEnum } from "../NodeEnum";
+import { ShapeEnum } from "./ShapeEnum";
 import { mxGraph, mxConstants, mxCellRenderer } from "../MxGraph";
 import { editorFunctions } from "./EditorFunctions";
 
@@ -23,7 +24,7 @@ import { editorFunctions } from "./EditorFunctions";
 * @param {String} y
 */
 export function addQuestion(graph, parent, json, x, y) {
-    editorFunctions.setCustomShape(graph, NodeEnum.Question);
+    editorFunctions.setCustomShape(graph, ShapeEnum.Rectangle);
 
     let data = [
         {
@@ -35,7 +36,7 @@ export function addQuestion(graph, parent, json, x, y) {
             "value": ""
         }
     ]
-    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, 80, x, y, 'shape=' + NodeEnum.Question);
+    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, 80, x, y, 'shape=' + NodeEnum.Rectangle);
 }
 
 /**
@@ -48,9 +49,9 @@ export function addQuestion(graph, parent, json, x, y) {
  * @param {String} y
  */
 export function addStart(graph, parent, json, x, y) {
-    editorFunctions.setCustomShape(graph, NodeEnum.Start);
+    editorFunctions.setCustomShape(graph, ShapeEnum.Ellipse);
 
-    return genericAddVertex(graph, parent, json, NodeEnum.Start, null, 80, 80, x, y, 'shape=' + NodeEnum.Start + ';perimeter=ellipsePerimeter;');
+    return genericAddVertex(graph, parent, json, NodeEnum.Start, null, 80, 80, x, y, 'shape=' + ShapeEnum.Ellipse + ';perimeter=ellipsePerimeter;deletable=0;');
 }
 
 /**
@@ -64,13 +65,15 @@ export function addStart(graph, parent, json, x, y) {
  * @param {String} y
  */
 export function addModule(graph, parent, json, x, y) {
-    editorFunctions.setCustomShape(graph, NodeEnum.Module);
+    editorFunctions.setCustomShape(graph, ShapeEnum.DottedEllipse);
 
     let data = [{
         "key": "module",
         "value": ""
     }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, 80, x, y, 'shape=' + NodeEnum.Module + ';perimeter=ellipsePerimeter;');
+    let vertex = genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, 80, x, y, 'shape=' + ShapeEnum.DottedEllipse + ';perimeter=ellipsePerimeter;');
+    vertex.setConnectable(false);
+    return vertex;
 }
 
 /**
@@ -83,9 +86,11 @@ export function addModule(graph, parent, json, x, y) {
  * @param {String} y
  */
 export function addEnd(graph, parent, json, x, y) {
-    editorFunctions.setCustomShape(graph, NodeEnum.Start);
+    editorFunctions.setCustomShape(graph, ShapeEnum.Ellipse);
 
-    return genericAddVertex(graph, parent, json, NodeEnum.End, null, 80, 80, x, y, 'shape=' + NodeEnum.Start + ';perimeter=ellipsePerimeter;');
+    let vertex = genericAddVertex(graph, parent, json, NodeEnum.End, null, 80, 80, x, y, 'shape=' + ShapeEnum.Ellipse + ';perimeter=ellipsePerimeter;editable=0;');
+    vertex.setConnectable(false);
+    return vertex;
 }
 
 /**
@@ -99,13 +104,13 @@ export function addEnd(graph, parent, json, x, y) {
  * @param {String} y
  */
 export function addNotification(graph, parent, json, x, y) {
-    editorFunctions.setCustomShape(graph, NodeEnum.Notification);
+    editorFunctions.setCustomShape(graph, ShapeEnum.Hexagon);
 
     let data = [{
         "key": "notify",
         "value": ""
     }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, 80, x, y, 'shape=' + NodeEnum.Notification + ';perimeter=ellipsePerimeter;');
+    return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, 80, x, y, 'shape=' + ShapeEnum.Hexagon + ';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -119,7 +124,7 @@ export function addNotification(graph, parent, json, x, y) {
  * @param {String} y
  */
 export function addNote(graph, parent, json, x, y) {
-    editorFunctions.setCustomShape(graph, NodeEnum.Question);
+    editorFunctions.setCustomShape(graph, ShapeEnum.Rectangle);
     let style = graph.getStylesheet().getDefaultVertexStyle();
     style[mxConstants.STYLE_FILLCOLOR] = '#fcea76';
 
@@ -144,7 +149,7 @@ export function addNote(graph, parent, json, x, y) {
  * @param {String} y
  */
 export function addMultipleChoice(graph, parent, json, x, y) {
-    editorFunctions.setCustomShape(graph, NodeEnum.MultipleChoice);
+    editorFunctions.setCustomShape(graph, ShapeEnum.Swimlane);
 
     let data = [
         {
@@ -161,7 +166,7 @@ export function addMultipleChoice(graph, parent, json, x, y) {
         }
     ]
 
-    let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, data, 300, 300, x, y, 'shape=' + NodeEnum.MultipleChoice);
+    let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, data, 300, 300, x, y, 'shape=' + ShapeEnum.Swimlane);
     
     //add three standard sub vertexes
     addSubVertexes(graph, parentSwimlane, json, 3, 0);
@@ -230,7 +235,7 @@ export function addSubVertexes(graph, parent, json, amountOfChildren, index) {
                 "value": "this is a choice"
             }]
 
-            genericAddVertex(graph, parent, null, NodeEnum.Choice, data, 80, 40, 10, (70 + i * 50), 'shape=' + NodeEnum.MultipleChoice + ';movable=0');
+            genericAddVertex(graph, parent, null, NodeEnum.Choice, data, 80, 40, 10, (70 + i * 50), 'shape=' + ShapeEnum.Swimlane + ';movable=0');
         }
     }
 }
