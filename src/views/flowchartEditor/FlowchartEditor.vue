@@ -243,7 +243,7 @@ import ModuleFunctions from "@/components/flowcharteditor/formatbar/ModuleFuncti
 import NotificationFunctions from "@/components/flowcharteditor/formatbar/NotificationFunctions";
 import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/MultipleChoiceFunctions";
 import ChoiceFunctions from "@/components/flowcharteditor/formatbar/ChoiceFunctions";
-import EdgeFunctions from "@/components/flowcharteditor/formatbar/EdgeFunctions";
+import EdgeFunctions from "@/components/flowcharteditor/formatbar/edge-functions/EdgeFunctions";
 import Drawer from "@/components/core/Drawer";
 
 /**

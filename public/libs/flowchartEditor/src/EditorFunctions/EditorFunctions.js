@@ -84,12 +84,11 @@ export let editorFunctions = {
 
             let data = [
                 {
-                    "key": "implication",
-                    "value": ""
-                },
-                {
-                    "key": "implicationLevel",
-                    "value": "default"
+                    "key": "implications",
+                    "value": [{
+                        "implication": "",
+                        "implicationLevel": "",
+                    }]
                 },
                 {
                     "key": "imageName",

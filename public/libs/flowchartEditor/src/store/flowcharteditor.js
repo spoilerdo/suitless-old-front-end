@@ -150,7 +150,9 @@ export const methods = {
             graph.removeCells(childrenToBeRemoved, true);
         }
     },
-    changeEdge(name, implication, implicationLevel, implicationColor, imageName){
+    changeEdge(name, implications, implicationColor, imageName){
+        console.log(implicationColor);
+
         state.selectedCell.value = name;
         state.editor.graph.getModel().setValue(state.selectedCell, name);
 
@@ -163,9 +165,8 @@ export const methods = {
         state.selectedCell.style += "strokeColor=" + implicationColor
         state.editor.graph.refresh();
 
-        state.selectedCell.lincData[0].value = implication;
-        state.selectedCell.lincData[1].value = implicationLevel;
-        state.selectedCell.lincData[2].value = imageName;
+        state.selectedCell.lincData[0].value = implications;
+        state.selectedCell.lincData[1].value = imageName;
     },
     //Generic method for a basic node with 2 inputs nodeName (name of the cell) and name of the first lincdata prop (question etc...)
     genericChangeNode(nodeName, name){

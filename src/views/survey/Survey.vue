@@ -50,9 +50,6 @@
       v-on:renderPreviousQuestion="renderPreviousQuestion"
       v-on:printPDF="generatePDF"
     />
-    <v-layout align-center justify-center row pa-5>
-      
-    </v-layout>
   </v-container>
 </template>
 
