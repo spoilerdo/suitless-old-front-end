@@ -27,6 +27,13 @@
           :isMobile="isMobile"
           :options="options"
         />
+        <SurveyInformation
+          v-else-if="currentquestion.style == $data.nodeEnum.Notification"
+          title="Extra information"
+          :description="getNotification()"
+          btnText="Got it"
+          v-on:btnClick="answeredQuestion(currentquestion.flows[0])"
+        />
         <Notification ref="surveyNotification" :timeVisible="0"/>
       </v-flex>
       <!--add the start of the survey this component will give some information about the survey-->
@@ -34,7 +41,8 @@
         v-else-if="surveyStarted === false && survey.name != null" 
         :title="survey.name" 
         :description="survey.description"
-        v-on:startSurvey="startSurvey"
+        btnText="Start survey"
+        v-on:btnClick="startSurvey"
       />
 
       <v-flex xs5 md6 pl-5 v-if="surveyStarted && survey.nodes != null">
@@ -246,6 +254,10 @@ export default {
       if(this.$refs.surveyNotification != null){
         this.$refs.surveyNotification.closeNotification(); 
       }
+    },
+
+    getNotification(currentquestion){
+      return currentquestion.lincData.find(data => data.key === "notify").value;
     },
 
     generatePDF() {

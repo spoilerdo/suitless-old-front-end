@@ -45,6 +45,8 @@ const actions = {
      * @memberof store.answer
      */
     answerQuestion({ commit, dispatch }, { answer, question }) {
+        let a = {};
+
         //check if the answer given is multiple choice (an array)
         if(Array.isArray(answer)) {
             //multi choice question answered
@@ -54,7 +56,7 @@ const actions = {
             answer.forEach(ans => {
                 //if a multi choice is answered without a follow up flow, be sure to save it seperately. otherwise it will be skipped
                 if(ans.flows.length === 0) {
-                    let a = {
+                    a = {
                         questionID: question.id,
                         questionValue: question.lincData.find(data => data.key === "question").value,
                         lincData: question.lincData,
@@ -68,7 +70,7 @@ const actions = {
                 }
 
                 ans.flows.forEach(flow => {
-                    let a = {
+                    a = {
                         questionID: question.id,
                         questionValue: question.lincData.find(data => data.key === "question").value,
                         lincData: question.lincData,
@@ -77,11 +79,6 @@ const actions = {
                         answerImplication: flow.implication,
                         answerImplicationLevel: flow.implicationLevel
                     };
-
-                    //Notify the user of the implication they just received from the survey.
-                    if(a.answerImplication != null){
-                        dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
-                    }
     
                     temp.push(a);
                 })
@@ -93,7 +90,7 @@ const actions = {
         } else {
             //single choice question answered
             //fill the answer in on the answers array
-            var a = {
+            a = {
                 questionID: question.id,
                 questionValue: question.lincData.find(data => data.key === "question").value,
                 lincData: question.lincData,
@@ -103,12 +100,12 @@ const actions = {
                 answerImplicationLevel: answer.implicationLevel
             };
 
-            //Notify the user of the implication they just received from the survey.
-            if(a.answerImplication != null){
-                dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
-            }
-
             commit(ADD_ANSWER, a);
+        }
+
+        //Notify the user of the implication they just received from the survey.
+        if(a.answerImplication != null){
+            dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
         }
     },
     /**

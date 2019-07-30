@@ -12,7 +12,7 @@
         </v-layout>
       </v-card-actions>
       <v-layout align-end justify-center row>
-        <v-btn class="primary" @click="$emit('startSurvey')" id="start-survey-btn-45783">Start survey</v-btn>
+        <v-btn class="primary" @click="$emit('btnClick')" id="start-survey-btn-45783">{{ btnText }}</v-btn>
       </v-layout>
     </v-card>
   </v-scale-transition>
@@ -40,6 +40,10 @@ export default {
       required: true
     },
     description: {
+      type: String,
+      required: true
+    },
+    btnText: {
       type: String,
       required: true
     }
