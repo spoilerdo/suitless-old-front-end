@@ -141,9 +141,9 @@ export default {
     addImplication() {
       this.implicationList.push({
         implication: null,
-        implicationLevel: null
+        implicationLevel: "default"
       });
-      this.implicationColors.push("#000");
+      this.implicationColors.push(theme.default);
     },
     deleteImplication(index) {
       this.implicationList.splice(index, 1);

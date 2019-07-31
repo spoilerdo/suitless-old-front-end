@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex md6 sm8 xs12>
         <materialCard color="primary" title="Student Legal Health Check" :text="loginText">
-          <v-alert :value="alert.message !=null" :type="alert.type" outline>{{alert.message}}</v-alert>
+          <Alert :value="alert.message !=null" :type="alert.type" outline :text="alert.message"></Alert>
 
           <div v-show="loggingIn">
             <Form email password name="loginForm" ref="loginForm" :onclick="loginUser"/>
@@ -50,6 +50,7 @@
 import materialCard from "@/components/material/Card";
 import Form from "@/components/login/LoginForm";
 import Logo from "@/components/login/Logo";
+import Alert from "@/components/material/Alert";
 import { mapState, mapActions } from "vuex";
 
 /**
@@ -61,6 +62,7 @@ export default {
   components: {
     Form,
     Logo,
+    Alert,
     materialCard
   },
   data() {

@@ -29,6 +29,7 @@
 
 <script>
 import ImplicationList from "./ImplicationList.vue";
+import theme from "@/plugins/vuetify/theme";
 import { mapState, mapActions } from "vuex";
 
 /**
@@ -44,11 +45,11 @@ export default {
         implications: [
           {
             implication: null,
-            implicationLevel: null
+            implicationLevel: "default"
           }
         ]
       },
-      implicationColorsList: ["#000"]
+      implicationColorsList: []
     };
   },
   components: {
@@ -61,6 +62,9 @@ export default {
       "imageName"
     ])
   },
+  created(){
+    this.implicationColorsList.push(theme.default);
+  },
   methods: {
     ...mapActions("cdn/", ["setFileDialog"]),
     prepareChangeEdge() {
@@ -72,9 +76,8 @@ export default {
             this.form.imageName = "DefaultEdgeImage";
           }
 
-          let implicationColor = "#000";
+          let implicationColor = theme.default;
           if (this.implicationColorsList.length === 1) {
-            console.log(this.implicationColorsList);
             implicationColor = this.implicationColorsList[0];
           }
 
@@ -86,18 +89,10 @@ export default {
           );
 
           //reset imageName because the image already has been used
-          this.form = {
-            answer: null,
-            imageName: "",
-            implications: [
-              {
-                implication: null,
-                implicationLevel: null
-              }
-            ]
-          }
 
-          this.implicationColorsList = ["#000"];
+          this.form = this.data.form;
+
+          this.implicationColorsList = [theme.default];
         }
       });
     }
@@ -110,13 +105,12 @@ export default {
         newValue.lincData.length > 0
       ) {
         this.form.answer = newValue.value;
-        /*this.form.implication = newValue.lincData.find(
-          data => data.key === "implication"
-        ).value;
-        this.form.implicationLevel = newValue.lincData.find(
-          data => data.key === "implicationLevel"
-        ).value;
-        */
+        let imp = JSON.parse(JSON.stringify(newValue.lincData.find(data => data.key === "implications").value));
+        this.form.implications = imp;
+        if(imp[0].implicationLevel){
+          const themes = imp.map((el)=> el.implicationLevel);
+          this.implicationColorsList = themes.map((el) => theme[el]);
+        }
       }
     },
     imageName: function(newVal) {

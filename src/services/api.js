@@ -20,6 +20,7 @@ export const apiCall = (method, path, data) => {
             }).then(res => {
                 return resolve(res.data);
             }).catch(err => {
+                if(err.response.status === 401){ checkAuthentication(); }
                 return reject(err);
             })
     });
@@ -37,6 +38,7 @@ export const apiCallWithContentType = (method, path, data, type) => {
             }).then(res => {
                 return resolve(res.data);
             }).catch(err => {
+                if(err.response.status === 401){ checkAuthentication(); }
                 return reject(err);
             })
     });
@@ -54,7 +56,14 @@ export const asyncApiCall = (method, path, data) => {
             }).then(res => {
                 return resolve(res.data);
             }).catch(err => {
+                if(err.response.status === 401){ checkAuthentication(); }
                 return reject(err);
             })
     })
+}
+
+//Used when the jwt token is outdate, just delete it then
+function checkAuthentication(){
+    localStorage.clear();
+    axios.defaults.headers.common['Authorization'] = "";
 }

@@ -60,8 +60,7 @@ const actions = {
                         lincData: question.lincData,
                         targetID: null,
                         answerValue: ans.value,
-                        answerImplication: null,
-                        answerImplicationLevel: null
+                        implications: ans.implications
                     }
 
                     temp.push(a);
@@ -74,8 +73,7 @@ const actions = {
                         lincData: question.lincData,
                         targetID: flow.targetID,
                         answerValue: ans.value,
-                        answerImplication: flow.implication,
-                        answerImplicationLevel: flow.implicationLevel
+                        implications: ans.implications
                     };
 
                     //Notify the user of the implication they just received from the survey.
@@ -99,8 +97,7 @@ const actions = {
                 lincData: question.lincData,
                 targetID: answer.targetID,
                 answerValue: answer.value,
-                answerImplication: answer.implication,
-                answerImplicationLevel: answer.implicationLevel
+                implications: answer.implications
             };
 
             //Notify the user of the implication they just received from the survey.
@@ -123,6 +120,7 @@ const actions = {
 const mutations = {
     [ADD_ANSWER](state, answer) {
         state.all.push(answer);
+        console.log(state.all);
     },
     [DELETE_LAST_ANSWER](state) {
         state.all.pop();

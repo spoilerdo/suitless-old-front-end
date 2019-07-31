@@ -61,8 +61,9 @@ export let editorFunctions = {
      * adds an unconnected edge to the graph.
      * @param {mxGraph} graph
      * @param {object} flow
+     * @param {object} implications
      */
-    addEdge(graph, flow) {
+    addEdge(graph, flow, implications) {
         let parent = graph.getDefaultParent();
         //Enabled the graph to be updated.
         graph.getModel().beginUpdate();
@@ -95,6 +96,12 @@ export let editorFunctions = {
                     "value": ""
                 }
             ]
+
+            if(implications){
+                data[0].value = implications;
+                //TODO fix this so that the correct image is saved
+                data[1].value = "DefaultEdgeImage";
+            }
 
             //Certain edges are not allowed to be added
             if(firstCell.lincType != NodeEnum.Start && firstCell.lincType != NodeEnum.Notification && firstCell.lincType != NodeEnum.MultipleChoice){
@@ -176,7 +183,7 @@ export let editorFunctions = {
 
         let cells = [];
         json.forEach(n => {
-            if(n.style != NodeEnum.Choice){
+            if(n.style != NodeEnum.Choice || n.style != NodeEnum.Start){
                 if(n.style == NodeEnum.MultipleChoice){
                     //The multiplechoice needs some childs
                     let data = n.lincData.filter(c => c.key !== "question")
@@ -210,8 +217,8 @@ export let editorFunctions = {
                     targetCell,
                     value: f.value
                 }
-                let edge = this.addEdge(graph, flow, f.implicationLevel);
-                this.changeEdgeColor(edge, f.implicationLevel);
+                let edge = this.addEdge(graph, flow, f.implications);
+                //this.changeEdgeColor(edge, f.implications);
             })
         })
     },

@@ -151,8 +151,6 @@ export const methods = {
         }
     },
     changeEdge(name, implications, implicationColor, imageName){
-        console.log(implicationColor);
-
         state.selectedCell.value = name;
         state.editor.graph.getModel().setValue(state.selectedCell, name);
 
