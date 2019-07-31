@@ -63,7 +63,7 @@ export default {
         this.formatBarType == this.$data.nodeEnum.Question
       ) {
         this.form.reason = newValue.lincData.find(
-          data => data.key === "question"
+          data => data.key === "reason"
         ).value;
       }
     }
