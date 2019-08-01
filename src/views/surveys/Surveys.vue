@@ -6,20 +6,16 @@
       <v-flex grow xs12>
         <div class="display-2 text-xs-center white--text pb-3">Recommended starter surveys</div>
       </v-flex>
-      <v-layout align-center justify-center row wrap>
+      <v-layout align-space-around justify-center row wrap>
         <ImageCard
           redirecturl="/survey/5cf4c7f87fa73a0006d320ac"
           imagename="trademark"
           text="Trademark"
-          cardWidth="xs6 sm4 md3"
-          direction="column"
         />
         <ImageCard
-          redirecturl="/survey/5cf4c8017fa73a0006d320ad"
-          imagename="software ip"
-          text="Software IP"
-          cardWidth="xs6 sm4 md3"
-          direction="column"
+          redirecturl="/survey/5d41a385c806980001e4abe5"
+          imagename="tradename"
+          text="Tradename"
         />
       </v-layout>
     </v-layout>

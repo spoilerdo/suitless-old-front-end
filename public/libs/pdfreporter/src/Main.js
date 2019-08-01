@@ -129,33 +129,38 @@ function getPDFContent(answers) {
  * @param {object} flows of a survey
  */
 function fillImplications(flows) {
-    console.log(flows);
     let implicationContents = [];
     flows.forEach(flow => {
-        switch (flow.answerImplicationLevel) {
-            case "success":
-                implicationContents.push(PdfContentSuccess("Success : "));
-                implicationContents.push(PdfContentSub(flow.answerImplication));
-                implicationContents.push(PdfContentWhitespace());
-                break;
-            case "warning":
-                implicationContents.push(PdfContentWarning("Warning : "));
-                implicationContents.push(PdfContentSub(flow.answerImplication));
-                implicationContents.push(PdfContentWhitespace());
-                break;
-            case "info":
-                implicationContents.push(PdfContentInfo("Info : "));
-                implicationContents.push(PdfContentSub(flow.answerImplication));
-                implicationContents.push(PdfContentWhitespace());
-                break;
-            case "primary":
-                console.log("something is primary");
-                implicationContents.push(PdfContentError("Error : "))
-                implicationContents.push(PdfContentSub(flow.answerImplication));
-                implicationContents.push(PdfContentWhitespace());
-                break;
-            default:
-                break;
+        if (flow.implications) {
+            flow.implications.forEach(implication => {
+                switch (implication.implicationLevel) {
+                    case "success":
+                        implicationContents.push(PdfContentSuccess("Success : "));
+                        implicationContents.push(PdfContentSub(implication.implication));
+                        implicationContents.push(PdfContentWhitespace());
+                        break;
+                    case "warning":
+                        implicationContents.push(PdfContentWarning("Warning : "));
+                        implicationContents.push(PdfContentSub(implication.implication));
+                        implicationContents.push(PdfContentWhitespace());
+                        break;
+                    case "info":
+                        implicationContents.push(PdfContentInfo("Info : "));
+                        implicationContents.push(PdfContentSub(implication.implication));
+                        implicationContents.push(PdfContentWhitespace());
+                        break;
+                    case "primary":
+                        implicationContents.push(PdfContentError("Error : "))
+                        implicationContents.push(PdfContentSub(implication.implication));
+                        implicationContents.push(PdfContentWhitespace());
+                        break;
+                    case "default":
+                        implicationContents.push(PdfContentSub(implication.implication));
+                        implicationContents.push(PdfContentWhitespace());
+                    default:
+                        break;
+                }
+            })
         }
     });
 

@@ -13,9 +13,9 @@ module.exports = {
         loginPage.login("martijn.devlam@hotmail.com", "password12")
 
         browser
+            .useCss()
             .url('http://localhost:8080/dashboard')
-            .waitForElementVisible('body', 10000)
-            .waitForElementVisible('#AllSurveys_Component', 1000)
+            .waitForElementVisible('#AllSurveys_Component', 50000)
             .assert.urlEquals('http://localhost:8080/dashboard')
 
         browser.expect.element('#AllSurveys_Component').to.be.present;

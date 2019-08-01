@@ -11,7 +11,7 @@
         <v-layout row wrap justify-center align-center fill-height>
           <v-list class="list-width" three-line id="advise">
             <template v-for="answers in structuredAnswers">
-              <v-list-tile class="list-item-height" :key="answers[0].answerImplicationLevel">
+              <v-list-tile class="list-item-height" :key="answers[0].implicationLevel">
                 <v-layout row wrap justify-center align-center fill-height>
                   <v-flex column xs4 offset-xs2>
                     <!-- detail buttons -->
@@ -21,18 +21,18 @@
                         icon
                         fab
                         color="secondary"
-                        @click="showDetail(answers[0].answerImplicationLevel)"
+                        @click="showDetail(answers[0].implicationLevel)"
                       >
                         <v-icon
                           large
-                          v-if="implicationDetailStates[implicationTypes.indexOf(answers[0].answerImplicationLevel)] === false"
+                          v-if="implicationDetailStates[implicationTypes.indexOf(answers[0].implicationLevel)] === false"
                         >mdi-chevron-down</v-icon>
                         <v-icon large else>mdi-chevron-up</v-icon>
                       </v-btn>
                       <!-- implication type name -->
                       <!-- get all the implication enum's keys who has an index of the index of the category + implicationTypes length. -->
                       <!-- you need the + length because the enum starts with the numbers and the half of the enum array is ALWAYS the implicationTypes length  -->
-                      <h3>{{ Object.keys($data.implicationEnum)[implicationTypes.indexOf(answers[0].answerImplicationLevel) + implicationTypes.length] }}</h3>
+                      <h3>{{ Object.keys($data.implicationEnum)[implicationTypes.indexOf(answers[0].implicationLevel) + implicationTypes.length] }}</h3>
                     </v-layout>
                   </v-flex>
                   <!-- implication percentage -->
@@ -42,7 +42,7 @@
                       :size="100"
                       :width="15"
                       :value="answers.length/totalNumberAnswers*100"
-                      :color="answers[0].answerImplicationLevel"
+                      :color="answers[0].implicationLevel"
                     />
                   </v-flex>
                 </v-layout>
@@ -50,9 +50,9 @@
               </v-list-tile>
               <v-list-tile
                 class="list-item-height"
-                :key="answers[0].answerImplicationLevel+1"
+                :key="answers[0].implicationLevel+1"
                 v-if="answers.length > 0"
-                v-show="implicationDetailStates[implicationTypes.indexOf(answers[0].answerImplicationLevel)] === true"
+                v-show="implicationDetailStates[implicationTypes.indexOf(answers[0].implicationLevel)] === true"
               >
                 <div>
                   <ImplicationList :answers="answers" />
@@ -170,6 +170,7 @@ export default {
     let totalAnswers = 0;
 
     anse.forEach(ans => {
+      console.log(ans);
       if (Array.isArray(ans)) {
         ans.forEach(a => {
           //get every answer and put it into the anse array
@@ -180,22 +181,28 @@ export default {
       }
 
       //The answer doesn't contain an implication
-      if (ans.answerImplicationLevel == null || ans.answerImplication === "") {
+      if (!ans.implications) {
         miscAnswers.push(ans);
       } else {
-        //get the implicationTypes index trough the answer's implication
-        let impIndex = implicationTypes.indexOf(ans.answerImplicationLevel);
-        //because the implicationTypes index is ALWAYS the same as the index within answers
-        //you can do the following to store the answer in the right category
-        answers[impIndex].push(ans);
-        //add up on the total answers that contain an implication
-        totalAnswers++;
+        //The answer does contian an implication
+        //for each implication get the implicationLevel's index
+        ans.implications.forEach(implication => {
+          if (implication.implication) {
+            console.log(implication);
+            let impIndex = implicationTypes.indexOf(implication.implicationLevel);
+            //because the implicationTypes index is ALWAYS the same as the index within answers
+            //you can do the following to store the answer in the right category
+            answers[impIndex].push(implication);
+            //add up on the total answers that contain an implication
+            totalAnswers++;
+          }
+        });
       }
     });
 
     //every implication category needs an boolean in order to hide/show the details
     let implicationStates = [];
-    implicationTypes.forEach(type => {
+    implicationTypes.forEach(() => {
       implicationStates.push(false);
     });
 

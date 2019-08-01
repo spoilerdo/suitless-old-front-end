@@ -7,7 +7,7 @@
         </v-layout>
       </v-card-title>
       <v-card-actions class="card-action-size">
-        <v-layout justify-center row>
+        <v-layout justify-center row mx-5>
           <p>{{ description }}</p>
         </v-layout>
       </v-card-actions>
@@ -20,7 +20,7 @@
 
 <style scoped>
 .card-size {
-  min-width: 60%;
+  width: 60%;
   min-height: 50vh;
 }
 .card-action-size {

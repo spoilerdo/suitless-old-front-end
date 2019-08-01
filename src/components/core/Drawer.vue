@@ -13,16 +13,29 @@
       <v-layout class="fill-height" tag="v-list" column>
         <v-list-tile avatar>
           <v-list-tile-avatar>
-            <v-img :src="logoehvlinc" fill/>
+            <v-hover>
+              <v-img
+                :src="logoehvlinc"
+                fill
+                @click="$router.push('/')"
+                slot-scope="{ hover }"
+                class="mx-auto"
+                :class="`elevation-${hover ? 12 : 2}`"
+              />
+            </v-hover>
           </v-list-tile-avatar>
           <v-flex v-if="!drawerOpen" style="display: flex; justify-content: center;">
             <v-list-tile-title class="title">ehvLINC</v-list-tile-title>
-            <v-icon v-if="window.width > 991" style="padding-right: 50px;" @click="toggleMini()">mdi-chevron-left</v-icon>
+            <v-icon
+              v-if="window.width > 991"
+              style="padding-right: 50px;"
+              @click="toggleMini()"
+            >mdi-chevron-left</v-icon>
           </v-flex>
         </v-list-tile>
-        <v-divider/>
+        <v-divider />
         <v-list-tile v-if="responsive">
-          <v-text-field class="purple-input search-input" label="Search..." color="purple"/>
+          <v-text-field class="purple-input search-input" label="Search..." color="purple" />
         </v-list-tile>
         <v-list-tile
           v-for="(link, i) in links"
@@ -35,10 +48,14 @@
           <v-list-tile-action>
             <v-icon>{{ link.icon }}</v-icon>
           </v-list-tile-action>
-          <v-list-tile-title v-if="!drawerOpen" v-text="link.text"/>
+          <v-list-tile-title v-if="!drawerOpen" v-text="link.text" />
         </v-list-tile>
         <v-list-tile v-if="drawerOpen">
-          <v-icon v-if="window.width > 991" @click="toggleMini()" style="margin: 0px 15px">mdi-chevron-right</v-icon>
+          <v-icon
+            v-if="window.width > 991"
+            @click="toggleMini()"
+            style="margin: 0px 15px"
+          >mdi-chevron-right</v-icon>
         </v-list-tile>
         <v-list-tile
           disabled
@@ -124,7 +141,7 @@ export default {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
 
-      if(this.window.width < 991) this.mini = false
+      if (this.window.width < 991) this.mini = false;
     },
 
     toggleMini() {

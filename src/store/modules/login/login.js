@@ -17,9 +17,10 @@ const state = {
     loggingIn: true,
     loginText: "Login",
     alert: {
-        type: null,
-        message: null
-    }
+        type: "info",
+        message: ""
+    },
+    token: localStorage.getItem('jwtToken') || ""
 }
 
 // getters
@@ -30,7 +31,8 @@ const getters = {
      */
     GetloggingIn: (state) => () => {
         return state.loggingIn;
-    }
+    },
+    isAuthenticated: state => !!state.token
 }
 
 // actions

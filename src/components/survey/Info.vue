@@ -1,6 +1,6 @@
 <template>
     <v-scale-transition>
-        <v-card v-if="reason !== undefined">
+        <v-card v-if="reason != null">
              <v-card-title primary-title class="grow mb-3">
                 <v-layout align-center justify-center row>
                     <h3 class="mb-0">Info</h3>
@@ -8,7 +8,7 @@
             </v-card-title>
             <v-card-actions class="action-card">
                 <v-layout align-center justify-center row>
-                    {{reason.value}}
+                    {{reason}}
                 </v-layout>
             </v-card-actions>
         </v-card>
@@ -23,17 +23,17 @@
 export default {
     data() {
         return {
-            reason: undefined
+            reason: null
         }
     },
     props: ["question"],
     mounted() {
-        this.reason = this.question.lincData.find(data => data.key === "reason");
+        this.reason = this.question.lincData.find(data => data.key === "reason").value || null;
     },
     watch: {
-        question: function(newVal, oldVal) {
+        question: function() {
             //update new reason on question change, otherwise old reason will be displayed
-            this.reason = this.question.lincData.find(data => data.key === "reason");
+            this.reason = this.question.lincData.find(data => data.key === "reason").value || null;
         }
     }
 }
