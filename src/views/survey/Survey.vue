@@ -1,13 +1,19 @@
 <template>
   <v-container fluid pa-0 ma-o>
-
     <!--dialog that shows a disclaimer that the user has to agree to in order to start the survey-->
-    <DisclaimerDialog v-on:agreeDisclaimer="agreeDisclaimer"/>
+    <DisclaimerDialog v-on:agreeDisclaimer="agreeDisclaimer" />
 
     <v-layout align-center justify-center row pa-2>
       <ProgressBar ref="progressBar" />
     </v-layout>
-    <v-layout align-start justify-start row ma-4 v-if="progress !== 100">
+    <v-layout align-center justify-center row v-if="surveyStarted === false && survey.name != null">
+      <SurveyInformation
+        :title="survey.name"
+        :description="survey.description"
+        v-on:startSurvey="startSurvey"
+      />
+    </v-layout>
+    <v-layout align-start justify-start row ma-4 v-else-if="progress !== 100">
       <v-flex xs12 md11 v-if="survey.nodes != null && currentquestion != null && surveyStarted">
         <!--currentquestion is an object not an integer-->
         <Question
@@ -27,21 +33,13 @@
           :isMobile="isMobile"
           :options="options"
         />
-        <Notification ref="surveyNotification" :timeVisible="0"/>
+        <Notification ref="surveyNotification" :timeVisible="0" />
       </v-flex>
-      <!--add the start of the survey this component will give some information about the survey-->
-      <SurveyInformation 
-        v-else-if="surveyStarted === false && survey.name != null" 
-        :title="survey.name" 
-        :description="survey.description"
-        v-on:startSurvey="startSurvey"
-      />
-
       <v-flex xs5 md6 pl-5 v-if="surveyStarted && survey.nodes != null">
         <Info :question="currentquestion" v-if="!isMobile" />
       </v-flex>
-
     </v-layout>
+    <!--add the start of the survey this component will give some information about the survey-->
     <EndPage
       v-else
       :answers="answer"
@@ -50,9 +48,6 @@
       v-on:renderPreviousQuestion="renderPreviousQuestion"
       v-on:printPDF="generatePDF"
     />
-    <v-layout align-center justify-center row pa-5>
-      
-    </v-layout>
   </v-container>
 </template>
 
@@ -126,13 +121,13 @@ export default {
     ]),
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
 
-    agreeDisclaimer(choice){
-      if(choice === false){
+    agreeDisclaimer(choice) {
+      if (choice === false) {
         this.$router.go(-1);
       }
     },
 
-    startSurvey(){
+    startSurvey() {
       this.surveyStarted = true;
     },
 
@@ -172,7 +167,9 @@ export default {
       let previousQuestionID = prevAnswer[0].questionID;
 
       //check if previous question is a notification, if so go one more back.
-      while (this.survey.nodes[previousQuestionID].style == this.$data.Notification) {
+      while (
+        this.survey.nodes[previousQuestionID].style == this.$data.Notification
+      ) {
         this.renderPreviousQuestion(this.survey.nodes[prevAnswer[0]]);
       }
       //select the previous question
@@ -190,7 +187,7 @@ export default {
 
     answeredMultiChoiceQuestion({ answers, questions }) {
       this.closeNotification();
-      
+
       //add answer to list of given answers.
       this.answerQuestion({
         answer: answers,
@@ -242,9 +239,9 @@ export default {
       this.fillProgress({ addedDepth: 1, survey: this.survey });
     },
 
-    closeNotification(){
-      if(this.$refs.surveyNotification != null){
-        this.$refs.surveyNotification.closeNotification(); 
+    closeNotification() {
+      if (this.$refs.surveyNotification != null) {
+        this.$refs.surveyNotification.closeNotification();
       }
     },
 
@@ -271,8 +268,8 @@ export default {
   },
   watch: {
     notification: function(val) {
-      if(this.$refs.surveyNotification != null){
-        if(val.message != null){
+      if (this.$refs.surveyNotification != null) {
+        if (val.message != null) {
           this.$refs.surveyNotification.showNotification(val.message, val.type);
         }
       }

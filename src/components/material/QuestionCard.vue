@@ -3,8 +3,8 @@
     color
     class="questionCard"
     elevation-4
-    max-width="300px"
-    max-height="300px"
+    max-width="400px"
+    max-height="400px"
     v-bind:class="{selectedCard: selected }"
     style="padding: 2%; flex-basis: 100%;"
     @click="onSelect()"
