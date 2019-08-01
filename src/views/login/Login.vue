@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex md6 sm8 xs12>
         <materialCard color="primary" title="Student Legal Health Check" :text="loginText">
-          <Alert :value="alert.message !=null" :type="alert.type" outline :text="alert.message"></Alert>
+          <Alert :value="alert.message !=''" :type="alert.type" outline :text="alert.message"></Alert>
 
           <div v-show="loggingIn">
             <Form email password name="loginForm" ref="loginForm" :onclick="loginUser"/>

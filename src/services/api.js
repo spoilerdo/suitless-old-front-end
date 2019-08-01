@@ -20,7 +20,7 @@ export const apiCall = (method, path, data) => {
             }).then(res => {
                 return resolve(res.data);
             }).catch(err => {
-                if(err.response.status === 401){ checkAuthentication(); }
+                if(err.response && err.response.status === 401){ checkAuthentication(); }
                 return reject(err);
             })
     });
@@ -38,7 +38,7 @@ export const apiCallWithContentType = (method, path, data, type) => {
             }).then(res => {
                 return resolve(res.data);
             }).catch(err => {
-                if(err.response.status === 401){ checkAuthentication(); }
+                if(err.response && err.response.status === 401){ checkAuthentication(); }
                 return reject(err);
             })
     });
@@ -56,7 +56,7 @@ export const asyncApiCall = (method, path, data) => {
             }).then(res => {
                 return resolve(res.data);
             }).catch(err => {
-                if(err.response.status === 401){ checkAuthentication(); }
+                if(err.response && err.response.status === 401){ checkAuthentication(); }
                 return reject(err);
             })
     })

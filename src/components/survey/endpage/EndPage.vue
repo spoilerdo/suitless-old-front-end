@@ -187,13 +187,15 @@ export default {
         //The answer does contian an implication
         //for each implication get the implicationLevel's index
         ans.implications.forEach(implication => {
-          console.log(implication);
-          let impIndex = implicationTypes.indexOf(implication.implicationLevel);
-          //because the implicationTypes index is ALWAYS the same as the index within answers
-          //you can do the following to store the answer in the right category
-          answers[impIndex].push(implication);
-          //add up on the total answers that contain an implication
-          totalAnswers++;
+          if (implication.implication) {
+            console.log(implication);
+            let impIndex = implicationTypes.indexOf(implication.implicationLevel);
+            //because the implicationTypes index is ALWAYS the same as the index within answers
+            //you can do the following to store the answer in the right category
+            answers[impIndex].push(implication);
+            //add up on the total answers that contain an implication
+            totalAnswers++;
+          }
         });
       }
     });
