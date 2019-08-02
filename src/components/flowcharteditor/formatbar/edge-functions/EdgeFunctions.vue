@@ -89,8 +89,7 @@ export default {
           );
 
           //reset imageName because the image already has been used
-
-          this.form = this.data.form;
+          this.form = this._data.form;
 
           this.implicationColorsList = [theme.default];
         }
