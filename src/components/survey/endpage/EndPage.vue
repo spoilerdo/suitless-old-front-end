@@ -3,7 +3,7 @@
     <v-card class="card-height">
       <v-card-title primary-title class="grow mb-3">
         <v-layout align-center justify-center row>
-          <h3 display-2>thank you for filling out the survey!</h3>
+          <h3 display-2>Thank you for filling out the survey!</h3>
         </v-layout>
       </v-card-title>
 
@@ -61,21 +61,24 @@
             </template>
           </v-list>
         </v-layout>
+        <ArrowControls
+          v-on:previousButtonClick="$emit('renderPreviousQuestion', question)"
+          :progress="progress"
+        />
       </v-card-text>
-
-      <ArrowControls
-        v-on:previousButtonClick="$emit('renderPreviousQuestion', question)"
-        :progress="progress"
-      />
 
       <v-card-actions>
         <!-- print pdf button -->
-        <v-layout align-center justify-center row>
-          <v-btn class="primary" @click="printPDF()">Print PDF</v-btn>
-        </v-layout>
-        <v-layout align-center justify-center row>
-          <v-btn class="secondary" @click="closeSurvey()">Continue</v-btn>
-        </v-layout>
+        <v-flex xs10 offset-xs1>
+          <v-layout align-center justify-center row>
+            <v-btn large class="primary" @click="printPDF()">Click here to print your report</v-btn>
+          </v-layout>
+        </v-flex>
+        <v-flex md-4>
+          <v-layout align-end justify-end row>
+            <v-btn large class="secondary" @click="closeSurvey()">Continue</v-btn>
+          </v-layout>
+        </v-flex>
       </v-card-actions>
     </v-card>
   </v-scale-transition>
@@ -84,6 +87,7 @@
 <style scoped>
 .card-height {
   min-height: 50vh;
+  margin-bottom: 60px;
 }
 .list-item-height {
   margin-top: 30px;
@@ -121,8 +125,8 @@ export default {
     printPDF() {
       this.$emit("printPDF");
     },
-    closeSurvey(){
-      this.$emit('closeSurvey');
+    closeSurvey() {
+      this.$emit("closeSurvey");
     },
     showDetail(implicationLevel) {
       let implicationTypes = this.implicationTypes;
@@ -173,7 +177,6 @@ export default {
     let totalAnswers = 0;
 
     anse.forEach(ans => {
-      console.log(ans);
       if (Array.isArray(ans)) {
         ans.forEach(a => {
           //get every answer and put it into the anse array
@@ -191,8 +194,9 @@ export default {
         //for each implication get the implicationLevel's index
         ans.implications.forEach(implication => {
           if (implication.implication) {
-            console.log(implication);
-            let impIndex = implicationTypes.indexOf(implication.implicationLevel);
+            let impIndex = implicationTypes.indexOf(
+              implication.implicationLevel
+            );
             //because the implicationTypes index is ALWAYS the same as the index within answers
             //you can do the following to store the answer in the right category
             answers[impIndex].push(implication);
