@@ -7,6 +7,7 @@ import Survey from '../views/survey/Survey.vue';
 import FlowchartEditor from '../views/flowchartEditor/FlowchartEditor';
 import LoginLanding from '@/views/landingpage/LoginLanding';
 import Cdn from '../views/cdn/Cdn';
+import Log from '../views/log/Log';
 import Dashboard from '../views/Dashboard.vue'
 
 Vue.use(Router)
@@ -59,6 +60,12 @@ let router = new Router({
       path: '/cdn',
       name: 'Cdn',
       component: Cdn,
+      meta: { requiresAuth: true, requiresAdmin: true }
+    },
+    {
+      path: '/log',
+      name: 'Log',
+      component: Log,
       meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
