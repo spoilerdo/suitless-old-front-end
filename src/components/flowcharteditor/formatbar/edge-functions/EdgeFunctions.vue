@@ -2,17 +2,7 @@
   <v-layout row justify-center>
     <v-form data-vv-scope="EdgeForm">
       <v-layout column>
-        <h6 class="subheading">An answer for the question</h6>
-        <v-textarea
-          v-model="form.answer"
-          auto-grow
-          box
-          color="primary"
-          label="Answer"
-          rows="1"
-          v-validate="'required'"
-          name="answer"
-        />
+        <GenericView nameLabel="An answer for the question" @onChange="changeProps" />
         <span>{{ errors.first('answer') }}</span>
         <v-btn color="primary" @click="setFileDialog(true)">Select Image</v-btn>
         <ImplicationList
@@ -29,6 +19,7 @@
 
 <script>
 import ImplicationList from "./ImplicationList.vue";
+import GenericView from "../genericView/GenericView";
 import theme from "@/plugins/vuetify/theme";
 import { mapState, mapActions } from "vuex";
 
@@ -40,6 +31,7 @@ export default {
   data() {
     return {
       form: {
+        edgeNode: null,
         answer: null,
         imageName: "",
         implications: [
@@ -53,7 +45,8 @@ export default {
     };
   },
   components: {
-    ImplicationList
+    ImplicationList,
+    GenericView
   },
   computed: {
     ...mapState("flowcharteditor/", [
@@ -67,6 +60,10 @@ export default {
   },
   methods: {
     ...mapActions("cdn/", ["setFileDialog"]),
+    changeProps(newForm){
+      this.form.edgeNode = newForm.nodeName;
+      this.form.answer = newForm.name;
+    },
     prepareChangeEdge() {
       this.$validator.validateAll("EdgeForm").then(valid => {
         if (valid) {

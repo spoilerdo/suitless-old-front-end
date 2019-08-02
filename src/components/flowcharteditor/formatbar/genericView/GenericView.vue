@@ -42,8 +42,8 @@ export default {
     data(){
         return {
             form: {
-                nodeName: null,
-                name: null
+                nodeName: "",
+                name: ""
             }
         }
     },
@@ -57,7 +57,7 @@ export default {
     },
     watch: {
         selectedCell: function(newValue, oldValue) {
-            if(newValue != null && newValue.lincData.length > 0){
+            if(newValue != null && newValue.lincData.length > 0 && newValue.value){
                 this.form.nodeName = newValue.value;
                 this.form.name = newValue.lincData[0].value;
             }
