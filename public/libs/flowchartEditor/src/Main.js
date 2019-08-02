@@ -81,7 +81,7 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         let keyHandler = new mxKeyHandler(graph);
         let undoManager = new mxUndoManager();
 
-        
+
 
         let undoListener = function (sender, evt) {
             undoManager.undoableEditHappened(evt.getProperty('edit'));
@@ -98,7 +98,7 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         graph.getModel().addListener(mxEvent.UNDO, undoListener)
         graph.getView().addListener(mxEvent.UNDO, undoListener)
 
-        connectionHandlerFunctions();
+        connectionHandlerFunctions(graph);
 
         createSnapPoints(graph, model);
 
