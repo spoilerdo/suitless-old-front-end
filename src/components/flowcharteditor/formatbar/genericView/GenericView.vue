@@ -9,7 +9,7 @@
             @change="changeProps"
         />
         <span>{{ errors.first('node text') }}</span>
-        <h6 class="subheading">The name of the {{nameLabel}}</h6>
+        <h6 class="subheading">{{nameLabel}}</h6>
         <v-textarea
             v-model="form.name"
             auto-grow

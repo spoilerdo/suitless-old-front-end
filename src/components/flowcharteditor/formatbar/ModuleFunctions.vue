@@ -2,7 +2,7 @@
     <v-layout row justify-center>
         <v-form>
             <GenericView
-                nameLabel="Module"
+                nameLabel="The name of the Module"
                 @onChange="changeProps"
             />
             <v-layout align-center justify-center row>

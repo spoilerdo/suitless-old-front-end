@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { ADD_ANSWER, DELETE_LAST_ANSWER } from '../mutation-types';
+import { ADD_ANSWER, DELETE_LAST_ANSWER, CLEAR_ANSWER } from '../mutation-types';
 import { SURVEY_NOTIFICATION_HANDLER } from '../../../generalconstants';
 
 /**
@@ -114,6 +114,13 @@ const actions = {
      */
     deleteLastAnswer({ commit }) {
         commit(DELETE_LAST_ANSWER);
+    },
+    /**
+     * Clears all the answers made.
+     * @memberof store.answer
+     */
+    clearAnswers({ commit }) {
+        commit(CLEAR_ANSWER);
     }
 }
 
@@ -124,6 +131,9 @@ const mutations = {
     },
     [DELETE_LAST_ANSWER](state) {
         state.all.pop();
+    },
+    [CLEAR_ANSWER](state) {
+        state.all = [];
     }
 }
 

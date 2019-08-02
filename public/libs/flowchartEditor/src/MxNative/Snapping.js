@@ -8,6 +8,8 @@
 
  /**
   * When drawing a line this code will look for the shortest connection point
+  * @param {object} pt point
+  * @param {object} t this
   */
 export function snapToFixedPoint(pt, t) {
     if (pt != null && t.previous != null) {
@@ -21,8 +23,9 @@ export function snapToFixedPoint(pt, t) {
             
             if (cp != null)
             {
+                //Stelling van pyta
                 var tmp = (cp.x - pt.x) * (cp.x - pt.x) + (cp.y - pt.y) * (cp.y - pt.y);
-            
+
                 if (dist == null || tmp < dist)
                 {
                     nearestConstraint = constraints[i];
@@ -35,6 +38,8 @@ export function snapToFixedPoint(pt, t) {
         {
             t.sourceConstraint = nearestConstraint;
         }
+
+        return nearestConstraint;
         
         // In case the edge style must be changed during the preview:
         // this.edgeState.style['edgeStyle'] = 'orthogonalEdgeStyle';

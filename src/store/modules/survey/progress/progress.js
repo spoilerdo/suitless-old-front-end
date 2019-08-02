@@ -150,6 +150,14 @@ const actions = {
    */
   setNotification({ commit }, notification) {
     commit(SET_NOTIFICATION, notification);
+  },
+  /**
+   * Clears the progress of a survey
+   * @memberof store.progress
+   */
+  clearProgress({ commit }) {
+    commit(SET_PROGRESS, 0);
+    commit(SET_CURRENTQUESTION, null);
   }
 }
 
