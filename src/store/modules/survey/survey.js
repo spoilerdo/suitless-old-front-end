@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { VueInstance } from '../../../main';
-import { SET_SURVEY, SET_SURVEYS } from './mutation-types';
+import { SET_SURVEY, SET_SURVEYS, DELETE_SURVEY_STATE } from './mutation-types';
 import { apiCall, asyncApiCall } from '@/services/api';
 import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 
@@ -75,6 +75,13 @@ const actions = {
         }).catch(e => {
             console.log(e)
         });
+    },
+    /**
+     * Deletes the chose survey to make
+     * @memberof store.survey
+     */
+    deleteChosenSurvey({ commit }) {
+        commit(DELETE_SURVEY_STATE);
     }
 }
 
@@ -86,6 +93,9 @@ const mutations = {
     },
     [SET_SURVEYS](state, surveys) {
         state.all = surveys._embedded.moduleList;
+    },
+    [DELETE_SURVEY_STATE](state) {
+        state.all.nodes = null;
     }
 }
 

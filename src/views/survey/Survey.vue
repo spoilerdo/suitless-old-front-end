@@ -49,6 +49,7 @@
       :progress="progress"
       v-on:renderPreviousQuestion="renderPreviousQuestion"
       v-on:printPDF="generatePDF"
+      v-on:closeSurvey="closeSurvey"
     />
     <v-layout align-center justify-center row pa-5>
       
@@ -65,6 +66,7 @@ import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
 import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
+import Router from 'vue-router'
 import { mapState, mapGetters, mapActions } from "vuex";
 
 /**
@@ -114,15 +116,16 @@ export default {
     this.setFooterColor("#c01833");
   },
   methods: {
-    ...mapActions("survey/", ["getSurveyByID"]),
-    ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion"]),
+    ...mapActions("survey/", ["getSurveyByID", "deleteChosenSurvey"]),
+    ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion", "clearAnswers"]),
     ...mapActions("progress/", [
       "fillProgress",
       "setCurrentQuestion",
       "fillCurrentQuestionBacklog",
       "clearCurrentQuestionBacklog",
       "fillsubQuestionBackLog",
-      "clearSubQuestionBackLog"
+      "clearSubQuestionBackLog",
+      "clearProgress"
     ]),
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
 
@@ -255,6 +258,14 @@ export default {
       };
 
       this.printPDF(pdfOptions, this.answer);
+    },
+
+    closeSurvey() {
+      this.deleteChosenSurvey();
+      this.clearAnswers();
+      this.clearProgress();
+
+      this.$router.push("/dashboard");
     },
 
     onResize() {

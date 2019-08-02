@@ -74,7 +74,7 @@
           <v-btn class="primary" @click="printPDF()">Print PDF</v-btn>
         </v-layout>
         <v-layout align-center justify-center row>
-          <v-btn class="secondary" to="/dashboard">Continue</v-btn>
+          <v-btn class="secondary" @click="closeSurvey()">Continue</v-btn>
         </v-layout>
       </v-card-actions>
     </v-card>
@@ -120,6 +120,9 @@ export default {
   methods: {
     printPDF() {
       this.$emit("printPDF");
+    },
+    closeSurvey(){
+      this.$emit('closeSurvey');
     },
     showDetail(implicationLevel) {
       let implicationTypes = this.implicationTypes;
