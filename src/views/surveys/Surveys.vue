@@ -13,9 +13,9 @@
           text="Trademark"
         />
         <ImageCard
-          redirecturl="/survey/5cf4c8017fa73a0006d320ad"
-          imagename="software ip"
-          text="Software IP"
+          redirecturl="/survey/5d41a385c806980001e4abe5"
+          imagename="tradename"
+          text="Tradename"
         />
       </v-layout>
     </v-layout>

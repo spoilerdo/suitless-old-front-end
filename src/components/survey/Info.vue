@@ -31,10 +31,9 @@ export default {
         this.reason = this.question.lincData.find(data => data.key === "reason").value || null;
     },
     watch: {
-        question: function(newVal, oldVal) {
+        question: function() {
             //update new reason on question change, otherwise old reason will be displayed
             this.reason = this.question.lincData.find(data => data.key === "reason").value || null;
-            console.log(this.reason);
         }
     }
 }

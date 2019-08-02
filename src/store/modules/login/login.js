@@ -1,7 +1,6 @@
 import {apiCall, setToken} from '@/services/api'
 import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 import router from '@/router/router'
-import jwtDecode from 'jwt-decode';
 import { SET_LOGGING_IN, SET_LOGIN_TEXT, SET_ALERT } from './mutation-types';
 
 /**
@@ -18,8 +17,8 @@ const state = {
     loggingIn: true,
     loginText: "Login",
     alert: {
-        type: null,
-        message: null
+        type: "info",
+        message: ""
     },
     token: localStorage.getItem('jwtToken') || ""
 }

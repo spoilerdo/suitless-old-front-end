@@ -2,7 +2,18 @@
   <v-layout row justify-center>
     <v-form data-vv-scope="EdgeForm">
       <v-layout column>
-        <GenericView nameLabel="An answer for the question" @onChange="changeProps" />
+        <h6 class="subheading">An answer for the question</h6>
+        <v-textarea
+          v-model="form.answer"
+          auto-grow
+          box
+          color="primary"
+          label="Answer"
+          rows="1"
+          v-validate="'required'"
+          name="answer"
+        />
+        <span>{{ errors.first('answer') }}</span>
         <h6 class="subheading">Implication of the answer</h6>
         <v-textarea
           v-model="form.implication"
@@ -76,8 +87,8 @@
 }
 </style>
 
+
 <script>
-import GenericView from "./genericView/GenericView";
 import { mapState, mapActions } from "vuex";
 import theme from "@/plugins/vuetify/theme";
 
@@ -89,7 +100,6 @@ export default {
   data() {
     return {
       form: {
-        edgeNode: null,
         answer: null,
         implication: null,
         implicationLevel: null,
@@ -102,18 +112,11 @@ export default {
   computed: {
     ...mapState("flowcharteditor/", ["selectedCell", "formatBarType", "imageName"])
   },
-  components: {
-    GenericView
-  },
   methods: {
     ...mapActions("cdn/", ["setFileDialog"]),
     setSelected(selected, color) {
       this.form.implicationLevel = selected;
       this.form.implicationColor = color;
-    },
-    changeProps(newForm) {
-      this.form.edgeNode = newForm.nodeName;
-      this.form.answer = newForm.name;
     },
     prepareChangeEdge() {
       this.$validator.validateAll("EdgeForm").then(valid => {
@@ -124,7 +127,13 @@ export default {
             this.form.imageName = "DefaultEdgeImage";
           }
 
-          this.changeEdge(this.form);
+          this.changeEdge(
+            this.form.answer,
+            this.form.implication,
+            this.form.implicationLevel,
+            this.form.implicationColor,
+            this.form.imageName
+          );
 
           //reset imageName because the image already has been used
           this.form.imageName = "";

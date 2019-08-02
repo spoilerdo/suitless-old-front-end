@@ -259,7 +259,7 @@ export function registerCustomShape(graph, shape, name) {
     style[mxConstants.STYLE_FONTSIZE] = '16';
 
     style = graph.getStylesheet().getDefaultEdgeStyle();
-    style[mxConstants.STYLE_STROKECOLOR] = '#000000';
+    style[mxConstants.STYLE_STROKECOLOR] = '#424242';
     style[mxConstants.STYLE_FONTCOLOR] = '#000000';
     style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = '#ffffff';
     style['fontStyle'] = '0';

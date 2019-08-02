@@ -146,9 +146,8 @@ export default {
                  * Change the selected edge data
                  * @memberof plugin.flowchartEditor
                  * @param {String} name the value of the selected edge
-                 * @param {String} implication the implication of the edge/ answer of questioin
-                 * @param {String} implicationLevel the level of the implication (warning, info, etc...)
-                 * @param {String} implicationColor the hex color you want to turn the edge into
+                 * @param {String} implications the implications of the edge/ answer of the question
+                 * @param {String} imageName the name of the image that is used for this edge/ answer
                 */
                 changeEdge({ nodeName, name, implication, implicationLevel, implicationColor, imageName }){
                     console.log(nodeName);

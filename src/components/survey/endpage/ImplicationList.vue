@@ -1,24 +1,29 @@
 <template>
     <v-list class="list-width">
-      <template v-for="answer in answers">
-        <v-flex row wrap xs12 :key="answer.questionID + answer.targetID">
+      <template v-for="(answer, index) in answers">
+        <v-flex row wrap xs12 :key="index + answer.implicationLevel">
           <h4>{{ answer.questionValue }}</h4>
         </v-flex>
-        <v-alert
+        <Alert
           :value="true"
-          :type="answer.answerImplicationLevel"
-          :key="answer.questionID + answer.targetID + 1"
-        >{{ answer.answerImplication }}</v-alert>
+          :type="answer.implicationLevel"
+          :text="answer.implication"
+          :key="index + answer.implication"
+        />
       </template>
     </v-list>
 </template>
 
 <script>
+import Alert from "@/components/material/Alert.vue";
 /**
  * Returns a list containing all implications.
  * @memberof component.Survey
  */
 export default {
+  components:{
+    Alert
+  },
   props: {
     answers: {
       type: Array,

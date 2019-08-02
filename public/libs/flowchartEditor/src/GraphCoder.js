@@ -56,19 +56,18 @@ export let GraphCoder = {
             for (var i = 0; i < cell.edges.length; i++) {
                 if (cell.id === cell.edges[i].source.id && cell.edges[i].target.id !== null) {
                     if (cell.edges[i].lincData != null) {
-                        if(cell.edges[i].lincData[0] != ""){
+                        if(cell.edges[i].lincData[0].value.length > 0){
                             output.push({
                                 targetID: cell.edges[i].target.id,
                                 value: cell.edges[i].value,
-                                implication: cell.edges[i].lincData[0].value,
-                                implicationLevel: cell.edges[i].lincData[1].value,
-                                imageName: cell.edges[i].lincData[2].value
+                                implications: cell.edges[i].lincData[0].value,
+                                imageName: cell.edges[i].lincData[1].value
                             })
                         } else {
                             output.push({
                                 targetID: cell.edges[i].target.id,
                                 value: cell.edges[i].value,
-                                imageName: cell.edges[i].lincData[2].value
+                                imageName: cell.edges[i].lincData[1].value
                             })
                         }
                     } else {
