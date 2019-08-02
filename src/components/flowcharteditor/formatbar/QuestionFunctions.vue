@@ -1,7 +1,7 @@
 <template>
   <v-layout row justify-center>
     <v-form data-vv-scope="QuestionForm">
-      <GenericView nameLabel="Question" @onChange="changeProps" />
+      <GenericView nameLabel="The name of the Question" @onChange="changeProps" />
       <v-layout column>
         <span>{{ errors.first('question') }}</span>
         <h6 class="subheading">The reason of the question</h6>

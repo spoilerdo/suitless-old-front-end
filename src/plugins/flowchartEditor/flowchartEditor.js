@@ -150,7 +150,8 @@ export default {
                  * @param {String} implicationLevel the level of the implication (warning, info, etc...)
                  * @param {String} implicationColor the hex color you want to turn the edge into
                 */
-                changeEdge(name, implication, implicationLevel, implicationColor, imageName){
+                changeEdge({ nodeName, name, implication, implicationLevel, implicationColor, imageName }){
+                    console.log(nodeName);
                     methods.changeEdge(name, implication, implicationLevel, implicationColor, imageName);
                 }
             },
