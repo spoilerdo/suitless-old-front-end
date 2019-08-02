@@ -1,6 +1,6 @@
 <template>
     <v-layout row justify-center>
-        <v-form>
+        <v-form @submit.prevent>
             <v-layout column>
                 <h6 class="subheading">Multiple choice Title</h6>
                 <v-text-field

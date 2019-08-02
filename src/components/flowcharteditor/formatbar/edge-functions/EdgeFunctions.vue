@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-form data-vv-scope="EdgeForm">
+    <v-form data-vv-scope="EdgeForm" @submit.prevent>
       <v-layout column>
         <h6 class="subheading">An answer for the question</h6>
         <v-textarea
