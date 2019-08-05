@@ -7,7 +7,7 @@ module.exports = {
             .end()
     },
 
-    'Login to admin account': function(browser){
+    /*'Login to admin account': function(browser){
         let loginPage = browser.page.loginPage();
 
         loginPage.login("martijn.devlam@hotmail.com", "password12")
@@ -21,5 +21,5 @@ module.exports = {
         browser.expect.element('#AllSurveys_Component').to.be.present;
 
         browser.end()
-    },
+    },*/
 }
