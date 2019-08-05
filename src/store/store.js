@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import app from './modules/app/app';
 import notificationHandler from './modules/notificationHandler/notificationHandler';
 import cdn from './modules/cdn/cdn';
+import log from './modules/log/log';
 import login from './modules/login/login'
 import survey from './modules/survey/survey';
 import answer from './modules/survey/answer/answer';
@@ -24,6 +25,7 @@ export default new Vuex.Store({
         app,
         notificationHandler,
         cdn,
+        log,
         login,
         survey,
         answer,
