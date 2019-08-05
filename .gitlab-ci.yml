@@ -3,11 +3,50 @@ before_script:
 
 stages:
 - test
+- testDev
 - build
+- buildDev
 - docker
+
+testDev_VueJS:
+  stage: testDev
+  except:
+    - tags
+  image: nightwatch:latest
+  services:
+  - name: selenium/standalone-chrome
+    alias: chrome
+  script:
+  - 'npm ci'
+  - 'npm run test:e2e:dev'
+  artifacts:
+    paths:
+    - tests/e2e/reports/
+
+buildDev_VueJS:
+  stage: buildDev
+  except:
+      - tags
+  image: node:10.16-stretch
+  retry: 2
+  script:
+  - 'npm ci'
+  - 'npm run build:dev'
+  - 'npm run docs'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+        - .m2/repository
+        - node_modules/
+  artifacts:
+    paths:
+    - dist/
 
 test_VueJS:
  stage: test
+ only:
+    - tags
  image: nightwatch:latest
  services:
  - name: selenium/standalone-chrome
@@ -21,6 +60,8 @@ test_VueJS:
 
 build_VueJS:
   stage: build
+  only:
+      - tags
   image: node:10.16-stretch
   retry: 2
   script:
