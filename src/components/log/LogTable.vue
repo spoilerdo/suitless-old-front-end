@@ -13,7 +13,7 @@
         <template slot="items" slot-scope="props">
           <td>{{ props.item.date }}</td>
           <td>{{ props.item.severity }}</td>
-          <!-- <td>{{ props.item.executor }}</td> -->
+          <td>{{ props.item.executor }}</td>
           <td>{{ props.item.classPath }}</td>
           <td>{{ props.item.message }}</td>
         </template>
@@ -34,7 +34,7 @@ export default {
       headers: [
         { text: "date", value: "date" },
         { text: "severity", value: "severity", sortable: false },
-        // { text: "executor", value: "executor", sortable: false },
+        { text: "executor", value: "executor", sortable: false },
         { text: "class path", value: "classPath", sortable: false },
         { text: "message", value: "message", sortable: false }
       ],
