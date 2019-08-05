@@ -1,6 +1,6 @@
 import { apiCall } from "@/services/api";
 import { LOG_URL, NOTIFICATION_HANDLER } from "../../generalconstants"
-import { SET_SERVICES } from "./mutation-types"
+import { SET_SERVICES, SET_LOGS } from "./mutation-types"
 
 const state = {
     services: [],
@@ -22,12 +22,24 @@ const actions = {
             }).catch(e => {
                 dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
             })
+    },
+    getLogs({ commit, dispatch }, serviceName) {
+        apiCall("GET", `${LOG_URL}/${serviceName}`)
+            .then(data => {
+                commit(SET_LOGS, data.logs);
+            }).catch(e => {
+                dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
+            })
     }
+
 }
 
 const mutations = {
     [SET_SERVICES](state, services) {
         state.services = services;
+    },
+    [SET_LOGS](state, logs) {
+        state.logs = logs;
     }
 }
 
