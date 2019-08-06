@@ -2,16 +2,19 @@ before_script:
 - export GRADLE_USER_HOME=`pwd`/.gradle
 
 stages:
-- test
 - testDev
-- build
 - buildDev
+- dockerDev
+- test
+- build
 - docker
 
 testDev_VueJS:
   stage: testDev
   except:
     - tags
+  tags:
+  - dev
   image: nightwatch:latest
   services:
   - name: selenium/standalone-chrome
@@ -27,6 +30,8 @@ buildDev_VueJS:
   stage: buildDev
   except:
       - tags
+  tags:
+  - dev
   image: node:10.16-stretch
   retry: 2
   script:
@@ -42,11 +47,35 @@ buildDev_VueJS:
   artifacts:
     paths:
     - dist/
+    
+docker_compose_dev:
+  stage: dockerDev
+  image: tmaier/docker-compose:latest
+  retry: 2
+  except:
+  - tags
+  tags:
+  - dev
+  only:
+  - master
+  before_script:
+  - 'docker info'
+  script:
+  - 'docker-compose up -d --build'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+        - .m2/repository
+        - node_modules/
 
-test_VueJS:
+
+test_VueJS_production:
  stage: test
  only:
     - tags
+  tags:
+  - production
  image: nightwatch:latest
  services:
  - name: selenium/standalone-chrome
@@ -58,12 +87,14 @@ test_VueJS:
    paths:
    - tests/e2e/reports/
 
-build_VueJS:
+build_VueJS_production:
   stage: build
   only:
       - tags
   image: node:10.16-stretch
   retry: 2
+  tags:
+  - production
   script:
   - 'npm ci'
   - 'npm run build'
@@ -78,12 +109,16 @@ build_VueJS:
     paths:
     - dist/
 
-docker_compose:
+docker_compose_production:
   stage: docker
   image: tmaier/docker-compose:latest
   retry: 2
   only:
-  - master
+  - tags
+  except:
+  - /^(?!master).+@/    # Ruby RegEx for anything not starting with 'master'
+  tags:
+  - production
   before_script:
   - 'docker info'
   script:
