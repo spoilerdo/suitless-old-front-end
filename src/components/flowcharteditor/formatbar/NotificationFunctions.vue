@@ -2,7 +2,7 @@
     <v-layout row justify-center>
         <v-form>
             <GenericView
-                nameLabel="Notification"
+                nameLabel="The name of the Notification"
                 @onChange="changeProps"
             />
             <v-layout align-center justify-center row>

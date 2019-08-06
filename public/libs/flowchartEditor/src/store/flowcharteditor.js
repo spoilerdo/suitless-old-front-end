@@ -53,6 +53,7 @@ export const state = {
     */
     editor: null,
     selectedCell: null,
+    constraint: null,
 
     newCell: {
         newCellInternal: null,

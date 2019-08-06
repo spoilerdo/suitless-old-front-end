@@ -126,6 +126,12 @@ export default {
       icon: "mdi-folder-multiple-image",
       text: "file manager"
     });
+
+    this.links.push({
+      to: "log",
+      icon: "mdi-script-text",
+      text: "log manager"
+    });
   },
   methods: {
     ...mapActions(["setDrawer"]),

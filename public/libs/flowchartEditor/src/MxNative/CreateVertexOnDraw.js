@@ -9,8 +9,9 @@
 
 import { NodeEnum } from "../NodeEnum";
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
+import { state } from "../store/flowcharteditor";
 
-import { mxConnectionHandler, mxPoint, mxLog } from "../MxGraph";
+import { mxConnectionHandler, mxPoint, mxLog, mxConstants } from "../MxGraph";
 
 /**
  * When drawing a line this code will show a popup menu so you can chose which node you want to create
@@ -19,6 +20,8 @@ import { mxConnectionHandler, mxPoint, mxLog } from "../MxGraph";
  */
 export function vertexOnDraw(mxEvent, graph) {
     mxEvent.disableContextMenu(document.body);
+
+    //let edgeState = mxConnectionHandler.prototype.edgeState;
 
     let mouseThis;
     let mouseSource;
@@ -146,7 +149,7 @@ export function vertexOnDraw(mxEvent, graph) {
         for (var prop in newStyle)
             array.push(prop + "=" + newStyle[prop]);
         edge.style = array.join(';');
-    }),
+    });
 
     //Override the connect function from MXGraph in order to make the edge between the source and target trough the EditorFunctions' AddEdge function
     //This is needed so that you can add a lincType to it otherwise there wont be a format bar shown
@@ -203,21 +206,22 @@ export function vertexOnDraw(mxEvent, graph) {
                 var value = null;
                 var style = null;
 
-                if (this.edgeState != null) {
-                    value = this.edgeState.cell.value;
-                    style = this.edgeState.cell.style;
+                let edgeState = mxConnectionHandler.prototype.edgeState;
+                if (edgeState != null) {
+                    value = edgeState.cell.value;
+                    style = edgeState.cell.style;
                 }
 
                 edge = editorFunctions.addEdge(graph, { fromCell: source, targetCell: target, value: null });
 
                 if (edge != null) {
                     // Updates the connection constraints
-                    this.graph.setConnectionConstraint(edge, source, true, this.sourceConstraint);
+                    this.graph.setConnectionConstraint(edge, source, true, state.constraint);
                     this.graph.setConnectionConstraint(edge, target, false, this.constraintHandler.currentConstraint);
 
                     // Uses geometry of the preview edge state
-                    if (this.edgeState != null) {
-                        model.setGeometry(edge, this.edgeState.cell.geometry);
+                    if (edgeState != null) {
+                        model.setGeometry(edge, edgeState.cell.geometry);
                     }
 
                     var parent = model.getParent(source);
@@ -275,7 +279,7 @@ export function vertexOnDraw(mxEvent, graph) {
                 }
             }
             catch (e) {
-                
+
             }
             finally {
                 model.endUpdate();
@@ -326,13 +330,3 @@ export function vertexOnDraw(mxEvent, graph) {
         });
     };
 }
-
-function addSelectedVertex(source, target, evt, connectionHandler, graph) {
-    if (connectionHandler == null) { return; }
-
-    if (target == null && source != null && evt != null) {
-        target = connectionHandler.createTargetVertex(evt, source);
-    }
-
-    editorFunctions.addEdge(graph, { fromCell: source, targetCell: target, value: null });
-};

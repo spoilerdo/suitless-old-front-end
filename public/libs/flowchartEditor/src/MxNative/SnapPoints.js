@@ -43,12 +43,4 @@ export function createSnapPoints(graph, model){
 
         return null;
     };
-    
-    // Connect preview
-    graph.connectionHandler.createEdgeState = (me) =>
-    {
-        var edge = graph.createEdge(null, null, null, null, null, 'edgeStyle=orthogonalEdgeStyle');
-        
-        return new mxCellState(graph.view, edge, graph.getCellStyle(edge));
-    };
 }
