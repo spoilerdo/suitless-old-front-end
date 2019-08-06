@@ -16,9 +16,6 @@ testDev_VueJS:
   tags:
     - dev
   image: nightwatch:latest
-  services:
-    - name: selenium/standalone-chrome
-      alias: chrome
   script:
     - 'npm ci'
     - 'npm run test:e2e:dev'
@@ -77,9 +74,6 @@ test_VueJS_production:
   tags:
   - production
   image: nightwatch:latest
-  services:
-    - name: selenium/standalone-chrome
-      alias: chrome
   script:
     - 'npm ci'
     - 'npm run test:e2e'
