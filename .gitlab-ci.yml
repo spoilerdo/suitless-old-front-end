@@ -78,7 +78,7 @@ test_VueJS_production:
   - production
   image: nightwatch:latest
   services:
-    - name: selenium/standalone-chrome
+    name: selenium/standalone-chrome
     alias: chrome
   script:
     - 'npm ci'
