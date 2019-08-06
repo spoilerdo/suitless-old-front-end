@@ -202,7 +202,7 @@ export function genericAddVertex(graph, parent, json, nodeEnum, data, width, hei
     }
 
     vertex.lincType = nodeEnum;
-    if (data != null) {
+    if (data) {
         vertex.lincData = data;
     }
 

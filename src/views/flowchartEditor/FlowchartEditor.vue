@@ -34,9 +34,11 @@
     overflow: hidden;
 }
 .format{
-    width: 400px;
-    padding-left: 15px;
-    padding-right: 40px;
+    width: 450px;
+    max-height: 95vh;
+    overflow-y: auto;
+    padding-left: 10px;
+    padding-right: 10px;
     padding-top: 25px;
 }
 

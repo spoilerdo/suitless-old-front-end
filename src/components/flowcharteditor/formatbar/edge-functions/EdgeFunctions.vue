@@ -55,12 +55,12 @@ export default {
       "imageName"
     ])
   },
-  created(){
+  created() {
     this.implicationColorsList.push(theme.default);
   },
   methods: {
     ...mapActions("cdn/", ["setFileDialog"]),
-    changeProps(newForm){
+    changeProps(newForm) {
       this.form.edgeNode = newForm.nodeName;
       this.form.answer = newForm.name;
     },
@@ -79,15 +79,14 @@ export default {
           }
 
           this.changeEdge(
+            this.form.edgeNode,
             this.form.answer,
             this.form.implications,
             implicationColor,
             this.form.imageName
           );
 
-          //reset imageName because the image already has been used
-
-          this.form = this.data.form;
+          this.form.imageName = "";
 
           this.implicationColorsList = [theme.default];
         }
@@ -96,18 +95,26 @@ export default {
   },
   watch: {
     selectedCell: function(newValue) {
-      if (
-        newValue != null &&
-        this.formatBarType == this.$data.nodeEnum.Edge &&
-        newValue.lincData.length > 0
-      ) {
-        this.form.answer = newValue.value;
-        let imp = JSON.parse(JSON.stringify(newValue.lincData.find(data => data.key === "implications").value));
-        this.form.implications = imp;
-        if(imp[0].implicationLevel){
-          const themes = imp.map((el)=> el.implicationLevel);
-          this.implicationColorsList = themes.map((el) => theme[el]);
+      //console.log(newValue);
+      if (newValue && this.formatBarType == this.$data.nodeEnum.Edge && newValue.lincData.length > 0) {
+        this.form.answer = newValue.lincData.find(
+          data => data.key == "answer"
+        ).value;
+        let imp = newValue.lincData.filter(data => data.key == "implication")
+          .map(el => el.value);
+        let impLvl = newValue.lincData.filter(data => data.key == "implicationLevel")
+          .map(el => el.value);
+        let implicationsObject = [{ implication: null, implicationLevel: "default" }];
+        if (imp.length > 0 && impLvl.length > 0) {
+          imp.forEach((implication, index) => {
+            implicationsObject.push({
+              implication: implication,
+              implicationLevel: impLvl[index]
+            });
+          });
+          this.implicationColorsList = impLvl.map(el => theme[el]);
         }
+        this.form.implications = implicationsObject;
       }
     },
     imageName: function(newVal) {
