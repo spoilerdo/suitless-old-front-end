@@ -7,13 +7,11 @@
  */
 
 import { pdfContent } from "./PdfContent"
-import { pdfContentEnum } from "./PdfContentEnum";
 
 export class pdfContentWhitespace extends pdfContent {
 
     constructor(){
         super();
-        this.type = pdfContentEnum.warning;
         this.data = "";
     }
 

@@ -7,13 +7,11 @@
  */
 
  import { pdfContent } from "./PdfContent"
-import { pdfContentEnum } from "./PdfContentEnum";
 
 export class pdfContentTitle extends pdfContent {
 
     constructor(data){
         super();
-        this.type = pdfContentEnum.title;
         this.data = data;
     }
 
