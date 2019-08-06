@@ -52,7 +52,7 @@ const actions = {
      * @memberof store.survey
      */
     getSurveyByID({ commit, dispatch }, surveyID) {
-        if(process.env.NODE_ENV == "test"){
+        if(process.env.NODE_ENV == "test" || process.env.NODE_ENV == "testdevelopment"){
             dispatch("getTestSurveyByID", surveyID);
             return;
         }

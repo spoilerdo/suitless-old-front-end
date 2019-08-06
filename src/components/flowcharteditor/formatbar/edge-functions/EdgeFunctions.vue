@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-form data-vv-scope="EdgeForm">
+    <v-form data-vv-scope="EdgeForm" @submit.prevent>
       <v-layout column>
         <GenericView nameLabel="An answer for the question" @onChange="changeProps" />
         <span>{{ errors.first('answer') }}</span>

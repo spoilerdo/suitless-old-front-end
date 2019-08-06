@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-form data-vv-scope="QuestionForm">
+    <v-form data-vv-scope="QuestionForm" @submit.prevent>
       <GenericView nameLabel="The name of the Question" @onChange="changeProps" />
       <v-layout column>
         <span>{{ errors.first('question') }}</span>

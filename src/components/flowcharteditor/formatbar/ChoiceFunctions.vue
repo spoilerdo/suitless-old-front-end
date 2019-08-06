@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-form data-vv-scope="ChoiceForm">
+    <v-form data-vv-scope="ChoiceForm" @submit.prevent>
       <GenericView nameLabel="The name of the Question" @onChange="changeProps" />
       <v-layout align-center justify-center row>
         <ServiceableFilePicker v-on:Base64="setFile($event)" v-on:Type="setType($event)" />

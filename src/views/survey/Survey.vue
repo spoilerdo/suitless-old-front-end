@@ -262,6 +262,7 @@ export default {
       this.clearAnswers();
       this.clearProgress();
 
+      //To dashboard or the login page but this is not shure yet
       this.$router.push("/dashboard");
     },
 
