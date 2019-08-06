@@ -1,6 +1,6 @@
 <template>
   <v-layout row justify-center>
-    <v-form data-vv-scope="GeneralForm">
+    <v-form data-vv-scope="GeneralForm" @submit.prevent>
       <v-layout column>
         <h5 class="headline">General flowchart information</h5>
         <v-text-field
