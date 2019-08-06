@@ -149,8 +149,8 @@ export default {
                  * @param {String} implications the implications of the edge/ answer of the question
                  * @param {String} imageName the name of the image that is used for this edge/ answer
                 */
-                changeEdge(name, implications, implicationColor, imageName){
-                    methods.changeEdge(name, implications, implicationColor, imageName);
+                changeEdge(nodeName, name, implications, implicationColor, imageName){
+                    methods.changeEdge(nodeName, name, implications, implicationColor, imageName);
                 }
             },
             /**

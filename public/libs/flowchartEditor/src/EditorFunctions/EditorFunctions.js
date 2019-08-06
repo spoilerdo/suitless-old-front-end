@@ -61,9 +61,9 @@ export let editorFunctions = {
      * adds an unconnected edge to the graph.
      * @param {mxGraph} graph
      * @param {object} flow
-     * @param {object} implications
+     * @param {object} lincData
      */
-    addEdge(graph, flow, implications) {
+    addEdge(graph, flow, lincData) {
         let parent = graph.getDefaultParent();
         //Enabled the graph to be updated.
         graph.getModel().beginUpdate();
@@ -85,11 +85,8 @@ export let editorFunctions = {
 
             let data = [
                 {
-                    "key": "implications",
-                    "value": [{
-                        "implication": "",
-                        "implicationLevel": "",
-                    }]
+                    "key": "answer",
+                    "value": ""
                 },
                 {
                     "key": "imageName",
@@ -97,10 +94,8 @@ export let editorFunctions = {
                 }
             ]
 
-            if(implications){
-                data[0].value = implications;
-                //TODO fix this so that the correct image is saved
-                data[1].value = "DefaultEdgeImage";
+            if(lincData){
+                data = lincData;
             }
 
             //Certain edges are not allowed to be added
@@ -217,8 +212,7 @@ export let editorFunctions = {
                     targetCell,
                     value: f.value
                 }
-                let edge = this.addEdge(graph, flow, f.implications);
-                //this.changeEdgeColor(edge, f.implications);
+                this.addEdge(graph, flow, f.lincData);
             })
         })
     },

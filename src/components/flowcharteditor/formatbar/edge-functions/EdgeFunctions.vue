@@ -2,17 +2,7 @@
   <v-layout row justify-center>
     <v-form data-vv-scope="EdgeForm" @submit.prevent>
       <v-layout column>
-        <h6 class="subheading">An answer for the question</h6>
-        <v-textarea
-          v-model="form.answer"
-          auto-grow
-          box
-          color="primary"
-          label="Answer"
-          rows="1"
-          v-validate="'required'"
-          name="answer"
-        />
+        <GenericView nameLabel="An answer for the question" @onChange="changeProps" />
         <span>{{ errors.first('answer') }}</span>
         <v-btn color="primary" @click="setFileDialog(true)">Select Image</v-btn>
         <ImplicationList
@@ -29,6 +19,7 @@
 
 <script>
 import ImplicationList from "./ImplicationList.vue";
+import GenericView from "../genericView/GenericView";
 import theme from "@/plugins/vuetify/theme";
 import { mapState, mapActions } from "vuex";
 
@@ -40,6 +31,7 @@ export default {
   data() {
     return {
       form: {
+        edgeNode: null,
         answer: null,
         imageName: "",
         implications: [
@@ -53,7 +45,8 @@ export default {
     };
   },
   components: {
-    ImplicationList
+    ImplicationList,
+    GenericView
   },
   computed: {
     ...mapState("flowcharteditor/", [
@@ -62,11 +55,15 @@ export default {
       "imageName"
     ])
   },
-  created(){
+  created() {
     this.implicationColorsList.push(theme.default);
   },
   methods: {
     ...mapActions("cdn/", ["setFileDialog"]),
+    changeProps(newForm) {
+      this.form.edgeNode = newForm.nodeName;
+      this.form.answer = newForm.name;
+    },
     prepareChangeEdge() {
       this.$validator.validateAll("EdgeForm").then(valid => {
         if (valid) {
@@ -82,14 +79,14 @@ export default {
           }
 
           this.changeEdge(
+            this.form.edgeNode,
             this.form.answer,
             this.form.implications,
             implicationColor,
             this.form.imageName
           );
 
-          //reset imageName because the image already has been used
-          this.form = this._data.form;
+          this.form.imageName = "";
 
           this.implicationColorsList = [theme.default];
         }
@@ -98,18 +95,26 @@ export default {
   },
   watch: {
     selectedCell: function(newValue) {
-      if (
-        newValue != null &&
-        this.formatBarType == this.$data.nodeEnum.Edge &&
-        newValue.lincData.length > 0
-      ) {
-        this.form.answer = newValue.value;
-        let imp = JSON.parse(JSON.stringify(newValue.lincData.find(data => data.key === "implications").value));
-        this.form.implications = imp;
-        if(imp[0].implicationLevel){
-          const themes = imp.map((el)=> el.implicationLevel);
-          this.implicationColorsList = themes.map((el) => theme[el]);
+      //console.log(newValue);
+      if (newValue && this.formatBarType == this.$data.nodeEnum.Edge && newValue.lincData.length > 0) {
+        this.form.answer = newValue.lincData.find(
+          data => data.key == "answer"
+        ).value;
+        let imp = newValue.lincData.filter(data => data.key == "implication")
+          .map(el => el.value);
+        let impLvl = newValue.lincData.filter(data => data.key == "implicationLevel")
+          .map(el => el.value);
+        let implicationsObject = [{ implication: null, implicationLevel: "default" }];
+        if (imp.length > 0 && impLvl.length > 0) {
+          imp.forEach((implication, index) => {
+            implicationsObject.push({
+              implication: implication,
+              implicationLevel: impLvl[index]
+            });
+          });
+          this.implicationColorsList = impLvl.map(el => theme[el]);
         }
+        this.form.implications = implicationsObject;
       }
     },
     imageName: function(newVal) {
