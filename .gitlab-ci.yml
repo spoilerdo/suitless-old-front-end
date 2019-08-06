@@ -72,25 +72,25 @@ docker_compose_dev:
 
 test_VueJS_production:
 stage: test
- only:
+only:
     - tags
   tags:
   - production
  image: nightwatch:latest
  services:
- - name: selenium/standalone-chrome
+    - name: selenium/standalone-chrome
    alias: chrome
  script:
  - 'npm ci'
  - 'npm run test:e2e'
  artifacts:
    paths:
-   - tests/e2e/reports/
+       - tests/e2e/reports/
 
 build_VueJS_production:
   stage: build
   only:
-      - tags
+    - tags
   image: node:10.16-stretch
   retry: 2
   tags:
