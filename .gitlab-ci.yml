@@ -2,27 +2,93 @@ before_script:
 - export GRADLE_USER_HOME=`pwd`/.gradle
 
 stages:
+- testDev
+- buildDev
+- dockerDev
 - test
 - build
 - docker
 
-test_VueJS:
- stage: test
- image: nightwatch:latest
- services:
- - name: selenium/standalone-chrome
-   alias: chrome
- script:
- - 'npm ci'
- - 'npm run test:e2e'
- artifacts:
-   paths:
-   - tests/e2e/reports/
+testDev_VueJS:
+  stage: testDev
+  except:
+    - tags
+  tags:
+    - dev
+  image: nightwatch:latest
+  script:
+    - 'npm ci'
+    - 'npm run test:e2e:dev'
+  artifacts:
+    paths:
+    - tests/e2e/reports/
 
-build_VueJS:
-  stage: build
+buildDev_VueJS:
+  stage: buildDev
+  except:
+    - tags
+  tags:
+    - dev
   image: node:10.16-stretch
   retry: 2
+  script:
+    - 'npm ci'
+    - 'npm run build:dev'
+    - 'npm run docs'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - .m2/repository
+      - node_modules/
+  artifacts:
+    paths:
+    - dist/
+    
+docker_compose_dev:
+  stage: dockerDev
+  image: tmaier/docker-compose:latest
+  retry: 2
+  except:
+    - tags
+  tags:
+    - dev
+  only:
+    - master
+  before_script:
+    - 'docker info'
+  script:
+    - 'docker-compose up -d --build'
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - .m2/repository
+      - node_modules/
+
+
+test_VueJS_production:
+  stage: test
+  only:
+    - tags
+  tags:
+  - production
+  image: nightwatch:latest
+  script:
+    - 'npm ci'
+    - 'npm run test:e2e'
+  artifacts:
+    paths:
+      - tests/e2e/reports/
+
+build_VueJS_production:
+  stage: build
+  only:
+    - tags
+  image: node:10.16-stretch
+  retry: 2
+  tags:
+  - production
   script:
   - 'npm ci'
   - 'npm run build'
@@ -31,25 +97,29 @@ build_VueJS:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
-        - .m2/repository
-        - node_modules/
+      - .m2/repository
+      - node_modules/
   artifacts:
     paths:
     - dist/
 
-docker_compose:
+docker_compose_production:
   stage: docker
   image: tmaier/docker-compose:latest
   retry: 2
   only:
-  - master
+    - tags
+  except:
+    - /^(?!master).+@/    # Ruby RegEx for anything not starting with 'master'
+  tags:
+    - production
   before_script:
-  - 'docker info'
+    - 'docker info'
   script:
-  - 'docker-compose up -d --build'
+    - 'docker-compose up -d --build'
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
     paths:
-        - .m2/repository
-        - node_modules/
+      - .m2/repository
+      - node_modules/
