@@ -6,7 +6,7 @@
  * @since 12-03-2019
  */
 
- import { pdfContent } from "./PdfContent"
+import { pdfContent } from "./PdfContent"
 
 export class pdfContentWarning extends pdfContent {
 

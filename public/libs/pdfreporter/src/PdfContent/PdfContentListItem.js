@@ -1,3 +1,10 @@
+/**
+ * pdfContent contains the class that initializes a pdfContent instance.
+ * This specific content is used for list items.
+ * @author Julius Ammerlaan
+ * @version 1.0
+ * @since 12-03-2019
+ */
 
 import { pdfContent } from "./PdfContent";
 

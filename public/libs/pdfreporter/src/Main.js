@@ -6,19 +6,11 @@
  */
 
 import { getDefaultPdfOptions } from "./PdfOptions"
-import { getDemoPdfContents } from "./DemoPDF"
-import { PdfContentQuestion, PdfContentReply, PdfContentResult, PdfContentTitle, PdfContentWarning, PdfContentInfo, PdfContentSuccess, PdfContentError, PdfContentSub, PdfContentWhitespace, PdfContentListItem } from "./PdfContentInitializer";
+import { PdfContentQuestion, PdfContentReply, PdfContentResult, PdfContentTitle, PdfContentWarning, PdfContentInfo, PdfContentSuccess, PdfContentError, PdfContentImplication, PdfContentWhitespace, PdfContentListItem } from "./PdfContentInitializer";
 import jsPDF from 'jspdf'
 
 
 const pdfReporter = {
-    generateDemoPDF() {
-        let pdfOptions = getDefaultPdfOptions();
-        let pdfContents = getDemoPdfContents();
-
-        generatePDF(pdfOptions, pdfContents, "report")
-    },
-
     /**
      * This is the starting point of generating a PDF.
      * This will call the method that formats the answers into PDF content and sets the name of the PDF.
@@ -136,27 +128,28 @@ function fillImplications(flows) {
                 switch (implication.implicationLevel) {
                     case "success":
                         implicationContents.push(PdfContentSuccess("Success : "));
-                        implicationContents.push(PdfContentSub(implication.implication));
+                        implicationContents.push(PdfContentImplication(implication.implication));
                         implicationContents.push(PdfContentWhitespace());
                         break;
                     case "warning":
                         implicationContents.push(PdfContentWarning("Warning : "));
-                        implicationContents.push(PdfContentSub(implication.implication));
+                        implicationContents.push(PdfContentImplication(implication.implication));
                         implicationContents.push(PdfContentWhitespace());
                         break;
                     case "info":
                         implicationContents.push(PdfContentInfo("Info : "));
-                        implicationContents.push(PdfContentSub(implication.implication));
+                        implicationContents.push(PdfContentImplication(implication.implication));
                         implicationContents.push(PdfContentWhitespace());
                         break;
                     case "primary":
                         implicationContents.push(PdfContentError("Error : "))
-                        implicationContents.push(PdfContentSub(implication.implication));
+                        implicationContents.push(PdfContentImplication(implication.implication));
                         implicationContents.push(PdfContentWhitespace());
                         break;
                     case "default":
-                        implicationContents.push(PdfContentSub(implication.implication));
+                        implicationContents.push(PdfContentImplication(implication.implication));
                         implicationContents.push(PdfContentWhitespace());
+                        break;
                     default:
                         break;
                 }

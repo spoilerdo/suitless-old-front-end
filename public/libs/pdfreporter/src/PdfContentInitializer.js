@@ -6,7 +6,7 @@ import { pdfContentWarning } from "./PdfContent/PdfContentWarning"
 import { pdfContentInfo } from "./PdfContent/PdfContentInfo"
 import { pdfContentSuccess } from "./PdfContent/PdfContentSuccess"
 import { pdfContentError } from "./PdfContent/PdfContentError";
-import { pdfContentSub } from "./PdfContent/PdfContentSub"
+import { pdfContentImplication } from "./PdfContent/PdfContentImplication"
 import { pdfContentWhitespace } from "./PdfContent/PdfContentWhitespace"
 import { pdfContentListItem } from "./PdfContent/PdfContentListItem";
 
@@ -43,8 +43,8 @@ export let PdfContentError = function(content) {
     return new pdfContentError(content);
 }
 
-export let PdfContentSub = function(content) {
-    return new pdfContentSub(content);
+export let PdfContentImplication = function(content) {
+    return new pdfContentImplication(content);
 }
 
 export let PdfContentWhitespace = function() {
