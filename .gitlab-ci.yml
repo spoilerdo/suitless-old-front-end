@@ -14,14 +14,14 @@ testDev_VueJS:
   except:
     - tags
   tags:
-  - dev
+    - dev
   image: nightwatch:latest
   services:
-  - name: selenium/standalone-chrome
+    - name: selenium/standalone-chrome
     alias: chrome
   script:
-  - 'npm ci'
-  - 'npm run test:e2e:dev'
+    - 'npm ci'
+    - 'npm run test:e2e:dev'
   artifacts:
     paths:
     - tests/e2e/reports/
@@ -29,21 +29,21 @@ testDev_VueJS:
 buildDev_VueJS:
   stage: buildDev
   except:
-      - tags
+    - tags
   tags:
-  - dev
+    - dev
   image: node:10.16-stretch
   retry: 2
   script:
-  - 'npm ci'
-  - 'npm run build:dev'
-  - 'npm run docs'
+    - 'npm ci'
+    - 'npm run build:dev'
+    - 'npm run docs'
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
-        - .m2/repository
-        - node_modules/
+      - .m2/repository
+      - node_modules/
   artifacts:
     paths:
     - dist/
@@ -53,39 +53,39 @@ docker_compose_dev:
   image: tmaier/docker-compose:latest
   retry: 2
   except:
-  - tags
+    - tags
   tags:
-  - dev
+    - dev
   only:
-  - master
+    - master
   before_script:
-  - 'docker info'
+    - 'docker info'
   script:
-  - 'docker-compose up -d --build'
+    - 'docker-compose up -d --build'
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
     paths:
-        - .m2/repository
-        - node_modules/
+      - .m2/repository
+      - node_modules/
 
 
 test_VueJS_production:
-stage: test
-only:
+  stage: test
+  only:
     - tags
   tags:
   - production
- image: nightwatch:latest
- services:
+  image: nightwatch:latest
+  services:
     - name: selenium/standalone-chrome
-   alias: chrome
- script:
- - 'npm ci'
- - 'npm run test:e2e'
- artifacts:
-   paths:
-       - tests/e2e/reports/
+    alias: chrome
+  script:
+    - 'npm ci'
+    - 'npm run test:e2e'
+  artifacts:
+    paths:
+      - tests/e2e/reports/
 
 build_VueJS_production:
   stage: build
@@ -103,8 +103,8 @@ build_VueJS_production:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
-        - .m2/repository
-        - node_modules/
+      - .m2/repository
+      - node_modules/
   artifacts:
     paths:
     - dist/
@@ -114,18 +114,18 @@ docker_compose_production:
   image: tmaier/docker-compose:latest
   retry: 2
   only:
-  - tags
+    - tags
   except:
-  - /^(?!master).+@/    # Ruby RegEx for anything not starting with 'master'
+    - /^(?!master).+@/    # Ruby RegEx for anything not starting with 'master'
   tags:
-  - production
+    - production
   before_script:
-  - 'docker info'
+    - 'docker info'
   script:
-  - 'docker-compose up -d --build'
+    - 'docker-compose up -d --build'
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
     paths:
-        - .m2/repository
-        - node_modules/
+      - .m2/repository
+      - node_modules/
