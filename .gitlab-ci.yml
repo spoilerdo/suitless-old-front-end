@@ -71,7 +71,7 @@ docker_compose_dev:
 
 
 test_VueJS_production:
- stage: test
+stage: test
  only:
     - tags
   tags:
