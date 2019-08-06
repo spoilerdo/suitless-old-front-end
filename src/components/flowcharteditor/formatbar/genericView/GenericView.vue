@@ -59,7 +59,9 @@ export default {
         selectedCell: function(newValue) {
             if(newValue){
                 this.form.nodeName = newValue.value;
-                this.form.name = newValue.lincData[0].value;
+                if(newValue.lincData.length > 0){
+                    this.form.name = newValue.lincData[0].value;
+                }
             }
         }
     }

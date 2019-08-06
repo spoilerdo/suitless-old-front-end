@@ -35,25 +35,28 @@ export function createFormatbar(editor, model) {
  * @param {object} selectedCell 
  * @param {mxGraphModel} model 
  */
-function showFormatBar(editor, selectedCell, model){
-    if(selectedCell == null){return;}
-        //change the state values
-        state.editor = editor;
-        state.selectedCell = selectedCell;
+function showFormatBar(editor, selectedCell, model) {
+    if (selectedCell == null) { return; }
+    //change the state values
+    state.editor = editor;
+    state.selectedCell = selectedCell;
 
-        let children = 3;
-        if(selectedCell.children != null){
-            children = selectedCell.children.length;
-        }
+    let children = 3;
+    if (selectedCell.children != null) {
+        children = selectedCell.children.length;
+    }
 
-        let newC = {
+    let newC = null;
+    if (selectedCell.lincData) {
+        newC = {
             "value": JSON.parse(JSON.stringify(selectedCell.value, null, "\t")),
             "lincData": JSON.parse(JSON.stringify(selectedCell.lincData, null, "\t")),
             "children": JSON.parse(JSON.stringify(children, null, "\t"))
         };
+    }
+    state.newCell.set = newC;
 
-        state.newCell.set = newC;
-        state.model = model;
+    state.model = model;
 
-        state.activeFormatBar.set = selectedCell.lincType;
+    state.activeFormatBar.set = selectedCell.lincType;
 }

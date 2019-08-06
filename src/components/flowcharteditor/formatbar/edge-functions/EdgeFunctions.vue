@@ -2,9 +2,8 @@
   <v-layout row justify-center>
     <v-form data-vv-scope="EdgeForm" @submit.prevent>
       <v-layout column>
-        <GenericView nameLabel="An answer for the question" @onChange="changeProps" />
-        <span>{{ errors.first('answer') }}</span>
-        <v-btn color="primary" @click="setFileDialog(true)">Select Image</v-btn>
+        <GenericView v-if="selected != null" nameLabel="An answer for the question" @onChange="changeProps" />
+        <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>
         <ImplicationList
           v-bind:implications.sync="form.implications"
           v-bind:implicationColors.sync="implicationColorsList"
@@ -28,6 +27,17 @@ import { mapState, mapActions } from "vuex";
  * @memberof component.FlowchartForm
  */
 export default {
+    components: {
+    ImplicationList,
+    GenericView
+  },
+  computed: {
+    ...mapState("flowcharteditor/", [
+      "selectedCell",
+      "formatBarType",
+      "imageName"
+    ])
+  },
   data() {
     return {
       form: {
@@ -41,22 +51,13 @@ export default {
           }
         ]
       },
-      implicationColorsList: []
+      implicationColorsList: [],
+      selected: null
     };
-  },
-  components: {
-    ImplicationList,
-    GenericView
-  },
-  computed: {
-    ...mapState("flowcharteditor/", [
-      "selectedCell",
-      "formatBarType",
-      "imageName"
-    ])
   },
   created() {
     this.implicationColorsList.push(theme.default);
+    this.selected = this.selectedCell;
   },
   methods: {
     ...mapActions("cdn/", ["setFileDialog"]),
@@ -95,8 +96,9 @@ export default {
   },
   watch: {
     selectedCell: function(newValue) {
-      //console.log(newValue);
       if (newValue && this.formatBarType == this.$data.nodeEnum.Edge && newValue.lincData.length > 0) {
+        this.selected = newValue;
+
         this.form.answer = newValue.lincData.find(
           data => data.key == "answer"
         ).value;
@@ -115,6 +117,8 @@ export default {
           this.implicationColorsList = impLvl.map(el => theme[el]);
         }
         this.form.implications = implicationsObject;
+      } else {
+        this.selected = null;
       }
     },
     imageName: function(newVal) {

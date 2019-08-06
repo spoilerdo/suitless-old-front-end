@@ -99,7 +99,7 @@ export let editorFunctions = {
             }
 
             //Certain edges are not allowed to be added
-            if(firstCell.lincType != NodeEnum.Start && firstCell.lincType != NodeEnum.Notification && firstCell.lincType != NodeEnum.MultipleChoice){
+            if(firstCell.lincType != NodeEnum.Start && firstCell.lincType != NodeEnum.Notification && firstCell.lincType != NodeEnum.MultipleChoice && firstCell.lincType != NodeEnum.Choice){
                 edge.lincData = data;
             }
 

@@ -118,17 +118,15 @@ const mutations = {
         state.flowchart = flowchartState;
     },
     [SET_CELL](state, cellState) {
-        state.selectedCell = {
-            value: cellState.value,
-            lincData: [],
-            children: null
-        };
-        if (cellState.children != null) {
-            state.selectedCell.children = cellState.children;
-        }
-        if (cellState.lincData != null) {
-            state.selectedCell.lincData = cellState.lincData;
-        }
+        if(cellState){
+            state.selectedCell = {
+                value: cellState.value || null,
+                lincData: cellState.lincData || null,
+                children: cellState.children || null
+            };
+        } else {
+            state.selectedCell = null;
+        }   
     }
 }
 
