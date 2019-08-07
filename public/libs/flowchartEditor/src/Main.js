@@ -126,14 +126,19 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
 
         autoResizeCells(graph);
 
-        StartFlowchart(graph);
-
         /**
          * When a new flowchart has been set this will trigger and activate the import function
          */
         state.flowchart.registerListener(function (val) {
             editorFunctions.importChart(graph, val.nodes, model);
         })
+
+        let localModel = JSON.parse(localStorage.getItem("model")) || null;
+        if(localModel && localModel.nodes && localModel.nodes.length > 1){
+            editorFunctions.importChart(graph, localModel.nodes, model)
+        } else {
+            StartFlowchart(graph);
+        }
 
         state.editor = editor;
     }
