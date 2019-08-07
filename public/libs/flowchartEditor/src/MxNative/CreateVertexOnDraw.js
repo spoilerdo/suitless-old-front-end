@@ -11,7 +11,7 @@ import { NodeEnum } from "../NodeEnum";
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
 import { state } from "../store/flowcharteditor";
 
-import { mxConnectionHandler, mxPoint, mxLog, mxConstants } from "../MxGraph";
+import { mxConnectionHandler, mxPoint } from "../MxGraph";
 
 /**
  * When drawing a line this code will show a popup menu so you can chose which node you want to create

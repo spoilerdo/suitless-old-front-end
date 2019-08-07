@@ -46,7 +46,7 @@ import { initAutoSave } from "./MxNative/AutoSave";
 //about the flowchart that will be shared with Vue trough the plugin script
 import { state } from "./store/flowcharteditor";
 
-import { mxClient, mxGraph, mxUtils, mxEvent, mxConstraintHandler, mxConnectionHandler, mxEditor, mxGraphModel, mxKeyHandler, mxUndoManager, mxConstants, mxGraphView } from "./MxGraph";
+import { mxClient, mxGraph, mxUtils, mxEvent, mxEditor, mxGraphModel, mxKeyHandler, mxUndoManager, mxConstants, mxGraphView } from "./MxGraph";
 
 /**
  * triggers the flowchart to be created.

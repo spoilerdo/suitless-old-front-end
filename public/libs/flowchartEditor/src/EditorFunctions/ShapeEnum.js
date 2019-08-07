@@ -15,11 +15,11 @@ export let ShapeEnum = {
     /**
      * Name to Value mapping.
      */
-    Rectangle: 0,
-    Ellipse: 1,
-    DottedEllipse: 2,
-    Hexagon: 3,
-    Swimlane: 4,
+    Rectangle : 0,
+    Ellipse : 1,
+    DottedEllipse : 2,
+    Hexagon : 3,
+    Swimlane : 4,
 
     /**
      * Value to Name mapping

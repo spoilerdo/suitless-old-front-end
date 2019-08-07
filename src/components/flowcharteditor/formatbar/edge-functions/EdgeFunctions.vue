@@ -110,15 +110,16 @@ export default {
         this.form.answer = newValue.lincData.find(
           data => data.key == "answer"
         ).value;
+        
         let imp = newValue.lincData
           .filter(data => data.key == "implication")
           .map(el => el.value);
+
         let impLvl = newValue.lincData
           .filter(data => data.key == "implicationLevel")
           .map(el => el.value);
-        let implicationsObject = [
-          { implication: null, implicationLevel: "default" }
-        ];
+
+        let implicationsObject = [];
         if (imp.length > 0 && impLvl.length > 0) {
           imp.forEach((implication, index) => {
             implicationsObject.push({
@@ -127,6 +128,10 @@ export default {
             });
           });
           this.implicationColorsList = impLvl.map(el => theme[el]);
+        } else {
+          implicationsObject = [
+            { implication: null, implicationLevel: "default" }
+          ];
         }
         this.form.implications = implicationsObject;
       } else {
