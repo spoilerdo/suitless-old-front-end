@@ -39,6 +39,9 @@ import { autoResizeCells } from "./MxNative/AutoResizeCell";
 //Script that contains some connection handler functionality
 import { connectionHandlerFunctions } from "./MxNative/MxConnectionHandler";
 
+//Script that will auto save the flowchart to the local storage
+import { initAutoSave } from "./MxNative/AutoSave";
+
 //Script that is the store of the flowchart editor this script contains some general information 
 //about the flowchart that will be shared with Vue trough the plugin script
 import { state } from "./store/flowcharteditor";
@@ -81,8 +84,6 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         let keyHandler = new mxKeyHandler(graph);
         let undoManager = new mxUndoManager();
 
-
-
         let undoListener = function (sender, evt) {
             undoManager.undoableEditHappened(evt.getProperty('edit'));
         }
@@ -120,6 +121,8 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         };
 
         clipBoardFunctions(graph);
+
+        initAutoSave(graph);
 
         autoResizeCells(graph);
 
