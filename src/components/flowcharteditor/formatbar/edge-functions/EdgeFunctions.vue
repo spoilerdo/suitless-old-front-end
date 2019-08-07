@@ -2,7 +2,12 @@
   <v-layout row justify-center>
     <v-form data-vv-scope="EdgeForm" @submit.prevent>
       <v-layout column>
-        <GenericView v-if="selected != null" nameLabel="An answer for the question" @onChange="changeProps" />
+        <GenericView
+          v-if="selected != null"
+          nameLabel="An answer for the question"
+          nodeName="edge"
+          @onChange="changeProps"
+        />
         <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>
         <ImplicationList
           v-bind:implications.sync="form.implications"
@@ -27,7 +32,7 @@ import { mapState, mapActions } from "vuex";
  * @memberof component.FlowchartForm
  */
 export default {
-    components: {
+  components: {
     ImplicationList,
     GenericView
   },
@@ -69,7 +74,6 @@ export default {
       this.$validator.validateAll("EdgeForm").then(valid => {
         if (valid) {
           //get the image name from the dialog and save it onto the edge
-
           if (this.form.imageName === "") {
             this.form.imageName = "DefaultEdgeImage";
           }
@@ -96,17 +100,25 @@ export default {
   },
   watch: {
     selectedCell: function(newValue) {
-      if (newValue && this.formatBarType == this.$data.nodeEnum.Edge && newValue.lincData.length > 0) {
+      if (
+        newValue &&
+        this.formatBarType == this.$data.nodeEnum.Edge &&
+        newValue.lincData.length > 0
+      ) {
         this.selected = newValue;
 
         this.form.answer = newValue.lincData.find(
           data => data.key == "answer"
         ).value;
-        let imp = newValue.lincData.filter(data => data.key == "implication")
+        let imp = newValue.lincData
+          .filter(data => data.key == "implication")
           .map(el => el.value);
-        let impLvl = newValue.lincData.filter(data => data.key == "implicationLevel")
+        let impLvl = newValue.lincData
+          .filter(data => data.key == "implicationLevel")
           .map(el => el.value);
-        let implicationsObject = [{ implication: null, implicationLevel: "default" }];
+        let implicationsObject = [
+          { implication: null, implicationLevel: "default" }
+        ];
         if (imp.length > 0 && impLvl.length > 0) {
           imp.forEach((implication, index) => {
             implicationsObject.push({

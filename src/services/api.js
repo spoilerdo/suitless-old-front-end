@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '@/router/router'
 
 export const setToken = (token) => {
     if (token) {
@@ -20,7 +21,7 @@ export const apiCall = (method, path, data) => {
             }).then(res => {
                 return resolve(res.data);
             }).catch(err => {
-                if(err.response && err.response.status === 401){ checkAuthentication(); }
+                checkAuthentication(err);
                 return reject(err);
             })
     });
@@ -38,32 +39,17 @@ export const apiCallWithContentType = (method, path, data, type) => {
             }).then(res => {
                 return resolve(res.data);
             }).catch(err => {
-                if(err.response && err.response.status === 401){ checkAuthentication(); }
+                checkAuthentication(err);
                 return reject(err);
             })
     });
 }
 
-export const asyncApiCall = (method, path, data) => {
-    return new Promise((resolve, reject) => {
-        return axios[method.toLowerCase()](
-            path,
-            data, {
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => {
-                return resolve(res.data);
-            }).catch(err => {
-                if(err.response && err.response.status === 401){ checkAuthentication(); }
-                return reject(err);
-            })
-    })
-}
-
 //Used when the jwt token is outdate, just delete it then
-function checkAuthentication(){
-    localStorage.clear();
-    axios.defaults.headers.common['Authorization'] = "";
+function checkAuthentication(err) {
+    if (err.response && err.response.status === 401 || err.message == "Network Error") {
+        localStorage.clear();
+        axios.defaults.headers.common['Authorization'] = "";
+        router.push("/login");
+    }
 }

@@ -1,7 +1,6 @@
 import _ from 'lodash';
-import { VueInstance } from '../../../main';
 import { SET_SURVEY, SET_SURVEYS, DELETE_SURVEY_STATE } from './mutation-types';
-import { apiCall, asyncApiCall } from '@/services/api';
+import { apiCall } from '@/services/api';
 import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 
 /**
@@ -41,7 +40,7 @@ const actions = {
      */
     async getAllSurveys({ commit, dispatch }) {
         try {
-            const modules = await asyncApiCall('get', `${API_URL}/modules`);
+            const modules = await apiCall('get', `${API_URL}/modules`);
             if(modules) commit(SET_SURVEYS, modules);
         } catch (e) {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });

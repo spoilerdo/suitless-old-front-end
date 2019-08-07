@@ -1,12 +1,16 @@
 <template>
   <v-layout row justify-center>
     <v-form data-vv-scope="ChoiceForm" @submit.prevent>
-      <GenericView nameLabel="The name of the Question" @onChange="changeProps" />
+      <GenericView
+        ref="genericView"
+        nameLabel="The name of the Question"
+        nodeName="choice"
+        @onChange="changeProps"
+        @validated="checkValidation"
+      />
+      <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>
       <v-layout align-center justify-center row>
-        <ServiceableFilePicker v-on:Base64="setFile($event)" v-on:Type="setType($event)" />
-      </v-layout>
-      <v-layout align-center justify-center row>
-        <v-btn color="primary" @click="genericChangeNode(form.nodeName, form.name)">Apply</v-btn>
+        <v-btn color="primary" @click="prepareGenericChangeNode()">Apply</v-btn>
       </v-layout>
     </v-form>
   </v-layout>
@@ -30,16 +34,17 @@ export default {
     return {
       form: {
         nodeName: null,
-        name: null
+        name: null,
+        imageName: ""
       },
-      image: {
-        file: "",
-        type: ""
-      }
+      selected: null
     };
   },
   computed: {
     ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
+  },
+  created() {
+    this.selected = this.selectedCell;
   },
   methods: {
     ...mapActions("cdn/", ["uploadImage"]),
@@ -53,18 +58,15 @@ export default {
       this.form = newForm;
     },
     prepareGenericChangeNode() {
+      this.$refs.genericView.checkIfValid()
+    },
+    checkValidation(genericValid){
       this.$validator.validateAll("ChoiceForm").then(valid => {
-        if (valid) {
+        if (valid && genericValid) {
           this.genericChangeNode(this.form.nodeName, this.form.name);
-
-          this.uploadImage({
-            file: this.image.file,
-            name: this.form.nodeName + this.selectedCell.id,
-            type: this.image.type
-          });
         }
       });
-    }
+    },
   },
   watch: {
     selectedCell: function(newValue) {
@@ -74,10 +76,13 @@ export default {
         newValue.lincData.length > 0
       ) {
         this.form.nodeName = newValue.value;
-        this.form.name = newValue.lincData.find(
+        this.form.name = newValue.lincData.filter(
           data => data.key === "choice"
         ).value;
       }
+    },
+    imageName: function(newVal) {
+      this.form.imageName = newVal;
     }
   }
 };

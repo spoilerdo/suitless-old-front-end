@@ -10,13 +10,13 @@
     >
       <v-layout row wrap>
         <div class="flex xs4">
-          <ListCard redirecturl="/survey" imagename="IP.svg" title="Intellectual Property" orientation="horizontal"/>
+          <!-- <ListCard redirecturl="/survey" imagename="IP.svg" title="Intellectual Property" orientation="horizontal"/> -->
         </div>
         <div class="flex xs4">
-          <ListCard redirecturl="/survey" imagename="Privacy.svg" title="Intellectual Property" orientation="horizontal"/>
+          <!-- <ListCard redirecturl="/survey" imagename="Privacy.svg" title="Intellectual Property" orientation="horizontal"/> -->
         </div>
         <div class="flex xs4">
-          <ListCard redirecturl="/survey" imagename="Trademark.svg" title="Intellectual Property" orientation="horizontal"/>
+          <!-- <ListCard redirecturl="/survey" imagename="Trademark.svg" title="Intellectual Property" orientation="horizontal"/> -->
         </div>
 
         <!-- </div> -->

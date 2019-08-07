@@ -1,4 +1,4 @@
-import { asyncApiCall } from '@/services/api'
+import { apiCall } from '@/services/api'
 import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 import { SET_IMPORT_DIALOG, SET_FLOWCHART, SET_FORMATBAR, SET_CELL, SET_IMAGE } from './mutation-types';
 
@@ -81,7 +81,7 @@ const actions = {
      */
     async getFlowchartByName({ commit, dispatch }, name) {
         try {
-            const req = await asyncApiCall('get', `${API_URL}/modules/name/${encodeURI(name)}`);
+            const req = await apiCall('get', `${API_URL}/modules/name/${encodeURI(name)}`);
             commit(SET_FLOWCHART, req);
         } catch (e) {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root:true });
@@ -94,7 +94,7 @@ const actions = {
      */
     async saveFlowchart({ dispatch }, flowchart) {
         try {
-            const req = await asyncApiCall('post', `${API_URL}/modules/`, flowchart);
+            const req = await apiCall('post', `${API_URL}/modules/`, flowchart);
             if(req && req.module != null) {
                 dispatch(NOTIFICATION_HANDLER, { message: "Flowchart saved", type: "success" }, { root:true })
             }

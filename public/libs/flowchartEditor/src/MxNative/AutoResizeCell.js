@@ -23,6 +23,14 @@ export function autoResizeCells(graph) {
         //loop through each cell and get their preferred boundaries
         cells.forEach(c => {
             if(c.lincType != undefined && c.lincType != NodeEnum.MultipleChoice){
+
+                let minHeight = 80;
+                let heightSlack = 25;
+                if(c.lincType == NodeEnum.Choice){
+                    minHeight = 40;
+                    heightSlack = 10;
+                }
+
                 let newRect = {}
                 let rect = c.geometry
                 let preffered = graph.getPreferredSizeForCell(c)
@@ -33,7 +41,7 @@ export function autoResizeCells(graph) {
 
                 //if they are under a minimum of 80 by 80 resize them bigger
                 newRect.width = (preffered.width + 10 < 80) ? 80 : preffered.width + 10
-                newRect.height = (preffered.height + 25 < 80) ? 80 : preffered.height + 25
+                newRect.height = (preffered.height + heightSlack < minHeight) ? minHeight : preffered.height + heightSlack
 
                 graph.resizeCell(c, newRect)
             }

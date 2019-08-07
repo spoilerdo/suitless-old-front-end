@@ -53,7 +53,7 @@ export default {
   },
   created() {
     //when created call the action to get all products from api and put it in the store
-    this.$store.dispatch("survey/getAllSurveys");
+    //this.$store.dispatch("survey/getAllSurveys");
   },
   data() {
     return {
