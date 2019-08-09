@@ -29,7 +29,7 @@ buildDev_VueJS:
     - tags
   tags:
     - dev
-  image: node:10.16-stretch
+  image: node:11.15.0
   retry: 2
   script:
     - 'npm ci'
@@ -85,7 +85,7 @@ build_VueJS_production:
   stage: build
   only:
     - tags
-  image: node:10.16-stretch
+  image: node:11.15.0
   retry: 2
   tags:
   - production
