@@ -2,11 +2,12 @@ import { pdfContentQuestion } from "./PdfContent/PdfContentQuestion"
 import { pdfContentReply } from "./PdfContent/PdfContentReply"
 import { pdfContentResult } from "./PdfContent/PdfContentResult"
 import { pdfContentTitle } from "./PdfContent/PdfContentTitle"
-import { pdfContentWarning } from "./PdfContent/PdfContentWarning"
-import { pdfContentInfo } from "./PdfContent/PdfContentInfo"
-import { pdfContentSuccess } from "./PdfContent/PdfContentSuccess"
-import { pdfContentError } from "./PdfContent/PdfContentError";
 import { pdfContentImplication } from "./PdfContent/PdfContentImplication"
+import { pdfContentHighPriority } from "./PdfContent/PdfContentHighPriority"
+import { pdfContentBackgroundInformation } from "./PdfContent/PdfContentBackgroundInformation"
+import { pdfContentHighPriorityDIY } from "./PdfContent/PdfContentHighPriorityDIY"
+import { pdfContentHighRisk } from "./PdfContent/PdfContentHighRisk";
+import { pdfContentAssumption } from "./PdfContent/PdfContentAssumption"
 import { pdfContentWhitespace } from "./PdfContent/PdfContentWhitespace"
 import { pdfContentListItem } from "./PdfContent/PdfContentListItem";
 
@@ -27,20 +28,24 @@ export let PdfContentTitle = function(content) {
     return new pdfContentTitle(content);
 }
 
-export let PdfContentWarning = function(content) {
-    return new pdfContentWarning(content);
+export let PdfContentHighPriority = function(content) {
+    return new pdfContentHighPriority(content);
 }
 
-export let PdfContentInfo = function(content) {
-    return new pdfContentInfo(content);
+export let PdfContentBackgroundInformation = function(content) {
+    return new pdfContentBackgroundInformation(content);
 }
 
-export let PdfContentSuccess = function(content) {
-    return new pdfContentSuccess(content);
+export let PdfContentHighPriorityDIY = function(content) {
+    return new pdfContentHighPriorityDIY(content);
 }
 
-export let PdfContentError = function(content) {
-    return new pdfContentError(content);
+export let PdfContentHighRisk = function(content) {
+    return new pdfContentHighRisk(content);
+}
+
+export let PdfContentAssumption = function(content) {
+    return new pdfContentAssumption(content);
 }
 
 export let PdfContentImplication = function(content) {

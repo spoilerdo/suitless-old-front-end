@@ -16,20 +16,12 @@ export class pdfContentWhitespace extends pdfContent {
     }
 
     /**
-     * sets the text color appropriate for the type.
+     * Add nothing, but act like our content is the max size.
+     * @param {*} doc unused
+     * @param {*} offset unused
      */
-    setStyle(doc) {
-        doc.setTextColor(250, 51, 51);
-        doc.setFontSize(11);
-        doc.setFont("Times","normal");
-    }
-
-    /**
-     * returns the correct offset for this pdfContent
-     * object
-     */
-    getOffset() {
-        return 0.5;
+    addToDoc(doc, offset) {
+        return 1;
     }
 }
 
