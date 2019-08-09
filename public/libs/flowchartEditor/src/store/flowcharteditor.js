@@ -163,18 +163,25 @@ export const methods = {
         state.selectedCell.style += "strokeColor=" + implicationColor
         state.editor.graph.refresh();
 
-        let data = state.selectedCell.lincData.slice(0, 2);
+        let data = [];
+        if(state.selectedCell.lincData){
+            data = state.selectedCell.lincData.slice(0, 2)
+        }
         implications.forEach(implication => {
             data.push({"key": "implication", "value": implication.implication});
             data.push({"key": "implicationLevel", "value": implication.implicationLevel});
         });
-        data[1].value = imageName;
+        if(imageName){
+            data[1].value = imageName;
+        }
         state.selectedCell.lincData = data;
     },
     //Generic method for a basic node with 2 inputs nodeName (name of the cell) and name of the first lincdata prop (question etc...)
     genericChangeNode(nodeName, name){
         state.selectedCell.value = nodeName;
         state.editor.graph.getModel().setValue(state.selectedCell, nodeName);
-        state.selectedCell.lincData[0].value = name;
+        if(state.selectedCell.lincData){
+            state.selectedCell.lincData[0].value = name;
+        }
     }
 }

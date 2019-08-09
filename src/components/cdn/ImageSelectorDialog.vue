@@ -106,6 +106,7 @@ export default {
         } else {
           this.$emit("fileName", this.selected.name);
         }
+        this.selected = null;
         this.setFileDialog(false);
       }
     },

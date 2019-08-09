@@ -10,7 +10,7 @@ import { GraphCoder } from "../GraphCoder";
 import { state } from "../store/flowcharteditor";
 import { addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice } from "./PrivateFunctions";
 
-import { mxConstants, mxEllipse, mxHexagon, mxSwimlane, mxRectangle } from "../MxGraph";
+import { mxConstants, mxEllipse, mxHexagon, mxSwimlane, mxRectangle, mxEvent } from "../MxGraph";
 
 /**
  * This is the max depth of a flowchart AKA what is the longest path of a flowchart.
@@ -94,12 +94,12 @@ export let editorFunctions = {
                 }
             ]
 
-            if(lincData){
+            if (lincData) {
                 data = lincData;
             }
 
             //Certain edges are not allowed to be added
-            if(firstCell.lincType != NodeEnum.Start && firstCell.lincType != NodeEnum.Notification && firstCell.lincType != NodeEnum.MultipleChoice){
+            if (firstCell.lincType != NodeEnum.Start && firstCell.lincType != NodeEnum.Notification && firstCell.lincType != NodeEnum.MultipleChoice && firstCell.lincType != NodeEnum.Choice) {
                 edge.lincData = data;
             }
 
@@ -121,13 +121,6 @@ export let editorFunctions = {
      * @param {mxGraph} graph 
      */
     addCustomShapes(graph) {
-        //Rectangle that represents a default node
-        function rectangle() { }
-        rectangle.prototype = new mxRectangle();
-        rectangle.prototype.constructor = rectangle;
-
-        registerCustomShape(graph, rectangle, ShapeEnum.Rectangle);
-
         //Ellipse that represents a start or end node
         function ellipse() { }
         ellipse.prototype = new mxEllipse();
@@ -173,15 +166,17 @@ export let editorFunctions = {
     * @param {mxGraphModel} model
     */
     importChart(graph, json, model) {
-        //delete existing graph
-        graph.removeCells(graph.getChildVertices(graph.getDefaultParent()))
+        //delete existing graph but first remove te style of the start node otherwise you can't destroy it
+        graph.getModel().setStyle(graph.getChildVertices()[0], '')
+        graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
 
         let cells = [];
         json.forEach(n => {
-            if(n.style != NodeEnum.Choice || n.style != NodeEnum.Start){
-                if(n.style == NodeEnum.MultipleChoice){
-                    //The multiplechoice needs some childs
-                    let data = n.lincData.filter(c => c.key !== "question")
+            if (n.style != NodeEnum.Choice || n.style != NodeEnum.Start) {
+                if (n.style == NodeEnum.MultipleChoice) {
+                    //The multiplechoice needs some childs|
+                    let data = n.lincData.filter(c => c.key !== "question" && c.key !== "loopsubQuestions" && c.key !== "reason")
+                    console.log(data);
 
                     let childs = [];
                     data.forEach(child => {
@@ -204,7 +199,7 @@ export let editorFunctions = {
 
         cells.forEach(c => {
             let fromCell = model.getCell(c.id);
-            
+
             c.cellflows.forEach(f => {
                 let targetCell = model.getCell(f.targetID);
                 let flow = {
@@ -224,9 +219,9 @@ export let editorFunctions = {
      * @param {String} implicationLevel 
      */
     changeEdgeColor(edge, implicationLevel) {
-        if(state.theme == null || implicationLevel == null){return;}
+        if (state.theme == null || implicationLevel == null) { return; }
 
-        if(edge.style.includes("strokeColor")){
+        if (edge.style.includes("strokeColor")) {
             //the first index are the styles that you want to reuse
             //the second index is the part that you want to replace
             let styles = edge.style.split("strokeColor");
@@ -234,7 +229,7 @@ export let editorFunctions = {
         }
 
         let levels = Object.getOwnPropertyNames(state.theme);
-        if(levels == null){return;}
+        if (levels == null) { return; }
 
         let index = levels.indexOf(implicationLevel.toLowerCase());
         let level = Object.values(state.theme)[index];
@@ -264,7 +259,7 @@ export let editorFunctions = {
         //get the previouse cell's depth and set the next cells depth + 1
         if (cell.lincType === NodeEnum.Question || cell.lincType === NodeEnum.MultipleChoice || cell.lincType === NodeEnum.Choice) {
             cell.depth = source.depth + 1;
-            if(cell.children != null){
+            if (cell.children != null) {
                 cell.children.forEach(child => {
                     child.depth = cell.depth;
                 });
