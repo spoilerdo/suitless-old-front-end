@@ -6,15 +6,20 @@
     <v-layout align-center justify-center row pa-2>
       <ProgressBar ref="progressBar" />
     </v-layout>
+    <!-- The start page of a survey -->
     <v-layout align-center justify-center row v-if="surveyStarted === false && survey.name != null">
       <SurveyInformation
         :title="survey.name"
         :description="survey.description"
-        v-on:startSurvey="startSurvey"
+        btnText="Start survey"
+        v-on:btnClick="startSurvey"
       />
     </v-layout>
-    <v-layout align-start justify-start row ma-4 v-else-if="progress !== 100">
-      <v-flex xs12 md11 v-if="survey.nodes != null && currentquestion != null && surveyStarted">
+    <!-- The questions the surveys asks -->
+
+    <!-- All the questions and multi choice -->
+    <v-layout align-start justify-start row ma-4 v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null">
+      <v-flex xs12 md11>
         <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == $data.nodeEnum.Question"
@@ -35,13 +40,26 @@
         />
         <Notification ref="surveyNotification" :timeVisible="0" />
       </v-flex>
-      <v-flex xs5 md6 pl-5 v-if="surveyStarted && survey.nodes != null">
-        <Info :question="currentquestion" v-if="!isMobile" />
+      <v-flex xs5 md6 pl-5>
+        <Info
+          :question="currentquestion"
+          v-if="!isMobile && currentquestion.style != $data.nodeEnum.Notification"
+        />
       </v-flex>
     </v-layout>
-    <!--add the start of the survey this component will give some information about the survey-->
+    <!-- All the notifications -->
+    <v-layout align-center justify-center row v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null">
+      <SurveyInformation
+        v-if="currentquestion.style == $data.nodeEnum.Notification"
+        title
+        :description="getNotify()"
+        btnText="Oke, got it"
+        v-on:btnClick="answeredQuestion(currentquestion.flows[0])"
+      />
+    </v-layout>
+    <!-- The end of the survey -->
     <EndPage
-      v-else
+      v-else-if="progress === 100"
       :answers="answer"
       :question="currentquestion"
       :progress="progress"
@@ -61,7 +79,7 @@ import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
 import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
-import Router from 'vue-router'
+import Router from "vue-router";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 /**
@@ -112,7 +130,11 @@ export default {
   },
   methods: {
     ...mapActions("survey/", ["getSurveyByID", "deleteChosenSurvey"]),
-    ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion", "clearAnswers"]),
+    ...mapActions("answer/", [
+      "deleteLastAnswer",
+      "answerQuestion",
+      "clearAnswers"
+    ]),
     ...mapActions("progress/", [
       "fillProgress",
       "setCurrentQuestion",
@@ -128,6 +150,11 @@ export default {
       if (choice === false) {
         this.$router.go(-1);
       }
+    },
+
+    getNotify() {
+      return this.currentquestion.lincData.find(data => data.key === "notify")
+        .value;
     },
 
     startSurvey() {

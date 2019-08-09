@@ -1,5 +1,6 @@
 <template>
     <v-form data-vv-scope="GenericForm">
+        <v-form @submit.prevent>
         <v-layout column>
             <h6 class="subheading">Text you want see in the node</h6>
             <v-text-field
@@ -24,6 +25,7 @@
             />
             <span>{{ errors.first(`GenericForm.${nodeName}`) }}</span>
         </v-layout>
+        </v-form>
     </v-form>
 </template>
 

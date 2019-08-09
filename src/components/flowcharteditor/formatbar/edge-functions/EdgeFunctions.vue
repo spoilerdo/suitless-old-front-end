@@ -24,6 +24,7 @@
 <script>
 import ImplicationList from "./ImplicationList.vue";
 import GenericView from "../genericView/GenericView";
+import { createImplicationArray } from "@/services/implicationHelper";
 import theme from "@/plugins/vuetify/theme";
 import { mapState, mapActions } from "vuex";
 
@@ -111,29 +112,10 @@ export default {
           data => data.key == "answer"
         ).value;
         
-        let imp = newValue.lincData
-          .filter(data => data.key == "implication")
-          .map(el => el.value);
+        let implicationArray = createImplicationArray(newValue);
 
-        let impLvl = newValue.lincData
-          .filter(data => data.key == "implicationLevel")
-          .map(el => el.value);
-
-        let implicationsObject = [];
-        if (imp.length > 0 && impLvl.length > 0) {
-          imp.forEach((implication, index) => {
-            implicationsObject.push({
-              implication: implication,
-              implicationLevel: impLvl[index]
-            });
-          });
-          this.implicationColorsList = impLvl.map(el => theme[el]);
-        } else {
-          implicationsObject = [
-            { implication: null, implicationLevel: "default" }
-          ];
-        }
-        this.form.implications = implicationsObject;
+        this.form.implications = implicationArray.implicationsObject;
+        this.implicationColorsList = implicationArray.implicationColorsList;
       } else {
         this.selected = null;
       }
