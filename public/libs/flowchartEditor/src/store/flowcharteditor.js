@@ -151,9 +151,8 @@ export const methods = {
             graph.removeCells(childrenToBeRemoved, true);
         }
     },
-    changeEdge(name, implications, implicationColor, imageName){
-        state.selectedCell.value = name;
-        state.editor.graph.getModel().setValue(state.selectedCell, name);
+    changeEdge(edgeNode, answer, implications, implicationColor, imageName){
+        this.genericChangeNode(edgeNode, answer);
 
         if(state.selectedCell.style.includes("strokeColor")){
             //the first index are the styles that you want to reuse
@@ -164,13 +163,25 @@ export const methods = {
         state.selectedCell.style += "strokeColor=" + implicationColor
         state.editor.graph.refresh();
 
-        state.selectedCell.lincData[0].value = implications;
-        state.selectedCell.lincData[1].value = imageName;
+        let data = [];
+        if(state.selectedCell.lincData){
+            data = state.selectedCell.lincData.slice(0, 2)
+        }
+        implications.forEach(implication => {
+            data.push({"key": "implication", "value": implication.implication});
+            data.push({"key": "implicationLevel", "value": implication.implicationLevel});
+        });
+        if(imageName){
+            data[1].value = imageName;
+        }
+        state.selectedCell.lincData = data;
     },
     //Generic method for a basic node with 2 inputs nodeName (name of the cell) and name of the first lincdata prop (question etc...)
     genericChangeNode(nodeName, name){
         state.selectedCell.value = nodeName;
         state.editor.graph.getModel().setValue(state.selectedCell, nodeName);
-        state.selectedCell.lincData[0].value = name;
+        if(state.selectedCell.lincData){
+            state.selectedCell.lincData[0].value = name;
+        }
     }
 }

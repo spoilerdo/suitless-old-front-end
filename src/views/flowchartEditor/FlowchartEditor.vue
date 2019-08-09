@@ -6,8 +6,8 @@
     <div id="formatbarContainer" class="format">
         <GeneralFunctions v-show="formatBarType == null"/>
         <QuestionFunctions v-show="formatBarType == this.$data.nodeEnum.Question"/>
-        <ModuleFunctions v-show="formatBarType == this.$data.nodeEnum.Module"/>
-        <NotificationFunctions v-show="formatBarType == this.$data.nodeEnum.Notification"/>
+        <GenericFunctions nameLabel="The name of the Module" nodeName="module"  v-show="formatBarType == this.$data.nodeEnum.Module"/>
+        <GenericFunctions nameLabel="The name of the Notification" nodeName="notification" v-show="formatBarType == this.$data.nodeEnum.Notification"/>
         <MultipleChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.MultipleChoice"/>
         <ChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.Choice"/>
         <EdgeFunctions v-show="formatBarType == this.$data.nodeEnum.Edge"/>
@@ -34,9 +34,11 @@
     overflow: hidden;
 }
 .format{
-    width: 400px;
-    padding-left: 15px;
-    padding-right: 40px;
+    width: 450px;
+    max-height: 95vh;
+    overflow-y: auto;
+    padding-left: 10px;
+    padding-right: 10px;
     padding-top: 25px;
 }
 
@@ -235,12 +237,11 @@ table.mxPopupMenu tr {
 
 <script>
 import { mapState, mapActions } from "vuex";
+import GenericFunctions from "@/components/flowcharteditor/formatbar/genericView/GenericFunctions";
 import FlowchartForm from "@/components/flowcharteditor/FlowchartForm";
 import ImageSelectorDialog from "@/components/cdn/ImageSelectorDialog";
 import GeneralFunctions from "@/components/flowcharteditor/formatbar/GeneralFunctions";
 import QuestionFunctions from "@/components/flowcharteditor/formatbar/QuestionFunctions";
-import ModuleFunctions from "@/components/flowcharteditor/formatbar/ModuleFunctions";
-import NotificationFunctions from "@/components/flowcharteditor/formatbar/NotificationFunctions";
 import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/MultipleChoiceFunctions";
 import ChoiceFunctions from "@/components/flowcharteditor/formatbar/ChoiceFunctions";
 import EdgeFunctions from "@/components/flowcharteditor/formatbar/edge-functions/EdgeFunctions";
@@ -254,11 +255,10 @@ export default {
     components: {
         Drawer,
         ImageSelectorDialog,
+        GenericFunctions,
         FlowchartForm,
         GeneralFunctions,
         QuestionFunctions,
-        ModuleFunctions,
-        NotificationFunctions,
         MultipleChoiceFunctions,
         ChoiceFunctions,
         EdgeFunctions

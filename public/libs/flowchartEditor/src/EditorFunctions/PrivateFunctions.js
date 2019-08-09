@@ -36,7 +36,7 @@ export function addQuestion(graph, parent, json, x, y) {
             "value": ""
         }
     ]
-    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, 80, x, y, 'shape=' + NodeEnum.Rectangle);
+    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, 80, x, y, 'shape=rectangle');
 }
 
 /**
@@ -168,8 +168,8 @@ export function addMultipleChoice(graph, parent, json, x, y) {
 
     let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, data, 300, 300, x, y, 'shape=' + ShapeEnum.Swimlane);
     
-    //add three standard sub vertexes
-    addSubVertexes(graph, parentSwimlane, json, 3, 0);
+    //add three standard sub vertexes or the vertexes from the json
+    addSubVertexes(graph, parentSwimlane, json, 3, 0); 
     
     return parentSwimlane;
 }
@@ -202,7 +202,7 @@ export function genericAddVertex(graph, parent, json, nodeEnum, data, width, hei
     }
 
     vertex.lincType = nodeEnum;
-    if (data != null) {
+    if (data) {
         vertex.lincData = data;
     }
 
@@ -224,6 +224,7 @@ export function genericAddVertex(graph, parent, json, nodeEnum, data, width, hei
  * @param {Number} index 
  */
 export function addSubVertexes(graph, parent, json, amountOfChildren, index) {
+    console.log(json);
     if(json != null){
         json.children.forEach(child => {
             genericAddVertex(graph, parent, child, NodeEnum.Choice);

@@ -39,11 +39,14 @@ import { autoResizeCells } from "./MxNative/AutoResizeCell";
 //Script that contains some connection handler functionality
 import { connectionHandlerFunctions } from "./MxNative/MxConnectionHandler";
 
+//Script that will auto save the flowchart to the local storage
+import { initAutoSave } from "./MxNative/AutoSave";
+
 //Script that is the store of the flowchart editor this script contains some general information 
 //about the flowchart that will be shared with Vue trough the plugin script
 import { state } from "./store/flowcharteditor";
 
-import { mxClient, mxGraph, mxUtils, mxEvent, mxConstraintHandler, mxConnectionHandler, mxEditor, mxGraphModel, mxKeyHandler, mxUndoManager, mxConstants, mxGraphView } from "./MxGraph";
+import { mxClient, mxGraph, mxUtils, mxEvent, mxEditor, mxGraphModel, mxKeyHandler, mxUndoManager, mxConstants, mxGraphView } from "./MxGraph";
 
 /**
  * triggers the flowchart to be created.
@@ -80,8 +83,6 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         let graph = new mxGraph(graphContainer, model);
         let keyHandler = new mxKeyHandler(graph);
         let undoManager = new mxUndoManager();
-
-
 
         let undoListener = function (sender, evt) {
             undoManager.undoableEditHappened(evt.getProperty('edit'));
@@ -121,9 +122,9 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
 
         clipBoardFunctions(graph);
 
-        autoResizeCells(graph);
+        initAutoSave(graph);
 
-        StartFlowchart(graph);
+        autoResizeCells(graph);
 
         /**
          * When a new flowchart has been set this will trigger and activate the import function
@@ -131,6 +132,13 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         state.flowchart.registerListener(function (val) {
             editorFunctions.importChart(graph, val.nodes, model);
         })
+
+        let localModel = JSON.parse(localStorage.getItem("model")) || null;
+        if(localModel && localModel.nodes && localModel.nodes.length > 1){
+            editorFunctions.importChart(graph, localModel.nodes, model)
+        } else {
+            StartFlowchart(graph);
+        }
 
         state.editor = editor;
     }

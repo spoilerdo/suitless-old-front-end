@@ -65,8 +65,6 @@ const actions = {
 
     //if you do not have a next question, first check if there's more subquestions to be handled
     if(question == null && state.subQuestionBackLog.length > 0 || question != null && question.style == nodeEnum.End && state.subQuestionBackLog.length > 0) {
-      console.log("if");
-      
       let comingQuestion = state.subQuestionBackLog[0];
       
       commit(SET_CURRENTQUESTION, comingQuestion);
@@ -74,7 +72,6 @@ const actions = {
     }
     //if you do not have a next question and there's no more sub questions switch to the normal question flow if it exists.
     else if (question == null && state.currentquestionBacklog.length > 0 || question != null && question.style == nodeEnum.End && state.currentquestionBacklog.length > 0) {
-      console.log("else if");
       let comingQuestion = state.currentquestionBacklog[0];
       //set the options for the coming question if it is multiple choice
       if(comingQuestion.style == nodeEnum.MultipleChoice) {
@@ -86,10 +83,8 @@ const actions = {
       commit(DELETE_FIRST_CURRENTBACKLOG_QUESTION);
       
     } else if(question == null){
-      console.log("else if 2");
       return;
     } else {
-      console.log("else");
       //if the next question is a notification then store it in the notification array and show it on the front-end
       if (question.style == nodeEnum.Notification) {
         commit(SET_NOTIFICATION, { message: question.value });

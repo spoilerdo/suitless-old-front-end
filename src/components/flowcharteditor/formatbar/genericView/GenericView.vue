@@ -1,28 +1,30 @@
 <template>
-    <v-layout column>
-        <h6 class="subheading">Text you want see in the node</h6>
-        <v-text-field
-            label="Node text"
-            v-model="form.nodeName"
-            v-validate="'required'"
-            name="node text"
-            @change="changeProps"
-        />
-        <span>{{ errors.first('node text') }}</span>
-        <h6 class="subheading">{{nameLabel}}</h6>
-        <v-textarea
-            v-model="form.name"
-            auto-grow
-            box
-            color="primary"
-            :label="nameLabel"
-            rows="1"
-            v-validate="'required'"
-            :name="nameLabel"
-            @change="changeProps"
-        />
-        <span>{{ errors.first(nameLabel) }}</span>
-    </v-layout>
+    <v-form data-vv-scope="GenericForm">
+        <v-layout column>
+            <h6 class="subheading">Text you want see in the node</h6>
+            <v-text-field
+                label="Node text"
+                v-model="form.nodeName"
+                v-validate="'required'"
+                name="node text"
+                @change="changeProps"
+            />
+            <span>{{ errors.first('GenericForm.node text') }}</span>
+            <h6 class="subheading">{{nameLabel}}</h6>
+            <v-textarea
+                v-model="form.name"
+                auto-grow
+                box
+                color="primary"
+                :label="nameLabel"
+                rows="1"
+                v-validate="'required'"
+                :name="nodeName"
+                @change="changeProps"
+            />
+            <span>{{ errors.first(`GenericForm.${nodeName}`) }}</span>
+        </v-layout>
+    </v-form>
 </template>
 
 <script>
@@ -37,13 +39,17 @@ export default {
         nameLabel: {
             type: String,
             required: true
+        },
+        nodeName: {
+            type: String,
+            required: true
         }
     },
     data(){
         return {
             form: {
-                nodeName: null,
-                name: null
+                nodeName: "",
+                name: ""
             }
         }
     },
@@ -53,13 +59,20 @@ export default {
     methods: {
         changeProps(){
             this.$emit("onChange", this.form);
+        },
+        checkIfValid(){
+            this.$validator.validateAll("GenericForm").then(valid => {
+                this.$emit("validated", valid);
+            })
         }
     },
     watch: {
-        selectedCell: function(newValue, oldValue) {
-            if(newValue != null && newValue.lincData.length > 0){
+        selectedCell: function(newValue) {
+            if(newValue){
                 this.form.nodeName = newValue.value;
-                this.form.name = newValue.lincData[0].value;
+                if(newValue.lincData.length > 0){
+                    this.form.name = newValue.lincData[0].value;
+                }
             }
         }
     }

@@ -1,9 +1,14 @@
 <template>
   <v-layout row justify-center>
-    <v-form data-vv-scope="QuestionForm">
-      <GenericView nameLabel="The name of the Question" @onChange="changeProps" />
+    <v-form data-vv-scope="QuestionForm" @submit.prevent>
+      <GenericView
+        ref="genericView"
+        nameLabel="The name of the Question"
+        nodeName="question"
+        @onChange="changeProps"
+        @validated="checkValidation"
+      />
       <v-layout column>
-        <span>{{ errors.first('question') }}</span>
         <h6 class="subheading">The reason of the question</h6>
         <v-textarea v-model="form.reason" auto-grow box color="primary" label="Reason" rows="1" />
       </v-layout>
@@ -45,8 +50,11 @@ export default {
       this.form.question = newForm.name;
     },
     prepareChangeQuestionNode() {
+      this.$refs.genericView.checkIfValid();
+    },
+    checkValidation(genericValid){
       this.$validator.validateAll("QuestionForm").then(valid => {
-        if (valid) {
+        if (valid && genericValid) {
           this.changeQuestionNode(
             this.form.questionNode,
             this.form.question,
@@ -54,7 +62,7 @@ export default {
           );
         }
       });
-    }
+    },
   },
   watch: {
     selectedCell: function(newValue) {

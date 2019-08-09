@@ -1,20 +1,14 @@
 <template>
   <v-layout row justify-center>
-    <v-form data-vv-scope="EdgeForm">
+    <v-form data-vv-scope="EdgeForm" @submit.prevent>
       <v-layout column>
-        <h6 class="subheading">An answer for the question</h6>
-        <v-textarea
-          v-model="form.answer"
-          auto-grow
-          box
-          color="primary"
-          label="Answer"
-          rows="1"
-          v-validate="'required'"
-          name="answer"
+        <GenericView
+          v-if="selected != null"
+          nameLabel="An answer for the question"
+          nodeName="edge"
+          @onChange="changeProps"
         />
-        <span>{{ errors.first('answer') }}</span>
-        <v-btn color="primary" @click="setFileDialog(true)">Select Image</v-btn>
+        <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>
         <ImplicationList
           v-bind:implications.sync="form.implications"
           v-bind:implicationColors.sync="implicationColorsList"
@@ -29,6 +23,7 @@
 
 <script>
 import ImplicationList from "./ImplicationList.vue";
+import GenericView from "../genericView/GenericView";
 import theme from "@/plugins/vuetify/theme";
 import { mapState, mapActions } from "vuex";
 
@@ -37,9 +32,21 @@ import { mapState, mapActions } from "vuex";
  * @memberof component.FlowchartForm
  */
 export default {
+  components: {
+    ImplicationList,
+    GenericView
+  },
+  computed: {
+    ...mapState("flowcharteditor/", [
+      "selectedCell",
+      "formatBarType",
+      "imageName"
+    ])
+  },
   data() {
     return {
       form: {
+        edgeNode: null,
         answer: null,
         imageName: "",
         implications: [
@@ -49,29 +56,24 @@ export default {
           }
         ]
       },
-      implicationColorsList: []
+      implicationColorsList: [],
+      selected: null
     };
   },
-  components: {
-    ImplicationList
-  },
-  computed: {
-    ...mapState("flowcharteditor/", [
-      "selectedCell",
-      "formatBarType",
-      "imageName"
-    ])
-  },
-  created(){
+  created() {
     this.implicationColorsList.push(theme.default);
+    this.selected = this.selectedCell;
   },
   methods: {
     ...mapActions("cdn/", ["setFileDialog"]),
+    changeProps(newForm) {
+      this.form.edgeNode = newForm.nodeName;
+      this.form.answer = newForm.name;
+    },
     prepareChangeEdge() {
       this.$validator.validateAll("EdgeForm").then(valid => {
         if (valid) {
           //get the image name from the dialog and save it onto the edge
-
           if (this.form.imageName === "") {
             this.form.imageName = "DefaultEdgeImage";
           }
@@ -82,15 +84,14 @@ export default {
           }
 
           this.changeEdge(
+            this.form.edgeNode,
             this.form.answer,
             this.form.implications,
             implicationColor,
             this.form.imageName
           );
 
-          //reset imageName because the image already has been used
-
-          this.form = this.data.form;
+          this.form.imageName = "";
 
           this.implicationColorsList = [theme.default];
         }
@@ -100,17 +101,41 @@ export default {
   watch: {
     selectedCell: function(newValue) {
       if (
-        newValue != null &&
+        newValue &&
         this.formatBarType == this.$data.nodeEnum.Edge &&
         newValue.lincData.length > 0
       ) {
-        this.form.answer = newValue.value;
-        let imp = JSON.parse(JSON.stringify(newValue.lincData.find(data => data.key === "implications").value));
-        this.form.implications = imp;
-        if(imp[0].implicationLevel){
-          const themes = imp.map((el)=> el.implicationLevel);
-          this.implicationColorsList = themes.map((el) => theme[el]);
+        this.selected = newValue;
+
+        this.form.answer = newValue.lincData.find(
+          data => data.key == "answer"
+        ).value;
+        
+        let imp = newValue.lincData
+          .filter(data => data.key == "implication")
+          .map(el => el.value);
+
+        let impLvl = newValue.lincData
+          .filter(data => data.key == "implicationLevel")
+          .map(el => el.value);
+
+        let implicationsObject = [];
+        if (imp.length > 0 && impLvl.length > 0) {
+          imp.forEach((implication, index) => {
+            implicationsObject.push({
+              implication: implication,
+              implicationLevel: impLvl[index]
+            });
+          });
+          this.implicationColorsList = impLvl.map(el => theme[el]);
+        } else {
+          implicationsObject = [
+            { implication: null, implicationLevel: "default" }
+          ];
         }
+        this.form.implications = implicationsObject;
+      } else {
+        this.selected = null;
       }
     },
     imageName: function(newVal) {
