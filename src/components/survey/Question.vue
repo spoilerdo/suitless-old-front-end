@@ -121,6 +121,7 @@ export default {
     answerQuestion() {
       if(this.selectedAnswer !== null) {
         this.$emit('answerQuestion', this.selectedAnswer);
+        this.selectedAnswer = null;
       }
     }
   }

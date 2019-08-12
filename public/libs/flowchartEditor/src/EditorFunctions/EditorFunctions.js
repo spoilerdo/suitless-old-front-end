@@ -90,7 +90,7 @@ export let editorFunctions = {
                 },
                 {
                     "key": "imageName",
-                    "value": ""
+                    "value": "DefaultEdgeImage"
                 }
             ]
 
