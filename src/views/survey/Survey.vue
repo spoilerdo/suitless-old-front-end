@@ -19,7 +19,7 @@
 
     <!-- All the questions and multi choice -->
     <v-layout align-start justify-start row ma-4 v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null">
-      <v-flex xs12 md11>
+      <v-flex xs12 md11 my-2>
         <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == $data.nodeEnum.Question"

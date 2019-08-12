@@ -1,6 +1,8 @@
 <template>
+<div v-if="reasons != null">
+    <v-flex xs10 offset-xs1 my-2 v-for="(reason, index) in reasons" :key="index">
     <v-scale-transition>
-        <v-card v-if="reason != null">
+        <v-card>
              <v-card-title primary-title class="grow mb-3">
                 <v-layout align-center justify-center row>
                     <h3 class="mb-0">Info</h3>
@@ -13,6 +15,8 @@
             </v-card-actions>
         </v-card>
     </v-scale-transition>
+    </v-flex>
+</div>
 </template>
 
 <script>
@@ -23,19 +27,20 @@
 export default {
     data() {
         return {
-            reason: null
+            reasons: null
         }
     },
     props: ["question"],
     mounted() {
-        let reason = this.question.lincData.find(data => data.key === "reason").value;
-        this.reason =  reason ? reason : null;
+        console.log(this.question.lincData);
+        let reasons = this.question.lincData.filter(data => data.key === "reason");
+        this.reasons =  reasons ? reasons.map(el => el.value) : null;
     },
     watch: {
         question: function() {
             //update new reason on question change, otherwise old reason will be displayed
-            let reason = this.question.lincData.find(data => data.key === "reason").value;
-            this.reason =  reason ? reason : null;
+            let reasons = this.question.lincData.filter(data => data.key === "reason");
+            this.reasons =  reasons ? reasons.map(el => el.value) : null;
         }
     }
 }

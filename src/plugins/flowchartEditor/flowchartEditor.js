@@ -114,8 +114,8 @@ export default {
                  * @param {String} question the question that will be asked in the survey front-end
                  * @param {String} reason the reason why you ask the question
                 */
-                changeQuestionNode(questionNode, question, reason){
-                    methods.changeQuestionNode(questionNode, question, reason);
+                changeQuestionNode(questionNode, question, reasons){
+                    methods.changeQuestionNode(questionNode, question, reasons);
                 },
                 
                 /**
