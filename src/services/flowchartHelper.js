@@ -1,5 +1,6 @@
 /**
- * A small helper that will convert the json implication of an answer to 1 array with the following object structure:
+ * A small helper that will convert the json to the correct objects for the flowchart editor formatbar for instace:
+ * implication of an answer to 1 array with the following object structure:
  * {
  *  implication: "",
  *  implicationLevel: ""
@@ -12,7 +13,7 @@
  * @memberof services.implicationHelper
  */
 
-import theme from "@/plugins/vuetify/theme";
+import theme from "@/plugins/vuetify/theme"; 
 
 export const createImplicationArray = (answer) => {
     //filters all the implications and maps there value into an array
@@ -43,4 +44,23 @@ export const createImplicationArray = (answer) => {
     }
 
     return { implicationsObject, implicationColorsList };
+}
+
+export const createReasonArray = (question) => {
+    //filters all the reasons and maps there value into an array
+    let reasons = question.lincData
+        .filter(data => data.key == "reason")
+        .map(el => el.value);
+
+    //add the array value to an object
+    let reasonsObject = [];
+    if(reasons.length > 0) {
+        reasons.forEach((reason, index) => {
+            reasonsObject.push({
+                reason: reason
+            })
+        })
+    }
+
+    return reasonsObject;
 }

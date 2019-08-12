@@ -24,7 +24,7 @@
 <script>
 import ImplicationList from "./ImplicationList.vue";
 import GenericView from "../genericView/GenericView";
-import { createImplicationArray } from "@/services/implicationHelper";
+import { createImplicationArray } from "@/services/flowchartHelper";
 import theme from "@/plugins/vuetify/theme";
 import { mapState, mapActions } from "vuex";
 

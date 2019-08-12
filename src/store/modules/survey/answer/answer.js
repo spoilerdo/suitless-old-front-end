@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { createImplicationArray } from "@/services/implicationHelper";
+import { createImplicationArray } from "@/services/flowchartHelper";
 import { ADD_ANSWER, DELETE_LAST_ANSWER, CLEAR_ANSWER } from '../mutation-types';
 import { SURVEY_NOTIFICATION_HANDLER } from '../../../generalconstants';
 
