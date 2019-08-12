@@ -224,7 +224,6 @@ export function genericAddVertex(graph, parent, json, nodeEnum, data, width, hei
  * @param {Number} index 
  */
 export function addSubVertexes(graph, parent, json, amountOfChildren, index) {
-    console.log(json);
     if(json != null){
         json.children.forEach(child => {
             genericAddVertex(graph, parent, child, NodeEnum.Choice);

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import GenericView from "./genericView/GenericView";
+import GenericView from "../genericView/GenericView";
 import { mapState, mapActions } from "vuex";
 
 /**
