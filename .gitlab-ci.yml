@@ -2,10 +2,10 @@ before_script:
 - export GRADLE_USER_HOME=`pwd`/.gradle
 
 stages:
-- testDev
+#- testDev
 - buildDev
 - dockerDev
-- test
+#- test
 - build
 - docker
 
