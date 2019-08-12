@@ -1,21 +1,25 @@
 <template>
   <v-container fluid pa-0 ma-o>
-    <Animatedbackground/>
+    <Animatedbackground />
 
     <v-layout align-center justify-center class="background-content-container" row wrap fill-height>
       <v-flex grow xs12>
         <div class="display-2 text-xs-center white--text pb-3">Recommended starter surveys</div>
       </v-flex>
       <v-layout align-space-around justify-center row wrap>
-        <ImageCard
-          redirecturl="/survey/5cf4c7f87fa73a0006d320ac"
-          imagename="trademark"
+        <ActionCard
+          v-on:action="redirectUser(paramter)"
+          parameter="/survey/5cf4c7f87fa73a0006d320ac"
           text="Trademark"
+          imageName="trademark"
+          rounded
         />
-        <ImageCard
-          redirecturl="/survey/5d41a385c806980001e4abe5"
-          imagename="tradename"
-          text="Tradename"
+        <ActionCard
+          v-on:action="redirectUser(paramter)"
+          parameter="/survey/5d41a385c806980001e4abe5"
+          text="tradename"
+          imageName="Trademark"
+          rounded
         />
       </v-layout>
     </v-layout>
@@ -39,7 +43,7 @@
 
 <script>
 import Animatedbackground from "@/components/background/Animatedbackground";
-import ImageCard from "@/components/material/ImageCard";
+import ActionCard from "@/components/material/ActionCard";
 import { mapActions } from "vuex";
 
 /**
@@ -50,10 +54,13 @@ import { mapActions } from "vuex";
 export default {
   components: {
     Animatedbackground,
-    ImageCard
+    ActionCard
   },
   methods: {
-    ...mapActions("app/", ["setBackground"])
+    ...mapActions("app/", ["setBackground"]),
+    redirectUser(url) {
+      this.$router.push(url);
+    }
   },
   created() {
     this.setBackground("#30002a");

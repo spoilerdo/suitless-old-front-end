@@ -38,7 +38,6 @@ const actions = {
   fillProgress({ commit, state }, { addedDepth, survey }) {
     let depth = state.depth;
     const currentquestion = state.currentquestion;
-    console.log(currentquestion.style);
 
     let d = depth + addedDepth;
     if (d >= 0) {
@@ -85,13 +84,8 @@ const actions = {
     } else if(question == null){
       return;
     } else {
-      //if the next question is a notification then store it in the notification array and show it on the front-end
-      if (question.style == nodeEnum.Notification) {
-        commit(SET_NOTIFICATION, { message: question.value });
-        commit(SET_CURRENTQUESTION, nodes[question.flows[0].targetID]);
-      }
       //if the next question is a multiple choice node then get the different options
-      else if (question.style == nodeEnum.MultipleChoice) {
+      if (question.style == nodeEnum.MultipleChoice) {
         commit(SET_OPTIONS, []);
         let choices = question.lincData.filter(c => c.key !== "question" && c.key !== "reason");
         commit(PUSH_OPTIONS, { options: choices, nodes });

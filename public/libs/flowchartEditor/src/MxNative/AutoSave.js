@@ -1,3 +1,10 @@
+/**
+ * Auto saves the flowchart after a certain amount of changes
+ * @author Martijn Dormans
+ * @version 1.0
+ * @since 07-08-2019
+ */
+
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
 import { mxAutoSaveManager } from "../MxGraph";
 

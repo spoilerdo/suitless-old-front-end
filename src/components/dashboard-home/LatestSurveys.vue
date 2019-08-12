@@ -8,7 +8,6 @@
     >
       <v-layout row wrap>
         <div v-for="s in survey" :key="s.moduelID" class="text-xs-center flex xs12 md3">
-          <RoundCard :redirecturl="`/survey/${s.moduleID}`" imagename="IP.svg" :text="s.name"/>
           <h1>69%</h1>
         </div>
       </v-layout>
@@ -33,7 +32,6 @@
 
 <script>
 import Card from "@/components/material/Card";
-import RoundCard from "@/components/material/RoundCard";
 import { mapState, mapGetters } from "vuex";
 
 /**
@@ -43,8 +41,7 @@ import { mapState, mapGetters } from "vuex";
  */
 export default {
   components: {
-    Card,
-    RoundCard
+    Card
   },
   computed: {
     ...mapState("survey", {

@@ -185,14 +185,14 @@ export default {
           anse.push(a);
         });
       }
-
+      
       //The answer doesn't contain an implication
       if (!ans.implications) {
         miscAnswers.push(ans);
       } else {
         //The answer does contian an implication
         //for each implication get the implicationLevel's index
-        ans.implications.forEach(implication => {
+        ans.implications.implicationsObject.forEach(implication => {
           if (implication.implication) {
             let impIndex = implicationTypes.indexOf(
               implication.implicationLevel
