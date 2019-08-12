@@ -70,7 +70,7 @@ import { CDN_URL } from "@/store/generalconstants";
 export default {
   props: {
     text: String,
-    parameter: Object,
+    parameter: Object | String,
     imageName: String,
     selection: {
         type: Boolean,

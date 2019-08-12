@@ -116,6 +116,12 @@ export default {
     });
 
     this.links.push({
+      to: "profile",
+      icon: "mdi-account",
+      text: "my profile"
+    })
+
+    this.links.push({
       to: "flowchart",
       icon: "mdi-square-edit-outline",
       text: "flowchart editor"

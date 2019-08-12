@@ -8,5 +8,7 @@ export default {
     success: '#4caf50',
     info: '#2196f3',
     warning: '#fb8c00',
-    default: '#424242'
+    default: '#424242',
+    defaultBackground: "#eee",
+    landingBackground: "#30002a"
 }

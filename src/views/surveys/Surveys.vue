@@ -8,17 +8,17 @@
       </v-flex>
       <v-layout align-space-around justify-center row wrap>
         <ActionCard
-          v-on:action="redirectUser(paramter)"
+          @action="redirecturl"
           parameter="/survey/5cf4c7f87fa73a0006d320ac"
           text="Trademark"
           imageName="trademark"
           rounded
         />
         <ActionCard
-          v-on:action="redirectUser(paramter)"
+          @action="redirecturl"
           parameter="/survey/5d41a385c806980001e4abe5"
-          text="tradename"
-          imageName="Trademark"
+          text="Tradename"
+          imageName="tradename"
           rounded
         />
       </v-layout>
@@ -44,6 +44,7 @@
 <script>
 import Animatedbackground from "@/components/background/Animatedbackground";
 import ActionCard from "@/components/material/ActionCard";
+import theme from "@/plugins/vuetify/theme";
 import { mapActions } from "vuex";
 
 /**
@@ -58,12 +59,12 @@ export default {
   },
   methods: {
     ...mapActions("app/", ["setBackground"]),
-    redirectUser(url) {
+    redirecturl(url) {
       this.$router.push(url);
     }
   },
   created() {
-    this.setBackground("#30002a");
+    this.setBackground(theme.landingBackground);
   }
 };
 </script>

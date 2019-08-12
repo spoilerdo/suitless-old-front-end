@@ -8,7 +8,8 @@ import FlowchartEditor from '../views/flowchartEditor/FlowchartEditor';
 import LoginLanding from '@/views/landingpage/LoginLanding';
 import Cdn from '../views/cdn/Cdn';
 import Log from '../views/log/Log';
-import Dashboard from '../views/Dashboard.vue'
+import Dashboard from '../views/Dashboard.vue';
+import Profile from '../views/Profile.vue';
 
 Vue.use(Router)
 
@@ -54,6 +55,13 @@ let router = new Router({
       name: 'dashboard',
       component: Dashboard,
       icon: 'mdi-view-dashboard',
+      meta: { requiresAuth: true, requiresAdmin: false }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
+      icon: 'mdi-account',
       meta: { requiresAuth: true, requiresAdmin: false }
     },
     {

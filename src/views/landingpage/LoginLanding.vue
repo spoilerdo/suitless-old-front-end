@@ -11,14 +11,14 @@
       </v-flex>
       <v-layout row wrap justify-center>
         <ActionCard
-          v-on:action="redirecturl(parameter)"
+          @action="redirecturl"
           parameter="/login"
           imageName="account"
           text="Create an account"
           rounded
         />
         <ActionCard
-          v-on:action="redirecturl(parameter)"
+          @action="redirecturl"
           parameter="/surveys"
           imageName="anonymous"
           text="Continue anonymously"
@@ -43,7 +43,7 @@ export default {
     ActionCard
   },
   methods: {
-    redirectUser(url) {
+    redirecturl(url) {
       this.$router.push(url);
     }
   },
