@@ -9,19 +9,19 @@ stages:
 - build
 - docker
 
-testDev_VueJS:
-  stage: testDev
-  except:
-    - tags
-  tags:
-    - dev
-  image: nightwatch:latest
-  script:
-    - 'npm ci'
-    - 'npm run test:e2e:dev'
-  artifacts:
-    paths:
-    - tests/e2e/reports/
+#testDev_VueJS:
+#  stage: testDev
+#  except:
+#    - tags
+#  tags:
+#    - dev
+#  image: nightwatch:latest
+#  script:
+#    - 'npm ci'
+#    - 'npm run test:e2e:dev'
+#  artifacts:
+#    paths:
+#    - tests/e2e/reports/
 
 buildDev_VueJS:
   stage: buildDev
@@ -67,19 +67,19 @@ docker_compose_dev:
       - node_modules/
 
 
-test_VueJS_production:
-  stage: test
-  only:
-    - tags
-  tags:
-  - production
-  image: nightwatch:latest
-  script:
-    - 'npm ci'
-    - 'npm run test:e2e'
-  artifacts:
-    paths:
-      - tests/e2e/reports/
+#test_VueJS_production:
+#  stage: test
+#  only:
+#    - tags
+#  tags:
+#  - production
+#  image: nightwatch:latest
+#  script:
+#    - 'npm ci'
+#    - 'npm run test:e2e'
+#  artifacts:
+#    paths:
+#      - tests/e2e/reports/
 
 build_VueJS_production:
   stage: build
