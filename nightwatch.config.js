@@ -1,6 +1,10 @@
 let config = {
   "page_objects_path": "tests/e2e/pages",
 
+  webdriver: {
+    server_path: 'node_modules/chromedriver/lib/chromedriver/chromedriver'
+  },
+
   test_settings: {
     chrome: {
       desiredCapabilities: {
