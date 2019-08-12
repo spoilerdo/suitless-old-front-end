@@ -80,6 +80,7 @@ import MultipleChoice from "@/components/survey/MultipleChoice.vue";
 import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
 import Router from "vue-router";
+import theme from "@/plugins/vuetify/theme";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 /**
@@ -125,8 +126,8 @@ export default {
   created() {
     //when created call the action to get the survey with the id in the props.
     this.getSurveyByID(this.surveyID);
-    this.setBackground("#eee");
-    this.setFooterColor("#c01833");
+    this.setBackground(theme.defaultBackground);
+    this.setFooterColor(theme.primary);
   },
   methods: {
     ...mapActions("survey/", ["getSurveyByID", "deleteChosenSurvey"]),
@@ -319,7 +320,7 @@ export default {
     window.addEventListener("resize", this.onResize, { passive: true });
   },
   beforeDestroy() {
-    this.setFooterColor("#fff");
+    this.setFooterColor("#eee");
     if (typeof window !== "undefined") {
       window.removeEventListener("resize", this.onResize, { passive: true });
     }

@@ -30,58 +30,6 @@
   </full-page>
 </template>
 
-<script>
-// @ is an alias to /src
-import { createNamespacedHelpers } from "vuex";
-import Animatedbackground from "@/components/background/Animatedbackground";
-import LoginNavbar from "@/components/login/LoginNavbar";
-import WhyThisSite from "@/components/landingpage/WhyThisSite";
-import WhatWeDo from "@/components/landingpage/WhatWeDo";
-import HowWeDoIt from "@/components/landingpage/HowWeDoIt";
-import { CDN_URL } from "@/store/generalconstants";
-import { mapActions } from "vuex";
-
-//can be used if you will only need to access ONE module in this component, will auto append /app before actions.
-const { mapState } = createNamespacedHelpers("app/");
-
-/**
- * Returns the landing page, the page most users see when the open the website.
- * @memberof view
- */
-export default {
-  name: "landingPage",
-  components: {
-    Animatedbackground,
-    LoginNavbar,
-    WhyThisSite,
-    WhatWeDo,
-    HowWeDoIt
-  },
-  data: () => {
-    return {
-      ehvLogo: `${CDN_URL}/LogoWhite`,
-      options: {
-        anchors: ['Landing', 'Intro', 'WhatWeDo', 'HowWeDoIt']
-      }
-    };
-  },
-  methods: {
-    ...mapActions("app/", ["setBackground"])
-  },
-  created() {
-    this.setBackground("#30002a");
-  },
-  computed: {
-    ...mapState(["newUser"])
-  },
-  beforeMount() {
-    if (!this.newUser) {
-      this.$router.push("/dashboard");
-    }
-  }
-};
-</script>
-
 <style scoped>
 .absolute{
   position: absolute;
@@ -114,3 +62,56 @@ i {
   text-align: center;
 }
 </style>
+
+<script>
+// @ is an alias to /src
+import { createNamespacedHelpers } from "vuex";
+import Animatedbackground from "@/components/background/Animatedbackground";
+import LoginNavbar from "@/components/login/LoginNavbar";
+import WhyThisSite from "@/components/landingpage/WhyThisSite";
+import WhatWeDo from "@/components/landingpage/WhatWeDo";
+import HowWeDoIt from "@/components/landingpage/HowWeDoIt";
+import theme from "@/plugins/vuetify/theme";
+import { CDN_URL } from "@/store/generalconstants";
+import { mapActions } from "vuex";
+
+//can be used if you will only need to access ONE module in this component, will auto append /app before actions.
+const { mapState } = createNamespacedHelpers("app/");
+
+/**
+ * Returns the landing page, the page most users see when the open the website.
+ * @memberof view
+ */
+export default {
+  name: "landingPage",
+  components: {
+    Animatedbackground,
+    LoginNavbar,
+    WhyThisSite,
+    WhatWeDo,
+    HowWeDoIt
+  },
+  data: () => {
+    return {
+      ehvLogo: `${CDN_URL}/LogoWhite`,
+      options: {
+        anchors: ['Landing', 'Intro', 'WhatWeDo', 'HowWeDoIt']
+      }
+    };
+  },
+  methods: {
+    ...mapActions("app/", ["setBackground"])
+  },
+  created() {
+    this.setBackground(theme.landingBackground);
+  },
+  computed: {
+    ...mapState(["newUser"])
+  },
+  beforeMount() {
+    if (!this.newUser) {
+      this.$router.push("/dashboard");
+    }
+  }
+};
+</script>
