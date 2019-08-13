@@ -73,6 +73,7 @@
 </style>
 
 <script>
+import { getEnumValues } from "@/services/flowchartHelper";
 import theme from "@/plugins/vuetify/theme";
 
 /**
@@ -100,8 +101,7 @@ export default {
     };
   },
   mounted() {
-    let halfLength = Math.ceil(Object.values(this.$data.implicationColorEnum).length / 2);
-    this.colors = Object.values(this.$data.implicationColorEnum).splice(0, halfLength);
+    this.colors = getEnumValues(this.$data.implicationColorEnum);
   },
   methods: {
     setSelected(selected, color, index) {

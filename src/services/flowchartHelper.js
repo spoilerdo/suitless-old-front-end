@@ -62,7 +62,6 @@ export const createImplicationArray = (answer, displayImplicationName = false) =
     return { implicationsObject, implicationColorsList };
 }
 
-//TODO: implicationList.vue needs to use this in its mounted state
 export const getEnumValues = (Enum) => {
     let halfLength = Math.ceil(Object.values(Enum).length / 2);
     return Object.values(Enum).splice(0, halfLength);
