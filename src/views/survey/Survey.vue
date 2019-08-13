@@ -149,7 +149,8 @@ export default {
 
     agreeDisclaimer(choice) {
       if (choice === false) {
-        this.$router.go(-1);
+        this.closeSurvey();
+        this.$router.go(-2);
       }
     },
 

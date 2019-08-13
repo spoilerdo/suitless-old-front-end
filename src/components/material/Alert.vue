@@ -1,5 +1,7 @@
 <template>
-  <v-alert :value="value" :type="type" :icon="icon" :outline="outline">{{ text }}</v-alert>
+  <v-alert :value="value" :type="type" :icon="icon" :outline="outline">
+    <div v-html="text" class="link">{{ text }}</div>
+  </v-alert>
 </template>
 
 <script>

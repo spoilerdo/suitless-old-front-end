@@ -1,9 +1,6 @@
 <template>
     <v-list class="list-width">
       <template v-for="(answer, index) in answers">
-        <v-flex row wrap xs12 :key="index + answer.implicationLevel">
-          <h4>{{ answer.questionValue }}</h4>
-        </v-flex>
         <Alert
           :value="true"
           :type="type"

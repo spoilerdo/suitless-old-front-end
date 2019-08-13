@@ -95,7 +95,6 @@ const actions = {
             //single choice question answered
             //fill the answer in on the answers array
             let implications = createImplicationArray(answer, true);
-            console.log(implications);
             var a = {
                 questionID: question.id,
                 questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,
