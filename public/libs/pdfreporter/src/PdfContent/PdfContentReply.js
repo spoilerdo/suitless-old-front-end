@@ -1,19 +1,17 @@
 /**
- * pdfContent contains the class that initializes a
- * pdfContent instance.
+ * pdfContent contains the class that initializes a pdfContent instance.
+ * This specific content is used for replies
  * @author Julius Ammerlaan
  * @version 1.0
  * @since 12-03-2019
  */
 
- import { pdfContent } from "./PdfContent"
-import { pdfContentEnum } from "./PdfContentEnum";
+import { pdfContent } from "./PdfContent"
 
 export class pdfContentReply extends pdfContent {
 
     constructor(data){
         super();
-        this.type = pdfContentEnum.reply;
         this.data = data;
     }
 

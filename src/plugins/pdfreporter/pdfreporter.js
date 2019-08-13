@@ -10,12 +10,9 @@ export default {
         Vue.mixin({
             methods: {
                 /**
-                 * Creates a demo PDF
+                 * Creates a PDF
                  * @memberof plugin.pdfreporter
                  */
-                generateDemoPDF() {
-                    pdfReporter.generateDemoPDF();
-                },
                 printPDF(pdfOptions, answers){
                     pdfReporter.printPDF(pdfOptions, answers);
                 }

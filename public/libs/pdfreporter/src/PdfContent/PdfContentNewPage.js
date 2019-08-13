@@ -1,6 +1,6 @@
 /**
  * pdfContent contains the class that initializes a pdfContent instance.
- * This specific content is used for whitespaces
+ * This specific content is used for a new page
  * @author Julius Ammerlaan
  * @version 1.0
  * @since 12-03-2019
@@ -8,7 +8,7 @@
 
 import { pdfContent } from "./PdfContent"
 
-export class pdfContentWhitespace extends pdfContent {
+export class pdfContentNewPage extends pdfContent {
 
     constructor(){
         super();
@@ -21,7 +21,8 @@ export class pdfContentWhitespace extends pdfContent {
      * @param {*} offset unused
      */
     addToDoc(doc, offset) {
-        return 1;
+        doc.addPage();
+        return -offset;
     }
 }
 

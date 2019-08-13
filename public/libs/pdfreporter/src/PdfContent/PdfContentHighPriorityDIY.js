@@ -1,27 +1,25 @@
 /**
  * pdfContent contains the class that initializes a pdfContent instance.
- * This specific content is used for an error implication.
- * @author Martijn Dormans
+ * This specific content is used for a High Priority DIY implication.
+ * @author Julius Ammerlaan
  * @version 1.0
- * @since 02-07-2019
+ * @since 12-03-2019
  */
 
-import { pdfContent } from "./PdfContent"
-import { pdfContentEnum } from "./PdfContentEnum";
+import { pdfContentImplication } from "./PdfContentImplication";
 
-export class pdfContentError extends pdfContent {
+export class pdfContentHighPriorityDIY extends pdfContentImplication {
 
     constructor(data){
-        super();
-        this.type = pdfContentEnum.warning;
-        this.data = data;
+        super(data);
+        this.implicationLevel = "High Priority DIY";
     }
 
     /**
      * sets the text color appropriate for the type.
      */
     setStyle(doc) {
-        doc.setTextColor(192, 24, 51);
+        doc.setTextColor(255, 255, 102); //Yellow
         doc.setFontSize(11);
         doc.setFont("Times","normal");
     }

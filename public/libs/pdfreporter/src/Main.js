@@ -6,19 +6,16 @@
  */
 
 import { getDefaultPdfOptions } from "./PdfOptions"
-import { getDemoPdfContents } from "./DemoPDF"
-import { PdfContentQuestion, PdfContentReply, PdfContentResult, PdfContentTitle, PdfContentWarning, PdfContentInfo, PdfContentSuccess, PdfContentError, PdfContentSub, PdfContentWhitespace, PdfContentListItem } from "./PdfContentInitializer";
+import * as pdfContent from "./PdfContentInitializer";
+import { pdfModuleTitle } from "./PdfModule/PdfModuleTitle"
 import jsPDF from 'jspdf'
+import { pdfModuleMultiChoice } from "./PdfModule/PdfModuleMultiChoice";
+import { pdfModuleQuestion } from "./PdfModule/PdfModuleQuestion";
+import { pdfModuleIndex } from "./PdfModule/PdfModuleIndex";
+import { pdfContentLogo } from "./PdfContent/PdfContentLogo";
 
 
 const pdfReporter = {
-    generateDemoPDF() {
-        let pdfOptions = getDefaultPdfOptions();
-        let pdfContents = getDemoPdfContents();
-
-        generatePDF(pdfOptions, pdfContents, "report")
-    },
-
     /**
      * This is the starting point of generating a PDF.
      * This will call the method that formats the answers into PDF content and sets the name of the PDF.
@@ -45,16 +42,28 @@ export default pdfReporter;
 function generatePDF(pdfOptions, pdfContents, pdfName) {
     let doc = new jsPDF(pdfOptions);
 
-    let startOffset = 2;
-    let offset = startOffset;
+    let borderOffset = 2;
+    let offset = borderOffset;
 
-    for (let i = 0; i < pdfContents.length; i++) {
-        if (offset > doc.internal.pageSize.height - 2) {
+    pdfContents.forEach(pdfModule => {
+        let testdoc = new jsPDF(pdfOptions);
+
+        let height = 0;
+        pdfModule.getContent().forEach(pdfContent => {
+            height += pdfContent.addToDoc(testdoc, offset);
+        })
+        if (offset + height > doc.internal.pageSize.height - borderOffset) {
             doc.addPage();
-            offset = startOffset;
+            offset = borderOffset;
         }
-        offset += pdfContents[i].addToDoc(doc, offset);
-    }
+
+        pdfModule.getContent().forEach(pdfContent => {
+            offset += pdfContent.addToDoc(doc, offset);
+            if(offset <= 0){ //This means that we have been send to a newpage.
+                offset = borderOffset;
+            }
+        })
+    });
 
     doc.save(pdfName + ".pdf");
 }
@@ -75,53 +84,34 @@ function getFormattedDate() {
  * @param {object} answers all the answers of a survey
  */
 function getPDFContent(answers) {
-    let pdfContents = [];
-
-    var today = new Date();
-    pdfContents.push(
-        PdfContentTitle(
-            "ehvLINC REPORT  " +
-            today.getFullYear() +
-            "-" +
-            (today.getMonth() + 1) +
-            "-" +
-            today.getDate()
-        )
-    );
-
+    let pdfQuestions = [];
     for (let i = 0; i < answers.length; i++) {
         //check if the question to be printed is multi or single choice
         let currentAnswer = answers[i];
 
         if (Array.isArray(currentAnswer)) {
-            //print relevant question based on first answer given
-
-            pdfContents.push(PdfContentQuestion(currentAnswer[0].questionValue));
-
-            //multi choice answer
-            currentAnswer.forEach(ans => {
-                //add all answers as a list to the PDF
-                pdfContents.push(PdfContentListItem("- " + ans.answerValue));
-                pdfContents.push(PdfContentWhitespace());
-            });
-
-            let implications = fillImplications(currentAnswer);
-
-            implications.forEach(impl => {
-                pdfContents.push(impl);
-            });
-
+            //Multiple Choice
+            pdfQuestions.push(new pdfModuleMultiChoice(
+                currentAnswer[0].questionValue,
+                currentAnswer,
+                fillImplications(currentAnswer)
+            ));
         } else if (currentAnswer.answerValue != null) {
             //single choice answer
-            pdfContents.push(PdfContentQuestion(answers[i].questionValue));
-            pdfContents.push(PdfContentReply(answers[i].answerValue));
-            let implications = fillImplications(Array.of(answers[i]));
-            implications.forEach(impl => {
-                pdfContents.push(impl);
-            });
+            pdfQuestions.push(new pdfModuleQuestion(
+                answers[i].questionValue,
+                answers[i].answerValue,
+                fillImplications(Array.of(answers[i]))
+            ));
         }
     }
-    return pdfContents;
+
+    let finalPdfContents = [];
+    finalPdfContents.push(new pdfModuleTitle("Startupseindhoven"));
+    finalPdfContents.push(new pdfModuleIndex(pdfQuestions));
+    finalPdfContents = finalPdfContents.concat(pdfQuestions);
+
+    return finalPdfContents;
 }
 
 /**
@@ -134,32 +124,26 @@ function fillImplications(flows) {
         if (flow.implications) {
             flow.implications.forEach(implication => {
                 switch (implication.implicationLevel) {
-                    case "success":
-                        implicationContents.push(PdfContentSuccess("Success : "));
-                        implicationContents.push(PdfContentSub(implication.implication));
-                        implicationContents.push(PdfContentWhitespace());
+                    case "HighRisk":
+                        implicationContents.push(pdfContent.PdfContentHighRisk(implication.implication));
                         break;
-                    case "warning":
-                        implicationContents.push(PdfContentWarning("Warning : "));
-                        implicationContents.push(PdfContentSub(implication.implication));
-                        implicationContents.push(PdfContentWhitespace());
+                    case "HighPriority":
+                        implicationContents.push(pdfContent.PdfContentHighPriority(implication.implication));
                         break;
-                    case "info":
-                        implicationContents.push(PdfContentInfo("Info : "));
-                        implicationContents.push(PdfContentSub(implication.implication));
-                        implicationContents.push(PdfContentWhitespace());
+                    case "HighPriorityDIY":
+                        implicationContents.push(pdfContent.PdfContentHighPriorityDIY(implication.implication));
                         break;
-                    case "primary":
-                        implicationContents.push(PdfContentError("Error : "))
-                        implicationContents.push(PdfContentSub(implication.implication));
-                        implicationContents.push(PdfContentWhitespace());
+                    case "BackgroundInformation":
+                        implicationContents.push(pdfContent.PdfContentBackgroundInformation(implication.implication));
                         break;
-                    case "default":
-                        implicationContents.push(PdfContentSub(implication.implication));
-                        implicationContents.push(PdfContentWhitespace());
+                    case "Assumption":
+                        implicationContents.push(pdfContent.PdfContentAssumption(implication.implication));
+                        break;
                     default:
+                        implicationContents.push(pdfContent.PdfContentImplication(implication.implication));
                         break;
                 }
+                implicationContents.push(pdfContent.PdfContentWhitespace());
             })
         }
     });
