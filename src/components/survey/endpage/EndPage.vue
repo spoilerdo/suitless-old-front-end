@@ -9,7 +9,7 @@
 
       <v-card-text>
         <v-layout row wrap justify-center align-center fill-height>
-          <v-list class="list-width" three-line id="advise">
+          <v-list class="list-width" three-line id="advise" v-if="structuredAnswers">
             <template v-for="answers in structuredAnswers">
               <v-list-tile class="list-item-height" :key="answers[0].implicationLevel">
                 <v-layout row wrap justify-center align-center fill-height>
@@ -42,7 +42,7 @@
                       :size="100"
                       :width="15"
                       :value="answers.length/totalNumberAnswers*100"
-                      :color="answers[0].implicationLevel"
+                      :color="getColor(answers[0].implicationLevel)"
                     />
                   </v-flex>
                 </v-layout>
@@ -55,11 +55,19 @@
                 v-show="implicationDetailStates[implicationTypes.indexOf(answers[0].implicationLevel)] === true"
               >
                 <div>
-                  <ImplicationList :answers="answers" />
+                  <ImplicationList
+                    :answers="answers"
+                    :type="getColor(answers[0].implicationLevel)"
+                  />
                 </div>
               </v-list-tile>
             </template>
           </v-list>
+          <h5
+            v-else
+            class="display-1"
+          >There is no advice this questionnaire can give you. That probably means you did wel! Click Continue to go further or print the PDF to see your answers.</h5>
+          <p class="subtitle-1">Go back using the arrow:</p>
         </v-layout>
         <ArrowControls
           v-on:previousButtonClick="$emit('renderPreviousQuestion', question)"
@@ -137,6 +145,12 @@ export default {
         implicationTypes.indexOf(implicationLevel)
       ] = !currentState;
       this.$forceUpdate();
+    },
+    getColor(implicationLevel) {
+      //Get the veutify theme color corrosponding to the implicationLevel
+      return this.$data.implicationColorEnum[
+        this.$data.implicationColorEnum[implicationLevel]
+      ];
     }
   },
   data() {
@@ -185,7 +199,7 @@ export default {
           anse.push(a);
         });
       }
-      
+
       //The answer doesn't contain an implication
       if (!ans.implications) {
         miscAnswers.push(ans);
@@ -210,7 +224,7 @@ export default {
     //every implication category needs an boolean in order to hide/show the details
     let implicationStates = [];
     implicationTypes.forEach(() => {
-      implicationStates.push(false);
+      implicationStates.push(true);
     });
 
     //clean all the empty arrays
