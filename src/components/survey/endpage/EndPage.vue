@@ -108,6 +108,7 @@
 <script>
 import ImplicationList from "@/components/survey/endpage/ImplicationList";
 import ArrowControls from "@/components/survey/ArrowControls.vue";
+import anchorme from "anchorme";
 
 /**
  * Returns an 'endpage' view used after the survey.

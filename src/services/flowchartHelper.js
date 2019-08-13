@@ -15,14 +15,28 @@
 
 import theme from "@/plugins/vuetify/theme"; 
 import { VueInstance as V} from "../main";
+import anchorme from "anchorme";
 
 export const createImplicationArray = (answer, displayImplicationName = false) => {
     let implicationColorEnum = V.$data.implicationColorEnum;
 
     //filters all the implications and maps there value into an array
+    //anchorme is used to convert href's to actual links the user can click
     let imp = answer.lincData
         .filter(data => data.key == "implication")
-        .map(el => el.value);
+        .map(el => el.value ?
+            anchorme(el.value, {
+                truncate: 40,
+                attributes:[
+                    {
+                        name:"target",
+                        value:"_blank"
+                    }
+                ]
+            })
+            :
+            null
+        );
 
     //filters all the implicationLevels and maps there value into an array
     let impLvl = answer.lincData
