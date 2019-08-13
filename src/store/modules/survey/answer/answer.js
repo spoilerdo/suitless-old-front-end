@@ -53,7 +53,7 @@ const actions = {
             let temp = [];
 
             answer.forEach(ans => {
-                let implications = createImplicationArray(ans);
+                let implications = createImplicationArray(ans, true);
                 
                 //if a multi choice is answered without a follow up flow, be sure to save it seperately. otherwise it will be skipped
                 if(ans.flows.length === 0) {
@@ -94,7 +94,8 @@ const actions = {
         } else {
             //single choice question answered
             //fill the answer in on the answers array
-            let implications = createImplicationArray(answer);
+            let implications = createImplicationArray(answer, true);
+            console.log(implications);
             var a = {
                 questionID: question.id,
                 questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,

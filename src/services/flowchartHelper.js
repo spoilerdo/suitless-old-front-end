@@ -14,8 +14,11 @@
  */
 
 import theme from "@/plugins/vuetify/theme"; 
+import { VueInstance as V} from "../main";
 
-export const createImplicationArray = (answer) => {
+export const createImplicationArray = (answer, displayImplicationName = false) => {
+    let implicationColorEnum = V.$data.implicationColorEnum;
+
     //filters all the implications and maps there value into an array
     let imp = answer.lincData
         .filter(data => data.key == "implication")
@@ -36,11 +39,10 @@ export const createImplicationArray = (answer) => {
                 implicationLevel: impLvl[index]
             });
         });
-        implicationColorsList = impLvl.map(el => theme[el]);
-    } else {
-        implicationsObject = [
-            { implication: null, implicationLevel: "default" }
-        ];
+        if(!displayImplicationName) {
+            //implicationColorsList = impLvl.map(el => theme[el]);
+            implicationColorsList = impLvl.map(el => theme[implicationColorEnum[implicationColorEnum[el]]]);
+        }
     }
 
     return { implicationsObject, implicationColorsList };
@@ -55,7 +57,7 @@ export const createReasonArray = (question) => {
     //add the array value to an object
     let reasonsObject = [];
     if(reasons.length > 0) {
-        reasons.forEach((reason, index) => {
+        reasons.forEach((reason) => {
             reasonsObject.push({
                 reason: reason
             })

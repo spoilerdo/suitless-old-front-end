@@ -6,7 +6,7 @@
         </v-flex>
         <Alert
           :value="true"
-          :type="answer.implicationLevel"
+          :type="type"
           :text="answer.implication"
           :key="index + answer.implication"
         />
@@ -27,6 +27,10 @@ export default {
   props: {
     answers: {
       type: Array,
+      required: true
+    },
+    type: { 
+      type: String,
       required: true
     }
   }

@@ -1,5 +1,5 @@
 <template>
-<div v-if="reasons != null">
+<div v-if="reasons != null && reasons != ''">
     <v-flex xs10 offset-xs1 my-2 v-for="(reason, index) in reasons" :key="index">
     <v-scale-transition>
         <v-card>
@@ -32,7 +32,6 @@ export default {
     },
     props: ["question"],
     mounted() {
-        console.log(this.question.lincData);
         let reasons = this.question.lincData.filter(data => data.key === "reason");
         this.reasons =  reasons ? reasons.map(el => el.value) : null;
     },

@@ -55,9 +55,7 @@ export default {
                 file: data.file,
                 name: data.name,
                 type: data.type
-            }).then(() => {
-                cb(this.newServiceable);
-            });            
+            }).then(cb(this.newServiceable));            
         },
         updateFile(data, cb){
             this.dialog = false;
