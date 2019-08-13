@@ -62,21 +62,8 @@ export const createImplicationArray = (answer, displayImplicationName = false) =
     return { implicationsObject, implicationColorsList };
 }
 
-export const createReasonArray = (question) => {
-    //filters all the reasons and maps there value into an array
-    let reasons = question.lincData
-        .filter(data => data.key == "reason")
-        .map(el => el.value);
-
-    //add the array value to an object
-    let reasonsObject = [];
-    if(reasons.length > 0) {
-        reasons.forEach((reason) => {
-            reasonsObject.push({
-                reason: reason
-            })
-        })
-    }
-
-    return reasonsObject;
+//TODO: implicationList.vue needs to use this in its mounted state
+export const getEnumValues = (Enum) => {
+    let halfLength = Math.ceil(Object.values(Enum).length / 2);
+    return Object.values(Enum).splice(0, halfLength);
 }

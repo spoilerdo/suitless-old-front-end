@@ -118,6 +118,7 @@ export const methods = {
         let data = state.selectedCell.lincData.slice(0, 1);
         reasons.forEach(reason => {
             data.push({"key": "reason", "value": reason.reason});
+            data.push({"key": "reasonType", "value": reason.type});
         })
         state.selectedCell.lincData = data;
     },

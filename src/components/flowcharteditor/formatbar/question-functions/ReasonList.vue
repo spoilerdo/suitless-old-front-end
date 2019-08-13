@@ -5,19 +5,31 @@
         <v-card elevation-4 :key="index">
           <v-layout column pa-2 my-2>
             <h6 class="subheading">Reason: {{ index + 1 }}</h6>
-            <v-textarea v-model="reason.reason" auto-grow box color="primary" label="Reason" rows="1" />
+            <v-textarea
+              v-model="reason.reason"
+              auto-grow
+              box
+              color="primary"
+              label="Reason"
+              rows="1"
+            />
+            <v-combobox
+              v-model="reason.type"
+              :items="getReasonTypes()"
+              label="Select a reason type"
+            />
             <v-layout justify-end row>
-                <v-btn
-                  class="small-btn"
-                  icon
-                  round
-                  outline
-                  color="primary"
-                  @click="deleteReason(index)"
-                >
-                  <v-icon size="15">mdi-minus</v-icon>
-                </v-btn>
-              </v-layout>
+              <v-btn
+                class="small-btn"
+                icon
+                round
+                outline
+                color="primary"
+                @click="deleteReason(index)"
+              >
+                <v-icon size="15">mdi-minus</v-icon>
+              </v-btn>
+            </v-layout>
           </v-layout>
         </v-card>
       </template>
@@ -51,6 +63,8 @@
 </style>
 
 <script>
+import { getEnumValues } from "../../../../services/flowchartHelper";
+
 export default {
   props: {
     reasons: {
@@ -63,7 +77,10 @@ export default {
       reasonList: this.reasons
     };
   },
-   methods: {
+  methods: {
+    getReasonTypes() {
+      return getEnumValues(this.$data.reasonEnum);
+    },
     addReason() {
       this.reasonList.push([]);
     },
