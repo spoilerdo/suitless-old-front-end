@@ -83,7 +83,6 @@ const actions = {
      * @memberof store.app
      */
     setFooterColor({ commit }, newColor) {
-        console.log(newColor);
         commit(SET_FOOTERCOLOR, newColor);
     },
     /**

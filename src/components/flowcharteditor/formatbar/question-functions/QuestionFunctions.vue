@@ -38,7 +38,8 @@ export default {
         question: null,
         reasons: [
           {
-            reason: null
+            reason: null,
+            type: "Example"
           }
         ]
       }
