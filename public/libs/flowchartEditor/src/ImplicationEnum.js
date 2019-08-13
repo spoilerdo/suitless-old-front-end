@@ -11,18 +11,18 @@ export let ImplicationEnum = {
     /**
      * Name to Value mapping.
      */
-    "Hight priority (Find specialist)" : 1, //Warning
-    "Background information" : 2,    //Info
-    "Assumptions" : 3, //Default
-    "High risk": 4,    //Error
-    "High priority (To do yourself)": 5,   //Yellow
+    "High risk": 1,
+    "Hight priority (Find specialist)" : 2,
+    "High priority (To do yourself)": 3,
+    "Background information" : 4,
+    "Assumptions" : 5,
 
     /**
      * Value to Name mapping.
      */
-    1 : "Hight priority (Find specialist)",
-    2 : "Background information",
-    3 : "Assumptions",
-    4 : "High risk",
-    5 : "High priority (To do yourself)"
+    1 : "High risk",
+    2 : "Hight priority (Find specialist)",
+    3 : "High priority (To do yourself)",
+    4 : "Background information",
+    5 : "Assumptions"
 }
