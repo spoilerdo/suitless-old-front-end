@@ -12,13 +12,13 @@ import { pdfContentListItem } from "../PdfContent/PdfContentListItem";
 export class pdfModuleMultiChoice extends pdfModule {
 
     constructor(question, answer, implications) {
-        super();
+        super(question);
         this.Content = [
             new pdfContentQuestion(question),
         ];
         answer.forEach(ans => {
             //add all answers as a list to the PDF
-            this.Content.push(new pdfContentListItem("- " + ans.answerValue));
+            this.Content.push(new pdfContentListItem(ans.answerValue));
         });
         this.Content = this.Content.concat(implications);
     }

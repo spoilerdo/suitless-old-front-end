@@ -6,14 +6,18 @@
  */
 
 import { pdfModule } from "./PdfModule";
-import { PdfContentTitle } from "../PdfContentInitializer";
+import { pdfContentLogo } from "../PdfContent/PdfContentLogo";
+import { pdfContentTitle } from "../PdfContent/PdfContentTitle";
+import { pdfContentNewPage } from "../PdfContent/PdfContentNewPage";
 
 export class pdfModuleTitle extends pdfModule {
 
     constructor(title) {
-        super();
+        super("Title");
         this.Content = [
-            new PdfContentTitle(`${title} - ${this.formatDate()}`)
+            new pdfContentTitle(`${title} - ${this.formatDate()}`),
+            new pdfContentLogo(),
+            new pdfContentNewPage()
         ];
     }
 

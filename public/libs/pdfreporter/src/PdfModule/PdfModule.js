@@ -7,8 +7,9 @@
 
 export class pdfModule {
 
-    constructor() {
+    constructor(name) {
         this.Content = [];
+        this.name = name;
     }
 
     getContent() {

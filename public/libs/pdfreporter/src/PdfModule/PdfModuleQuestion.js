@@ -12,7 +12,7 @@ import { pdfContentReply } from "../PdfContent/PdfContentReply";
 export class pdfModuleQuestion extends pdfModule {
 
     constructor(question, reply, implications) {
-        super();
+        super(question);
         this.Content = [
             new pdfContentQuestion(question),
             new pdfContentReply(reply)

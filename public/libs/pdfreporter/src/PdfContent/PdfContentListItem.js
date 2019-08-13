@@ -12,7 +12,7 @@ export class pdfContentListItem extends pdfContent {
 
     constructor(data){
         super();
-        this.data = data;
+        this.data = `- ${data}`;
     }
 
     /**

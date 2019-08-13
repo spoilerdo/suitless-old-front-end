@@ -11,6 +11,8 @@ import { pdfModuleTitle } from "./PdfModule/PdfModuleTitle"
 import jsPDF from 'jspdf'
 import { pdfModuleMultiChoice } from "./PdfModule/PdfModuleMultiChoice";
 import { pdfModuleQuestion } from "./PdfModule/PdfModuleQuestion";
+import { pdfModuleIndex } from "./PdfModule/PdfModuleIndex";
+import { pdfContentLogo } from "./PdfContent/PdfContentLogo";
 
 
 const pdfReporter = {
@@ -57,6 +59,9 @@ function generatePDF(pdfOptions, pdfContents, pdfName) {
 
         pdfModule.getContent().forEach(pdfContent => {
             offset += pdfContent.addToDoc(doc, offset);
+            if(offset <= 0){ //This means that we have been send to a newpage.
+                offset = borderOffset;
+            }
         })
     });
 
@@ -79,31 +84,34 @@ function getFormattedDate() {
  * @param {object} answers all the answers of a survey
  */
 function getPDFContent(answers) {
-    let pdfContents = [];
-
-    pdfContents.push(new pdfModuleTitle("ehvLINC"));
-
+    let pdfQuestions = [];
     for (let i = 0; i < answers.length; i++) {
         //check if the question to be printed is multi or single choice
         let currentAnswer = answers[i];
 
         if (Array.isArray(currentAnswer)) {
             //Multiple Choice
-            pdfContents.push(new pdfModuleMultiChoice(
+            pdfQuestions.push(new pdfModuleMultiChoice(
                 currentAnswer[0].questionValue,
                 currentAnswer,
                 fillImplications(currentAnswer)
             ));
         } else if (currentAnswer.answerValue != null) {
             //single choice answer
-            pdfContents.push(new pdfModuleQuestion(
+            pdfQuestions.push(new pdfModuleQuestion(
                 answers[i].questionValue,
                 answers[i].answerValue,
                 fillImplications(Array.of(answers[i]))
             ));
         }
     }
-    return pdfContents;
+
+    let finalPdfContents = [];
+    finalPdfContents.push(new pdfModuleTitle("Startupseindhoven"));
+    finalPdfContents.push(new pdfModuleIndex(pdfQuestions));
+    finalPdfContents = finalPdfContents.concat(pdfQuestions);
+
+    return finalPdfContents;
 }
 
 /**
