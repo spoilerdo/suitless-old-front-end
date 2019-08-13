@@ -53,7 +53,7 @@ export default {
         implications: [
           {
             implication: null,
-            implicationLevel: "default"
+            implicationLevel: "Assumptions"
           }
         ]
       },

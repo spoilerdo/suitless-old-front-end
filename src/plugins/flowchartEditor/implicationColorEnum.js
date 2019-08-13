@@ -12,31 +12,31 @@ export let ImplicationColorEnum = {
     /**
      * Name to Value mapping.
      */
-    [ImplicationEnum[1]] : 1, //Warning
-    [ImplicationEnum[2]] : 2,    //Info
-    [ImplicationEnum[3]] : 3, //Default
-    [ImplicationEnum[4]] : 4,    //Error
-    [ImplicationEnum[5]] : 5,   //Yellow
+    [ImplicationEnum[1]] : 1,
+    [ImplicationEnum[2]] : 2,
+    [ImplicationEnum[3]] : 3,
+    [ImplicationEnum[4]] : 4,
+    [ImplicationEnum[5]] : 5,
 
     /**
      * Value to Name mapping
      */
-    1 : "warning",
-    2 : "info",
-    3 : "default",
-    4 : "error",
-    5 : "yellow"
+    1 : "error",
+    2 : "warning",
+    3 : "yellow",
+    4 : "info",
+    5 : "default",
 }
 
 export let ColorImplicationEnum = {
     /**
      * Name to Value mapping
      */
-    "warning": 1,
-    "info": 2,
-    "default": 3,
-    "error": 4,
-    "yellow": 5,
+    "error" : 1,
+    "warning" : 2,
+    "yellow" : 3,
+    "info" : 4,
+    "default" : 5,
 
     /**
      * Value to Name mapping.
