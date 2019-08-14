@@ -54,7 +54,6 @@ export const createImplicationArray = (answer, displayImplicationName = false) =
             });
         });
         if(!displayImplicationName) {
-            //implicationColorsList = impLvl.map(el => theme[el]);
             implicationColorsList = impLvl.map(el => theme[implicationColorEnum[implicationColorEnum[el]]]);
         }
     }
@@ -62,8 +61,29 @@ export const createImplicationArray = (answer, displayImplicationName = false) =
     return { implicationsObject, implicationColorsList };
 }
 
-//TODO: implicationList.vue needs to use this in its mounted state
 export const getEnumValues = (Enum) => {
     let halfLength = Math.ceil(Object.values(Enum).length / 2);
     return Object.values(Enum).splice(0, halfLength);
+}
+
+export const getReasonsArray = (question) => {
+    let rea = question.lincData
+        .filter(data => data.key == "reason")
+        .map(el => el.value);
+
+    let types = question.lincData
+        .filter(data => data.key == "reasonType")
+        .map(el => el.value);
+
+    let reasons = [];
+    if(rea.length > 0 && types.length > 0) {
+        rea.forEach((reason, index) => {
+            reasons.push({
+                reason: reason,
+                type: types[index]
+            })
+        })
+    }
+
+    return reasons;
 }

@@ -23,7 +23,7 @@
 <script>
 import GenericView from "../genericView/GenericView";
 import ReasonList from "./ReasonList";
-import { createReasonArray } from "@/services/flowchartHelper";
+import { getReasonsArray } from "@/services/flowchartHelper";
 import { mapState, mapActions } from "vuex";
 
 /**
@@ -79,9 +79,7 @@ export default {
         newValue != null &&
         this.formatBarType == this.$data.nodeEnum.Question
       ) {
-        this.form.reason = newValue.lincData.find(
-          data => data.key === "reason"
-        ).value;
+        this.form.reasons = getReasonsArray(newValue);
       }
     }
   }
