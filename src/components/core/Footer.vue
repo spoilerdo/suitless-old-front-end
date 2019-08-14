@@ -31,8 +31,7 @@
 
 <script>
 //import { mapState, mapGetters } from "vuex";
-import { createNamespacedHelpers } from "vuex";
-const { mapState } = createNamespacedHelpers("app/");
+import { mapState, createNamespacedHelpers } from "vuex";
 const { mapGetters } = createNamespacedHelpers("login/");
 
 /**
@@ -45,21 +44,25 @@ export default {
     calculatedColor: ""
   }),
   computed: {
-    ...mapState(["footerColor"]),
+    ...mapState("app/", ["footerColor"]),
+    ...mapState("login/", ["token"]),
     ...mapGetters(["isAuthenticated"])
   },
-  mounted() {
-    if (this.isAuthenticated) {
-      this.links = [
-        { name: "Landing", Link: "/" },
-        { name: "Logout", Link: "/profile" },
-        { name: "Dashboard", Link: "/dashboard" }
-      ];
-    } else {
-      this.links = [
-        { name: "Landing", Link: "/" },
-        { name: "Login", Link: "/login" }
-      ];
+  watch: {
+    token: function() {
+      console.log(this.isAuthenticated);
+      if (this.isAuthenticated) {
+        this.links = [
+          { name: "Landing", Link: "/" },
+          { name: "Logout", Link: "/profile" },
+          { name: "Dashboard", Link: "/dashboard" }
+        ];
+      } else {
+        this.links = [
+          { name: "Landing", Link: "/" },
+          { name: "Login", Link: "/login" }
+        ];
+      }
     }
   }
 };
