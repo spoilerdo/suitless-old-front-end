@@ -21,7 +21,13 @@ const state = {
         type: "info",
         message: ""
     },
-    token: jwt_decode(localStorage.getItem('jwtToken')) || ""
+    token: () => {
+        try{
+            state.token = jwt_decode(localStorage.getItem('jwtToken'));
+        } catch {
+            state.token = "";
+        }
+    }
 }
 
 // getters
