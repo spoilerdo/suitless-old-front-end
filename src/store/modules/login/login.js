@@ -2,7 +2,6 @@ import { apiCall, setToken } from '@/services/api'
 import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 import router from '@/router/router'
 import { SET_LOGGING_IN, SET_LOGIN_TEXT, SET_ALERT } from './mutation-types';
-import jwt_decode from "jwt-decode";
 
 /**
  * The login module contains the login/ register API calls to the account service
@@ -21,7 +20,7 @@ const state = {
         type: "info",
         message: ""
     },
-    token: jwt_decode(localStorage.getItem('jwtToken')) || ""
+    token: localStorage.getItem('jwtToken') || ""
 }
 
 // getters
