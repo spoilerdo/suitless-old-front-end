@@ -21,13 +21,13 @@ export class pdfContentImplication extends pdfContent {
     }
 
     addToDoc(doc, offset) {
-        this.setDefaultStyle(doc)
+        this.setStyle(doc);
 
         let internalOffset = 0;
         doc.text(`${this.implicationLevel}: `, this.getX(), offset+internalOffset);
         internalOffset += this.lineOffset;
 
-        this.setStyle(doc);
+        this.setDefaultStyle(doc)
 
         var lines = doc.splitTextToSize(this.data, this.pageWidth);
         

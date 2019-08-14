@@ -9,8 +9,13 @@ export default {
     info: '#2196f3',
     warning: '#fb8c00',
     error: '#c01833',
-    yellow: '#aeea00',
     default: '#424242',
     defaultBackground: "#eee",
-    landingBackground: "#30002a"
+    landingBackground: "#30002a",
+
+    red: '#ff0000',
+    orange: '#ff9900',
+    yellow: '#ffcc66',
+    blue: '#0066ff',
+    black: '000000'
 }

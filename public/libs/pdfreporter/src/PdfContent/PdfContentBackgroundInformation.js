@@ -12,7 +12,7 @@ export class pdfContentBackgroundInformation extends pdfContentImplication {
 
     constructor(data){
         super(data);
-        this.implicationLevel = "Background Information";
+        this.implicationLevel = "Background information";
     }
 
     /**

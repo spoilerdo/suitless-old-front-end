@@ -123,7 +123,7 @@ function fillImplications(flows) {
     let implicationContents = [];
     flows.forEach(flow => {
         if (flow.implications) {
-            flow.implications.forEach(implication => {
+            flow.implications.implicationsObject.forEach(implication => {
                 switch (implication.implicationLevel) {
                     case ImplicationEnum[1]:
                         implicationContents.push(pdfContent.PdfContentHighRisk(implication.implication));
