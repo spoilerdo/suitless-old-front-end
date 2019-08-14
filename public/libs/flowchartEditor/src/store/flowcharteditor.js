@@ -172,8 +172,10 @@ export const methods = {
             data = state.selectedCell.lincData.slice(0, 2)
         }
         implications.forEach(implication => {
-            data.push({"key": "implication", "value": implication.implication});
-            data.push({"key": "implicationLevel", "value": implication.implicationLevel});
+            if(implication.implication){
+                data.push({"key": "implication", "value": implication.implication});
+                data.push({"key": "implicationLevel", "value": implication.implicationLevel});
+            }
         });
         if(imageName){
             data[1].value = imageName;

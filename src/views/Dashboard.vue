@@ -31,6 +31,7 @@ export default {
   },
   mounted() {
     this.role = this.token["scopes"];
+    this.surveys;
   },
   data() {
     return {

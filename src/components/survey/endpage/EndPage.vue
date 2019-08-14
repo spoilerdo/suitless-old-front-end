@@ -9,7 +9,7 @@
 
       <v-card-text>
         <v-layout row wrap justify-center align-center fill-height>
-          <v-list class="list-width" three-line id="advise" v-if="structuredAnswers">
+          <v-list class="list-width" three-line id="advise" v-if="structuredAnswers.length > 0">
             <template v-for="answers in structuredAnswers">
               <v-list-tile class="list-item-height" :key="answers[0].implicationLevel">
                 <v-layout row wrap justify-center align-center fill-height>
@@ -65,8 +65,12 @@
           </v-list>
           <h5
             v-else
-            class="display-1"
-          >There is no advice this questionnaire can give you. That probably means you did wel! Click Continue to go further or print the PDF to see your answers.</h5>
+            class="headline text-center"
+          >There is no advice this questionnaire can give you.
+          <br/>
+          That probably means you did wel! Click Continue to go further or print the PDF to see your answers.</h5>
+        </v-layout>
+        <v-layout row wrap justify-center align-center>
           <p class="subtitle-1">Go back using the arrow:</p>
         </v-layout>
         <ArrowControls

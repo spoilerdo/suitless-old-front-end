@@ -101,7 +101,7 @@ export default {
   },
   computed: {
     ...mapState("survey/", {
-      survey: state => state.all
+      survey: state => state.survey
     }),
     ...mapState("answer", {
       answer: state => state.all
