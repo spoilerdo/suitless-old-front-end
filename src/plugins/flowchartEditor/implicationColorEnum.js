@@ -8,7 +8,7 @@ import { ImplicationEnum } from '../../../public/libs/flowchartEditor/src/Implic
  * @since 13-08-2019
  */
 
-export let ImplicationColorEnum = {
+export let ImplicationColorEnum, ColorImplicationEnum = {
     /**
      * Name to Value mapping.
      */
@@ -20,26 +20,6 @@ export let ImplicationColorEnum = {
 
     /**
      * Value to Name mapping
-     */
-    1 : "error",
-    2 : "warning",
-    3 : "yellow",
-    4 : "info",
-    5 : "default",
-}
-
-export let ColorImplicationEnum = {
-    /**
-     * Name to Value mapping
-     */
-    "error" : 1,
-    "warning" : 2,
-    "yellow" : 3,
-    "info" : 4,
-    "default" : 5,
-
-    /**
-     * Value to Name mapping.
      */
     1 : ImplicationEnum[1],
     2 : ImplicationEnum[2],
