@@ -12,7 +12,7 @@ export let ImplicationEnum = {
      * Name to Value mapping.
      */
     "High risk": 1,
-    "Hight priority (Find specialist)" : 2,
+    "High priority (Find specialist)" : 2,
     "High priority (To do yourself)": 3,
     "Background information" : 4,
     "Assumptions" : 5,
@@ -21,7 +21,7 @@ export let ImplicationEnum = {
      * Value to Name mapping.
      */
     1 : "High risk",
-    2 : "Hight priority (Find specialist)",
+    2 : "High priority (Find specialist)",
     3 : "High priority (To do yourself)",
     4 : "Background information",
     5 : "Assumptions"

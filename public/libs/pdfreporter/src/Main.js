@@ -13,6 +13,7 @@ import { pdfModuleMultiChoice } from "./PdfModule/PdfModuleMultiChoice";
 import { pdfModuleQuestion } from "./PdfModule/PdfModuleQuestion";
 import { pdfModuleIndex } from "./PdfModule/PdfModuleIndex";
 import { pdfContentLogo } from "./PdfContent/PdfContentLogo";
+import { ImplicationEnum } from "../../flowchartEditor/src/ImplicationEnum";
 
 
 const pdfReporter = {
@@ -122,21 +123,21 @@ function fillImplications(flows) {
     let implicationContents = [];
     flows.forEach(flow => {
         if (flow.implications) {
-            flow.implications.forEach(implication => {
+            flow.implications.implicationsObject.forEach(implication => {
                 switch (implication.implicationLevel) {
-                    case "HighRisk":
+                    case ImplicationEnum[1]:
                         implicationContents.push(pdfContent.PdfContentHighRisk(implication.implication));
                         break;
-                    case "HighPriority":
+                    case ImplicationEnum[2]:
                         implicationContents.push(pdfContent.PdfContentHighPriority(implication.implication));
                         break;
-                    case "HighPriorityDIY":
+                    case ImplicationEnum[3]:
                         implicationContents.push(pdfContent.PdfContentHighPriorityDIY(implication.implication));
                         break;
-                    case "BackgroundInformation":
+                    case ImplicationEnum[4]:
                         implicationContents.push(pdfContent.PdfContentBackgroundInformation(implication.implication));
                         break;
-                    case "Assumption":
+                    case ImplicationEnum[5]:
                         implicationContents.push(pdfContent.PdfContentAssumption(implication.implication));
                         break;
                     default:

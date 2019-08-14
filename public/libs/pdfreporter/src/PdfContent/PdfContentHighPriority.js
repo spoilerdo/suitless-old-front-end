@@ -12,7 +12,7 @@ export class pdfContentHighPriority extends pdfContentImplication {
 
     constructor(data){
         super(data);
-        this.implicationLevel = "High Priority";
+        this.implicationLevel = "High priority (Find specialist)";
     }
 
     /**

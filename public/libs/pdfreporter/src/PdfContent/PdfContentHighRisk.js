@@ -12,7 +12,7 @@ export class pdfContentHighRisk extends pdfContentImplication {
 
     constructor(data){
         super(data);
-        this.implicationLevel = "High Risk";
+        this.implicationLevel = "High risk";
     }
 
     /**
