@@ -140,8 +140,8 @@ export default {
                  * @param {String} reason the reason why you ask the question
                  * @param {Boolean} loopSubQuestions used in order to loob the same subquestion if there are any.
                 */
-                changeMultipleChoiceNode(nodeName, title, amountOfChoices, reason, loopSubQuestions){
-                    methods.changeMultipleChoiceNode(nodeName, title, amountOfChoices, reason, loopSubQuestions);
+                changeMultipleChoiceNode(nodeName, title, amountOfChoices, reasons, loopSubQuestions){
+                    methods.changeMultipleChoiceNode(nodeName, title, amountOfChoices, reasons, loopSubQuestions);
                 },
                 
                 /**

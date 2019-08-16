@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-list class="list-height">
+      <h6 v-if="implications.length <= 0" class="subheading">Add an implication:</h6>
       <template v-for="(implication, index) in implicationList">
         <v-card elevation-4 :key="index">
           <v-layout column pa-2 my-2>
