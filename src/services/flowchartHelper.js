@@ -69,7 +69,18 @@ export const getEnumValues = (Enum) => {
 export const getReasonsArray = (question) => {
     let rea = question.lincData
         .filter(data => data.key == "reason")
-        .map(el => el.value);
+        .map(el => el.value ?
+            anchorme(el.value, {
+            truncate: 40,
+            attributes:[
+                {
+                    name:"target",
+                    value:"_blank"
+                }
+            ]
+          }) 
+          : null
+        );
 
     let types = question.lincData
         .filter(data => data.key == "reasonType")

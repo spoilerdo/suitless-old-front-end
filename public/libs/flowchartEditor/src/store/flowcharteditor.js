@@ -122,11 +122,11 @@ export const methods = {
         })
         state.selectedCell.lincData = data;
     },
-    changeMultipleChoiceNode(nodeName, title, amountOfChoices, reason, loopSubQuestions){
+    changeMultipleChoiceNode(nodeName, title, amountOfChoices, reasons, loopSubQuestions){
         let graph = state.editor.graph;
 
         //change the generic values of a node (node value and question of the multi choice)
-        this.changeQuestionNode(nodeName, title, reason);
+        this.changeQuestionNode(nodeName, title, reasons);
         
         //get the child count (amount of choices)
         let childerenCount = state.selectedCell.getChildCount();

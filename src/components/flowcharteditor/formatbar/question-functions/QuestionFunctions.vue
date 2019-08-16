@@ -9,9 +9,7 @@
         @onChange="changeProps"
         @validated="checkValidation"
       />
-      <ReasonList
-        v-bind:reasons.sync="form.reasons"
-      />
+      <ReasonList v-bind:reasons.sync="form.reasons"/>
       </v-layout>
       <v-layout align-center justify-center row>
         <v-btn color="primary" @click="prepareChangeQuestionNode()">Apply</v-btn>
