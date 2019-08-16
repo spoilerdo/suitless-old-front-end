@@ -8,7 +8,6 @@
         @onChange="changeProps"
         @validated="checkValidation"
       />
-      <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>
       <v-layout align-center justify-center row>
         <v-btn color="primary" @click="prepareGenericChangeNode()">Apply</v-btn>
       </v-layout>
@@ -35,7 +34,6 @@ export default {
       form: {
         nodeName: null,
         name: null,
-        imageName: ""
       },
       selected: null
     };

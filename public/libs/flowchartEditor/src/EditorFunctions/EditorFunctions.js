@@ -176,7 +176,6 @@ export let editorFunctions = {
                 if (n.style == NodeEnum.MultipleChoice) {
                     //The multiplechoice needs some childs|
                     let data = n.lincData.filter(c => c.key !== "question" && c.key !== "loopsubQuestions" && c.key !== "reason")
-                    console.log(data);
 
                     let childs = [];
                     data.forEach(child => {

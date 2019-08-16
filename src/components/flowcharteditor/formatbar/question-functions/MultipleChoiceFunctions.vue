@@ -68,7 +68,7 @@ export default {
             type: "Example"
           }
         ],
-        loopSubQuestions: true
+        loopSubQuestions: false
       }
     };
   },

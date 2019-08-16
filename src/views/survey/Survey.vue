@@ -250,7 +250,7 @@ export default {
       let shouldLoopNonUniqueSubQuestions = this.currentquestion.lincData.find(
         d => d.key === "loopsubQuestions"
       );
-      if (shouldLoopNonUniqueSubQuestions.value == "true") {
+      if (shouldLoopNonUniqueSubQuestions.value == "false") {
         //create list of unique sub questions based on targetid and only add these to the backlog (skip first one it will be handled seperately)
         let uniqueList = [
           ...new Set(answers.slice(1).map(i => i.flows[0].targetID))

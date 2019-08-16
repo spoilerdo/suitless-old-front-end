@@ -231,7 +231,7 @@ export function addSubVertexes(graph, parent, json, amountOfChildren, index) {
     } else {
         for (let i = index; i < amountOfChildren; i++) {
             let data = [{
-                "key": "choice ",
+                "key": "choice",
                 "value": "this is a choice"
             }]
 
