@@ -32,7 +32,7 @@ export default {
   props: {
     timeVisible: {
       type: Number,
-      required: true
+      default: 6000
     }
   },
   methods: {

@@ -20,18 +20,13 @@ export let GraphCoder = {
 
                     //But first we need to check if the node already contains the choice data.
                     //If so than you will need to update these
-                    let oldChoice = n.lincData.filter(c => c.value === child.id);
-                    if (oldChoice.length != 0) {
-                        let newChoice = oldChoice[0].key = child.value;
-                        let index = n.lincData.indexOf(oldChoice);
-                        n.lincData[index] = newChoice;
-                    } else {
-                        //If it's new than just push it
-                        n.lincData.push({
-                            "key": child.value,
-                            "value": child.id
-                        });
-                    }
+                    let standardLincData = n.lincData.filter(c => c.value !== child.id);
+                    //If it's new than just push it
+                    standardLincData.push({
+                        "key": child.value,
+                        "value": child.id
+                    });
+                    n.lincData = standardLincData;
                 })
             }
 
