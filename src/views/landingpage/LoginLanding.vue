@@ -10,15 +10,19 @@
         >Creating an account allows us to suggest surveys to you based on your data and submitted surveys!</div>
       </v-flex>
       <v-layout row wrap justify-center>
-        <ImageCard
-          redirecturl="/login"
-          imagename="account"
+        <ActionCard
+          @action="redirecturl"
+          parameter="/login"
+          imageName="account"
           text="Create an account"
+          rounded
         />
-        <ImageCard
-          redirecturl="/surveys"
-          imagename="anonymous"
+        <ActionCard
+          @action="redirecturl"
+          parameter="/surveys"
+          imageName="anonymous"
           text="Continue anonymously"
+          rounded
         />
       </v-layout>
     </v-layout>
@@ -26,8 +30,8 @@
 </template>
 
 <script>
+import ActionCard from "@/components/material/ActionCard";
 import Animatedbackground from "@/components/background/Animatedbackground";
-import ImageCard from "@/components/material/ImageCard";
 
 /**
  * returns the login landing page, asking the user wether they want to create an account.
@@ -36,7 +40,12 @@ import ImageCard from "@/components/material/ImageCard";
 export default {
   components: {
     Animatedbackground,
-    ImageCard
-  }
+    ActionCard
+  },
+  methods: {
+    redirecturl(url) {
+      this.$router.push(url);
+    }
+  },
 };
 </script>

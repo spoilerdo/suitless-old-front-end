@@ -1,20 +1,39 @@
 <template>
   <v-container fluid pa-0 ma-o>
     <!--dialog that shows a disclaimer that the user has to agree to in order to start the survey-->
-    <DisclaimerDialog v-on:agreeDisclaimer="agreeDisclaimer" />
+    <DisclaimerDialog 
+      v-on:chosenAction="agreeDisclaimer"
+      title="Disclaimer"
+      text="The Legal Healthcheck Platform is not your online lawyer. Therefore, the service itself and the information it provides shall not be seen as legal advice. Rather, the Legal Healthcheck platform is intended as educational tool for students and start-ups to obtain basic legal knowledge. EhvLINC cannot guarantee that the information provided on this website (including the reports that it generates) is correct and fully up-to-date. Usage of the Legal Healthcheck Platform is fully at your own risk. EhvLINC explicitly rejects all liability for direct, indirect, incidental or special damages arising out or relating to the access or use of the service. This includes, but not restricted to, loss or damage caused by usage of information by this website, inaccurate results, loss of profits, business interruption, loss of use of the service, the cost of substitute services or claims by third parties for any damages to computers, software, modems, telephones or other property."
+      trueBtnText="Agree"
+      falseBtnText="Disagree"
+      dialogState
+      persistent
+    />
 
     <v-layout align-center justify-center row pa-2>
       <ProgressBar ref="progressBar" />
     </v-layout>
+    <!-- The start page of a survey -->
     <v-layout align-center justify-center row v-if="surveyStarted === false && survey.name != null">
       <SurveyInformation
         :title="survey.name"
         :description="survey.description"
-        v-on:startSurvey="startSurvey"
+        btnText="Start survey"
+        v-on:btnClick="startSurvey"
       />
     </v-layout>
-    <v-layout align-start justify-start row ma-4 v-else-if="progress !== 100">
-      <v-flex xs12 md11 v-if="survey.nodes != null && currentquestion != null && surveyStarted">
+    <!-- The questions the surveys asks -->
+
+    <!-- All the questions and multi choice -->
+    <v-layout
+      align-start
+      justify-start
+      row
+      ma-4
+      v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
+    >
+      <v-flex xs12 md11 my-2>
         <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == $data.nodeEnum.Question"
@@ -35,13 +54,31 @@
         />
         <Notification ref="surveyNotification" :timeVisible="0" />
       </v-flex>
-      <v-flex xs5 md6 pl-5 v-if="surveyStarted && survey.nodes != null">
-        <Info :question="currentquestion" v-if="!isMobile" />
+      <v-flex xs5 md6 pl-5>
+        <Info
+          :question="currentquestion"
+          v-if="!isMobile && currentquestion.style != $data.nodeEnum.Notification"
+        />
       </v-flex>
     </v-layout>
-    <!--add the start of the survey this component will give some information about the survey-->
+    <!-- All the notifications -->
+    <v-layout
+      align-center
+      justify-center
+      row
+      v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
+    >
+      <SurveyInformation
+        v-if="currentquestion.style == $data.nodeEnum.Notification"
+        title
+        :description="getNotify()"
+        btnText="Oke, got it"
+        v-on:btnClick="answeredQuestion(currentquestion.flows[0])"
+      />
+    </v-layout>
+    <!-- The end of the survey -->
     <EndPage
-      v-else
+      v-else-if="progress === 100"
       :answers="answer"
       :question="currentquestion"
       :progress="progress"
@@ -54,14 +91,15 @@
 
 <script>
 import SurveyInformation from "@/components/survey/SurveyInformation.vue";
-import DisclaimerDialog from "@/components/material/DisclaimerDialog.vue";
+import DisclaimerDialog from "@/components/material/Dialog.vue";
 import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
 import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
 import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
-import Router from 'vue-router'
+import Router from "vue-router";
+import theme from "@/plugins/vuetify/theme";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 /**
@@ -82,7 +120,7 @@ export default {
   },
   computed: {
     ...mapState("survey/", {
-      survey: state => state.all
+      survey: state => state.survey
     }),
     ...mapState("answer", {
       answer: state => state.all
@@ -107,12 +145,16 @@ export default {
   created() {
     //when created call the action to get the survey with the id in the props.
     this.getSurveyByID(this.surveyID);
-    this.setBackground("#eee");
-    this.setFooterColor("#c01833");
+    this.setBackground(theme.defaultBackground);
+    this.setFooterColor(theme.primary);
   },
   methods: {
     ...mapActions("survey/", ["getSurveyByID", "deleteChosenSurvey"]),
-    ...mapActions("answer/", ["deleteLastAnswer", "answerQuestion", "clearAnswers"]),
+    ...mapActions("answer/", [
+      "deleteLastAnswer",
+      "answerQuestion",
+      "clearAnswers"
+    ]),
     ...mapActions("progress/", [
       "fillProgress",
       "setCurrentQuestion",
@@ -126,8 +168,14 @@ export default {
 
     agreeDisclaimer(choice) {
       if (choice === false) {
-        this.$router.go(-1);
+        this.closeSurvey();
+        this.$router.go(-2);
       }
+    },
+
+    getNotify() {
+      return this.currentquestion.lincData.find(data => data.key === "notify")
+        .value;
     },
 
     startSurvey() {
@@ -158,6 +206,7 @@ export default {
 
       //get previous answer(s) and convert them to an array.
       prevAnswer = this.getAnswerByQuestionID(question);
+      //console.log(prevAnswer);
 
       if (!Array.isArray(prevAnswer)) {
         prevAnswer = Array.of(prevAnswer);
@@ -170,16 +219,16 @@ export default {
       let previousQuestionID = prevAnswer[0].questionID;
 
       //check if previous question is a notification, if so go one more back.
-      while (
-        this.survey.nodes[previousQuestionID].style == this.$data.Notification
-      ) {
-        this.renderPreviousQuestion(this.survey.nodes[prevAnswer[0]]);
+      if (
+        this.survey.nodes[previousQuestionID].style == this.$data.nodeEnum.Notification) {
+        this.renderPreviousQuestion(this.survey.nodes[prevAnswer[0].questionID]);
+      } else {
+        //select the previous question
+        this.setCurrentQuestion({
+          question: this.survey.nodes[previousQuestionID],
+          nodes: this.survey.nodes
+        });
       }
-      //select the previous question
-      this.setCurrentQuestion({
-        question: this.survey.nodes[previousQuestionID],
-        nodes: this.survey.nodes
-      });
       this.deleteLastAnswer();
 
       prevAnswer.forEach(() => {
@@ -292,7 +341,7 @@ export default {
     window.addEventListener("resize", this.onResize, { passive: true });
   },
   beforeDestroy() {
-    this.setFooterColor("#fff");
+    this.setFooterColor("#eee");
     if (typeof window !== "undefined") {
       window.removeEventListener("resize", this.onResize, { passive: true });
     }

@@ -9,13 +9,7 @@
         nudge-right="10"
         nudge-bottom="18"
         v-if="isMobile"
-      >
-        <template v-slot:activator="{ on }">
-          <v-btn class="action-btn" flat icon left absolute round v-on="on">
-            <v-icon color="secondary">mdi-help</v-icon>
-          </v-btn>
-        </template>
-
+      > 
         <v-layout style="width: 100%;">
           <Info :question="this.question"/>
         </v-layout>
@@ -26,17 +20,20 @@
           <h3 class="headline mb-0">{{question.lincData.find(data => data.key === "question").value}}</h3>
         </v-layout>
       </v-card-title>
+      
       <v-card-actions class="action-card">
         <v-layout row wrap justify-center>
           <!-- question card for single answer questions -->
-          <QuestionCard
-            v-on:selectedAnswer="selectAnswer"
+          <ActionCard
+            @action="selectAnswer"
             v-for="answer in question.flows"
             :key="answer.targetID + answer.value"
             :id="'question-' + answer.targetID"
-            :text="answer.value"
-            :answer="answer"
-            color="primary" 
+            :parameter="answer"
+            :text="getText(answer)"
+            :imageName="getImageName(answer)"
+            selection
+            color="primary"
             style="margin:10px"
             ref="question"
           />
@@ -71,7 +68,7 @@
 
 
 <script>
-import QuestionCard from "@/components/material/QuestionCard.vue";
+import ActionCard from "@/components/material/ActionCard.vue";
 import Info from "@/components/survey/Info.vue";
 import ArrowControls from "@/components/survey/ArrowControls.vue";
 
@@ -81,7 +78,7 @@ import ArrowControls from "@/components/survey/ArrowControls.vue";
  */
 export default {
   components: {
-    QuestionCard,
+    ActionCard,
     Info,
     ArrowControls
   },
@@ -102,11 +99,17 @@ export default {
     }
   },
   methods: {
+    getText(answer){
+      return answer.lincData.find(data => data.key === "answer").value;
+    },
+    getImageName(answer){
+      return answer.lincData.find(data => data.key === "imageName").value
+    },
     selectAnswer(selectAnswer) {
       //loop through all answers and deselect any that do not match
       this.$refs.question.forEach(child => {
         //only to get components which contain the needed method
-        if(child.answer == selectAnswer) {
+        if(child.parameter == selectAnswer) {
           child.setSelected(true);
         } else {
           child.setSelected(false);
@@ -118,6 +121,7 @@ export default {
     answerQuestion() {
       if(this.selectedAnswer !== null) {
         this.$emit('answerQuestion', this.selectedAnswer);
+        this.selectedAnswer = null;
       }
     }
   }

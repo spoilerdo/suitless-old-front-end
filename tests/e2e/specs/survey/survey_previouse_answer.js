@@ -29,7 +29,7 @@ module.exports = {
         browser
             .waitForElementVisible('#question-5', 10000)
             .click('#question-5')
-            .assert.cssClassPresent('#question-5', 'selectedCard')
+            .assert.cssClassPresent('#question-5', 'selectionCardClicked')
         if (progresses[index] != 'finished') {
             browser.click('#next-btn')
             //check the progress bar
@@ -63,7 +63,7 @@ module.exports = {
         browser
             .waitForElementVisible('#question-17', 10000)
             .click('#question-17')
-            .assert.cssClassPresent('#question-17', 'selectedCard')
+            .assert.cssClassPresent('#question-17', 'selectionCardClicked')
         if (progresses[index] != 'finished') {
             browser.click('#next-btn')
 

@@ -1,7 +1,7 @@
 /**
  * When cells get selected or deselected the cell size will adjust to the text length
- * @author Sueño de Kort
- * @version 1.0
+ * @author Sueño de Kort & Martijn Dormans
+ * @version 1.1
  * @since 14-05-2019
  */        
 

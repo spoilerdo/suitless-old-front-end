@@ -1,4 +1,4 @@
-import { apiCall, asyncApiCall } from "@/services/api";
+import { apiCall } from "@/services/api";
 import { CDN_URL, NOTIFICATION_HANDLER } from "../../generalconstants"
 import { SET_SERVCEABLES, UPDATE_SERVICEABLES, DELETE_SERVICEABLES, ADD_SERVICEABLES, SET_FILE_DIALOG, SET_NEW_SERVICEABLES, SET_SERVICEABLE_EXISTS, ADD_IMAGES, SET_IMAGES, ADD_IMAGE } from "./mutation-types";
 
@@ -105,11 +105,25 @@ const actions = {
     },
 
     /** 
-     * Attempts to delete an serviceable from the CDN service
+     * Attempts to delete an serviceable from the CDN service by tag
      * @memberof store.cdn
      */
-    deleteData({ commit, dispatch }, serviceable) {
+    deleteByTag({ commit, dispatch }, serviceable) {
         apiCall("DELETE", `${CDN_URL}/${serviceable.name}`)
+            .then(() => {
+                dispatch(NOTIFICATION_HANDLER, { message: "succesfully deleted", type: "success" }, { root: true });
+                commit(DELETE_SERVICEABLES, serviceable);
+            }).catch(e => {
+                dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
+            });
+    },
+
+    /**
+     * Attempts to delete an serviceable from the CDN service by id
+     * @memberof store.cdn
+     */
+    deleteById({ commit, dispatch }, serviceable) {
+        apiCall("DELETE", `${CDN_URL}/id/${serviceable.id}`)
             .then(() => {
                 dispatch(NOTIFICATION_HANDLER, { message: "succesfully deleted", type: "success" }, { root: true });
                 commit(DELETE_SERVICEABLES, serviceable);
@@ -124,7 +138,7 @@ const actions = {
      */
     async checkServiceableExists({ commit }, tag) {
         try {
-            const req = await asyncApiCall("GET", `${CDN_URL}/${tag}`)
+            const req = await apiCall("GET", `${CDN_URL}/${tag}`)
             if (req) {
                 if (req != null) {
                     commit(SET_SERVICEABLE_EXISTS, true);
@@ -148,7 +162,7 @@ const actions = {
         data.set('tag', name);
 
         try {
-            const req = await asyncApiCall("POST", `${CDN_URL}/base64`, data);
+            const req = await apiCall("POST", `${CDN_URL}/base64`, data);
             if (req) {
                 commit(SET_NEW_SERVICEABLES, req);
 
@@ -172,7 +186,7 @@ const actions = {
         data.set('tag', name);
 
         try {
-            const req = await asyncApiCall("PUT", `${CDN_URL}/base64`, data);
+            const req = await apiCall("PUT", `${CDN_URL}/base64`, data);
             if (req) {
                 commit(SET_NEW_SERVICEABLES, req);
 
@@ -213,6 +227,7 @@ const mutations = {
                 name: serviceable.tag,
                 size: (serviceable.size / 1000).toFixed(2), //Byte to KB
                 type: serviceable.type,
+                id: serviceable.id,
                 baseURL: CDN_URL + "/" + serviceable.tag
             });
         });

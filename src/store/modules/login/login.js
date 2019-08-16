@@ -1,7 +1,8 @@
 import { apiCall, setToken } from '@/services/api'
 import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
 import router from '@/router/router'
-import { SET_LOGGING_IN, SET_LOGIN_TEXT, SET_ALERT } from './mutation-types';
+import { SET_LOGGING_IN, SET_LOGIN_TEXT, SET_ALERT, SET_TOKEN } from './mutation-types';
+import jwt_decode from "jwt-decode";
 
 /**
  * The login module contains the login/ register API calls to the account service
@@ -20,8 +21,16 @@ const state = {
         type: "info",
         message: ""
     },
-    token: localStorage.getItem('jwtToken') || ""
+    token: localStorage.getItem("jwtToken") ? jwt_decode(localStorage.getItem('jwtToken')) : ""
 }
+
+/**
+ * try{
+            state.token = jwt_decode(localStorage.getItem('jwtToken'));
+        } catch {
+            state.token = "";
+        }
+ */
 
 // getters
 const getters = {
@@ -62,11 +71,18 @@ const actions = {
             .then((req => {
                 localStorage.setItem('jwtToken', req.token);
                 setToken(req.token);
+                commit(SET_TOKEN, req.token);
                 router.push("/dashboard");
             })).catch(e => {
                 commit(SET_ALERT, {type:"error", message: "Email or password invalid"});
                 dispatch(NOTIFICATION_HANDLER, { message: e, type: "error", noSnackbar: true }, { root:true });
             });
+    },
+
+    logout() {
+        localStorage.removeItem("jwtToken");
+        setToken("");
+        router.push("/");
     },
 
     /**
@@ -95,6 +111,9 @@ const mutations = {
     [SET_ALERT](state, payload) {
         state.alert.type = payload.type;
         state.alert.message = payload.message;
+    },
+    [SET_TOKEN](state, payload) {
+        state.token =  jwt_decode(payload);
     }
 }
 

@@ -9,7 +9,7 @@
 
       <v-card-text>
         <v-layout row wrap justify-center align-center fill-height>
-          <v-list class="list-width" three-line id="advise">
+          <v-list class="list-width" three-line id="advise" v-if="structuredAnswers.length > 0">
             <template v-for="answers in structuredAnswers">
               <v-list-tile class="list-item-height" :key="answers[0].implicationLevel">
                 <v-layout row wrap justify-center align-center fill-height>
@@ -42,7 +42,7 @@
                       :size="100"
                       :width="15"
                       :value="answers.length/totalNumberAnswers*100"
-                      :color="answers[0].implicationLevel"
+                      :color="getColor(answers[0].implicationLevel)"
                     />
                   </v-flex>
                 </v-layout>
@@ -55,11 +55,23 @@
                 v-show="implicationDetailStates[implicationTypes.indexOf(answers[0].implicationLevel)] === true"
               >
                 <div>
-                  <ImplicationList :answers="answers" />
+                  <ImplicationList
+                    :answers="answers"
+                    :type="getColor(answers[0].implicationLevel)"
+                  />
                 </div>
               </v-list-tile>
             </template>
           </v-list>
+          <h5
+            v-else
+            class="headline text-center"
+          >There is no advice this questionnaire can give you.
+          <br/>
+          That probably means you did wel! Click Continue to go further or print the PDF to see your answers.</h5>
+        </v-layout>
+        <v-layout row wrap justify-center align-center>
+          <p class="subtitle-1">Go back using the arrow:</p>
         </v-layout>
         <ArrowControls
           v-on:previousButtonClick="$emit('renderPreviousQuestion', question)"
@@ -100,6 +112,7 @@
 <script>
 import ImplicationList from "@/components/survey/endpage/ImplicationList";
 import ArrowControls from "@/components/survey/ArrowControls.vue";
+import anchorme from "anchorme";
 
 /**
  * Returns an 'endpage' view used after the survey.
@@ -137,6 +150,12 @@ export default {
         implicationTypes.indexOf(implicationLevel)
       ] = !currentState;
       this.$forceUpdate();
+    },
+    getColor(implicationLevel) {
+      //Get the veutify theme color corrosponding to the implicationLevel
+      return this.$data.implicationColorEnum[
+        this.$data.implicationColorEnum[implicationLevel]
+      ];
     }
   },
   data() {
@@ -192,7 +211,7 @@ export default {
       } else {
         //The answer does contian an implication
         //for each implication get the implicationLevel's index
-        ans.implications.forEach(implication => {
+        ans.implications.implicationsObject.forEach(implication => {
           if (implication.implication) {
             let impIndex = implicationTypes.indexOf(
               implication.implicationLevel
@@ -210,7 +229,7 @@ export default {
     //every implication category needs an boolean in order to hide/show the details
     let implicationStates = [];
     implicationTypes.forEach(() => {
-      implicationStates.push(false);
+      implicationStates.push(true);
     });
 
     //clean all the empty arrays

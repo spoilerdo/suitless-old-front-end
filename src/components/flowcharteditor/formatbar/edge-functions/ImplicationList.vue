@@ -17,47 +17,13 @@
             <h6 class="subheading">Select the implication level</h6>
             <v-layout align-center justify-center row>
               <v-btn
+                v-for="(color, i) in colors"
+                :key="i"
                 flat
                 icon
-                color="default"
-                v-bind:class="{selectedColor: implicationColorsList.length > 0 && implicationColorsList[index] == theme.default}"
-                @click="setSelected('default', theme.default, index)"
-              >
-                <v-icon>mdi-checkbox-blank</v-icon>
-              </v-btn>
-              <v-btn
-                flat
-                icon
-                color="success"
-                v-bind:class="{selectedColor: implicationColorsList.length > 0 && implicationColorsList[index] == theme.success}"
-                @click="setSelected('success', theme.success, index)"
-              >
-                <v-icon>mdi-checkbox-blank</v-icon>
-              </v-btn>
-              <v-btn
-                flat
-                icon
-                color="info"
-                v-bind:class="{selectedColor: implicationColorsList.length > 0 && implicationColorsList[index] == theme.info}"
-                @click="setSelected('info', theme.info, index)"
-              >
-                <v-icon>mdi-checkbox-blank</v-icon>
-              </v-btn>
-              <v-btn
-                flat
-                icon
-                color="warning"
-                v-bind:class="{selectedColor: implicationColorsList.length > 0 && implicationColorsList[index] == theme.warning}"
-                @click="setSelected('warning', theme.warning, index)"
-              >
-                <v-icon>mdi-checkbox-blank</v-icon>
-              </v-btn>
-              <v-btn
-                flat
-                icon
-                color="primary"
-                v-bind:class="{selectedColor: implicationColorsList.length > 0 && implicationColorsList[index] == theme.primary}"
-                @click="setSelected('primary', theme.primary, index)"
+                :color="color"
+                v-bind:class="{selectedColor: implicationColorsList.length > 0 && implicationColorsList[index] == theme[color]}"
+                @click="setSelected($data.colorImplicationEnum[$data.colorImplicationEnum[color]], theme[color], index)"
               >
                 <v-icon>mdi-checkbox-blank</v-icon>
               </v-btn>
@@ -108,6 +74,7 @@
 
 <script>
 import theme from "@/plugins/vuetify/theme";
+import { getEnumValues } from "@/services/flowchartHelper";
 
 /**
  * Returns a list containing the amount of implications this edge contains,
@@ -129,8 +96,12 @@ export default {
     return {
       implicationList: this.implications,
       implicationColorsList: this.implicationColors,
-      theme
+      theme,
+      colors: []
     };
+  },
+  mounted() {
+    this.colors = getEnumValues(this.$data.implicationColorEnum);
   },
   methods: {
     setSelected(selected, color, index) {
@@ -141,7 +112,7 @@ export default {
     addImplication() {
       this.implicationList.push({
         implication: null,
-        implicationLevel: "default"
+        implicationLevel: "Assumption"
       });
       this.implicationColors.push(theme.default);
     },

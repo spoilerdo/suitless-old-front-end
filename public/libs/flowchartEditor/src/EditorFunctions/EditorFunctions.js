@@ -90,7 +90,7 @@ export let editorFunctions = {
                 },
                 {
                     "key": "imageName",
-                    "value": ""
+                    "value": "DefaultEdgeImage"
                 }
             ]
 
@@ -257,7 +257,7 @@ export let editorFunctions = {
     */
     updateDepth(cell, source) {
         //get the previouse cell's depth and set the next cells depth + 1
-        if (cell.lincType === NodeEnum.Question || cell.lincType === NodeEnum.MultipleChoice || cell.lincType === NodeEnum.Choice) {
+        if (cell.lincType === NodeEnum.Question || cell.lincType === NodeEnum.MultipleChoice || cell.lincType === NodeEnum.Choice || cell.lincType === NodeEnum.Notification) {
             cell.depth = source.depth + 1;
             if (cell.children != null) {
                 cell.children.forEach(child => {

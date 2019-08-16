@@ -1,6 +1,7 @@
 <template>
   <v-layout row justify-center>
     <v-form data-vv-scope="QuestionForm" @submit.prevent>
+      <v-layout column>
       <GenericView
         ref="genericView"
         nameLabel="The name of the Question"
@@ -8,9 +9,9 @@
         @onChange="changeProps"
         @validated="checkValidation"
       />
-      <v-layout column>
-        <h6 class="subheading">The reason of the question</h6>
-        <v-textarea v-model="form.reason" auto-grow box color="primary" label="Reason" rows="1" />
+      <ReasonList
+        v-bind:reasons.sync="form.reasons"
+      />
       </v-layout>
       <v-layout align-center justify-center row>
         <v-btn color="primary" @click="prepareChangeQuestionNode()">Apply</v-btn>
@@ -20,7 +21,9 @@
 </template>
 
 <script>
-import GenericView from "./genericView/GenericView";
+import GenericView from "../genericView/GenericView";
+import ReasonList from "./ReasonList";
+import { getReasonsArray } from "@/services/flowchartHelper";
 import { mapState, mapActions } from "vuex";
 
 /**
@@ -33,7 +36,12 @@ export default {
       form: {
         questionNode: null,
         question: null,
-        reason: null
+        reasons: [
+          {
+            reason: null,
+            type: "Example"
+          }
+        ]
       }
     };
   },
@@ -41,7 +49,8 @@ export default {
     ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
   },
   components: {
-    GenericView
+    GenericView,
+    ReasonList
   },
   methods: {
     ...mapActions("flowcharteditor/", ["setSelectedCell"]),
@@ -58,7 +67,7 @@ export default {
           this.changeQuestionNode(
             this.form.questionNode,
             this.form.question,
-            this.form.reason
+            this.form.reasons
           );
         }
       });
@@ -70,9 +79,7 @@ export default {
         newValue != null &&
         this.formatBarType == this.$data.nodeEnum.Question
       ) {
-        this.form.reason = newValue.lincData.find(
-          data => data.key === "reason"
-        ).value;
+        this.form.reasons = getReasonsArray(newValue);
       }
     }
   }

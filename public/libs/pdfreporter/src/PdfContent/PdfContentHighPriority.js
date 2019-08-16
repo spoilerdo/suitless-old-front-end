@@ -1,27 +1,25 @@
 /**
  * pdfContent contains the class that initializes a pdfContent instance.
- * This specific content is used for a warning implication.
+ * This specific content is used for a High Priority implication.
  * @author Julius Ammerlaan
  * @version 1.0
  * @since 12-03-2019
  */
 
- import { pdfContent } from "./PdfContent"
-import { pdfContentEnum } from "./PdfContentEnum";
+import { pdfContentImplication } from "./PdfContentImplication";
 
-export class pdfContentWarning extends pdfContent {
+export class pdfContentHighPriority extends pdfContentImplication {
 
     constructor(data){
-        super();
-        this.type = pdfContentEnum.warning;
-        this.data = data;
+        super(data);
+        this.implicationLevel = "High priority (Find specialist)";
     }
 
     /**
      * sets the text color appropriate for the type.
      */
     setStyle(doc) {
-        doc.setTextColor(250, 51, 51);
+        doc.setTextColor(255, 178, 102); //Orange
         doc.setFontSize(11);
         doc.setFont("Times","normal");
     }

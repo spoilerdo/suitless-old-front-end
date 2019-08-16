@@ -113,10 +113,14 @@ export const methods = {
     These methods will be called from the Vue plugin instance and will change the look of the selectedcell,
     by the newly inputed values from the user
     */
-    changeQuestionNode(questionNode, question, reason){
+    changeQuestionNode(questionNode, question, reasons){
         this.genericChangeNode(questionNode, question);
-        if(state.selectedCell.lincData != null && state.selectedCell.lincData[1].key === "reason")
-        state.selectedCell.lincData[1].value = reason
+        let data = state.selectedCell.lincData.slice(0, 1);
+        reasons.forEach(reason => {
+            data.push({"key": "reason", "value": reason.reason});
+            data.push({"key": "reasonType", "value": reason.type});
+        })
+        state.selectedCell.lincData = data;
     },
     changeMultipleChoiceNode(nodeName, title, amountOfChoices, reason, loopSubQuestions){
         let graph = state.editor.graph;
@@ -168,8 +172,10 @@ export const methods = {
             data = state.selectedCell.lincData.slice(0, 2)
         }
         implications.forEach(implication => {
-            data.push({"key": "implication", "value": implication.implication});
-            data.push({"key": "implicationLevel", "value": implication.implicationLevel});
+            if(implication.implication){
+                data.push({"key": "implication", "value": implication.implication});
+                data.push({"key": "implicationLevel", "value": implication.implicationLevel});
+            }
         });
         if(imageName){
             data[1].value = imageName;

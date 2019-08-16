@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { createImplicationArray } from "@/services/flowchartHelper";
 import { ADD_ANSWER, DELETE_LAST_ANSWER, CLEAR_ANSWER } from '../mutation-types';
 import { SURVEY_NOTIFICATION_HANDLER } from '../../../generalconstants';
 
@@ -52,15 +53,17 @@ const actions = {
             let temp = [];
 
             answer.forEach(ans => {
+                let implications = createImplicationArray(ans, true);
+                
                 //if a multi choice is answered without a follow up flow, be sure to save it seperately. otherwise it will be skipped
                 if(ans.flows.length === 0) {
                     let a = {
                         questionID: question.id,
-                        questionValue: question.lincData.find(data => data.key === "question").value,
+                        questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,
                         lincData: question.lincData,
                         targetID: null,
                         answerValue: ans.value,
-                        implications: ans.implications
+                        implications: implications
                     }
 
                     temp.push(a);
@@ -69,11 +72,11 @@ const actions = {
                 ans.flows.forEach(flow => {
                     let a = {
                         questionID: question.id,
-                        questionValue: question.lincData.find(data => data.key === "question").value,
+                        questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,
                         lincData: question.lincData,
                         targetID: flow.targetID,
                         answerValue: ans.value,
-                        implications: ans.implications
+                        implications: implications
                     };
 
                     //Notify the user of the implication they just received from the survey.
@@ -91,13 +94,14 @@ const actions = {
         } else {
             //single choice question answered
             //fill the answer in on the answers array
+            let implications = createImplicationArray(answer, true);
             var a = {
                 questionID: question.id,
-                questionValue: question.lincData.find(data => data.key === "question").value,
+                questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,
                 lincData: question.lincData,
                 targetID: answer.targetID,
                 answerValue: answer.value,
-                implications: answer.implications
+                implications: implications
             };
 
             //Notify the user of the implication they just received from the survey.
@@ -127,7 +131,6 @@ const actions = {
 const mutations = {
     [ADD_ANSWER](state, answer) {
         state.all.push(answer);
-        console.log(state.all);
     },
     [DELETE_LAST_ANSWER](state) {
         state.all.pop();

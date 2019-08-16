@@ -1,20 +1,31 @@
 <template>
   <v-flex text-xs-right justify-center class="margin">
-    <v-btn v-if="isAuthenticated" to="/dashboard" small class="primary">Dashboard</v-btn>
+    <v-btn v-if="tok" to="/dashboard" small class="primary">Dashboard</v-btn>
     <v-btn v-else to="/login" small class="primary">Login</v-btn>
   </v-flex>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+const { mapState } = createNamespacedHelpers("login/");
 
 /**
  * Returns the Login navbar
  * @memberof component.Login
  */
 export default {
+  data() {
+    return {
+      tok: null
+    }
+  },
   computed:{
-    ...mapGetters("login/", ["isAuthenticated"])
+    ...mapState(["token"])
+  },
+  watch: {
+    token: function(newVal) {
+      tok = token;
+    }
   }
 };
 </script>

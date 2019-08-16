@@ -3,6 +3,8 @@ import { state, methods } from '../../../public/libs/flowchartEditor/src/store/f
 import { mapActions } from 'vuex';
 import { NodeEnum } from '../../../public/libs/flowchartEditor/src/NodeEnum';
 import { ImplicationEnum } from '../../../public/libs/flowchartEditor/src/ImplicationEnum';
+import { ReasonEnum } from '../../../public/libs/flowchartEditor/src/ReasonEnum';
+import { ImplicationColorEnum, ColorImplicationEnum } from "./implicationColorEnum";
 import theme from '../vuetify/theme';
 
 /**
@@ -114,8 +116,8 @@ export default {
                  * @param {String} question the question that will be asked in the survey front-end
                  * @param {String} reason the reason why you ask the question
                 */
-                changeQuestionNode(questionNode, question, reason){
-                    methods.changeQuestionNode(questionNode, question, reason);
+                changeQuestionNode(questionNode, question, reasons){
+                    methods.changeQuestionNode(questionNode, question, reasons);
                 },
                 
                 /**
@@ -163,12 +165,27 @@ export default {
                      * @memberof plugin.flowchartEditor
                      * The nodeEnum can be used to alter between node format bar types or just to specify a certain node type
                      */
-                    nodeEnum: NodeEnum,
+                    nodeEnum : NodeEnum,
+                    /**
+                     * The ReasonEnum can be used to keep track of all the different types of reason a builder give to the user
+                     * @memberof plugin.flowchartEditor
+                     */
+                    reasonEnum : ReasonEnum,
                     /**
                      * @memberof plugin.flowchartEditor
                      * The implicationEnum can be used to keep track of all the different implications that are avaialble on an edge
                      */
-                    implicationEnum: ImplicationEnum
+                    implicationEnum : ImplicationEnum,
+                    /**
+                     * @memberof plugin.flowchartEditor
+                     * The implication color enum can be used to map the implication to the veutify color theme
+                     */
+                    implicationColorEnum : ImplicationColorEnum,
+                    /**
+                     * @memberof plugin.flowchartEditor
+                     * The color implication enum can be used to map the veutify color theme to the implication
+                     */
+                    colorImplicationEnum : ColorImplicationEnum
                 };
             }
         })
