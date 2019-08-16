@@ -114,7 +114,7 @@ export const methods = {
     by the newly inputed values from the user
     */
     changeQuestionNode(questionNode, question, reasons){
-        this.genericChangeNode(questionNode, question);
+        this.genericChangeNode(questionNode, question, "question");
         let data = state.selectedCell.lincData.slice(0, 1);
         reasons.forEach(reason => {
             data.push({"key": "reason", "value": reason.reason});
@@ -132,7 +132,7 @@ export const methods = {
         let childerenCount = state.selectedCell.getChildCount();
 
         //change the loopSubQuestions data of the multi choice node
-        state.selectedCell.lincData[2].value = loopSubQuestions;
+        state.selectedCell.lincData.find(data => data.key === "loopsubQuestions").value = loopSubQuestions;
 
         if(childerenCount < amountOfChoices){
             //add some choices because the user wants more than he already has
@@ -156,7 +156,7 @@ export const methods = {
         }
     },
     changeEdge(edgeNode, answer, implications, implicationColor, imageName){
-        this.genericChangeNode(edgeNode, answer);
+        this.genericChangeNode(edgeNode, answer, "answer");
 
         if(state.selectedCell.style.includes("strokeColor")){
             //the first index are the styles that you want to reuse
@@ -183,11 +183,11 @@ export const methods = {
         state.selectedCell.lincData = data;
     },
     //Generic method for a basic node with 2 inputs nodeName (name of the cell) and name of the first lincdata prop (question etc...)
-    genericChangeNode(nodeName, name){
+    genericChangeNode(nodeName, name, keyName){
         state.selectedCell.value = nodeName;
         state.editor.graph.getModel().setValue(state.selectedCell, nodeName);
         if(state.selectedCell.lincData){
-            state.selectedCell.lincData[0].value = name;
+            state.selectedCell.lincData.find(data => data.key === keyName).value = name;
         }
     }
 }
