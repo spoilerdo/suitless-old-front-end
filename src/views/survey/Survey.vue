@@ -1,7 +1,15 @@
 <template>
   <v-container fluid pa-0 ma-o>
     <!--dialog that shows a disclaimer that the user has to agree to in order to start the survey-->
-    <DisclaimerDialog v-on:agreeDisclaimer="agreeDisclaimer" />
+    <DisclaimerDialog 
+      v-on:chosenAction="agreeDisclaimer"
+      title="Disclaimer"
+      text="The Legal Healthcheck Platform is not your online lawyer. Therefore, the service itself and the information it provides shall not be seen as legal advice. Rather, the Legal Healthcheck platform is intended as educational tool for students and start-ups to obtain basic legal knowledge. EhvLINC cannot guarantee that the information provided on this website (including the reports that it generates) is correct and fully up-to-date. Usage of the Legal Healthcheck Platform is fully at your own risk. EhvLINC explicitly rejects all liability for direct, indirect, incidental or special damages arising out or relating to the access or use of the service. This includes, but not restricted to, loss or damage caused by usage of information by this website, inaccurate results, loss of profits, business interruption, loss of use of the service, the cost of substitute services or claims by third parties for any damages to computers, software, modems, telephones or other property."
+      trueBtnText="Agree"
+      falseBtnText="Disagree"
+      dialogState
+      persistent
+    />
 
     <v-layout align-center justify-center row pa-2>
       <ProgressBar ref="progressBar" />
@@ -72,7 +80,7 @@
 
 <script>
 import SurveyInformation from "@/components/survey/SurveyInformation.vue";
-import DisclaimerDialog from "@/components/material/DisclaimerDialog.vue";
+import DisclaimerDialog from "@/components/material/Dialog.vue";
 import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
 import Notification from "@/components/material/Notification.vue";

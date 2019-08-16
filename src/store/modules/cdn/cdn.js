@@ -105,11 +105,25 @@ const actions = {
     },
 
     /** 
-     * Attempts to delete an serviceable from the CDN service
+     * Attempts to delete an serviceable from the CDN service by tag
      * @memberof store.cdn
      */
-    deleteData({ commit, dispatch }, serviceable) {
+    deleteByTag({ commit, dispatch }, serviceable) {
         apiCall("DELETE", `${CDN_URL}/${serviceable.name}`)
+            .then(() => {
+                dispatch(NOTIFICATION_HANDLER, { message: "succesfully deleted", type: "success" }, { root: true });
+                commit(DELETE_SERVICEABLES, serviceable);
+            }).catch(e => {
+                dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
+            });
+    },
+
+    /**
+     * Attempts to delete an serviceable from the CDN service by id
+     * @memberof store.cdn
+     */
+    deleteById({ commit, dispatch }, serviceable) {
+        apiCall("DELETE", `${CDN_URL}/id/${serviceable.id}`)
             .then(() => {
                 dispatch(NOTIFICATION_HANDLER, { message: "succesfully deleted", type: "success" }, { root: true });
                 commit(DELETE_SERVICEABLES, serviceable);
@@ -213,6 +227,7 @@ const mutations = {
                 name: serviceable.tag,
                 size: (serviceable.size / 1000).toFixed(2), //Byte to KB
                 type: serviceable.type,
+                id: serviceable.id,
                 baseURL: CDN_URL + "/" + serviceable.tag
             });
         });
