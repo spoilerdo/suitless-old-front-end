@@ -18,7 +18,13 @@
     <!-- The questions the surveys asks -->
 
     <!-- All the questions and multi choice -->
-    <v-layout align-start justify-start row ma-4 v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null">
+    <v-layout
+      align-start
+      justify-start
+      row
+      ma-4
+      v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
+    >
       <v-flex xs12 md11 my-2>
         <!--currentquestion is an object not an integer-->
         <Question
@@ -48,7 +54,12 @@
       </v-flex>
     </v-layout>
     <!-- All the notifications -->
-    <v-layout align-center justify-center row v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null">
+    <v-layout
+      align-center
+      justify-center
+      row
+      v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
+    >
       <SurveyInformation
         v-if="currentquestion.style == $data.nodeEnum.Notification"
         title
@@ -101,7 +112,7 @@ export default {
   },
   computed: {
     ...mapState("survey/", {
-      survey: state => state.all
+      survey: state => state.survey
     }),
     ...mapState("answer", {
       answer: state => state.all
@@ -187,6 +198,7 @@ export default {
 
       //get previous answer(s) and convert them to an array.
       prevAnswer = this.getAnswerByQuestionID(question);
+      //console.log(prevAnswer);
 
       if (!Array.isArray(prevAnswer)) {
         prevAnswer = Array.of(prevAnswer);
@@ -199,16 +211,16 @@ export default {
       let previousQuestionID = prevAnswer[0].questionID;
 
       //check if previous question is a notification, if so go one more back.
-      while (
-        this.survey.nodes[previousQuestionID].style == this.$data.Notification
-      ) {
-        this.renderPreviousQuestion(this.survey.nodes[prevAnswer[0]]);
+      if (
+        this.survey.nodes[previousQuestionID].style == this.$data.nodeEnum.Notification) {
+        this.renderPreviousQuestion(this.survey.nodes[prevAnswer[0].questionID]);
+      } else {
+        //select the previous question
+        this.setCurrentQuestion({
+          question: this.survey.nodes[previousQuestionID],
+          nodes: this.survey.nodes
+        });
       }
-      //select the previous question
-      this.setCurrentQuestion({
-        question: this.survey.nodes[previousQuestionID],
-        nodes: this.survey.nodes
-      });
       this.deleteLastAnswer();
 
       prevAnswer.forEach(() => {

@@ -14,7 +14,8 @@ import { API_URL, NOTIFICATION_HANDLER } from '../../generalconstants';
  * @name survey
  */
 const state = {
-    all: []
+    all: [],
+    survey: {}
 }
 
 const getters = {
@@ -25,7 +26,7 @@ const getters = {
     getFirstQuestionID: (state) => {
         //get the second node and return its ID
         let id = 0;
-        while (typeof state.all.nodes[id] == 'undefined' || state.all.nodes[id].value == 'Start' || state.all.nodes[id].style == '8') {
+        while (typeof state.survey.nodes[id] == 'undefined' || state.survey.nodes[id].value == 'Start' || state.survey.nodes[id].style == '8') {
             id++;
         }
         return id; //found first ID
@@ -86,9 +87,9 @@ const actions = {
 
 const mutations = {
     [SET_SURVEY](state, survey) {
-        state.all = survey;
+        state.survey = survey;
         //makes an object array with the node ID as key
-        state.all.nodes = _.mapKeys(survey.nodes, 'id');
+        state.survey.nodes = _.mapKeys(survey.nodes, 'id');
     },
     [SET_SURVEYS](state, surveys) {
         state.all = surveys._embedded.moduleList;
