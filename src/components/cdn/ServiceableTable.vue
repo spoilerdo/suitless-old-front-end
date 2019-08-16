@@ -1,5 +1,13 @@
 <template>
   <v-layout column>
+    <ConfirmationDialog
+      title="Confirmation"
+      text="Are you sure you want to delete this?"
+      trueBtnText="Yes"
+      falseBtnText="No"
+      ref="ConfirmDialog"
+      v-on:chosenAction="checkDeletionChoice"
+    />
     <v-flex style="overflow: auto">
       <v-data-table :headers="headers" :items="serviceables" item-key="name" hide-actions class="elevation-1">
         <template slot="items" slot-scope="props">
@@ -18,7 +26,7 @@
               </v-card>
             </v-dialog>
 
-            <v-btn color="danger" small @click="deleteData(props.item)">Delete</v-btn>
+            <v-btn color="danger" small @click="toggleDialog(props.item)">Delete</v-btn>
           </td>
         </template>
       </v-data-table>
@@ -27,6 +35,7 @@
 </template>
 
 <script>
+import ConfirmationDialog from "@/components/material/Dialog";
 import { mapState, mapActions } from "vuex";
 
 /**
@@ -42,14 +51,30 @@ export default {
         { text: "Size (KB)", value: "size" },
         { text: "Type", value: "type" },
         { text: "Actions", sortable: false }
-      ]
+      ],
+      dialogState: false,
+      selectedItem: null
     };
+  },
+  components: {
+    ConfirmationDialog
   },
   computed: {
     ...mapState("cdn/", ["serviceables"])
   },
   methods: {
-    ...mapActions("cdn/", ["getAllData", "deleteData"]),
+    ...mapActions("cdn/", ["getAllData", "deleteById"]),
+    toggleDialog(item){
+      this.selectedItem = item;
+      this.$refs.ConfirmDialog.toggle();
+    },
+    checkDeletionChoice(choice){
+      if(this.selectedItem && choice){
+        console.log(this.selectedItem.id);
+        this.deleteById(this.selectedItem);
+        this.selectedItem = null;
+      }
+    }
   },
   mounted() {
     this.getAllData();

@@ -3,7 +3,7 @@
     <Toolbar v-if="!newUser"/>
     <CoreView/>
     <!-- Universal Notification component for the notificationHandler module (error handling) -->
-    <Notification :timeVisible="6000" ref="notification"/>
+    <Notification ref="notification"/>
     <!-- Universal CDN Uploader for uploading files -->
     <ServiceableUploaderDialog ref="cdnUploader"/>
   </v-app>
