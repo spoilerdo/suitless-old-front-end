@@ -22,7 +22,7 @@
           name="question"
         />
         <span>{{ errors.first('MultiChoiceForm.question') }}</span>
-        <v-textarea v-model="form.reason" auto-grow box color="primary" label="Reason" rows="1" />
+        <ReasonList v-bind:reasons.sync="form.reasons"/>
         <h6 class="subheading">The amount of choices</h6>
         <v-text-field
           v-model="form.amountOfChoices"
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import ReasonList from "./ReasonList";
+import { getReasonsArray } from "@/services/flowchartHelper";
 import { mapState } from "vuex";
 
 /**
@@ -60,13 +62,21 @@ export default {
         multipleChoiceNode: null,
         multipleChoice: null,
         amountOfChoices: 3,
-        reason: null,
+        reasons: [
+          {
+            reason: null,
+            type: "Example"
+          }
+        ],
         loopSubQuestions: true
       }
     };
   },
   computed: {
     ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
+  },
+  components: {
+    ReasonList
   },
   methods: {
     prepareChangeMultipleChoiceNode() {
@@ -93,9 +103,7 @@ export default {
         this.form.multipleChoice = newValue.lincData.find(
           data => data.key === "question"
         ).value;
-        this.form.reason = newValue.lincData.find(
-          data => data.key === "reason"
-        ).value;
+        this.form.reasons = getReasonsArray(newValue);
         this.form.loopSubQuestions = newValue.lincData.find(
           data => data.key === "loopsubQuestions"
         );

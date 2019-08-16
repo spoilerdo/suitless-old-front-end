@@ -242,7 +242,7 @@ import FlowchartForm from "@/components/flowcharteditor/FlowchartForm";
 import ImageSelectorDialog from "@/components/cdn/ImageSelectorDialog";
 import GeneralFunctions from "@/components/flowcharteditor/formatbar/GeneralFunctions";
 import QuestionFunctions from "@/components/flowcharteditor/formatbar/question-functions/QuestionFunctions";
-import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/MultipleChoiceFunctions";
+import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/question-functions/MultipleChoiceFunctions";
 import ChoiceFunctions from "@/components/flowcharteditor/formatbar/ChoiceFunctions";
 import EdgeFunctions from "@/components/flowcharteditor/formatbar/edge-functions/EdgeFunctions";
 import Drawer from "@/components/core/Drawer";

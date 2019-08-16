@@ -5,11 +5,11 @@
         <v-card>
           <v-card-title primary-title class="grow mb-3">
             <v-layout align-center justify-center row>
-              <h3 class="mb-0">Info</h3>
+              <h3 class="mb-0">{{ reason.type }}</h3>
             </v-layout>
           </v-card-title>
           <v-card-actions class="action-card">
-            <v-layout align-center justify-center row><p v-html="reason">{{ reason }}</p></v-layout>
+            <v-layout align-center justify-center row><p v-html="reason.reason">{{ reason.reason }}</p></v-layout>
           </v-card-actions>
         </v-card>
       </v-scale-transition>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import anchorme from "anchorme";
+import { getReasonsArray } from "@/services/flowchartHelper";
 
 /**
  * Returns an 'info' view used in the survey.
@@ -40,15 +40,7 @@ export default {
         data => data.key === "reason"
       );
 
-      this.reasons = reasons ? reasons.map(el => anchorme(el.value, {
-          truncate: 40,
-          attributes:[
-              {
-                  name:"target",
-                  value:"_blank"
-              }
-          ]
-        })) : null;
+      this.reasons = getReasonsArray(this.question);
     }
   },
   watch: {

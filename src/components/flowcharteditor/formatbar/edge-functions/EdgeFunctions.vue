@@ -8,7 +8,7 @@
           nodeName="edge"
           @onChange="changeProps"
         />
-        <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>
+        <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>        
         <ImplicationList
           v-bind:implications.sync="form.implications"
           v-bind:implicationColors.sync="implicationColorsList"
