@@ -1,6 +1,6 @@
 <template>
   <div v-if="reasons != null && reasons != ''">
-    <v-flex xs10 offset-xs1 my-2 v-for="(reason, index) in reasons" :key="index">
+    <v-flex px-5 my-2 v-for="(reason, index) in reasons" :key="index">
       <v-scale-transition>
         <v-card>
           <v-card-title primary-title class="grow mb-3">
@@ -25,28 +25,10 @@ import { getReasonsArray } from "@/services/flowchartHelper";
  * @memberof component.Survey
  */
 export default {
-  data() {
-    return {
-      reasons: null
-    };
-  },
-  props: ["question"],
-  mounted() {
-    this.getReasons();
-  },
-  methods: {
-    getReasons() {
-      let reasons = this.question.lincData.filter(
-        data => data.key === "reason"
-      );
-
-      this.reasons = getReasonsArray(this.question);
-    }
-  },
-  watch: {
-    question: function() {
-      //update new reason on question change, otherwise old reason will be displayed
-      this.getReasons();
+  props: {
+    reasons: {
+      type: Array,
+      required: true
     }
   }
 };

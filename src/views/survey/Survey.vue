@@ -28,12 +28,11 @@
     <!-- All the questions and multi choice -->
     <v-layout
       align-start
-      justify-start
+      justify-center
       row
-      ma-4
       v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
     >
-      <v-flex xs12 md11 my-2>
+      <v-flex xs11 sm7 md6 my-2>
         <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == $data.nodeEnum.Question"
@@ -54,12 +53,10 @@
         />
         <Notification ref="surveyNotification" :timeVisible="0" />
       </v-flex>
-      <v-flex xs5 md6 pl-5>
         <Info
-          :question="currentquestion"
+          :reasons="getReasonsArray(currentquestion)"
           v-if="!isMobile && currentquestion.style != $data.nodeEnum.Notification"
         />
-      </v-flex>
     </v-layout>
     <!-- All the notifications -->
     <v-layout
@@ -98,6 +95,7 @@ import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
 import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
+import { getReasonsArray } from "@/services/flowchartHelper";
 import Router from "vue-router";
 import theme from "@/plugins/vuetify/theme";
 import { mapState, mapGetters, mapActions } from "vuex";
@@ -134,12 +132,13 @@ export default {
     ...mapGetters({
       firsQuestionID: "survey/getFirstQuestionID",
       getAnswerByQuestionID: "answer/getAnswerByQuestionID"
-    })
+    }),
   },
   data() {
     return {
-      isMobile: false,
-      surveyStarted: false
+      isMobile: true,
+      surveyStarted: false,
+      getReasonsArray: getReasonsArray
     };
   },
   created() {
@@ -147,6 +146,8 @@ export default {
     this.getSurveyByID(this.surveyID);
     this.setBackground(theme.defaultBackground);
     this.setFooterColor(theme.primary);
+
+    console.log(this.isMobile);
   },
   methods: {
     ...mapActions("survey/", ["getSurveyByID", "deleteChosenSurvey"]),
@@ -316,7 +317,7 @@ export default {
     },
 
     onResize() {
-      this.isMobile = window.innerWidth < 600;
+      this.isMobile = window.innerWidth < 950;
     }
   },
   updated() {

@@ -4,14 +4,22 @@
       <v-menu
         transition="slide-x-transition"
         bottom
-        right
-        offset-x
-        nudge-right="10"
-        nudge-bottom="18"
+        nudge-bottom="35"
+        full-width
         v-if="isMobile"
+        max-width="100vw"
       > 
-        <v-layout style="width: 100%;">
-          <Info :question="this.question"/>
+        <template v-slot:activator="{ on }">
+          <v-btn
+            flat
+            v-on="on"
+          >
+            <v-icon color="secondary" left>mdi-help</v-icon>
+          </v-btn>
+        </template>
+
+        <v-layout>
+          <Info :reasons="getReasonsArray(this.question)"/>
         </v-layout>
       </v-menu>
 
@@ -51,16 +59,6 @@
 </template>
 
 <style scoped>
-.answerBtn {
-  margin-bottom: 15px;
-}
-
-.action-btn {
-  opacity: 0.6;
-}
-.action-btn:hover {
-  opacity: 1;
-}
 .action-card {
   min-height: 62px;
 }
@@ -70,6 +68,7 @@
 <script>
 import ActionCard from "@/components/material/ActionCard.vue";
 import Info from "@/components/survey/Info.vue";
+import { getReasonsArray } from "@/services/flowchartHelper";
 import ArrowControls from "@/components/survey/ArrowControls.vue";
 
 /**
@@ -95,7 +94,8 @@ export default {
   },
   data() {
     return{
-      selectedAnswer: null
+      selectedAnswer: null,
+      getReasonsArray: getReasonsArray
     }
   },
   methods: {

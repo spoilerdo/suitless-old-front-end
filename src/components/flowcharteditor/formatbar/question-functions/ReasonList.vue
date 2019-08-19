@@ -66,6 +66,10 @@
 <script>
 import { getEnumValues } from "../../../../services/flowchartHelper";
 
+/**
+ * View used for "reason" properties within a question cell
+ * @memberof component.flowchartForm
+ */
 export default {
   props: {
     reasons: {

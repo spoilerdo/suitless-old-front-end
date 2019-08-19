@@ -5,6 +5,14 @@
 </template>
 
 <script>
+/**
+ * Used if you want the Alert component of vuetify
+ * @memberof component.Material
+ * @property {Boolean} value
+ * @property {String} type
+ * @property {String} text
+ * @property {Boolean} outline
+ */
 export default {
   props: {
     value: {
