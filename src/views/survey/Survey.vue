@@ -32,7 +32,7 @@
       row
       v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
     >
-      <v-flex xs11 sm7 md6 my-2>
+      <v-flex xs11 sm7 md7 my-2>
         <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == $data.nodeEnum.Question"
