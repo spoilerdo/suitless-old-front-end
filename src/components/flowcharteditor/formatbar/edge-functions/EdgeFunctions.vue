@@ -4,9 +4,11 @@
       <v-layout column>
         <GenericView
           v-if="selected != null"
+          ref="genericView"
           nameLabel="An answer for the question"
           nodeName="edge"
           @onChange="changeProps"
+          @validated="checkValidation"
         />
         <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>        
         <ImplicationList
@@ -72,8 +74,11 @@ export default {
       this.form.answer = newForm.name;
     },
     prepareChangeEdge() {
+      this.$refs.genericView.checkIfValid();
+    },
+    checkValidation(genericValid) {
       this.$validator.validateAll("EdgeForm").then(valid => {
-        if (valid) {
+        if (valid && genericValid) {
           //get the image name from the dialog and save it onto the edge
           if (this.form.imageName === "") {
             this.form.imageName = "DefaultEdgeImage";

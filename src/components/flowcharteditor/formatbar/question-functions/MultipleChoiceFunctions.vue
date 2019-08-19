@@ -7,6 +7,8 @@
           v-model="form.multipleChoiceNode"
           label="Title"
           v-validate="'required'"
+          counter="20"
+          maxlength="20"
           name="title"
         />
         <span>{{ errors.first('MultiChoiceForm.title') }}</span>
@@ -19,19 +21,24 @@
           label="Question"
           rows="1"
           v-validate="'required'"
+          maxlength="255"
+          counter="255"
           name="question"
         />
         <span>{{ errors.first('MultiChoiceForm.question') }}</span>
         <ReasonList v-bind:reasons.sync="form.reasons"/>
         <h6 class="subheading">The amount of choices</h6>
-        <v-text-field
+        <v-slider
+          class="pt-2"
           v-model="form.amountOfChoices"
-          type="number"
-          :value="form.amountOfChoices"
-          v-validate="'required'"
-          name="amount of choices"
+          :rules="rules"
+          color="warning"
+          min="2"
+          max="20"
+          persistent-hint
+          thumb-color="info"
+          thumb-label="always"
         />
-        <span>{{ errors.first('MultiChoiceForm.amount of choices') }}</span>
         <v-checkbox
           v-model="form.loopSubQuestions"
           label="Ask the same subquestions more than once"
@@ -68,8 +75,11 @@ export default {
             type: "Example"
           }
         ],
-        loopSubQuestions: false
-      }
+        loopSubQuestions: false,
+      },
+      rules: [
+        val => val <= 15 || `This is maybe a bit to much`
+      ]
     };
   },
   computed: {
