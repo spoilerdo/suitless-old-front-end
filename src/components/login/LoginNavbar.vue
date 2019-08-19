@@ -1,6 +1,6 @@
 <template>
   <v-flex text-xs-right justify-center class="margin">
-    <v-btn v-if="tok" to="/dashboard" small class="primary">Dashboard</v-btn>
+    <v-btn v-if="token" to="/dashboard" small class="primary">Dashboard</v-btn>
     <v-btn v-else to="/login" small class="primary">Login</v-btn>
   </v-flex>
 </template>
@@ -14,18 +14,8 @@ const { mapState } = createNamespacedHelpers("login/");
  * @memberof component.Login
  */
 export default {
-  data() {
-    return {
-      tok: null
-    }
-  },
   computed:{
     ...mapState(["token"])
-  },
-  watch: {
-    token: function(newVal) {
-      tok = token;
-    }
   }
 };
 </script>

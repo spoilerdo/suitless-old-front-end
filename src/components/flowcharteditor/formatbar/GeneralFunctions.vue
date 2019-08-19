@@ -24,7 +24,7 @@
         <v-btn
           id="btn_save_flowchart"
           color="primary"
-          @click="prepareSaveFlowchart(form.title, form.description, form.flowchartImageName)"
+          @click="prepareSaveFlowchart()"
         >Save</v-btn>
         <v-btn id="btn_import_flowchart" color="primary" @click="setImportDialog(true)">Import</v-btn>
         <v-btn color="primary">Test</v-btn>
@@ -46,7 +46,7 @@ export default {
       form: {
         title: "",
         description: null,
-        flowchartImageName: ""
+        imageName: ""
       }
     };
   },
@@ -56,14 +56,14 @@ export default {
   methods: {
     ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart"]),
     ...mapActions("cdn/", ["setFileDialog"]),
-    prepareSaveFlowchart(name, description, flowchartImageName) {
+    prepareSaveFlowchart() {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if (valid) {
           let lincData = [];
-          if (flowchartImageName !== "") {
+          if (this.form.imageName !== "") {
             lincData = [{
                 key: "imageName",
-                value: flowchartImageName
+                value: this.form.imageName
               }];
           } else {
             lincData = [{
@@ -71,15 +71,10 @@ export default {
               value: "DefaultFlowchartImage"
             }]
           }
-          let flowchart = this.getFlowchart(name, description, lincData);
+          let flowchart = this.getFlowchart(this.form.title, this.form.description, lincData);
           this.saveFlowchart(flowchart);
         }
       });
-    }
-  },
-  watch: {
-    imageName: function(newVal) {
-      this.form.flowchartImageName = newVal;
     }
   }
 };

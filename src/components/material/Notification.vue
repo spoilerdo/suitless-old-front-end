@@ -18,7 +18,7 @@
 /**
  * Returns a temporary notification
  * @memberof component.Material
- * @property {boolean} activated
+ * @property {Number} timeVisible
  */
 export default {
   data(){

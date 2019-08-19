@@ -46,7 +46,7 @@
   border-radius: 35px;
 }
 .cardMediaImgSelected {
-    max-height: 90px;
+  max-height: 90px;
 }
 .cardMediaImg {
   max-height: 250px;
@@ -67,6 +67,14 @@
 <script>
 import { CDN_URL } from "@/store/generalconstants";
 
+/**
+ * Used if you want the card element of vuetify
+ * @memberof component.Material
+ * @property {String} text
+ * @property {Object | String} parameter
+ * @property {Boolean} selection
+ * @property {Boolean} rounded 
+ */
 export default {
   props: {
     text: String,
@@ -94,6 +102,11 @@ export default {
     setSelected(selected) {
       if (this.selection) {
         this.selected = selected;
+      }
+    },
+    toggle(){
+      if(this.selection){
+        this.selected = !this.selected;
       }
     }
   }
