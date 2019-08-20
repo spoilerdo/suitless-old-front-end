@@ -27,7 +27,7 @@
           @click="prepareSaveFlowchart()"
         >Save</v-btn>
         <v-btn id="btn_import_flowchart" color="primary" @click="setImportDialog(true)">Import</v-btn>
-        <v-btn color="primary">Test</v-btn>
+        <v-btn color="primary" @click="testFlowchart()">Test</v-btn>
       </v-layout>
     </v-form>
   </v-layout>
@@ -56,6 +56,7 @@ export default {
   methods: {
     ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart"]),
     ...mapActions("cdn/", ["setFileDialog"]),
+    ...mapActions("survey/", ["setSurvey"]),
     prepareSaveFlowchart() {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if (valid) {
@@ -75,6 +76,16 @@ export default {
           this.saveFlowchart(flowchart);
         }
       });
+    },
+    testFlowchart() {
+      this.$validator.validateAll("GeneralForm").then(valid => {
+        if(valid) {
+          let flowchart = this.getFlowchart(this.form.title, this.form.description, []);
+          this.setSurvey(JSON.parse(flowchart));
+          let routerData = this.$router.resolve({path: "/survey/test"})
+          window.open(routerData.href, '_blank');
+        }
+      })
     }
   }
 };

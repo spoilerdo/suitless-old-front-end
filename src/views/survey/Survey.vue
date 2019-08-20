@@ -146,8 +146,6 @@ export default {
     this.getSurveyByID(this.surveyID);
     this.setBackground(theme.defaultBackground);
     this.setFooterColor(theme.primary);
-
-    console.log(this.isMobile);
   },
   methods: {
     ...mapActions("survey/", ["getSurveyByID", "deleteChosenSurvey"]),
@@ -346,6 +344,15 @@ export default {
     if (typeof window !== "undefined") {
       window.removeEventListener("resize", this.onResize, { passive: true });
     }
-  }
+  },
+  beforeRouteLeave(to, from, next) {
+    const answer = window.confirm("Do you really want to leave? You are still working on the survey!");
+    if(answer) {
+      next();
+      this.closeSurvey();
+    } else {
+      next(false);
+    }
+  },
 };
 </script>

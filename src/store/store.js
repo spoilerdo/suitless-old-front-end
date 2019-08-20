@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
+import {localStorageSynchroniser} from '@/plugins/vuex/vuex';
+
 import app from './modules/app/app';
 import notificationHandler from './modules/notificationHandler/notificationHandler';
 import cdn from './modules/cdn/cdn';
@@ -32,5 +35,6 @@ export default new Vuex.Store({
         progress,
         flowcharteditor
     },
+    plugins: [localStorageSynchroniser],
     strict: debug
 })
