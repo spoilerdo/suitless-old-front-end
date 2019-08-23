@@ -31,7 +31,6 @@ const getters = {
         }
         return id; //found first ID
     },
-
 }
 
 const actions = {
@@ -82,6 +81,13 @@ const actions = {
      */
     deleteChosenSurvey({ commit }) {
         commit(DELETE_SURVEY_STATE);
+    },
+    /**
+     * Set a new survey to make
+     * @memberof store.survey
+     */
+    setSurvey({ commit }, survey) {
+        commit(SET_SURVEY, survey);
     }
 }
 
@@ -95,7 +101,7 @@ const mutations = {
         state.all = surveys._embedded.moduleList;
     },
     [DELETE_SURVEY_STATE](state) {
-        state.all.nodes = null;
+        state.survey = {};
     }
 }
 
