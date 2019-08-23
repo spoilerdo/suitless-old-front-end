@@ -1,6 +1,5 @@
 <template>
-    <v-form data-vv-scope="GenericForm">
-        <v-form @submit.prevent>
+    <v-form data-vv-scope="GenericForm" @submit.prevent>
         <v-layout column>
             <h6 class="subheading">Text you want see in the node</h6>
             <v-text-field
@@ -8,6 +7,8 @@
                 v-model="form.nodeName"
                 v-validate="'required'"
                 name="node text"
+                counter="15"
+                maxlength="15"
                 @change="changeProps"
             />
             <span>{{ errors.first('GenericForm.node text') }}</span>
@@ -21,11 +22,12 @@
                 rows="1"
                 v-validate="'required'"
                 :name="nodeName"
+                counter="255"
+                maxlength="255"
                 @change="changeProps"
             />
             <span>{{ errors.first(`GenericForm.${nodeName}`) }}</span>
         </v-layout>
-        </v-form>
     </v-form>
 </template>
 

@@ -115,12 +115,14 @@ export const methods = {
     */
     changeQuestionNode(questionNode, question, reasons){
         this.genericChangeNode(questionNode, question, "question");
-        let data = state.selectedCell.lincData.slice(0, 1);
-        reasons.forEach(reason => {
-            data.push({"key": "reason", "value": reason.reason});
-            data.push({"key": "reasonType", "value": reason.type});
-        })
-        state.selectedCell.lincData = data;
+        if(reasons){
+            let data = state.selectedCell.lincData.slice(0, 1);
+            reasons.forEach(reason => {
+                data.push({"key": "reason", "value": reason.reason});
+                data.push({"key": "reasonType", "value": reason.type});
+            })
+            state.selectedCell.lincData = data;   
+        }
     },
     changeMultipleChoiceNode(nodeName, title, amountOfChoices, reasons, loopSubQuestions){
         let graph = state.editor.graph;
@@ -133,6 +135,9 @@ export const methods = {
 
         //change the loopSubQuestions data of the multi choice node
         state.selectedCell.lincData.find(data => data.key === "loopsubQuestions").value = loopSubQuestions;
+
+        console.log(childerenCount);
+        console.log(amountOfChoices);
 
         if(childerenCount < amountOfChoices){
             //add some choices because the user wants more than he already has

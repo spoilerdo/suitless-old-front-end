@@ -14,6 +14,8 @@
               label="Implication"
               rows="1"
               name="implication"
+              counter="300"
+              maxlength="300"
             />
             <h6 class="subheading">Select the implication level</h6>
             <v-layout align-center justify-center row>
