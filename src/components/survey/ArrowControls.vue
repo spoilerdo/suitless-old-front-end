@@ -8,7 +8,7 @@
       class="action-btn"
       id="previouse-btn"
     >
-      <v-icon color="secondary" x-large left>mdi-chevron-left</v-icon>
+      <v-icon color="secondary" size="50" left>mdi-chevron-left</v-icon>
     </v-btn>
 
     <!-- next arrow -->
@@ -20,7 +20,7 @@
       @click="nextButtonClick()"
       id="next-btn"
     >
-      <v-icon color="secondary" x-large right>mdi-chevron-right</v-icon>
+      <v-icon color="secondary" size="50" right>mdi-chevron-right</v-icon>
     </v-btn>
   </v-layout>
 </template>
