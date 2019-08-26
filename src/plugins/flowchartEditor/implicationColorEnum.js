@@ -21,22 +21,22 @@ export let ImplicationColorEnum = {
     /**
      * Value to Name mapping
      */
-    1 : "red",
-    2 : "orange",
+    1 : "error",
+    2 : "warning",
     3 : "yellow",
-    4 : "blue",
-    5 : "black",
+    4 : "info",
+    5 : "default",
 }
 
 export let ColorImplicationEnum = {
     /**
      * Name to Value mapping
      */
-    "red" : 1,
-    "orange" : 2,
+    "error" : 1,
+    "warning" : 2,
     "yellow" : 3,
-    "blue" : 4,
-    "black" : 5,
+    "info" : 4,
+    "default" : 5,
 
     /**
      * Value to Name mapping.

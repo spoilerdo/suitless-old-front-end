@@ -120,7 +120,7 @@ export default {
         //emit answers to parent if answers are filled.
         this.$emit("answerMultiChoice", {
           answers: this.answers,
-          questions: this.question
+          q: this.question
         });
       }
     }

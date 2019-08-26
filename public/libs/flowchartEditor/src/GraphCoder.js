@@ -14,19 +14,6 @@ export let GraphCoder = {
                 n.children.forEach(child => {
                     //add child-node to the nodes array
                     nodes.push(this.createNode(child));
-
-                    //Add some lincdata to the parent node in order to save the child.
-                    //It will save the child-node's name and id in order to get a reference to in the survey front-end.
-
-                    //But first we need to check if the node already contains the choice data.
-                    //If so than you will need to update these
-                    let standardLincData = n.lincData.filter(c => c.value !== child.id);
-                    //If it's new than just push it
-                    standardLincData.push({
-                        "key": child.value,
-                        "value": child.id
-                    });
-                    n.lincData = standardLincData;
                 })
             }
 

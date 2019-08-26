@@ -121,14 +121,36 @@ export default {
                 },
                 
                 /**
-                 * Changes the selected node data of a generic node.
+                 * Changes the selected node data of a choice node.
                  * For instance a notification node.
                  * @memberof plugin.flowchartEditor
-                 * @param {String} nodeName the value of the selected generic cell
+                 * @param {String} nodeName the value of the selected cell
                  * @param {String} name the value that will be used in the survey front-end 
                 */
-                genericChangeNode(nodeName, name){
-                    methods.genericChangeNode(nodeName, name);
+                changeChoiceNode(nodeName, name){
+                    methods.changeChoiceNode(nodeName, name);
+                },
+
+                /**
+                 * Changes the selected node data of a module node.
+                 * For instance a notification node.
+                 * @memberof plugin.flowchartEditor
+                 * @param {String} nodeName the value of the selected cell
+                 * @param {String} name the value that will be used in the survey front-end 
+                */
+                changeModuleNode(nodeName, name) {
+                    methods.changeModuleNode(nodeName, name);
+                },
+
+                /**
+                 * Changes the selected node data of a notification node.
+                 * For instance a notification node.
+                 * @memberof plugin.flowchartEditor
+                 * @param {String} nodeName the value of the selected cell
+                 * @param {String} name the value that will be used in the survey front-end 
+                */
+                changeNotificationNode(nodeName, name) {
+                    methods.changeNotificationNode(nodeName, name);
                 },
                 
                 /**

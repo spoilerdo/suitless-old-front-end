@@ -87,6 +87,11 @@ export default {
         }
       })
     }
+  },
+  watch: {
+    imageName: function(newVal) {
+      this.form.imageName = newVal;
+    }
   }
 };
 </script>

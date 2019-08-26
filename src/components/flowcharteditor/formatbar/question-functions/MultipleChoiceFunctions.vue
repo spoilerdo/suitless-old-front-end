@@ -26,7 +26,7 @@
           name="question"
         />
         <span>{{ errors.first('MultiChoiceForm.question') }}</span>
-        <ReasonList v-bind:reasons.sync="form.reasons"/>
+        <ReasonList v-bind:reasons.sync="form.reasons" />
         <h6 class="subheading">The amount of choices</h6>
         <v-slider
           class="pt-2"
@@ -75,11 +75,9 @@ export default {
             type: "Example"
           }
         ],
-        loopSubQuestions: false,
+        loopSubQuestions: false
       },
-      rules: [
-        val => val <= 15 || `This is maybe a bit to much`
-      ]
+      rules: [val => val <= 15 || `This is maybe a bit to much`]
     };
   },
   computed: {
@@ -96,7 +94,7 @@ export default {
             this.form.multipleChoiceNode,
             this.form.multipleChoice,
             this.form.amountOfChoices,
-            this.form.reason,
+            this.form.reasons,
             this.form.loopSubQuestions
           );
         }
@@ -109,14 +107,16 @@ export default {
         newValue != null &&
         this.formatBarType == this.$data.nodeEnum.MultipleChoice
       ) {
+        if (newValue.lincData.length > 0) {
+          this.form.multipleChoice = newValue.lincData.find(
+            data => data.key === "question"
+          ).value;
+          this.form.reasons = getReasonsArray(newValue);
+          this.form.loopSubQuestions = newValue.lincData.find(
+            data => data.key === "loopsubQuestions"
+          ).value;
+        }
         this.form.multipleChoiceNode = newValue.value;
-        this.form.multipleChoice = newValue.lincData.find(
-          data => data.key === "question"
-        ).value;
-        this.form.reasons = getReasonsArray(newValue);
-        this.form.loopSubQuestions = newValue.lincData.find(
-          data => data.key === "loopsubQuestions"
-        );
         this.form.amountOfChoices = newValue.children;
       }
     }

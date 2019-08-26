@@ -95,6 +95,5 @@ export const getReasonsArray = (question) => {
             })
         })
     }
-
     return reasons;
 }

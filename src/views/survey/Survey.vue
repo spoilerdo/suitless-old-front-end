@@ -236,7 +236,7 @@ export default {
       });
     },
 
-    answeredMultiChoiceQuestion({ answers, questions }) {
+    answeredMultiChoiceQuestion({ answers, q }) {
       this.closeNotification();
 
       //add answer to list of given answers.
@@ -249,10 +249,15 @@ export default {
       let shouldLoopNonUniqueSubQuestions = this.currentquestion.lincData.find(
         d => d.key === "loopsubQuestions"
       );
+
+      let firstSubQuestion = null;
+      let subquestions = answers.filter(answer => answer.flows.length > 0);
+      firstSubQuestion = this.survey.nodes[subquestions[0].flows[0].targetID];
       if (shouldLoopNonUniqueSubQuestions.value == "false") {
         //create list of unique sub questions based on targetid and only add these to the backlog (skip first one it will be handled seperately)
+        subquestions = subquestions.slice(1);
         let uniqueList = [
-          ...new Set(answers.slice(1).map(i => i.flows[0].targetID))
+          ...new Set(subquestions.map(i => i.flows[0].targetID))
         ];
         uniqueList.forEach(nextQID => {
           //make sure we do not get duplicates on the first item we sliced
@@ -262,7 +267,7 @@ export default {
         });
       } else {
         //loop through all answers (skip 1st again it will be handled seperately) and add them to the subquestionbakclog
-        answers.slice(1).forEach(ans => {
+        subquestions.slice(1).forEach(ans => {
           if (ans.flows.length > 0) {
             this.fillsubQuestionBackLog(
               this.survey.nodes[ans.flows[0].targetID]
@@ -271,13 +276,9 @@ export default {
         });
       }
 
-      let firstSubQuestion = null;
-      if (answers[0].flows.length > 0) {
-        firstSubQuestion = this.survey.nodes[answers[0].flows[0].targetID];
-      }
       let backLogQuestion = null;
-      if (questions.flows.length > 0) {
-        backLogQuestion = this.survey.nodes[questions.flows[0].targetID];
+      if (q.flows.length > 0) {
+        backLogQuestion = this.survey.nodes[q.flows[0].targetID];
       }
 
       //add the first question to come after finishing all multiple choice sub questions to the backlog.
