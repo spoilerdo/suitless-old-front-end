@@ -50,7 +50,6 @@ export default {
   },
   watch: {
     token: function() {
-      console.log(this.isAuthenticated);
       if (this.isAuthenticated) {
         this.links = [
           { name: "Landing", Link: "/" },

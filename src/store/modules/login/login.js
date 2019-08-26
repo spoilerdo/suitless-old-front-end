@@ -24,14 +24,6 @@ const state = {
     token: localStorage.getItem("jwtToken") ? jwt_decode(localStorage.getItem('jwtToken')) : ""
 }
 
-/**
- * try{
-            state.token = jwt_decode(localStorage.getItem('jwtToken'));
-        } catch {
-            state.token = "";
-        }
- */
-
 // getters
 const getters = {
     /**
@@ -79,10 +71,11 @@ const actions = {
             });
     },
 
-    logout() {
+    logout({ commit }) {
         localStorage.removeItem("jwtToken");
         setToken("");
         router.push("/");
+        commit(SET_TOKEN, null);
     },
 
     /**
@@ -113,7 +106,7 @@ const mutations = {
         state.alert.message = payload.message;
     },
     [SET_TOKEN](state, payload) {
-        state.token =  jwt_decode(payload);
+        state.token =  payload ? jwt_decode(payload) : payload;
     }
 }
 

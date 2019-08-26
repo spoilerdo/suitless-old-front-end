@@ -8,6 +8,12 @@
 
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
 import { addSubVertexes } from "../EditorFunctions/PrivateFunctions";
+import { QuestionNode } from "../EditorFunctions/NodeClasses/QuestionNode";
+import { MultiChoiceNode } from "../EditorFunctions/NodeClasses/MultiChoiceNode";
+import { ChoiceNode } from "../EditorFunctions/NodeClasses/ChoiceNode";
+import { ModuleNode } from "../EditorFunctions/NodeClasses/ModuleNode";
+import { NotificationNode } from "../EditorFunctions/NodeClasses/NotificationNode";
+import { EdgeNode } from "../EditorFunctions/NodeClasses/EdgeNode";
 
 /**
  * All general variables that can be communicated to Vue
@@ -113,26 +119,27 @@ export const methods = {
     These methods will be called from the Vue plugin instance and will change the look of the selectedcell,
     by the newly inputed values from the user
     */
-    changeQuestionNode(questionNode, question, reasons){
-        this.genericChangeNode(questionNode, question, "question");
-        let data = state.selectedCell.lincData.slice(0, 1);
-        reasons.forEach(reason => {
-            data.push({"key": "reason", "value": reason.reason});
-            data.push({"key": "reasonType", "value": reason.type});
-        })
-        state.selectedCell.lincData = data;
+    //Generic method to change the node value. This displays the node name in the flowchart editor
+    genericChangeNode(nodeName){
+    state.selectedCell.value = nodeName;
+    state.editor.graph.getModel().setValue(state.selectedCell, nodeName);
+    /*if(state.selectedCell.lincData){
+        state.selectedCell.lincData.find(data => data.key === keyName).value = name;
+    }*/
     },
-    changeMultipleChoiceNode(nodeName, title, amountOfChoices, reasons, loopSubQuestions){
-        let graph = state.editor.graph;
+    changeQuestionNode(nodeName, question, reasons){
+        this.genericChangeNode(nodeName);
 
-        //change the generic values of a node (node value and question of the multi choice)
-        this.changeQuestionNode(nodeName, title, reasons);
+        let questionNode = new QuestionNode(question, reasons);
+        state.selectedCell.lincData = questionNode.getData();
+    },
+    changeMultipleChoiceNode(nodeName, question, amountOfChoices, reasons, loopSubQuestions){
+        this.genericChangeNode(nodeName);
+
+        let graph = state.editor.graph;
         
         //get the child count (amount of choices)
         let childerenCount = state.selectedCell.getChildCount();
-
-        //change the loopSubQuestions data of the multi choice node
-        state.selectedCell.lincData.find(data => data.key === "loopsubQuestions").value = loopSubQuestions;
 
         if(childerenCount < amountOfChoices){
             //add some choices because the user wants more than he already has
@@ -154,9 +161,30 @@ export const methods = {
             }
             graph.removeCells(childrenToBeRemoved, true);
         }
+
+        let multiChoiceNode = new MultiChoiceNode(question, reasons, loopSubQuestions, state.selectedCell.children);
+        state.selectedCell.lincData = multiChoiceNode.getData();
     },
-    changeEdge(edgeNode, answer, implications, implicationColor, imageName){
-        this.genericChangeNode(edgeNode, answer, "answer");
+    changeChoiceNode(nodeName, name) {
+        this.genericChangeNode(nodeName);
+
+        let choiceNode = new ChoiceNode(name);
+        state.selectedCell.lincData = choiceNode.getData();
+    },
+    changeModuleNode(nodeName, name) {
+        this.genericChangeNode(nodeName);
+        
+        let moduleNode = new ModuleNode(name);
+        state.selectedCell.lincData = moduleNode.getData();
+    },
+    changeNotificationNode(nodeName, name) {
+        this.genericChangeNode(nodeName);
+
+        let notificationNode = new NotificationNode(name);
+        state.selectedCell.lincData = notificationNode.getData();
+    },
+    changeEdge(nodeName, answer, implications, implicationColor, imageName){
+        this.genericChangeNode(nodeName);
 
         if(state.selectedCell.style.includes("strokeColor")){
             //the first index are the styles that you want to reuse
@@ -167,27 +195,7 @@ export const methods = {
         state.selectedCell.style += "strokeColor=" + implicationColor
         state.editor.graph.refresh();
 
-        let data = [];
-        if(state.selectedCell.lincData){
-            data = state.selectedCell.lincData.slice(0, 2)
-        }
-        implications.forEach(implication => {
-            if(implication.implication){
-                data.push({"key": "implication", "value": implication.implication});
-                data.push({"key": "implicationLevel", "value": implication.implicationLevel});
-            }
-        });
-        if(imageName){
-            data[1].value = imageName;
-        }
-        state.selectedCell.lincData = data;
-    },
-    //Generic method for a basic node with 2 inputs nodeName (name of the cell) and name of the first lincdata prop (question etc...)
-    genericChangeNode(nodeName, name, keyName){
-        state.selectedCell.value = nodeName;
-        state.editor.graph.getModel().setValue(state.selectedCell, nodeName);
-        if(state.selectedCell.lincData){
-            state.selectedCell.lincData.find(data => data.key === keyName).value = name;
-        }
+        let edgeNode = new EdgeNode(answer, imageName, implications);
+        state.selectedCell.lincData = edgeNode.getData();
     }
 }

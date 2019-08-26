@@ -75,7 +75,7 @@ const actions = {
       //set the options for the coming question if it is multiple choice
       if(comingQuestion.style == nodeEnum.MultipleChoice) {
         commit(SET_OPTIONS, []);
-        let choices = comingQuestion.lincData.filter(c => c.key !== "question" && c.key !== "reason");
+        let choices = comingQuestion.lincData.filter(c => c.key === "choice");
         commit(PUSH_OPTIONS, { options: choices, nodes });
       }
       commit(SET_CURRENTQUESTION, comingQuestion);
@@ -87,7 +87,7 @@ const actions = {
       //if the next question is a multiple choice node then get the different options
       if (question.style == nodeEnum.MultipleChoice) {
         commit(SET_OPTIONS, []);
-        let choices = question.lincData.filter(c => c.key !== "question" && c.key !== "reason");
+        let choices = question.lincData.filter(c => c.key === "choice");
         commit(PUSH_OPTIONS, { options: choices, nodes });
 
         commit(SET_CURRENTQUESTION, question);
@@ -172,7 +172,6 @@ const mutations = {
     state.options = options;
   },
   [PUSH_OPTIONS](state, { options, nodes }) {
-    options.splice(options.findIndex(item => item.key === "loopsubQuestions"), 1)
     options.forEach(option => {
       state.options.push(nodes[option.value]);
     });

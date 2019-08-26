@@ -46,12 +46,6 @@ export default {
   },
   methods: {
     ...mapActions("cdn/", ["uploadImage"]),
-    setFile(file) {
-      this.image.file = file;
-    },
-    setTYpe(type) {
-      this.image.type = type;
-    },
     changeProps(newForm) {
       this.form = newForm;
     },
@@ -61,7 +55,7 @@ export default {
     checkValidation(genericValid){
       this.$validator.validateAll("ChoiceForm").then(valid => {
         if (valid && genericValid) {
-          this.genericChangeNode(this.form.nodeName, this.form.name);
+          this.changeChoiceNode(this.form.nodeName, this.form.name);
         }
       });
     },
@@ -78,9 +72,6 @@ export default {
           data => data.key === "choice"
         ).value;
       }
-    },
-    imageName: function(newVal) {
-      this.form.imageName = newVal;
     }
   }
 };

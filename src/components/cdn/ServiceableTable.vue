@@ -70,7 +70,6 @@ export default {
     },
     checkDeletionChoice(choice){
       if(this.selectedItem && choice){
-        console.log(this.selectedItem.id);
         this.deleteById(this.selectedItem);
         this.selectedItem = null;
       }

@@ -24,10 +24,10 @@
         <v-btn
           id="btn_save_flowchart"
           color="primary"
-          @click="prepareSaveFlowchart(form.title, form.description, form.flowchartImageName)"
+          @click="prepareSaveFlowchart()"
         >Save</v-btn>
         <v-btn id="btn_import_flowchart" color="primary" @click="setImportDialog(true)">Import</v-btn>
-        <v-btn color="primary">Test</v-btn>
+        <v-btn color="primary" @click="testFlowchart()">Test</v-btn>
       </v-layout>
     </v-form>
   </v-layout>
@@ -46,7 +46,7 @@ export default {
       form: {
         title: "",
         description: null,
-        flowchartImageName: ""
+        imageName: ""
       }
     };
   },
@@ -56,14 +56,15 @@ export default {
   methods: {
     ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart"]),
     ...mapActions("cdn/", ["setFileDialog"]),
-    prepareSaveFlowchart(name, description, flowchartImageName) {
+    ...mapActions("survey/", ["setSurvey"]),
+    prepareSaveFlowchart() {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if (valid) {
           let lincData = [];
-          if (flowchartImageName !== "") {
+          if (this.form.imageName !== "") {
             lincData = [{
                 key: "imageName",
-                value: flowchartImageName
+                value: this.form.imageName
               }];
           } else {
             lincData = [{
@@ -71,15 +72,25 @@ export default {
               value: "DefaultFlowchartImage"
             }]
           }
-          let flowchart = this.getFlowchart(name, description, lincData);
+          let flowchart = this.getFlowchart(this.form.title, this.form.description, lincData);
           this.saveFlowchart(flowchart);
         }
       });
+    },
+    testFlowchart() {
+      this.$validator.validateAll("GeneralForm").then(valid => {
+        if(valid) {
+          let flowchart = this.getFlowchart(this.form.title, this.form.description, []);
+          this.setSurvey(JSON.parse(flowchart));
+          let routerData = this.$router.resolve({path: "/survey/test"})
+          window.open(routerData.href, '_blank');
+        }
+      })
     }
   },
   watch: {
     imageName: function(newVal) {
-      this.form.flowchartImageName = newVal;
+      this.form.imageName = newVal;
     }
   }
 };

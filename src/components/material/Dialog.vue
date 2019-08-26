@@ -15,6 +15,16 @@
 </template>
 
 <script>
+/**
+ * Returns a dialog component to be used in other components/ views
+ * @memberof component.Material
+ * @property {String} title
+ * @property {String} text
+ * @property {String} trueBtnText
+ * @property {String} falseBtnText
+ * @property {Boolean} dialogState
+ * @property {Boolean} persistent
+ */
 export default {
   props: {
     title: {

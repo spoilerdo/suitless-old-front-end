@@ -13,6 +13,8 @@
               color="primary"
               label="Reason"
               rows="1"
+              counter="300"
+              maxlength="300"
             />
             <v-combobox
               v-model="reason.type"
@@ -66,6 +68,10 @@
 <script>
 import { getEnumValues } from "../../../../services/flowchartHelper";
 
+/**
+ * View used for "reason" properties within a question cell
+ * @memberof component.flowchartForm
+ */
 export default {
   props: {
     reasons: {

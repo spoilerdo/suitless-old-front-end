@@ -28,12 +28,11 @@
     <!-- All the questions and multi choice -->
     <v-layout
       align-start
-      justify-start
+      justify-center
       row
-      ma-4
       v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
     >
-      <v-flex xs12 md11 my-2>
+      <v-flex xs11 sm7 md7 my-2>
         <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == $data.nodeEnum.Question"
@@ -54,12 +53,10 @@
         />
         <Notification ref="surveyNotification" :timeVisible="0" />
       </v-flex>
-      <v-flex xs5 md6 pl-5>
         <Info
-          :question="currentquestion"
+          :reasons="getReasonsArray(currentquestion)"
           v-if="!isMobile && currentquestion.style != $data.nodeEnum.Notification"
         />
-      </v-flex>
     </v-layout>
     <!-- All the notifications -->
     <v-layout
@@ -98,6 +95,7 @@ import Notification from "@/components/material/Notification.vue";
 import MultipleChoice from "@/components/survey/MultipleChoice.vue";
 import EndPage from "@/components/survey/endpage/EndPage.vue";
 import Info from "@/components/survey/Info.vue";
+import { getReasonsArray } from "@/services/flowchartHelper";
 import Router from "vue-router";
 import theme from "@/plugins/vuetify/theme";
 import { mapState, mapGetters, mapActions } from "vuex";
@@ -134,12 +132,13 @@ export default {
     ...mapGetters({
       firsQuestionID: "survey/getFirstQuestionID",
       getAnswerByQuestionID: "answer/getAnswerByQuestionID"
-    })
+    }),
   },
   data() {
     return {
-      isMobile: false,
-      surveyStarted: false
+      isMobile: true,
+      surveyStarted: false,
+      getReasonsArray: getReasonsArray
     };
   },
   created() {
@@ -237,7 +236,7 @@ export default {
       });
     },
 
-    answeredMultiChoiceQuestion({ answers, questions }) {
+    answeredMultiChoiceQuestion({ answers, q }) {
       this.closeNotification();
 
       //add answer to list of given answers.
@@ -250,10 +249,15 @@ export default {
       let shouldLoopNonUniqueSubQuestions = this.currentquestion.lincData.find(
         d => d.key === "loopsubQuestions"
       );
+
+      let firstSubQuestion = null;
+      let subquestions = answers.filter(answer => answer.flows.length > 0);
+      firstSubQuestion = this.survey.nodes[subquestions[0].flows[0].targetID];
       if (shouldLoopNonUniqueSubQuestions.value == "false") {
         //create list of unique sub questions based on targetid and only add these to the backlog (skip first one it will be handled seperately)
+        subquestions = subquestions.slice(1);
         let uniqueList = [
-          ...new Set(answers.slice(1).map(i => i.flows[0].targetID))
+          ...new Set(subquestions.map(i => i.flows[0].targetID))
         ];
         uniqueList.forEach(nextQID => {
           //make sure we do not get duplicates on the first item we sliced
@@ -263,7 +267,7 @@ export default {
         });
       } else {
         //loop through all answers (skip 1st again it will be handled seperately) and add them to the subquestionbakclog
-        answers.slice(1).forEach(ans => {
+        subquestions.slice(1).forEach(ans => {
           if (ans.flows.length > 0) {
             this.fillsubQuestionBackLog(
               this.survey.nodes[ans.flows[0].targetID]
@@ -272,13 +276,9 @@ export default {
         });
       }
 
-      let firstSubQuestion = null;
-      if (answers[0].flows.length > 0) {
-        firstSubQuestion = this.survey.nodes[answers[0].flows[0].targetID];
-      }
       let backLogQuestion = null;
-      if (questions.flows.length > 0) {
-        backLogQuestion = this.survey.nodes[questions.flows[0].targetID];
+      if (q.flows.length > 0) {
+        backLogQuestion = this.survey.nodes[q.flows[0].targetID];
       }
 
       //add the first question to come after finishing all multiple choice sub questions to the backlog.
@@ -316,7 +316,7 @@ export default {
     },
 
     onResize() {
-      this.isMobile = window.innerWidth < 600;
+      this.isMobile = window.innerWidth < 950;
     }
   },
   updated() {
@@ -345,6 +345,15 @@ export default {
     if (typeof window !== "undefined") {
       window.removeEventListener("resize", this.onResize, { passive: true });
     }
-  }
+  },
+  beforeRouteLeave(to, from, next) {
+    const answer = window.confirm("Do you really want to leave? You are still working on the survey!");
+    if(answer) {
+      next();
+      this.closeSurvey();
+    } else {
+      next(false);
+    }
+  },
 };
 </script>

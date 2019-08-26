@@ -3,7 +3,7 @@
     <v-card class="card-height">
       <v-card-title primary-title class="grow mb-3">
         <v-layout align-center justify-center row>
-          <h3 display-2>Thank you for filling out the survey!</h3>
+          <h3 display-2>Thank you for completing this module.</h3>
         </v-layout>
       </v-card-title>
 
