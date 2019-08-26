@@ -23,7 +23,7 @@ export class MultiChoiceNode extends QuestionNode {
         })
         this.choices.forEach(choice => {
             data.push({
-                "key": choice.lincData.find(data => data.key === "choice").value,
+                "key": "choice",
                 "value": choice.id
             }); 
         });

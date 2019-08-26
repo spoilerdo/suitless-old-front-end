@@ -10,12 +10,7 @@ export default {
     warning: '#fb8c00',
     error: '#c01833',
     default: '#424242',
+    yellow: '#c5db1a',
     defaultBackground: "#eee",
     landingBackground: "#30002a",
-
-    red: '#ff0000',
-    orange: '#ff9900',
-    yellow: '#ffcc66',
-    blue: '#0066ff',
-    black: '000000'
 }
