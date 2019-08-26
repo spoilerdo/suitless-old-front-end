@@ -252,7 +252,9 @@ export default {
 
       let firstSubQuestion = null;
       let subquestions = answers.filter(answer => answer.flows.length > 0);
-      firstSubQuestion = this.survey.nodes[subquestions[0].flows[0].targetID];
+      if(subquestions.lenght > 0) {
+        firstSubQuestion = this.survey.nodes[subquestions[0].flows[0].targetID];
+      }
       if (shouldLoopNonUniqueSubQuestions.value == "false") {
         //create list of unique sub questions based on targetid and only add these to the backlog (skip first one it will be handled seperately)
         subquestions = subquestions.slice(1);
