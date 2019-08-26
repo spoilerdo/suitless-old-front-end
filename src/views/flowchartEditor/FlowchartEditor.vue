@@ -6,8 +6,8 @@
     <div id="formatbarContainer" class="format">
         <GeneralFunctions v-show="formatBarType == null"/>
         <QuestionFunctions v-show="formatBarType == this.$data.nodeEnum.Question"/>
-        <GenericFunctions nameLabel="The name of the Module" nodeName="module"  v-show="formatBarType == this.$data.nodeEnum.Module"/>
-        <GenericFunctions nameLabel="The name of the Notification" nodeName="notification" v-show="formatBarType == this.$data.nodeEnum.Notification"/>
+        <GenericFunctions nameLabel="The name of the Module" nodeName="module" type="module"  v-show="formatBarType == this.$data.nodeEnum.Module"/>
+        <GenericFunctions nameLabel="The name of the Notification" nodeName="notification" type="notification" v-show="formatBarType == this.$data.nodeEnum.Notification"/>
         <MultipleChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.MultipleChoice"/>
         <ChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.Choice"/>
         <EdgeFunctions v-show="formatBarType == this.$data.nodeEnum.Edge"/>

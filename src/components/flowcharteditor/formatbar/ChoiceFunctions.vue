@@ -55,7 +55,7 @@ export default {
     checkValidation(genericValid){
       this.$validator.validateAll("ChoiceForm").then(valid => {
         if (valid && genericValid) {
-          this.genericChangeNode(this.form.nodeName, this.form.name);
+          this.changeChoiceNode(this.form.nodeName, this.form.name);
         }
       });
     },

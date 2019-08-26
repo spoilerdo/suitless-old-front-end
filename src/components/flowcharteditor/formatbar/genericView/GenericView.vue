@@ -76,6 +76,8 @@ export default {
                 this.form.nodeName = newValue.value;
                 if(newValue.lincData.length > 0){
                     this.form.name = newValue.lincData[0].value;
+                } else {
+                    this.form.name = "";
                 }
             }
         }

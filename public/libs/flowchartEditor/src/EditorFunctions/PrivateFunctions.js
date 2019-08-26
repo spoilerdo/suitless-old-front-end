@@ -11,12 +11,16 @@ import { NodeEnum } from "../NodeEnum";
 import { ShapeEnum } from "./ShapeEnum";
 import { mxGraph, mxConstants, mxCellRenderer } from "../MxGraph";
 import { editorFunctions } from "./EditorFunctions";
+import { QuestionNode } from "./NodeClasses/QuestionNode";
+import { ModuleNode } from "./NodeClasses/ModuleNode";
+import { NotificationNode } from "./NodeClasses/NotificationNode";
+import { MultiChoiceNode } from "./NodeClasses/MultiChoiceNode";
+import { ChoiceNode } from "./NodeClasses/ChoiceNode";
 
 /**
 * Inserts vertex with Question parameters and json if given
 * A Question contains 2 data values:
 * - question: question that is asked within the survey
-* - reason: the reason this question is asked
 * @param {mxGraph} graph 
 * @param {DefaultParent} parent 
 * @param {object} json
@@ -26,17 +30,8 @@ import { editorFunctions } from "./EditorFunctions";
 export function addQuestion(graph, parent, json, x, y) {
     editorFunctions.setCustomShape(graph, ShapeEnum.Rectangle);
 
-    let data = [
-        {
-            "key": "question",
-            "value": ""
-        },
-        {
-            "key": "reason",
-            "value": ""
-        }
-    ]
-    return genericAddVertex(graph, parent, json, NodeEnum.Question, data, 80, 80, x, y, 'shape=rectangle');
+    let questionNode = new QuestionNode("", []);
+    return genericAddVertex(graph, parent, json, NodeEnum.Question, questionNode.getData(), 80, 80, x, y, 'shape=rectangle');
 }
 
 /**
@@ -67,11 +62,8 @@ export function addStart(graph, parent, json, x, y) {
 export function addModule(graph, parent, json, x, y) {
     editorFunctions.setCustomShape(graph, ShapeEnum.DottedEllipse);
 
-    let data = [{
-        "key": "module",
-        "value": ""
-    }]
-    let vertex = genericAddVertex(graph, parent, json, NodeEnum.Module, data, 80, 80, x, y, 'shape=' + ShapeEnum.DottedEllipse + ';perimeter=ellipsePerimeter;');
+    let moduleNode = new ModuleNode("");
+    let vertex = genericAddVertex(graph, parent, json, NodeEnum.Module, moduleNode.getData(), 80, 80, x, y, 'shape=' + ShapeEnum.DottedEllipse + ';perimeter=ellipsePerimeter;');
     vertex.setConnectable(false);
     return vertex;
 }
@@ -106,11 +98,8 @@ export function addEnd(graph, parent, json, x, y) {
 export function addNotification(graph, parent, json, x, y) {
     editorFunctions.setCustomShape(graph, ShapeEnum.Hexagon);
 
-    let data = [{
-        "key": "notify",
-        "value": ""
-    }]
-    return genericAddVertex(graph, parent, json, NodeEnum.Notification, data, 80, 80, x, y, 'shape=' + ShapeEnum.Hexagon + ';perimeter=ellipsePerimeter;');
+    let notificationModule = new NotificationNode("");
+    return genericAddVertex(graph, parent, json, NodeEnum.Notification, notificationModule.getData(), 80, 80, x, y, 'shape=' + ShapeEnum.Hexagon + ';perimeter=ellipsePerimeter;');
 }
 
 /**
@@ -136,7 +125,6 @@ export function addNote(graph, parent, json, x, y) {
  * Example: https://jgraph.github.io/mxgraph/javascript/examples/folding.html
  * MultipleChoice contains 3 data values:
  * - question: question that is asked within the survey
- * - reason: the reason this question is asked
  * - loopsubQuestions: is a boolean that will determine if the same subquestion will be asked multiple times
  * It is possible that some choices have the same subquestions and that you don't want to ask these multiple times
  * 
@@ -151,22 +139,8 @@ export function addNote(graph, parent, json, x, y) {
 export function addMultipleChoice(graph, parent, json, x, y) {
     editorFunctions.setCustomShape(graph, ShapeEnum.Swimlane);
 
-    let data = [
-        {
-            "key": "question",
-            "value": ""
-        },
-        {
-            "key": "reason",
-            "value": ""
-        },
-        {
-            "key": "loopsubQuestions",
-            "value": true
-        }
-    ]
-
-    let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, data, 300, 300, x, y, 'shape=' + ShapeEnum.Swimlane);
+    let multiChoiceNode = new MultiChoiceNode("", [], false, []);
+    let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, multiChoiceNode.getData(), 300, 300, x, y, 'shape=' + ShapeEnum.Swimlane);
     
     //add three standard sub vertexes or the vertexes from the json
     addSubVertexes(graph, parentSwimlane, json, 3, 0); 
@@ -202,6 +176,7 @@ export function genericAddVertex(graph, parent, json, nodeEnum, data, width, hei
     }
 
     vertex.lincType = nodeEnum;
+    vertex.lincData = [];
     if (data) {
         vertex.lincData = data;
     }
@@ -230,12 +205,9 @@ export function addSubVertexes(graph, parent, json, amountOfChildren, index) {
         });
     } else {
         for (let i = index; i < amountOfChildren; i++) {
-            let data = [{
-                "key": "choice",
-                "value": "this is a choice"
-            }]
 
-            genericAddVertex(graph, parent, null, NodeEnum.Choice, data, 80, 40, 10, (70 + i * 50), 'shape=' + ShapeEnum.Swimlane + ';movable=0');
+            let choiceNode = new ChoiceNode("");
+            genericAddVertex(graph, parent, null, NodeEnum.Choice, choiceNode.getData(), 80, 40, 10, (70 + i * 50), 'shape=' + ShapeEnum.Swimlane + ';movable=0');
         }
     }
 }

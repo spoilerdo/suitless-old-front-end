@@ -31,6 +31,10 @@ export default {
     nodeName: {
       type: String,
       required: true
+    },
+    type: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -50,7 +54,14 @@ export default {
     },
     checkValidation(valid){
       if(valid) {
-        this.genericChangeNode(this.form.nodeName, this.form.name);
+        switch(this.type) {
+          case "module":
+            this.changeModuleNode(this.form.nodeName, this.form.name);
+            break;
+          case "notification":
+            this.changeNotificationNode(this.form.nodeName, this.form.name);
+            break;
+        }
       }
     },
     changeProps(newForm) {

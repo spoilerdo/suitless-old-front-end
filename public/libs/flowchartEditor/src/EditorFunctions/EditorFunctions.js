@@ -11,6 +11,7 @@ import { state } from "../store/flowcharteditor";
 import { addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice } from "./PrivateFunctions";
 
 import { mxConstants, mxEllipse, mxHexagon, mxSwimlane, mxRectangle, mxEvent } from "../MxGraph";
+import { EdgeNode } from "./NodeClasses/EdgeNode";
 
 /**
  * This is the max depth of a flowchart AKA what is the longest path of a flowchart.
@@ -83,17 +84,8 @@ export let editorFunctions = {
 
             edge.lincType = NodeEnum.Edge;
 
-            let data = [
-                {
-                    "key": "answer",
-                    "value": ""
-                },
-                {
-                    "key": "imageName",
-                    "value": "DefaultEdgeImage"
-                }
-            ]
-
+            let edgeNode = new EdgeNode("", "", []);
+            let data = edgeNode.getData();
             if (lincData) {
                 data = lincData;
             }
@@ -179,9 +171,11 @@ export let editorFunctions = {
 
                     let childs = [];
                     data.forEach(child => {
+                        console.log(child);
                         //get child from json array and ad it to the parent
                         childs = childs.concat(json.find(c => c.id == child.value));
                     });
+                    console.log(childs);
                     n.children = childs;
                 }
 
