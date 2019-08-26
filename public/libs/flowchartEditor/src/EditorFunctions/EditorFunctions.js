@@ -171,11 +171,9 @@ export let editorFunctions = {
 
                     let childs = [];
                     data.forEach(child => {
-                        console.log(child);
                         //get child from json array and ad it to the parent
                         childs = childs.concat(json.find(c => c.id == child.value));
                     });
-                    console.log(childs);
                     n.children = childs;
                 }
 
