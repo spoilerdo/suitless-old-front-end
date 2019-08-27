@@ -1,6 +1,7 @@
 import { apiCall } from "@/services/api";
 import { CDN_URL, NOTIFICATION_HANDLER } from "../../generalconstants"
 import { SET_SERVCEABLES, UPDATE_SERVICEABLES, DELETE_SERVICEABLES, ADD_SERVICEABLES, SET_FILE_DIALOG, SET_NEW_SERVICEABLES, SET_SERVICEABLE_EXISTS, ADD_IMAGES, SET_IMAGES, ADD_IMAGE } from "./mutation-types";
+import { async } from "q";
 
 /**
  * The cdn module contains actions that make API calls to the CDN Service
@@ -90,11 +91,11 @@ const actions = {
     getData({ commit, dispatch, getters }, id) {
         apiCall("GET", `${CDN_URL}/meta/id/${id}`)
             .then(data => {
-                let oldMetadata = getters.getServiceablesDataByName(data.metadataList[0].tag);
+                let oldMetadata = getters.getServiceablesDataByName(data.metaServiceableWrapperList[0].tag);
 
                 if (oldMetadata != null) {
                     //metadata already exists in the list but is maybe outdated so update it
-                    commit(UPDATE_SERVICEABLES, { data, oldMetadata });
+                    commit(UPDATE_SERVICEABLES, { data: data.metaServiceableWrapperList[0], oldMetadata });
                 } else {
                     //metadata is new so add it to the bottom of the list
                     commit(ADD_SERVICEABLES, data);
@@ -197,6 +198,25 @@ const actions = {
         } catch (e) {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
         }
+    },
+
+    /**
+     * Attempts to update the meta data of a serviceable to the CDN service
+     * @memberof store.cdn
+     */
+    async updateMetaData({ dispatch, commit, getters }, { tag, locked }){
+        try {
+            const req = await apiCall("PUT", `${CDN_URL}/meta/${tag}`, locked);
+            if(req) {
+                let oldMetadata = getters.getServiceablesDataByName(req.metaServiceableWrapper.tag);
+
+                commit(UPDATE_SERVICEABLES, { data: req.metaServiceableWrapper, oldMetadata });
+
+                dispatch(NOTIFICATION_HANDLER, { message: "file updated", type: "success" }, { root: true });
+            }
+        } catch (e) {
+            dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
+        }
     }
 }
 
@@ -208,7 +228,7 @@ const mutations = {
         state.images = imageState;
     },
     [ADD_IMAGES](state, data) {
-        data.metadataList.forEach(image => {
+        data.metaServiceableWrapperList.forEach(image => {
             state.images.push({
                 name: image.tag,
                 baseURL: CDN_URL + "/" + image.tag
@@ -222,23 +242,24 @@ const mutations = {
         state.serviceables = data;
     },
     [ADD_SERVICEABLES](state, data) {
-        data.metadataList.forEach(serviceable => {
+        data.metaServiceableWrapperList.forEach(serviceable => {
             state.serviceables.push({
                 name: serviceable.tag,
                 size: (serviceable.size / 1000).toFixed(2), //Byte to KB
                 type: serviceable.type,
                 id: serviceable.id,
+                locked: serviceable.locked,
                 baseURL: CDN_URL + "/" + serviceable.tag
             });
         });
     },
-    [UPDATE_SERVICEABLES](state, payload) {        
+    [UPDATE_SERVICEABLES](state, payload) {  
         let index = state.serviceables.indexOf(payload.oldMetadata);
         state.serviceables[index] = {
-            name: payload.data.metadataList[0].tag,
-            size: (payload.data.metadataList[0].size / 1000).toFixed(2), //Byte to KB
-            type: payload.data.metadataList[0].type,
-            baseURL: CDN_URL + payload.data.metadataList[0].tag
+            name: payload.data.tag,
+            size: (payload.data.size / 1000).toFixed(2), //Byte to KB
+            type: payload.data.type,
+            baseURL: CDN_URL + payload.data.tag
         }
     },
     [DELETE_SERVICEABLES](state, data) {

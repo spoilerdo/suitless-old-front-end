@@ -8,12 +8,13 @@
       ref="ConfirmDialog"
       v-on:chosenAction="checkDeletionChoice"
     />
-    <v-flex style="overflow: auto">
+    <v-flex>
       <v-data-table :headers="headers" :items="serviceables" item-key="name" hide-actions class="elevation-1">
         <template slot="items" slot-scope="props">
           <td>{{ props.item.name }}</td>
           <td>{{ props.item.size }}</td>
           <td>{{ props.item.type }}</td>
+          <td><v-checkbox :input-value="props.item.locked" @change="updateMetaData({tag: props.item.name, locked: !props.item.locked})"/></td>
           <td class="actionsSection">
 
             <v-dialog :lazy=true>
@@ -63,7 +64,7 @@ export default {
     ...mapState("cdn/", ["serviceables"])
   },
   methods: {
-    ...mapActions("cdn/", ["getAllData", "deleteById"]),
+    ...mapActions("cdn/", ["getAllData", "deleteById", "updateMetaData"]),
     toggleDialog(item){
       this.selectedItem = item;
       this.$refs.ConfirmDialog.toggle();
