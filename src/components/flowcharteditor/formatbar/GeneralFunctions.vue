@@ -80,6 +80,10 @@ export default {
     testFlowchart() {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if(valid) {
+          //Save in a localstorage that this is a test env. Beacuse there needs to be extra functionality
+          localStorage.setItem("ENV", "TEST");
+
+          //get the flowchart and open a new survey page.
           let flowchart = this.getFlowchart(this.form.title, this.form.description, []);
           this.setSurvey(JSON.parse(flowchart));
           let routerData = this.$router.resolve({path: "/survey/test"})
