@@ -54,9 +54,8 @@ export default {
     ...mapState("flowcharteditor/", ["imageName"])
   },
   methods: {
-    ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart"]),
+    ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart", "setFlowchart"]),
     ...mapActions("cdn/", ["setFileDialog"]),
-    ...mapActions("survey/", ["setSurvey"]),
     prepareSaveFlowchart() {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if (valid) {
@@ -80,12 +79,9 @@ export default {
     testFlowchart() {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if(valid) {
-          //Save in a localstorage that this is a test env. Beacuse there needs to be extra functionality
-          localStorage.setItem("ENV", "TEST");
-
           //get the flowchart and open a new survey page.
           let flowchart = this.getFlowchart(this.form.title, this.form.description, []);
-          this.setSurvey(JSON.parse(flowchart));
+          this.setFlowchart(JSON.parse(flowchart));
           let routerData = this.$router.resolve({path: "/survey/test"})
           window.open(routerData.href, '_blank');
         }

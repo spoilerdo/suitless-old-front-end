@@ -108,11 +108,6 @@ export default {
         this.$emit("answerQuestion", this.selectedAnswer);
         this.selectedAnswer = null;
       }
-    },
-    checkEnv() {
-      if (localStorage.getItem("ENV") !== null) {
-        return localStorage.getItem("ENV");
-      }
     }
   }
 }

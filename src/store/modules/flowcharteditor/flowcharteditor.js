@@ -75,10 +75,11 @@ const actions = {
     },
 
     /**
-     * update the flows of the flowchart you are currently editing
+     * save the flows of the flowchart you are currently editing
+     * @memberof store.flowchareditor
      */
-    updateFlows({ commit }, ){
-        
+    setFlowchart({ commit }, flowchart){
+        commit(SET_FLOWCHART, flowchart);
     },
 
     /**
