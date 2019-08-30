@@ -90,10 +90,7 @@ export let editorFunctions = {
                 data = lincData;
             }
 
-            //Certain edges are not allowed to be added
-            if (firstCell.lincType != NodeEnum.Start && firstCell.lincType != NodeEnum.Notification && firstCell.lincType != NodeEnum.MultipleChoice && firstCell.lincType != NodeEnum.Choice) {
-                edge.lincData = data;
-            }
+            edge.lincData = data;
 
             graph.addEdge(edge, parent, firstCell, secondCell);
 
