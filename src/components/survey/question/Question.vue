@@ -34,7 +34,7 @@
           :flows="this.flows"
           @selectAnswer="selectAnswer"
         />
-        <ActionContent v-else :flows="this.flows" @selectAnswer="selectAnswer" />
+        <ActionContent v-else :flows="this.flows" @selectAnswer="selectAnswer"/>
       </v-card-actions>
 
       <ArrowControls
@@ -49,23 +49,6 @@
 <style scoped>
 .action-card {
   min-height: 62px;
-}
-.dnd-container {
-  width: 100%;
-}
-.card-ghost {
-  transition: transform 0.18s ease;
-  transform: rotateZ(5deg);
-}
-
-.card-ghost-drop {
-  transition: transform 0.18s ease-in-out;
-  transform: rotateZ(0deg);
-}
-.drop-preview {
-  background-color: rgba(150, 150, 200, 0.1);
-  border: 1px dashed #abc;
-  margin: 5px;
 }
 </style>
 
@@ -103,12 +86,7 @@ export default {
     return {
       selectedAnswer: null,
       getReasonsArray: getReasonsArray,
-      flows: this.question.flows,
-      dropPlaceholderOptions: {
-        className: "drop-preview",
-        animationDuration: "150",
-        showOnTop: true
-      }
+      flows: this.question.flows
     };
   },
   methods: {
@@ -133,12 +111,9 @@ export default {
     },
     checkEnv() {
       if (localStorage.getItem("ENV") !== null) {
-        if (localStorage.getItem("ENV") === "TEST") {
-          //its a test env so change the action content to a dragable action content
-          return "TEST";
-        }
+        return localStorage.getItem("ENV");
       }
     }
   }
-};
+}
 </script>

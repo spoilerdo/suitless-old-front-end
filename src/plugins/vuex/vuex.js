@@ -21,6 +21,8 @@ export const localStorageSynchroniser = store => {
     }
 
     window.onbeforeunload = () => {
+        //TODO: is dit netjes???
         localStorage.removeItem(SET_SURVEY);
+        localStorage.removeItem("ENV");
     };
 }

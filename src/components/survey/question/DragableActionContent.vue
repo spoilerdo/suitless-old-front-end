@@ -9,7 +9,7 @@
       class="dnd-container"
       :drop-placeholder="dropPlaceholderOptions"
     >
-      <Draggable v-for="(answer, index) in flows" :key="index">
+      <Draggable v-for="(answer, index) in testflows" :key="index">
         <v-layout align-center justify-center row>
           <!-- question card for single answer questions -->
           <ActionCard
@@ -70,6 +70,16 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      dropPlaceholderOptions: {
+        className: "drop-preview",
+        animationDuration: "150",
+        showOnTop: true
+      },
+      testflows: this.flows
+    };
+  },
   methods: {
     getText(answer) {
       return answer.lincData.find(data => data.key === "answer").value;
@@ -78,10 +88,26 @@ export default {
       return answer.lincData.find(data => data.key === "imageName").value;
     },
     selectAnswer(answer) {
-      this.$emit("selectAnswer", {selectAnswer: answer, question: this.$refs.question});
+      this.$emit("selectAnswer", {
+        selectAnswer: answer,
+        question: this.$refs.question
+      });
     },
-    onDrop(dropResult) {
-      this.flows = applyDrag(this.flows, dropResult);
+    onDrop(dropResult) {      
+      const newFlows = applyDrag(this.testflows, dropResult);
+      for (let i = 0; i < newFlows.length; i++) {
+        const flow = newFlows[i];
+        this.testflows[i].targetID = flow.targetID;
+      };
+      this.testflows = newFlows;
+      //this.flows = applyDrag(this.flows, dropResult);
+      //TODO: add function to change the actual storage flow
+      //You have a localstorage that needs to be changed but this will be deleted when you cliose the window.
+      //SO you can't use it ... You could change the survey_model local storage that is used as a autosave function for the flowchart editor.
+      //If you change that than it will befine.
+      //HOW TO CHANGE IT:
+      //find the question that is currently displayed by the test env
+      //get the flow of that question and change it (BY ID OFCOURSE)
     }
   }
 };
