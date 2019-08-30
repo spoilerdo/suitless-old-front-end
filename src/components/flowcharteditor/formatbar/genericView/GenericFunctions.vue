@@ -5,6 +5,7 @@
         ref="genericView"
         :nameLabel="nameLabel"
         :nodeName="nodeName"
+        :lincDataName="lincDataName"
         @onChange="changeProps"
         @validated="checkValidation"
       />
@@ -33,6 +34,10 @@ export default {
       required: true
     },
     type: {
+      type: String,
+      required: true
+    },
+    lincDataName: {
       type: String,
       required: true
     }
