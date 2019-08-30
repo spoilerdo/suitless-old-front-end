@@ -47,6 +47,10 @@ export default {
         nodeName: {
             type: String,
             required: true
+        },
+        lincDataName: {
+            type: String,
+            required: true
         }
     },
     data(){
@@ -74,8 +78,8 @@ export default {
         selectedCell: function(newValue) {
             if(newValue){
                 this.form.nodeName = newValue.value;
-                if(newValue.lincData.length > 0){
-                    this.form.name = newValue.lincData[0].value;
+                if(newValue.lincData.length > 0 && newValue.lincData.find(data => data.key === this.lincDataName)){
+                    this.form.name = newValue.lincData.find(data => data.key === this.lincDataName).value;
                 } else {
                     this.form.name = "";
                 }

@@ -1,16 +1,17 @@
 <template>
   <v-layout row justify-center>
-    <v-form data-vv-scope="EdgeForm" @submit.prevent>
+    <v-form @submit.prevent>
       <v-layout column>
         <GenericView
-          v-if="selected != null"
+          v-if="selected != null && this.form.answer !== null"
           ref="genericView"
           nameLabel="An answer for the question"
           nodeName="edge"
+          lincDataName="answer"
           @onChange="changeProps"
           @validated="checkValidation"
         />
-        <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>        
+        <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>
         <ImplicationList
           v-bind:implications.sync="form.implications"
           v-bind:implicationColors.sync="implicationColorsList"
@@ -49,8 +50,8 @@ export default {
   data() {
     return {
       form: {
-        edgeNode: null,
-        answer: null,
+        edgeNode: "",
+        answer: "",
         imageName: "",
         implications: [
           {
@@ -74,34 +75,37 @@ export default {
       this.form.answer = newForm.name;
     },
     prepareChangeEdge() {
-      this.$refs.genericView.checkIfValid();
+      if (this.selected) {
+        this.$refs.genericView.checkIfValid();
+      } else {
+        this.checkValidation(true);
+      }
     },
     checkValidation(genericValid) {
-      this.$validator.validateAll("EdgeForm").then(valid => {
-        if (valid && genericValid) {
-          //get the image name from the dialog and save it onto the edge
-          if (this.form.imageName === "") {
-            this.form.imageName = "DefaultEdgeImage";
-          }
-
-          let implicationColor = theme.default;
-          if (this.implicationColorsList.length === 1) {
-            implicationColor = this.implicationColorsList[0];
-          }
-
-          this.changeEdge(
-            this.form.edgeNode,
-            this.form.answer,
-            this.form.implications,
-            implicationColor,
-            this.form.imageName
-          );
-
-          this.form.imageName = "";
-
-          this.implicationColorsList = [theme.default];
+      if (genericValid) {
+        //get the image name from the dialog and save it onto the edge
+        if (this.form.imageName === "") {
+          this.form.imageName = "DefaultEdgeImage";
         }
-      });
+
+        let implicationColor = theme.default;
+        if (this.implicationColorsList.length === 1) {
+          implicationColor = this.implicationColorsList[0];
+        }
+
+        this.changeEdge(
+          this.form.edgeNode,
+          this.form.answer,
+          this.form.implications,
+          implicationColor,
+          this.form.imageName
+        );
+
+        this.form.imageName = "";
+        this.form.implications = [];
+
+        this.implicationColorsList = [theme.default];
+      }
     }
   },
   watch: {
@@ -113,10 +117,12 @@ export default {
       ) {
         this.selected = newValue;
 
-        this.form.answer = newValue.lincData.find(
-          data => data.key == "answer"
-        ).value;
-        
+        if(newValue.lincData.find(data => data.key == "answer")){
+          this.form.answer = newValue.lincData.find(data => data.key == "answer").value;
+        }else{
+          this.form.answer = null;
+        }
+
         let implicationArray = createImplicationArray(newValue);
 
         this.form.implications = implicationArray.implicationsObject;
