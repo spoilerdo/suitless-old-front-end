@@ -115,7 +115,7 @@ export default {
     addImplication() {
       this.implicationList.push({
         implication: null,
-        implicationLevel: "Assumption"
+        implicationLevel: this.$data.implicationEnum[5]
       });
       this.implicationColors.push(theme.default);
     },
