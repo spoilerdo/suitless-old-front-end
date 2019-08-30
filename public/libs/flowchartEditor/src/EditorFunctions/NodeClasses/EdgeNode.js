@@ -14,12 +14,14 @@ export class EdgeNode{
     }
 
     getData() {
-        let data = [
-            {
+        let data = []
+
+        if(this.imageName) {
+            data.push({
                 "key": "imageName",
                 "value": this.imageName
-            }
-        ]
+            });
+        }
 
         if(this.answer) {
             data.push({

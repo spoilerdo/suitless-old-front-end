@@ -122,7 +122,8 @@ const mutations = {
             state.selectedCell = {
                 value: cellState.value || null,
                 lincData: cellState.lincData || null,
-                children: cellState.children || null
+                children: cellState.children || null,
+                editable: cellState.editable || null
             };
         } else {
             state.selectedCell = null;
