@@ -140,7 +140,7 @@ export function addMultipleChoice(graph, parent, json, x, y) {
     editorFunctions.setCustomShape(graph, ShapeEnum.Swimlane);
 
     let multiChoiceNode = new MultiChoiceNode("", [], false, []);
-    let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, multiChoiceNode.getData(), 300, 300, x, y, 'shape=' + ShapeEnum.Swimlane);
+    let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, multiChoiceNode.getData(), 300, 300, x, y, 'shape=' + ShapeEnum.Swimlane + ";editable=0;");
     
     //add three standard sub vertexes or the vertexes from the json
     addSubVertexes(graph, parentSwimlane, json, 3, 0); 

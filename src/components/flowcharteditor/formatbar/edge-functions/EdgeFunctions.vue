@@ -3,7 +3,7 @@
     <v-form @submit.prevent>
       <v-layout column>
         <GenericView
-          v-if="selected != null && this.form.answer !== null"
+          v-if="this.editable"
           ref="genericView"
           nameLabel="An answer for the question"
           nodeName="edge"
@@ -11,7 +11,7 @@
           @onChange="changeProps"
           @validated="checkValidation"
         />
-        <v-btn v-if="selected != null" color="primary" @click="setFileDialog(true)">Select Image</v-btn>
+        <v-btn v-if="this.editable" color="primary" @click="setFileDialog(true)">Select Image</v-btn>
         <ImplicationList
           v-bind:implications.sync="form.implications"
           v-bind:implicationColors.sync="implicationColorsList"
@@ -60,6 +60,7 @@ export default {
           }
         ]
       },
+      editable: true,
       implicationColorsList: [],
       selected: null
     };
@@ -75,7 +76,7 @@ export default {
       this.form.answer = newForm.name;
     },
     prepareChangeEdge() {
-      if (this.selected) {
+      if (this.$refs.genericView) {
         this.$refs.genericView.checkIfValid();
       } else {
         this.checkValidation(true);
@@ -110,13 +111,12 @@ export default {
   },
   watch: {
     selectedCell: function(newValue) {
+      this.editable = newValue.editable;
       if (
         newValue &&
         this.formatBarType == this.$data.nodeEnum.Edge &&
-        newValue.lincData.length > 0
+        newValue.lincData
       ) {
-        this.selected = newValue;
-
         if(newValue.lincData.find(data => data.key == "answer")){
           this.form.answer = newValue.lincData.find(data => data.key == "answer").value;
         }else{
@@ -127,8 +127,6 @@ export default {
 
         this.form.implications = implicationArray.implicationsObject;
         this.implicationColorsList = implicationArray.implicationColorsList;
-      } else {
-        this.selected = null;
       }
     },
     imageName: function(newVal) {
