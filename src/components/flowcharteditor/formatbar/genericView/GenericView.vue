@@ -7,8 +7,8 @@
                 v-model="form.nodeName"
                 v-validate="'required'"
                 name="node text"
-                counter="15"
-                maxlength="15"
+                counter="25"
+                maxlength="25"
                 @change="changeProps"
             />
             <span>{{ errors.first('GenericForm.node text') }}</span>

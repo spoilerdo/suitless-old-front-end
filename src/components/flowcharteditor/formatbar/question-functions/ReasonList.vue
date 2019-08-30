@@ -13,8 +13,8 @@
               color="primary"
               label="Reason"
               rows="1"
-              counter="300"
-              maxlength="300"
+              counter="750"
+              maxlength="750"
             />
             <v-combobox
               v-model="reason.type"
