@@ -75,6 +75,13 @@ const actions = {
     },
 
     /**
+     * update the flows of the flowchart you are currently editing
+     */
+    updateFlows({ commit }, ){
+        
+    },
+
+    /**
      * This actions returns a flowchart. 
      * The FlowchartForm view will pass this from the plugins/flowcharteditor to the flowchart editor plugin.
      * @memberof store.flowcharteditor

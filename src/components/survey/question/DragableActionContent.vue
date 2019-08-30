@@ -100,6 +100,9 @@ export default {
         this.testflows[i].targetID = flow.targetID;
       };
       this.testflows = newFlows;
+      //Update the flows to the localstorage
+      
+
       //this.flows = applyDrag(this.flows, dropResult);
       //TODO: add function to change the actual storage flow
       //You have a localstorage that needs to be changed but this will be deleted when you cliose the window.
