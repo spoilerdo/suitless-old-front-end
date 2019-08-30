@@ -61,14 +61,8 @@ function showFormatBar(editor, selectedCell, model) {
     }
 
     const source = selectedCell.source;
-    const target = selectedCell.target;
     if(selectedCell.source && source.style){
-        if(source.style.includes("deletable=0") || source.style.includes("editable=0")){
-            newC.editable = false;
-        }
-    }
-    if(selectedCell.target && target.style){
-        if(selectedCell.target && target.style.includes("editable=0")){
+        if(source.style.includes("deletable=0") || source.style.includes("editable=0") || source.style.includes("movable=0")){
             newC.editable = false;
         }
     }
