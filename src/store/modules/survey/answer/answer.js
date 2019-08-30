@@ -62,7 +62,7 @@ const actions = {
                         questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,
                         lincData: question.lincData,
                         targetID: null,
-                        answerValue: ans.value,
+                        answerValue: ans.lincData.find(data => data.key === "answer").value,
                         implications: implications
                     }
 
@@ -75,7 +75,7 @@ const actions = {
                         questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,
                         lincData: question.lincData,
                         targetID: flow.targetID,
-                        answerValue: ans.value,
+                        answerValue: answer.lincData.find(data => data.key === "answer").value,
                         implications: implications
                     };
 
@@ -100,7 +100,7 @@ const actions = {
                 questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,
                 lincData: question.lincData,
                 targetID: answer.targetID,
-                answerValue: answer.value,
+                answerValue: answer.lincData.find(data => data.key === "answer").value,
                 implications: implications
             };
 
