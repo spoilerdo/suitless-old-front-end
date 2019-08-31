@@ -222,7 +222,7 @@ const mutations = {
         state.serviceables = data;
     },
     [ADD_SERVICEABLES](state, data) {
-        data.metadataList.forEach(serviceable => {
+        data.metaServiceableWrapperList.forEach(serviceable => {
             state.serviceables.push({
                 name: serviceable.tag,
                 size: (serviceable.size / 1000).toFixed(2), //Byte to KB
@@ -235,10 +235,10 @@ const mutations = {
     [UPDATE_SERVICEABLES](state, payload) {        
         let index = state.serviceables.indexOf(payload.oldMetadata);
         state.serviceables[index] = {
-            name: payload.data.metadataList[0].tag,
-            size: (payload.data.metadataList[0].size / 1000).toFixed(2), //Byte to KB
-            type: payload.data.metadataList[0].type,
-            baseURL: CDN_URL + payload.data.metadataList[0].tag
+            name: payload.data.metaServiceableWrapperList[0].tag,
+            size: (payload.data.metaServiceableWrapperList[0].size / 1000).toFixed(2), //Byte to KB
+            type: payload.data.metaServiceableWrapperList[0].type,
+            baseURL: CDN_URL + payload.data.metaServiceableWrapperList[0].tag
         }
     },
     [DELETE_SERVICEABLES](state, data) {
