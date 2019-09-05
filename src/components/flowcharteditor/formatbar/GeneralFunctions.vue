@@ -82,6 +82,8 @@ export default {
           //get the flowchart and open a new survey page.
           let flowchart = this.getFlowchart(this.form.title, this.form.description, []);
           this.setFlowchart(JSON.parse(flowchart));
+          //change the ENV to test, so that the draggable functionality activates
+          localStorage.setItem("ENV", "TEST");
           let routerData = this.$router.resolve({path: "/survey/test"})
           window.open(routerData.href, '_blank');
         }

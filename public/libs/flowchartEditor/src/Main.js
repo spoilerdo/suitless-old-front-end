@@ -122,7 +122,7 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
 
         clipBoardFunctions(graph);
 
-        initAutoSave(graph);
+        initAutoSave(graph, model);
 
         autoResizeCells(graph);
 

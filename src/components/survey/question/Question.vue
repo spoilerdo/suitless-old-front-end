@@ -32,6 +32,7 @@
         <DragableActionContent
           v-if="checkEnv() === 'TEST' "
           :flows="this.flows"
+          :question="this.question"
           @selectAnswer="selectAnswer"
         />
         <ActionContent v-else :flows="this.flows" @selectAnswer="selectAnswer"/>
@@ -108,6 +109,14 @@ export default {
         this.$emit("answerQuestion", this.selectedAnswer);
         this.selectedAnswer = null;
       }
+    },
+    checkEnv() {
+      return localStorage.getItem("ENV");
+    }
+  },
+  watch: {
+    question: function(val) {
+      this.flows = val.flows;
     }
   }
 }

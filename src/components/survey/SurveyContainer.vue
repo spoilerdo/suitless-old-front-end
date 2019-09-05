@@ -270,8 +270,12 @@ export default {
       this.clearAnswers();
       this.clearProgress();
 
-      //To dashboard or the login page but this is not shure yet
-      this.$router.push("/dashboard");
+      if(localStorage.getItem("ENV") === "TEST"){
+        window.close();
+      } else {
+        //To dashboard or the login page but this is not shure yet
+        this.$router.push("/dashboard");
+      }
     }
   },
   watch: {

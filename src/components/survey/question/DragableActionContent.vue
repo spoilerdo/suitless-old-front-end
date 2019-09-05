@@ -9,7 +9,7 @@
       class="dnd-container"
       :drop-placeholder="dropPlaceholderOptions"
     >
-      <Draggable v-for="(answer, index) in testflows" :key="index">
+      <Draggable v-for="answer in testflows" :key="answer.targetID + answer.value">
         <v-layout align-center justify-center row>
           <!-- question card for single answer questions -->
           <ActionCard
@@ -57,6 +57,7 @@ import ActionCard from "@/components/material/ActionCard.vue";
 
 import { Container, Draggable } from "vue-smooth-dnd";
 import { applyDrag } from "@/plugins/smooth-dnd/helpers";
+import { SET_FLOWCHART } from '@/store/modules/flowcharteditor/mutation-types';
 
 export default {
   components: {
@@ -67,6 +68,10 @@ export default {
   props: {
     flows: {
       type: Array,
+      required: true
+    },
+    question: {
+      type: Object,
       required: true
     }
   },
@@ -95,22 +100,21 @@ export default {
     },
     onDrop(dropResult) {      
       const newFlows = applyDrag(this.testflows, dropResult);
+      this.testflows = newFlows;
       for (let i = 0; i < newFlows.length; i++) {
         const flow = newFlows[i];
         this.testflows[i].targetID = flow.targetID;
       };
-      this.testflows = newFlows;
-      //Update the flows to the localstorage
-      
 
-      //this.flows = applyDrag(this.flows, dropResult);
-      //TODO: add function to change the actual storage flow
-      //You have a localstorage that needs to be changed but this will be deleted when you cliose the window.
-      //SO you can't use it ... You could change the survey_model local storage that is used as a autosave function for the flowchart editor.
-      //If you change that than it will befine.
-      //HOW TO CHANGE IT:
-      //find the question that is currently displayed by the test env
-      //get the flow of that question and change it (BY ID OFCOURSE)
+      //Update the flows to the localstorage
+      let flowchart = JSON.parse(localStorage.getItem(SET_FLOWCHART));
+      flowchart.nodes.find(n => n.id === this.question.id).flows = this.testflows;
+      localStorage.setItem(SET_FLOWCHART, JSON.stringify(flowchart));
+    }
+  },
+  watch: {
+    flows: function(val) {
+      this.testflows = val;
     }
   }
 };

@@ -18,6 +18,13 @@ export const localStorageSynchroniser = store => {
     }
 
     window.onbeforeunload = () => {
+        //update the auto save of the flowchart editor with the new changes from the test function
+        let flowchart = localStorage.getItem(SET_FLOWCHART);
+        console.log(flowchart);
+        if(flowchart){
+            localStorage.setItem("model", flowchart);
+        }
         localStorage.removeItem(SET_FLOWCHART);
+        localStorage.removeItem("ENV");
     };
 }

@@ -8,7 +8,7 @@
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
 import { mxAutoSaveManager } from "../MxGraph";
 
-export function initAutoSave(graph) {
+export function initAutoSave(graph, model) {
     mxAutoSaveManager.prototype.autoSaveThreshold = 2;
     let mgr = new mxAutoSaveManager(graph);
     mgr.save = function () {
@@ -16,4 +16,9 @@ export function initAutoSave(graph) {
             localStorage.setItem("model", editorFunctions.exportChart(graph, "autosave", "This is a autosave", null));
         }
     };
+
+    window.onstorage = (e) => {
+        let flowchart = JSON.parse(e.newValue);
+        editorFunctions.importChart(graph, flowchart.nodes, model);
+    }
 }
