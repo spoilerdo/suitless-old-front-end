@@ -1,6 +1,7 @@
 <template>
   <v-layout row justify-center>
     <v-form data-vv-scope="ChoiceForm" @submit.prevent>
+      <v-layout column>
       <GenericView
         ref="genericView"
         nameLabel="The name of the Question"
@@ -9,6 +10,8 @@
         @onChange="changeProps"
         @validated="checkValidation"
       />
+      <v-btn color="primary" @click="setFileDialog(true)">Select Image</v-btn>
+      </v-layout>
       <v-layout align-center justify-center row>
         <v-btn color="primary" @click="prepareGenericChangeNode()">Apply</v-btn>
       </v-layout>
@@ -35,6 +38,7 @@ export default {
       form: {
         nodeName: null,
         name: null,
+        imageName: ""
       },
       selected: null
     };
@@ -46,7 +50,7 @@ export default {
     this.selected = this.selectedCell;
   },
   methods: {
-    ...mapActions("cdn/", ["uploadImage"]),
+    ...mapActions("cdn/", ["setFileDialog"]),
     changeProps(newForm) {
       this.form = newForm;
     },
@@ -56,7 +60,13 @@ export default {
     checkValidation(genericValid){
       this.$validator.validateAll("ChoiceForm").then(valid => {
         if (valid && genericValid) {
+          if(this.form.imageName === ""){
+            this.form.imageName = "DefaultEdgeImage";
+          }
+
           this.changeChoiceNode(this.form.nodeName, this.form.name);
+
+          this.form.imageName = "";
         }
       });
     },
@@ -74,6 +84,9 @@ export default {
         ).value;
       }
     }
+  },
+  imageName: function(newVal) {
+    this.form.imageName = newVal;
   }
 };
 </script>
