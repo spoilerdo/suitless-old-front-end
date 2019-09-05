@@ -256,10 +256,10 @@ const mutations = {
     [UPDATE_SERVICEABLES](state, payload) {  
         let index = state.serviceables.indexOf(payload.oldMetadata);
         state.serviceables[index] = {
-            name: payload.data.tag,
-            size: (payload.data.size / 1000).toFixed(2), //Byte to KB
-            type: payload.data.type,
-            baseURL: CDN_URL + payload.data.tag
+            name: payload.data.metaServiceableWrapperList[0].tag,
+            size: (payload.data.metaServiceableWrapperList[0].size / 1000).toFixed(2), //Byte to KB
+            type: payload.data.metaServiceableWrapperList[0].type,
+            baseURL: CDN_URL + payload.data.metaServiceableWrapperList[0].tag
         }
     },
     [DELETE_SERVICEABLES](state, data) {

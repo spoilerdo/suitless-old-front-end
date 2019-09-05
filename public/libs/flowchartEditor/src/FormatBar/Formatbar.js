@@ -46,14 +46,27 @@ function showFormatBar(editor, selectedCell, model) {
         children = selectedCell.children.length;
     }
 
-    let newC = null;
+    let newC = {
+        "value": JSON.parse(JSON.stringify(selectedCell.value, null, "\t")),
+        "children": JSON.parse(JSON.stringify(children, null, "\t")),
+        "editable": true
+    };
     if (selectedCell.lincData) {
         newC = {
             "value": JSON.parse(JSON.stringify(selectedCell.value, null, "\t")),
             "lincData": JSON.parse(JSON.stringify(selectedCell.lincData, null, "\t")),
-            "children": JSON.parse(JSON.stringify(children, null, "\t"))
+            "children": JSON.parse(JSON.stringify(children, null, "\t")),
+            "editable": true
         };
     }
+
+    const source = selectedCell.source;
+    if(selectedCell.source && source.style){
+        if(source.style.includes("deletable=0") || source.style.includes("editable=0") || source.style.includes("movable=0")){
+            newC.editable = false;
+        }
+    }
+
     state.newCell.set = newC;
 
     state.model = model;

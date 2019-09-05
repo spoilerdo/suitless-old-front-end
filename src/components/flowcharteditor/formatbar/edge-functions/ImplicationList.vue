@@ -14,8 +14,8 @@
               label="Implication"
               rows="1"
               name="implication"
-              counter="300"
-              maxlength="300"
+              counter="750"
+              maxlength="750"
             />
             <h6 class="subheading">Select the implication level</h6>
             <v-layout align-center justify-center row>
@@ -115,7 +115,7 @@ export default {
     addImplication() {
       this.implicationList.push({
         implication: null,
-        implicationLevel: "Assumption"
+        implicationLevel: this.$data.implicationEnum[5]
       });
       this.implicationColors.push(theme.default);
     },

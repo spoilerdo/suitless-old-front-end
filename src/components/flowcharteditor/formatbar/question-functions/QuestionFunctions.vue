@@ -6,6 +6,7 @@
         ref="genericView"
         nameLabel="The name of the Question"
         nodeName="question"
+        lincDataName="question"
         @onChange="changeProps"
         @validated="checkValidation"
       />

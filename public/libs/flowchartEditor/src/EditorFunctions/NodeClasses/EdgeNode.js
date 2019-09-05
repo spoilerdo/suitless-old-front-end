@@ -14,16 +14,21 @@ export class EdgeNode{
     }
 
     getData() {
-        let data = [
-            {
-                "key": "answer",
-                "value": this.answer
-            },
-            {
+        let data = []
+
+        if(this.imageName) {
+            data.push({
                 "key": "imageName",
                 "value": this.imageName
-            }
-        ]
+            });
+        }
+
+        if(this.answer) {
+            data.push({
+                "key": "answer",
+                "value": this.answer
+            });
+        }
 
         this.implications.forEach(implication => {
             if(implication.implication){
