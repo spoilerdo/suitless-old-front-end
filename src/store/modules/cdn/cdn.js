@@ -208,7 +208,7 @@ const mutations = {
         state.images = imageState;
     },
     [ADD_IMAGES](state, data) {
-        data.metadataList.forEach(image => {
+        data.metaServiceableWrapperList.forEach(image => {
             state.images.push({
                 name: image.tag,
                 baseURL: CDN_URL + "/" + image.tag
