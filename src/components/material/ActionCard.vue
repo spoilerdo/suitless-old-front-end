@@ -95,6 +95,9 @@ export default {
       image: `${CDN_URL}/${this.imageName}`
     };
   },
+  updated() {
+    this.image = `${CDN_URL}/${this.imageName}`;
+  },
   methods: {
     onClickAction() {
       this.$emit("action", this.parameter);

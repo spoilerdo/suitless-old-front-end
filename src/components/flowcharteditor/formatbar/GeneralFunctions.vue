@@ -54,9 +54,8 @@ export default {
     ...mapState("flowcharteditor/", ["imageName"])
   },
   methods: {
-    ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart"]),
+    ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart", "setFlowchart"]),
     ...mapActions("cdn/", ["setFileDialog"]),
-    ...mapActions("survey/", ["setSurvey"]),
     prepareSaveFlowchart() {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if (valid) {
@@ -80,8 +79,11 @@ export default {
     testFlowchart() {
       this.$validator.validateAll("GeneralForm").then(valid => {
         if(valid) {
+          //get the flowchart and open a new survey page.
           let flowchart = this.getFlowchart(this.form.title, this.form.description, []);
-          this.setSurvey(JSON.parse(flowchart));
+          this.setFlowchart(JSON.parse(flowchart));
+          //change the ENV to test, so that the draggable functionality activates
+          localStorage.setItem("ENV", "TEST");
           let routerData = this.$router.resolve({path: "/survey/test"})
           window.open(routerData.href, '_blank');
         }
