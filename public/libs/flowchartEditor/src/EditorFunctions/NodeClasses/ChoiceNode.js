@@ -7,14 +7,28 @@
  * @since 28-08-2019
  */
 export class ChoiceNode {
-    constructor(name){
+    constructor(name, imageName){
         this.name = name;
+        this.imageName = imageName;
     }
 
     getData() {
-        return [{
-            "key": "choice",
-            "value": this.name
-        }]
+        let data = [];
+
+        if(this.name) {
+            data.push({
+                "key": "choice",
+                "value": this.name
+            })
+        }
+
+        if(this.imageName) {
+            data.push({
+                "key": "imageName",
+                "value": this.imageName
+            })
+        }
+
+        return data;
     }
 }

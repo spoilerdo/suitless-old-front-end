@@ -64,7 +64,7 @@ export default {
             this.form.imageName = "DefaultEdgeImage";
           }
 
-          this.changeChoiceNode(this.form.nodeName, this.form.name);
+          this.changeChoiceNode(this.form.nodeName, this.form.name, this.form.imageName);
 
           this.form.imageName = "";
         }

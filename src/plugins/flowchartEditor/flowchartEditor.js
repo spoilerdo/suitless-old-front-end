@@ -126,10 +126,11 @@ export default {
                  * For instance a notification node.
                  * @memberof plugin.flowchartEditor
                  * @param {String} nodeName the value of the selected cell
-                 * @param {String} name the value that will be used in the survey front-end 
+                 * @param {String} name the value that will be used in the survey front-end
+                 * @param {String} imageName the name of the image
                 */
-                changeChoiceNode(nodeName, name){
-                    methods.changeChoiceNode(nodeName, name);
+                changeChoiceNode(nodeName, name, imageName){
+                    methods.changeChoiceNode(nodeName, name, imageName);
                 },
 
                 /**
@@ -172,6 +173,7 @@ export default {
                  * @memberof plugin.flowchartEditor
                  * @param {String} name the value of the selected edge
                  * @param {String} implications the implications of the edge/ answer of the question
+                 * @param {String} implicationColor the color hex codes of every implication
                  * @param {String} imageName the name of the image that is used for this edge/ answer
                 */
                 changeEdge(nodeName, name, implications, implicationColor, imageName){
