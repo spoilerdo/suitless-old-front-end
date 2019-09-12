@@ -177,10 +177,10 @@ export const methods = {
         let moduleNode = new ModuleNode(name);
         state.selectedCell.lincData = moduleNode.getData();
     },
-    changeNotificationNode(nodeName, name) {
+    changeNotificationNode(nodeName, name, title) {
         this.genericChangeNode(nodeName);
 
-        let notificationNode = new NotificationNode(name);
+        let notificationNode = new NotificationNode(name, title);
         state.selectedCell.lincData = notificationNode.getData();
     },
     changeEdge(nodeName, answer, implications, implicationColor, imageName){

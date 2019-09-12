@@ -7,14 +7,21 @@
  * @since 28-08-2019
  */
 export class NotificationNode {
-    constructor(name){
+    constructor(name, title){
         this.name = name;
+        this.title = title;
     }
 
     getData() {
-        return [{
-            "key": "notify",
-            "value": this.name
-        }]
+        return [
+            {
+                "key": "notify",
+                "value": this.name
+            },
+            {
+                "key": "title",
+                "value": this.title
+            }
+        ]
     }
 }

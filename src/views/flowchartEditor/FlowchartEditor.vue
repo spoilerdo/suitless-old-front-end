@@ -6,8 +6,8 @@
     <div id="formatbarContainer" class="format">
         <GeneralFunctions v-show="formatBarType == null"/>
         <QuestionFunctions v-show="formatBarType == this.$data.nodeEnum.Question"/>
-        <GenericFunctions nameLabel="The name of the Module" nodeName="module" type="module" lincDataName="module"  v-show="formatBarType == this.$data.nodeEnum.Module"/>
-        <GenericFunctions nameLabel="The name of the Notification" nodeName="notification" type="notification" lincDataName="notify" v-show="formatBarType == this.$data.nodeEnum.Notification"/>
+        <ModuleFunctions v-show="formatBarType == this.$data.nodeEnum.Module"/>
+        <NotificationFunctions v-show="formatBarType == this.$data.nodeEnum.Notification"/>
         <MultipleChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.MultipleChoice"/>
         <ChoiceFunctions v-show="formatBarType == this.$data.nodeEnum.Choice"/>
         <EdgeFunctions v-show="formatBarType == this.$data.nodeEnum.Edge"/>
@@ -237,7 +237,6 @@ table.mxPopupMenu tr {
 
 <script>
 import { mapState, mapActions } from "vuex";
-import GenericFunctions from "@/components/flowcharteditor/formatbar/genericView/GenericFunctions";
 import FlowchartForm from "@/components/flowcharteditor/FlowchartForm";
 import ImageSelectorDialog from "@/components/flowcharteditor/ImageSelectorDialog";
 import GeneralFunctions from "@/components/flowcharteditor/formatbar/GeneralFunctions";
@@ -245,6 +244,8 @@ import QuestionFunctions from "@/components/flowcharteditor/formatbar/question-f
 import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/question-functions/MultipleChoiceFunctions";
 import ChoiceFunctions from "@/components/flowcharteditor/formatbar/ChoiceFunctions";
 import EdgeFunctions from "@/components/flowcharteditor/formatbar/edge-functions/EdgeFunctions";
+import NotificationFunctions from "@/components/flowcharteditor/formatbar/NotificationFunctions";
+import ModuleFunctions from "@/components/flowcharteditor/formatbar/ModuleFunctions";
 import Drawer from "@/components/core/Drawer";
 
 /**
@@ -255,13 +256,14 @@ export default {
     components: {
         Drawer,
         ImageSelectorDialog,
-        GenericFunctions,
         FlowchartForm,
         GeneralFunctions,
         QuestionFunctions,
         MultipleChoiceFunctions,
         ChoiceFunctions,
-        EdgeFunctions
+        EdgeFunctions,
+        NotificationFunctions,
+        ModuleFunctions
     },
     mounted(){
         this.startEditor();

@@ -148,10 +148,11 @@ export default {
                  * For instance a notification node.
                  * @memberof plugin.flowchartEditor
                  * @param {String} nodeName the value of the selected cell
-                 * @param {String} name the value that will be used in the survey front-end 
+                 * @param {String} name the value that will be used in the survey front-end
+                 * @param {String} title the title of the notification
                 */
-                changeNotificationNode(nodeName, name) {
-                    methods.changeNotificationNode(nodeName, name);
+                changeNotificationNode(nodeName, name, title) {
+                    methods.changeNotificationNode(nodeName, name, title);
                 },
                 
                 /**
