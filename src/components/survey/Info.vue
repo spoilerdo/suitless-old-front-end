@@ -48,11 +48,11 @@ export default {
     },
     question: {
       type: String,
-      required: true
+      default: ""
     },
     flowchartName: {
       type: String,
-      required: true
+      default: ""
     }
   },
   methods: {
