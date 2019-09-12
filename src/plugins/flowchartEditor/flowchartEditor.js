@@ -84,7 +84,6 @@ export default {
                  * @param {SelectedCell} val a MXGraph cell class
                  */
                 setnewSelectedCell(val){
-                    console.log(val);
                     this.setSelectedCell(val);
                 },
 

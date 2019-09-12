@@ -71,6 +71,7 @@ export default {
   },
   methods: {
     ...mapActions("cdn/", ["setFileDialog"]),
+    ...mapActions("flowcharteditor/", ["setImageName"]),
     changeProps(newForm) {
       this.form.edgeNode = newForm.nodeName;
       this.form.answer = newForm.name;
@@ -102,6 +103,7 @@ export default {
           this.form.imageName
         );
 
+        this.setImageName("");
         this.form.imageName = "";
         this.form.implications = [];
 

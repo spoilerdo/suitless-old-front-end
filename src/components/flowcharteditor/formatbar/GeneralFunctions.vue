@@ -54,7 +54,7 @@ export default {
     ...mapState("flowcharteditor/", ["imageName"])
   },
   methods: {
-    ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart", "setFlowchart"]),
+    ...mapActions("flowcharteditor/", ["setImportDialog", "saveFlowchart", "setFlowchart", "setImageName"]),
     ...mapActions("cdn/", ["setFileDialog"]),
     prepareSaveFlowchart() {
       this.$validator.validateAll("GeneralForm").then(valid => {
@@ -73,6 +73,7 @@ export default {
           }
           let flowchart = this.getFlowchart(this.form.title, this.form.description, lincData);
           this.saveFlowchart(flowchart);
+          this.setImageName("");
         }
       });
     },

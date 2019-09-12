@@ -104,7 +104,7 @@ export default {
       for (let i = 0; i < newFlows.length; i++) {
         const flow = newFlows[i];
         this.testflows[i].targetID = flow.targetID;
-      };
+      }
 
       //Update the flows to the localstorage
       let flowchart = JSON.parse(localStorage.getItem(SET_FLOWCHART));
