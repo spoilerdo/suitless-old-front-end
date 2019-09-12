@@ -30,6 +30,8 @@
       </v-flex>
       <Info
         :reasons="getReasonsArray(currentquestion)"
+        :questionObject="currentquestion"
+        :flowchartName="survey.name"
         v-if="!isMobile && currentquestion.style != $data.nodeEnum.Notification"
       />
     </v-layout>
