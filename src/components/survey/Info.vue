@@ -3,6 +3,22 @@
     <v-flex px-5 my-2 v-for="(reason, index) in reasons" :key="index">
       <v-scale-transition>
         <v-card>
+          <v-tooltip left>
+            <template v-slot:activator="{ on: tooltip }">
+              <v-btn
+                v-if="index === 0"
+                flat
+                icon
+                small
+                right
+                absolute
+                round
+                v-on="{ ...tooltip }"
+                @click="askQuestion()"
+              ><v-icon color="secondary">mdi-help</v-icon></v-btn>
+            </template>
+            <span>I do not understand this question</span>
+          </v-tooltip>
           <v-card-title primary-title class="grow mb-3">
             <v-layout align-center justify-center row>
               <h3 class="mb-0">{{ reason.type }}</h3>
@@ -29,6 +45,20 @@ export default {
     reasons: {
       type: Array,
       required: true
+    },
+    question: {
+      type: String,
+      required: true
+    },
+    flowchartName: {
+      type: String,
+      required: true
+    }
+  },
+  methods: {
+    askQuestion() {
+      console.log("LOAD");
+      window.location.href = `mailto:support@suitless.nl?subject=question about the ${this.flowchartName} flowchart?body=I got a question about the following question: ${this.question}`;
     }
   }
 };
