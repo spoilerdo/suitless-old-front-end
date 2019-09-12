@@ -1,7 +1,6 @@
 import { apiCall } from "@/services/api";
 import { CDN_URL, NOTIFICATION_HANDLER } from "../../generalconstants"
 import { SET_SERVCEABLES, UPDATE_SERVICEABLES, DELETE_SERVICEABLES, ADD_SERVICEABLES, SET_FILE_DIALOG, SET_NEW_SERVICEABLES, SET_SERVICEABLE_EXISTS, ADD_IMAGES, SET_IMAGES, ADD_IMAGE } from "./mutation-types";
-import { async } from "q";
 
 /**
  * The cdn module contains actions that make API calls to the CDN Service

@@ -94,9 +94,7 @@ export default {
       return option.lincData.find(data => data.key === "choice").value;
     },
     getImageName(option) {
-      //TODO: add this when the choice imageName is imported in the flowchart editor
-      //return option.lincData.find(data => data.key === "imageName").value;
-      return "DefaultEdgeImage";
+      return option.lincData.find(data => data.key === "imageName").value;
     },
     selectChoice(answer) {
       //loop through all answers and deselect any that do not match

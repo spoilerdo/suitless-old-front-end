@@ -2,15 +2,15 @@
   <v-layout row justify-center>
     <v-form data-vv-scope="ChoiceForm" @submit.prevent>
       <v-layout column>
-      <GenericView
-        ref="genericView"
-        nameLabel="The name of the Question"
-        nodeName="choice"
-        lincDataName="choice"
-        @onChange="changeProps"
-        @validated="checkValidation"
-      />
-      <v-btn color="primary" @click="setFileDialog(true)">Select Image</v-btn>
+        <GenericView
+          ref="genericView"
+          nameLabel="The name of the Question"
+          nodeName="choice"
+          lincDataName="choice"
+          @onChange="changeProps"
+          @validated="checkValidation"
+        />
+        <v-btn color="primary" @click="setFileDialog(true)">Select Image</v-btn>
       </v-layout>
       <v-layout align-center justify-center row>
         <v-btn color="primary" @click="prepareGenericChangeNode()">Apply</v-btn>
@@ -44,32 +44,41 @@ export default {
     };
   },
   computed: {
-    ...mapState("flowcharteditor/", ["selectedCell", "formatBarType"])
+    ...mapState("flowcharteditor/", [
+      "selectedCell",
+      "formatBarType",
+      "imageName"
+    ])
   },
   created() {
     this.selected = this.selectedCell;
   },
   methods: {
     ...mapActions("cdn/", ["setFileDialog"]),
+    ...mapActions("flowcharteditor/", ["setImageName"]),
     changeProps(newForm) {
       this.form = newForm;
     },
     prepareGenericChangeNode() {
-      this.$refs.genericView.checkIfValid()
+      this.$refs.genericView.checkIfValid();
     },
-    checkValidation(genericValid){
+    checkValidation(genericValid) {
       this.$validator.validateAll("ChoiceForm").then(valid => {
         if (valid && genericValid) {
-          if(this.form.imageName === ""){
+          if (this.form.imageName === "") {
             this.form.imageName = "DefaultEdgeImage";
           }
-
-          this.changeChoiceNode(this.form.nodeName, this.form.name, this.form.imageName);
+          this.changeChoiceNode(
+            this.form.nodeName,
+            this.form.name,
+            this.form.imageName
+          );
 
           this.form.imageName = "";
+          this.setImageName("");
         }
       });
-    },
+    }
   },
   watch: {
     selectedCell: function(newValue) {
@@ -83,10 +92,10 @@ export default {
           data => data.key === "choice"
         ).value;
       }
+    },
+    imageName: function(newVal) {
+      this.form.imageName = newVal;
     }
-  },
-  imageName: function(newVal) {
-    this.form.imageName = newVal;
   }
 };
 </script>

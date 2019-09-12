@@ -13,7 +13,7 @@
         <EdgeFunctions v-show="formatBarType == this.$data.nodeEnum.Edge"/>
     </div>
     <FlowchartForm id="importForm"/>
-    <ImageSelectorDialog v-on:fileName="setImageName($event)"/>
+    <ImageSelectorDialog/>
   </v-layout>
 </template>
 
@@ -239,7 +239,7 @@ table.mxPopupMenu tr {
 import { mapState, mapActions } from "vuex";
 import GenericFunctions from "@/components/flowcharteditor/formatbar/genericView/GenericFunctions";
 import FlowchartForm from "@/components/flowcharteditor/FlowchartForm";
-import ImageSelectorDialog from "@/components/cdn/ImageSelectorDialog";
+import ImageSelectorDialog from "@/components/flowcharteditor/ImageSelectorDialog";
 import GeneralFunctions from "@/components/flowcharteditor/formatbar/GeneralFunctions";
 import QuestionFunctions from "@/components/flowcharteditor/formatbar/question-functions/QuestionFunctions";
 import MultipleChoiceFunctions from "@/components/flowcharteditor/formatbar/question-functions/MultipleChoiceFunctions";
@@ -267,8 +267,7 @@ export default {
         this.startEditor();
     },
     methods: {
-        ...mapActions("app/", ["setBackground", "setFooterColor"]),
-        ...mapActions("flowcharteditor/", ["setImageName"])
+        ...mapActions("app/", ["setBackground", "setFooterColor"])
     },
     beforeMount() {
         this.setBackground("transparent");

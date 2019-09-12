@@ -27,7 +27,11 @@ const state = {
     importDialog: false,
 
     //image name that has been selected by the file dialog
-    imageName: null,
+    //origin is which component is currently in use of selecting an image
+    imageName: {
+        name: "",
+        origin: "",
+    },
 
     flowchart: null,
     formatBarType: null,

@@ -28,7 +28,7 @@ export let GraphCoder = {
             nodes
         }
 
-        console.log(JSON.stringify(module, null, "\t"))
+        //console.log(JSON.stringify(module, null, "\t"))
         return JSON.stringify(module, null, "\t")
     },
 

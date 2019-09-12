@@ -39,7 +39,6 @@ import SurveyInformation from "@/components/survey/SurveyInformation.vue";
 import DisclaimerDialog from "@/components/material/Dialog.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
 
-import Router from "vue-router";
 import theme from "@/plugins/vuetify/theme";
 import { mapState, mapGetters, mapActions } from "vuex";
 
@@ -94,7 +93,6 @@ export default {
 
     agreeDisclaimer(choice) {
       if (choice === false) {
-        this.closeSurvey();
         this.$router.go(-2);
       }
     },
