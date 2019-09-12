@@ -44,7 +44,7 @@
       <!-- All the notifications -->
       <SurveyInformation
         v-if="currentquestion.style == $data.nodeEnum.Notification"
-        title
+        :title="getNotifyTitle()"
         :description="getNotify()"
         btnText="Oke, got it"
         v-on:btnClick="answeredQuestion(currentquestion.flows[0])"
@@ -255,6 +255,11 @@ export default {
 
     getNotify() {
       return this.currentquestion.lincData.find(data => data.key === "notify")
+        .value;
+    },
+
+    getNotifyTitle() {
+      return this.currentquestion.lincData.find(data => data.key === "title")
         .value;
     },
 
