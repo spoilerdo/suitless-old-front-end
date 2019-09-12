@@ -50,13 +50,13 @@ export default {
       type: Array,
       required: true
     },
-    questionObject: {
-      type: Object,
-      required: true
+    question: {
+      type: String,
+      default: ""
     },
     flowchartName: {
       type: String,
-      required: true
+      default: ""
     }
   },
   methods: {

@@ -134,10 +134,12 @@ export default {
     answeredQuestion(answer) {
       this.closeNotification();
 
-      this.answerQuestion({
-        answer,
-        question: this.currentquestion
-      });
+      if (answer.value != null) {
+        this.answerQuestion({
+          answer,
+          question: this.currentquestion
+        });
+      }
 
       let nextQuestion = this.survey.nodes[answer.targetID];
 
@@ -277,7 +279,7 @@ export default {
       this.clearAnswers();
       this.clearProgress();
 
-      if(localStorage.getItem("ENV") === "TEST"){
+      if (localStorage.getItem("ENV") === "TEST") {
         window.close();
       } else {
         //To dashboard or the login page but this is not shure yet
