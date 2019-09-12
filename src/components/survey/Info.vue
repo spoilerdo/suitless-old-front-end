@@ -15,7 +15,9 @@
                 round
                 v-on="{ ...tooltip }"
                 @click="askQuestion()"
-              ><v-icon color="secondary">mdi-help</v-icon></v-btn>
+              >
+                <v-icon color="secondary">mdi-help</v-icon>
+              </v-btn>
             </template>
             <span>I do not understand this question</span>
           </v-tooltip>
@@ -25,7 +27,9 @@
             </v-layout>
           </v-card-title>
           <v-card-actions class="action-card">
-            <v-layout align-center justify-center row><p v-html="reason.reason">{{ reason.reason }}</p></v-layout>
+            <v-layout align-center justify-center row>
+              <p v-html="reason.reason">{{ reason.reason }}</p>
+            </v-layout>
           </v-card-actions>
         </v-card>
       </v-scale-transition>
@@ -57,8 +61,9 @@ export default {
   },
   methods: {
     askQuestion() {
-      console.log("LOAD");
-      window.location.href = `mailto:support@suitless.nl?subject=question about the ${this.flowchartName} flowchart?body=I got a question about the following question: ${this.question}`;
+      let question = this.questionObject.lincData.find(data => data.key === "question").value;
+      window.location.href = `mailto:support@suitless.nl?subject=question about the ${this.flowchartName} 
+      flowchart&body=I got a question about the following question: "${question}"`;
     }
   }
 };
