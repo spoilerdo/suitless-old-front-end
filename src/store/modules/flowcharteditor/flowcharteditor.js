@@ -27,7 +27,11 @@ const state = {
     importDialog: false,
 
     //image name that has been selected by the file dialog
-    imageName: null,
+    //origin is which component is currently in use of selecting an image
+    imageName: {
+        name: "",
+        origin: "",
+    },
 
     flowchart: null,
     formatBarType: null,
@@ -72,6 +76,14 @@ const actions = {
      */
     setSelectedCell({ commit }, newCell) {
         commit(SET_CELL, newCell);
+    },
+
+    /**
+     * save the flows of the flowchart you are currently editing
+     * @memberof store.flowchareditor
+     */
+    setFlowchart({ commit }, flowchart){
+        commit(SET_FLOWCHART, flowchart);
     },
 
     /**

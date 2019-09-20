@@ -83,6 +83,7 @@ export default {
   },
   methods: {
     ...mapActions("cdn/", ["getAllImagesData", "setFileDialog", "addImage"]),
+    ...mapActions("flowcharteditor/", ["setImageName"]),
     setFile(file) {
       this.image.file = file;
     },
@@ -104,7 +105,8 @@ export default {
         if (this.selected === null) {
           this.tryUploadingNewServiceable(this.image, this.clearImage);
         } else {
-          this.$emit("fileName", this.selected.name);
+          //=======TODO ADD ORIGIN!!!!========
+          this.setImageName(this.selected.name, );
         }
         this.selected = null;
         this.setFileDialog(false);

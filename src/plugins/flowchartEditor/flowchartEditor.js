@@ -84,7 +84,6 @@ export default {
                  * @param {SelectedCell} val a MXGraph cell class
                  */
                 setnewSelectedCell(val){
-                    console.log(val);
                     this.setSelectedCell(val);
                 },
 
@@ -126,10 +125,11 @@ export default {
                  * For instance a notification node.
                  * @memberof plugin.flowchartEditor
                  * @param {String} nodeName the value of the selected cell
-                 * @param {String} name the value that will be used in the survey front-end 
+                 * @param {String} name the value that will be used in the survey front-end
+                 * @param {String} imageName the name of the image
                 */
-                changeChoiceNode(nodeName, name){
-                    methods.changeChoiceNode(nodeName, name);
+                changeChoiceNode(nodeName, name, imageName){
+                    methods.changeChoiceNode(nodeName, name, imageName);
                 },
 
                 /**
@@ -148,10 +148,11 @@ export default {
                  * For instance a notification node.
                  * @memberof plugin.flowchartEditor
                  * @param {String} nodeName the value of the selected cell
-                 * @param {String} name the value that will be used in the survey front-end 
+                 * @param {String} name the value that will be used in the survey front-end
+                 * @param {String} title the title of the notification
                 */
-                changeNotificationNode(nodeName, name) {
-                    methods.changeNotificationNode(nodeName, name);
+                changeNotificationNode(nodeName, name, title) {
+                    methods.changeNotificationNode(nodeName, name, title);
                 },
                 
                 /**
@@ -172,6 +173,7 @@ export default {
                  * @memberof plugin.flowchartEditor
                  * @param {String} name the value of the selected edge
                  * @param {String} implications the implications of the edge/ answer of the question
+                 * @param {String} implicationColor the color hex codes of every implication
                  * @param {String} imageName the name of the image that is used for this edge/ answer
                 */
                 changeEdge(nodeName, name, implications, implicationColor, imageName){

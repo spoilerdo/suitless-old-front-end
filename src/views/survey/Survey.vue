@@ -23,80 +23,22 @@
         v-on:btnClick="startSurvey"
       />
     </v-layout>
-    <!-- The questions the surveys asks -->
 
-    <!-- All the questions and multi choice -->
-    <v-layout
-      align-start
-      justify-center
-      row
-      v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
-    >
-      <v-flex xs11 sm7 md7 my-2>
-        <!--currentquestion is an object not an integer-->
-        <Question
-          v-if="currentquestion.style == $data.nodeEnum.Question"
-          v-on:answerQuestion="answeredQuestion"
-          v-on:renderPreviousQuestion="renderPreviousQuestion"
-          :question="currentquestion"
-          :progress="progress"
-          :isMobile="isMobile"
-        />
-        <MultipleChoice
-          v-else-if="currentquestion.style == $data.nodeEnum.MultipleChoice"
-          v-on:answerMultiChoice="answeredMultiChoiceQuestion"
-          v-on:renderPreviousQuestion="renderPreviousQuestion"
-          :question="currentquestion"
-          :progress="progress"
-          :isMobile="isMobile"
-          :options="options"
-        />
-        <Notification ref="surveyNotification" :timeVisible="0" />
-      </v-flex>
-        <Info
-          :reasons="getReasonsArray(currentquestion)"
-          v-if="!isMobile && currentquestion.style != $data.nodeEnum.Notification"
-        />
-    </v-layout>
-    <!-- All the notifications -->
-    <v-layout
-      align-center
-      justify-center
-      row
-      v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
-    >
-      <SurveyInformation
-        v-if="currentquestion.style == $data.nodeEnum.Notification"
-        title
-        :description="getNotify()"
-        btnText="Oke, got it"
-        v-on:btnClick="answeredQuestion(currentquestion.flows[0])"
-      />
-    </v-layout>
-    <!-- The end of the survey -->
-    <EndPage
-      v-else-if="progress === 100"
-      :answers="answer"
-      :question="currentquestion"
-      :progress="progress"
-      v-on:renderPreviousQuestion="renderPreviousQuestion"
-      v-on:printPDF="generatePDF"
-      v-on:closeSurvey="closeSurvey"
+    <!-- The questions the surveys asks -->
+    <SurveyContainer
+      v-bind:isMobile.sync="isMobile"
+      v-bind:surveyStarted.sync="surveyStarted"
+      v-if="survey.nodes != null && surveyStarted && currentquestion != null"
     />
   </v-container>
 </template>
 
 <script>
+import SurveyContainer from "@/components/survey/SurveyContainer.vue";
 import SurveyInformation from "@/components/survey/SurveyInformation.vue";
 import DisclaimerDialog from "@/components/material/Dialog.vue";
-import Question from "@/components/survey/Question.vue";
 import ProgressBar from "@/components/survey/Progress.vue";
-import Notification from "@/components/material/Notification.vue";
-import MultipleChoice from "@/components/survey/MultipleChoice.vue";
-import EndPage from "@/components/survey/endpage/EndPage.vue";
-import Info from "@/components/survey/Info.vue";
-import { getReasonsArray } from "@/services/flowchartHelper";
-import Router from "vue-router";
+
 import theme from "@/plugins/vuetify/theme";
 import { mapState, mapGetters, mapActions } from "vuex";
 
@@ -107,38 +49,26 @@ import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   props: ["surveyID"],
   components: {
+    SurveyContainer,
     SurveyInformation,
     DisclaimerDialog,
-    Question,
-    ProgressBar,
-    Notification,
-    MultipleChoice,
-    Info,
-    EndPage
+    ProgressBar
   },
   computed: {
     ...mapState("survey/", {
       survey: state => state.survey
     }),
-    ...mapState("answer", {
-      answer: state => state.all
-    }),
     ...mapState("progress/", [
-      "currentquestion",
-      "progress",
-      "notification",
-      "options"
+      "currentquestion"
     ]),
     ...mapGetters({
-      firsQuestionID: "survey/getFirstQuestionID",
-      getAnswerByQuestionID: "answer/getAnswerByQuestionID"
-    }),
+      firsQuestionID: "survey/getFirstQuestionID"
+    })
   },
   data() {
     return {
       isMobile: true,
-      surveyStarted: false,
-      getReasonsArray: getReasonsArray
+      surveyStarted: false
     };
   },
   created() {
@@ -147,195 +77,32 @@ export default {
     this.setBackground(theme.defaultBackground);
     this.setFooterColor(theme.primary);
   },
+  updated() {
+    //only on the first ever update since this page
+    if (this.currentquestion == null) {
+      let firstquestion = this.survey.nodes[this.firsQuestionID];
+      let allNodes = this.survey.nodes;
+
+      this.setCurrentQuestion({ question: firstquestion, nodes: allNodes });
+    }
+  },
   methods: {
-    ...mapActions("survey/", ["getSurveyByID", "deleteChosenSurvey"]),
-    ...mapActions("answer/", [
-      "deleteLastAnswer",
-      "answerQuestion",
-      "clearAnswers"
-    ]),
-    ...mapActions("progress/", [
-      "fillProgress",
-      "setCurrentQuestion",
-      "fillCurrentQuestionBacklog",
-      "clearCurrentQuestionBacklog",
-      "fillsubQuestionBackLog",
-      "clearSubQuestionBackLog",
-      "clearProgress"
-    ]),
+    ...mapActions("survey/", ["getSurveyByID"]),
+    ...mapActions("progress/", ["setCurrentQuestion"]),
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
 
     agreeDisclaimer(choice) {
       if (choice === false) {
-        this.closeSurvey();
         this.$router.go(-2);
       }
-    },
-
-    getNotify() {
-      return this.currentquestion.lincData.find(data => data.key === "notify")
-        .value;
     },
 
     startSurvey() {
       this.surveyStarted = true;
     },
 
-    answeredQuestion(answer) {
-      this.closeNotification();
-
-      this.answerQuestion({
-        answer,
-        question: this.currentquestion
-      });
-
-      let nextQuestion = this.survey.nodes[answer.targetID];
-
-      this.setCurrentQuestion({
-        question: nextQuestion,
-        nodes: this.survey.nodes
-      });
-      this.fillProgress({ addedDepth: 1, survey: this.survey });
-    },
-
-    renderPreviousQuestion(question) {
-      this.closeNotification();
-
-      let prevAnswer = null;
-
-      //get previous answer(s) and convert them to an array.
-      prevAnswer = this.getAnswerByQuestionID(question);
-      //console.log(prevAnswer);
-
-      if (!Array.isArray(prevAnswer)) {
-        prevAnswer = Array.of(prevAnswer);
-      } else {
-        //make sure to clear the backlog so the flow of the survey doesnt mess up.
-        this.clearCurrentQuestionBacklog();
-        this.clearSubQuestionBackLog();
-      }
-
-      let previousQuestionID = prevAnswer[0].questionID;
-
-      //check if previous question is a notification, if so go one more back.
-      if (
-        this.survey.nodes[previousQuestionID].style == this.$data.nodeEnum.Notification) {
-        this.renderPreviousQuestion(this.survey.nodes[prevAnswer[0].questionID]);
-      } else {
-        //select the previous question
-        this.setCurrentQuestion({
-          question: this.survey.nodes[previousQuestionID],
-          nodes: this.survey.nodes
-        });
-      }
-      this.deleteLastAnswer();
-
-      prevAnswer.forEach(() => {
-        //reset progress for each previous answer
-        this.fillProgress({ addedDepth: -1, survey: this.survey });
-      });
-    },
-
-    answeredMultiChoiceQuestion({ answers, q }) {
-      this.closeNotification();
-
-      //add answer to list of given answers.
-      this.answerQuestion({
-        answer: answers,
-        question: this.currentquestion
-      });
-
-      //check if a flag is set for not looping non unique answers
-      let shouldLoopNonUniqueSubQuestions = this.currentquestion.lincData.find(
-        d => d.key === "loopsubQuestions"
-      );
-
-      let firstSubQuestion = null;
-      let subquestions = answers.filter(answer => answer.flows.length > 0);
-      if(subquestions.lenght > 0) {
-        firstSubQuestion = this.survey.nodes[subquestions[0].flows[0].targetID];
-      }
-      if (shouldLoopNonUniqueSubQuestions.value == "false") {
-        //create list of unique sub questions based on targetid and only add these to the backlog (skip first one it will be handled seperately)
-        subquestions = subquestions.slice(1);
-        let uniqueList = [
-          ...new Set(subquestions.map(i => i.flows[0].targetID))
-        ];
-        uniqueList.forEach(nextQID => {
-          //make sure we do not get duplicates on the first item we sliced
-          if (nextQID !== answers[0].flows[0].targetID) {
-            this.fillsubQuestionBackLog(this.survey.nodes[nextQID]);
-          }
-        });
-      } else {
-        //loop through all answers (skip 1st again it will be handled seperately) and add them to the subquestionbakclog
-        subquestions.slice(1).forEach(ans => {
-          if (ans.flows.length > 0) {
-            this.fillsubQuestionBackLog(
-              this.survey.nodes[ans.flows[0].targetID]
-            );
-          }
-        });
-      }
-
-      let backLogQuestion = null;
-      if (q.flows.length > 0) {
-        backLogQuestion = this.survey.nodes[q.flows[0].targetID];
-      }
-
-      //add the first question to come after finishing all multiple choice sub questions to the backlog.
-      this.fillCurrentQuestionBacklog({
-        firstSubQuestion: firstSubQuestion,
-        backLogQuestion: backLogQuestion,
-        nodes: this.survey.nodes
-      });
-
-      this.fillProgress({ addedDepth: 1, survey: this.survey });
-    },
-
-    closeNotification() {
-      if (this.$refs.surveyNotification != null) {
-        this.$refs.surveyNotification.closeNotification();
-      }
-    },
-
-    generatePDF() {
-      let pdfOptions = {
-        orientation: "portrait",
-        unit: "cm"
-      };
-
-      this.printPDF(pdfOptions, this.answer);
-    },
-
-    closeSurvey() {
-      this.deleteChosenSurvey();
-      this.clearAnswers();
-      this.clearProgress();
-
-      //To dashboard or the login page but this is not shure yet
-      this.$router.push("/dashboard");
-    },
-
     onResize() {
       this.isMobile = window.innerWidth < 950;
-    }
-  },
-  updated() {
-    //only on the first ever update since this page
-    if (this.currentquestion == null) {
-      let firstquestion = this.survey.nodes[this.firsQuestionID];
-      let allNodes = this.survey.nodes;
-      this.setCurrentQuestion({ question: firstquestion, nodes: allNodes });
-    }
-  },
-  watch: {
-    notification: function(val) {
-      if (this.$refs.surveyNotification != null) {
-        if (val.message != null) {
-          this.$refs.surveyNotification.showNotification(val.message, val.type);
-        }
-      }
     }
   },
   mounted() {
@@ -347,15 +114,6 @@ export default {
     if (typeof window !== "undefined") {
       window.removeEventListener("resize", this.onResize, { passive: true });
     }
-  },
-  beforeRouteLeave(to, from, next) {
-    const answer = window.confirm("Do you really want to leave? You are still working on the survey!");
-    if(answer) {
-      next();
-      this.closeSurvey();
-    } else {
-      next(false);
-    }
-  },
+  }
 };
 </script>

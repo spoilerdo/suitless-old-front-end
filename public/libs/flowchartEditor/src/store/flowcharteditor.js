@@ -165,10 +165,10 @@ export const methods = {
         let multiChoiceNode = new MultiChoiceNode(question, reasons, loopSubQuestions, state.selectedCell.children);
         state.selectedCell.lincData = multiChoiceNode.getData();
     },
-    changeChoiceNode(nodeName, name) {
+    changeChoiceNode(nodeName, name, imageName) {
         this.genericChangeNode(nodeName);
 
-        let choiceNode = new ChoiceNode(name);
+        let choiceNode = new ChoiceNode(name, imageName);
         state.selectedCell.lincData = choiceNode.getData();
     },
     changeModuleNode(nodeName, name) {
@@ -177,10 +177,10 @@ export const methods = {
         let moduleNode = new ModuleNode(name);
         state.selectedCell.lincData = moduleNode.getData();
     },
-    changeNotificationNode(nodeName, name) {
+    changeNotificationNode(nodeName, name, title) {
         this.genericChangeNode(nodeName);
 
-        let notificationNode = new NotificationNode(name);
+        let notificationNode = new NotificationNode(name, title);
         state.selectedCell.lincData = notificationNode.getData();
     },
     changeEdge(nodeName, answer, implications, implicationColor, imageName){

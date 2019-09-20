@@ -1,26 +1,30 @@
-import { SET_SURVEY, DELETE_SURVEY_STATE } from '@/store/modules/survey/mutation-types';
+import { SET_FLOWCHART } from '@/store/modules/flowcharteditor/mutation-types';
+import { SET_SURVEY } from '@/store/modules/survey/mutation-types';
 export const localStorageSynchroniser = store => {
     store.subscribe((mutation, state) => {
         //This will store some states to the localstorage because you want to use the information for multible tabs
 
-        //survey.js
+        //flowcharteditor.js
         //The survey state is needed in order to get it on a sperate tab for testing purposes
-        if(mutation.type === "survey/"+SET_SURVEY){
+        if(mutation.type === "flowcharteditor/"+SET_FLOWCHART){
             if(mutation.payload){
-                localStorage.setItem(SET_SURVEY, JSON.stringify(mutation.payload));
+                localStorage.setItem(SET_FLOWCHART, JSON.stringify(mutation.payload));
             }
-        }else if(mutation.type === "survey/"+ DELETE_SURVEY_STATE) {
-            localStorage.removeItem(SET_SURVEY);
         }
 
     })
-    if(localStorage.getItem(SET_SURVEY)){
-        store.commit("survey/"+SET_SURVEY, JSON.parse(localStorage.getItem(SET_SURVEY)));
-    } else {
-        store.commit("survey/"+DELETE_SURVEY_STATE);
+    if(localStorage.getItem(SET_FLOWCHART)){
+        store.commit("survey/"+SET_SURVEY, JSON.parse(localStorage.getItem(SET_FLOWCHART)));
     }
 
     window.onbeforeunload = () => {
-        localStorage.removeItem(SET_SURVEY);
+        //update the auto save of the flowchart editor with the new changes from the test function
+        let flowchart = localStorage.getItem(SET_FLOWCHART);
+        console.log(flowchart);
+        if(flowchart){
+            localStorage.setItem("model", flowchart);
+        }
+        localStorage.removeItem(SET_FLOWCHART);
+        localStorage.removeItem("ENV");
     };
 }

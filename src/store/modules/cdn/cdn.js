@@ -90,11 +90,11 @@ const actions = {
     getData({ commit, dispatch, getters }, id) {
         apiCall("GET", `${CDN_URL}/meta/id/${id}`)
             .then(data => {
-                let oldMetadata = getters.getServiceablesDataByName(data.metadataList[0].tag);
+                let oldMetadata = getters.getServiceablesDataByName(data.metaServiceableWrapperList[0].tag);
 
                 if (oldMetadata != null) {
                     //metadata already exists in the list but is maybe outdated so update it
-                    commit(UPDATE_SERVICEABLES, { data, oldMetadata });
+                    commit(UPDATE_SERVICEABLES, { data: data.metaServiceableWrapperList[0], oldMetadata });
                 } else {
                     //metadata is new so add it to the bottom of the list
                     commit(ADD_SERVICEABLES, data);
@@ -197,6 +197,25 @@ const actions = {
         } catch (e) {
             dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
         }
+    },
+
+    /**
+     * Attempts to update the meta data of a serviceable to the CDN service
+     * @memberof store.cdn
+     */
+    async updateMetaData({ dispatch, commit, getters }, { tag, locked }){
+        try {
+            const req = await apiCall("PUT", `${CDN_URL}/meta/${tag}`, locked);
+            if(req) {
+                let oldMetadata = getters.getServiceablesDataByName(req.metaServiceableWrapper.tag);
+
+                commit(UPDATE_SERVICEABLES, { data: req.metaServiceableWrapper, oldMetadata });
+
+                dispatch(NOTIFICATION_HANDLER, { message: "file updated", type: "success" }, { root: true });
+            }
+        } catch (e) {
+            dispatch(NOTIFICATION_HANDLER, { message: e, type: "error" }, { root: true });
+        }
     }
 }
 
@@ -228,11 +247,12 @@ const mutations = {
                 size: (serviceable.size / 1000).toFixed(2), //Byte to KB
                 type: serviceable.type,
                 id: serviceable.id,
+                locked: serviceable.locked,
                 baseURL: CDN_URL + "/" + serviceable.tag
             });
         });
     },
-    [UPDATE_SERVICEABLES](state, payload) {        
+    [UPDATE_SERVICEABLES](state, payload) {  
         let index = state.serviceables.indexOf(payload.oldMetadata);
         state.serviceables[index] = {
             name: payload.data.metaServiceableWrapperList[0].tag,
