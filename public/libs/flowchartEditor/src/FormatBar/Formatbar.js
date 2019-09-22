@@ -6,15 +6,14 @@
  */
 
 import { mxEvent, mxEditor } from "../MxGraph";
-import { state } from "../store/flowcharteditor";
+import { state } from "../store/flowcharteditorEndpoint";
 
 /**
- * create format bar on the right
+ * Create format bar on the right
  * @param {mxEditor} editor 
  * @param {mxGraphModel} model
  */
 export function createFormatbar(editor, model) {
-    //formatBarFunctions.showDiagram(formatbarContainer, editor);
     editor.graph.getSelectionModel().addListener(mxEvent.CHANGE, (sender, evt) => {
         let cells = evt.getProperty('removed');
 
@@ -26,7 +25,7 @@ export function createFormatbar(editor, model) {
             state.activeFormatBar.set = null;
         }
     });
-};
+}
 
 /**
  * Updates the flowchart editor store to the correct formatbar type that corresponds to the selected cell type (e.g. question node)

@@ -6,7 +6,7 @@
  * @since 12-03-2019
  */
 
-import { mxEdgeHandler, mxConnectionConstraint, mxCellState, mxPoint } from "../MxGraph";
+import { mxEdgeHandler, mxConnectionConstraint, mxPoint } from "../MxGraph";
 
 /**
  * Creates the snap point on a vertex. 
@@ -17,7 +17,7 @@ export function createSnapPoints(graph, model){
     // Disables floating connections (only use with no connect image)
     if (graph.connectionHandler.connectImage == null)
     {
-        graph.connectionHandler.isConnectableCell = (cell) =>
+        graph.connectionHandler.isConnectableCell = () =>
         {
             return false;
         };

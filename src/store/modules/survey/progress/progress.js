@@ -36,6 +36,7 @@ const actions = {
    * @memberof store.progress
    */
   fillProgress({ commit, state }, { addedDepth, survey }) {
+    let nodeEnum = V.$data.nodeEnum;
     let depth = state.depth;
     const currentquestion = state.currentquestion;
 
@@ -44,7 +45,7 @@ const actions = {
       depth = d;
     }
 
-    if (currentquestion.style != "2" && (currentquestion.flows.length > 0 || state.currentquestionBacklog.length !== 0 || state.subQuestionBackLog.length !== 0)) {
+    if (currentquestion.style != nodeEnum.End && (currentquestion.flows.length > 0 || state.currentquestionBacklog.length !== 0 || state.subQuestionBackLog.length !== 0)) {
       //bump up the progress
       commit(SET_PROGRESS, (depth / survey.maxDepth) * 100);
     } else {

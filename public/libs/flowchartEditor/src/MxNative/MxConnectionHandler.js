@@ -6,7 +6,7 @@
  * @version 1.0
  * @since 09-07-2019
  */
-import { state } from "../store/flowcharteditor";
+import { state } from "../store/flowcharteditorEndpoint";
 import { mxConnectionHandler, mxUtils, mxConstraintHandler, mxCellState } from "../MxGraph";
 
 export function connectionHandlerFunctions(graph) {
@@ -19,14 +19,13 @@ export function connectionHandlerFunctions(graph) {
         var shape = connectionHandlerCreateShape.apply(this, arguments);
 
         shape.isDashed = '0';
-        //edgeStyle=orthogonalEdgeStyle;html=1;jettySize=auto;orthogonalLoop=1;
         shape.myEdgeStyle = 'orthogonalEdgeStyle'
 
         return shape;
     }
 
     // Overrides live preview to keep current style
-    mxConnectionHandler.prototype.updatePreview = function (valid) {
+    mxConnectionHandler.prototype.updatePreview = function () {
         // do not change color of preview
     };
 
@@ -37,7 +36,7 @@ export function connectionHandlerFunctions(graph) {
 
 
     // Connect preview
-    graph.connectionHandler.createEdgeState = function (me) {
+    graph.connectionHandler.createEdgeState = function () {
         var edge = graph.createEdge(null, null, null, null, null, 'edgeStyle=orthogonalEdgeStyle');
 
         return new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge));
@@ -47,7 +46,7 @@ export function connectionHandlerFunctions(graph) {
 
     // Special case: Snaps source of new connections to fixed points
     var mxConnectionHandlerUpdateEdgeState = mxConnectionHandler.prototype.updateEdgeState;
-    mxConnectionHandler.prototype.updateEdgeState = function (pt, constraint) {
+    mxConnectionHandler.prototype.updateEdgeState = function (pt) {
         if (pt != null && this.previous != null) {
             var constraints = this.graph.getAllConnectionConstraints(this.previous);
             var nearestConstraint = null;

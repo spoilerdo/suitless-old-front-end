@@ -123,9 +123,6 @@ export const methods = {
     genericChangeNode(nodeName){
     state.selectedCell.value = nodeName;
     state.editor.graph.getModel().setValue(state.selectedCell, nodeName);
-    /*if(state.selectedCell.lincData){
-        state.selectedCell.lincData.find(data => data.key === keyName).value = name;
-    }*/
     },
     changeQuestionNode(nodeName, question, reasons){
         this.genericChangeNode(nodeName);
@@ -140,6 +137,9 @@ export const methods = {
         
         //get the child count (amount of choices)
         let childerenCount = state.selectedCell.getChildCount();
+        console.log("CHANGE MULTI CHOICE");
+        console.log(childerenCount);
+        console.log(amountOfChoices);
 
         if(childerenCount < amountOfChoices){
             //add some choices because the user wants more than he already has
@@ -162,7 +162,9 @@ export const methods = {
             graph.removeCells(childrenToBeRemoved, true);
         }
 
-        let multiChoiceNode = new MultiChoiceNode(question, reasons, loopSubQuestions, state.selectedCell.children);
+        let multiChoiceNode = new MultiChoiceNode(question, reasons, loopSubQuestions, state.selectedCell.children.map((child) => {
+            return child.id;
+        }));
         state.selectedCell.lincData = multiChoiceNode.getData();
     },
     changeChoiceNode(nodeName, name, imageName) {

@@ -22,11 +22,11 @@ export function autoResizeCells(graph) {
 
         //loop through each cell and get their preferred boundaries
         cells.forEach(c => {
-            if(c.lincType != undefined && c.lincType != NodeEnum.MultipleChoice){
+            if(c.lincType !== undefined && c.lincType !== NodeEnum.MultipleChoice){
 
                 let minHeight = 80;
                 let heightSlack = 25;
-                if(c.lincType == NodeEnum.Choice){
+                if(c.lincType === NodeEnum.Choice){
                     minHeight = 40;
                     heightSlack = 10;
                 }
