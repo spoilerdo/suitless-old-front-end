@@ -92,7 +92,7 @@ export default {
     ...mapActions("app/", ["setBackground", "setFooterColor"]),
 
     agreeDisclaimer(choice) {
-      if (choice === false) {
+      if (choice == false) {
         this.$router.go(-2);
       }
     },

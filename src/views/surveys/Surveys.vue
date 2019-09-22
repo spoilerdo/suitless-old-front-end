@@ -9,16 +9,9 @@
       <v-layout align-space-around justify-center row wrap>
         <ActionCard
           @action="redirecturl"
-          parameter="/survey/5cf4c7f87fa73a0006d320ac"
-          text="Trademark"
+          parameter="/survey/5d74f34a6eb14e0001b9c89c"
+          text="Trade name/ Trademark"
           imageName="trademark"
-          rounded
-        />
-        <ActionCard
-          @action="redirecturl"
-          parameter="/survey/5d41a385c806980001e4abe5"
-          text="Tradename"
-          imageName="tradename"
           rounded
         />
       </v-layout>
