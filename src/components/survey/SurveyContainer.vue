@@ -7,7 +7,7 @@
       row
       v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
     >
-      <v-flex xs11 sm7 md7 my-2>
+      <v-flex xs11 sm7 md7 my-2 px-2>
         <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == $data.nodeEnum.Question"
@@ -29,6 +29,7 @@
         <Notification ref="surveyNotification" :timeVisible="0" />
       </v-flex>
       <Info
+        class="max-width"
         :reasons="getReasonsArray(currentquestion)"
         :questionObject="currentquestion"
         :flowchartName="survey.name"
@@ -62,6 +63,12 @@
     />
   </div>
 </template>
+
+<style scoped>
+.max-width {
+  max-width: 50%;
+}
+</style>
 
 <script>
 import Question from "@/components/survey/question/Question.vue";
