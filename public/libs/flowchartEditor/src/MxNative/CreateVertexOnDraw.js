@@ -9,9 +9,9 @@
 
 import { NodeEnum } from "../NodeEnum";
 import { editorFunctions } from "../EditorFunctions/EditorFunctions";
-import { state } from "../store/flowcharteditor";
+import { state } from "../store/flowcharteditorEndpoint";
 
-import { mxConnectionHandler, mxPoint } from "../MxGraph";
+import { mxConnectionHandler, mxPoint, mxEventObject, mxGeometry } from "../MxGraph";
 
 /**
  * When drawing a line this code will show a popup menu so you can chose which node you want to create
@@ -105,7 +105,7 @@ export function vertexOnDraw(mxEvent, graph) {
 
         let cell = editorFunctions.addVertex(selectedvertexType, this.graph, null, null, null);
 
-        editorFunctions.updateDepth(cell, source);
+        //editorFunctions.updateDepth(cell, source);
 
         geo = this.graph.getModel().getGeometry(cell);
 
@@ -228,7 +228,6 @@ export function vertexOnDraw(mxEvent, graph) {
 
                     // Inserts edge before source
                     if (this.isInsertBefore(edge, source, target, evt, dropTarget)) {
-                        var index = null;
                         var tmp = source;
 
                         while (tmp.parent != null && tmp.geometry != null &&
@@ -279,7 +278,7 @@ export function vertexOnDraw(mxEvent, graph) {
                 }
             }
             catch (e) {
-
+                console.error(e);
             }
             finally {
                 model.endUpdate();

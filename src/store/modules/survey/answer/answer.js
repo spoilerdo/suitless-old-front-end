@@ -47,47 +47,49 @@ const actions = {
      */
     answerQuestion({ commit, dispatch }, { answer, question }) {
         //check if the answer given is multiple choice (an array)
-        if(Array.isArray(answer)) {
+        if (Array.isArray(answer)) {
             //multi choice question answered
             //create temp array for storing created answer objects
             let temp = [];
 
             answer.forEach(ans => {
                 let implications = createImplicationArray(ans, true);
-                
+
+                let answerClass = null;
+
                 //if a multi choice is answered without a follow up flow, be sure to save it seperately. otherwise it will be skipped
-                if(ans.flows.length === 0) {
-                    let a = {
+                if (ans.flows.length === 0) {
+                    answerClass = {
                         questionID: question.id,
                         questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,
                         lincData: question.lincData,
                         targetID: null,
-                        answerValue: ans.lincData.find(data => data.key === "answer").value,
+                        answerValue: ans.lincData.find(data => data.key === "choice").value,
                         implications: implications
                     }
-
-                    temp.push(a);
+                } else {
+                    ans.flows.forEach(flow => {
+                        answerClass = {
+                            questionID: question.id,
+                            questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,
+                            lincData: question.lincData,
+                            targetID: flow.targetID,
+                            answerValue: ans.lincData.find(data => data.key === "choice").value,
+                            implications: implications
+                        };
+                    })
                 }
 
-                ans.flows.forEach(flow => {
-                    let a = {
-                        questionID: question.id,
-                        questionValue: question.lincData.find(data => data.key === "question" || data.key === "notify").value,
-                        lincData: question.lincData,
-                        targetID: flow.targetID,
-                        answerValue: answer.lincData.find(data => data.key === "answer").value,
-                        implications: implications
-                    };
+                //Notify the user of the implication they just received from the survey.
+                if (answerClass.answerImplication != null) {
+                    dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root: true });
+                }
 
-                    //Notify the user of the implication they just received from the survey.
-                    if(a.answerImplication != null){
-                        dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
-                    }
-    
-                    temp.push(a);
-                })
+                if(answerClass) {
+                    temp.push(answerClass);
+                }
             });
-            
+
             //push the array to the main answer store.
             commit(ADD_ANSWER, temp);
 
@@ -105,8 +107,8 @@ const actions = {
             };
 
             //Notify the user of the implication they just received from the survey.
-            if(a.answerImplication != null){
-                dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root:true });
+            if (a.answerImplication != null) {
+                dispatch(SURVEY_NOTIFICATION_HANDLER, { message: a.answerImplication, type: a.answerImplicationLevel }, { root: true });
             }
 
             commit(ADD_ANSWER, a);

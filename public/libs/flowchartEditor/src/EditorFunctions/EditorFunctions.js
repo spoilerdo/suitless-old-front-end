@@ -7,7 +7,7 @@
 import { NodeEnum } from "../NodeEnum";
 import { ShapeEnum } from "./ShapeEnum";
 import { GraphCoder } from "../GraphCoder";
-import { state } from "../store/flowcharteditor";
+import { state } from "../store/flowcharteditorEndpoint";
 import { addQuestion, addStart, addModule, addEnd, addNotification, addNote, registerCustomShape, addMultipleChoice } from "./PrivateFunctions";
 
 import { mxConstants, mxEllipse, mxHexagon, mxSwimlane, mxRectangle, mxEvent } from "../MxGraph";
@@ -18,6 +18,7 @@ import { EdgeNode } from "./NodeClasses/EdgeNode";
  * This only counts the amount of questions
  */
 let maxDepth = 0;
+let amountOfSubQuestions = 0;
 
 /**
  * Contains common graph functions such as adding or connecting nodes.
@@ -145,7 +146,7 @@ export let editorFunctions = {
     * @param {mxGraph} graph
     */
     exportChart(graph, name, description, lincData) {
-        return GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth, lincData);
+        return GraphCoder.encodeGraphToJSON(graph, name, description, maxDepth + amountOfSubQuestions, lincData);
     },
 
     /**
@@ -163,8 +164,9 @@ export let editorFunctions = {
         json.forEach(n => {
             if (n.style != NodeEnum.Choice || n.style != NodeEnum.Start) {
                 if (n.style == NodeEnum.MultipleChoice) {
-                    //The multiplechoice needs some childs|
-                    let data = n.lincData.filter(c => c.key !== "question" && c.key !== "loopsubQuestions" && c.key !== "reason")
+                    //The multiplechoice needs some childs
+                    //TODO: deze klopt niet!!! REEEEE
+                    let data = n.lincData.filter(c => c.key === "choice")
 
                     let childs = [];
                     data.forEach(child => {
@@ -227,7 +229,7 @@ export let editorFunctions = {
     },
 
     /**
-    * changes the active graph style.
+    * Changes the active graph style.
     * @param {mxGraph} graph 
     * @param {string} name
     */
@@ -241,16 +243,41 @@ export let editorFunctions = {
     },
 
     /**
-    * Update the depth of a qualifite node
+     * Removes depth whenever cells are removed
+     * @param {mxCell} cell 
+     */
+    removeDepth(cell) {
+        if(cell.isSubQuestion){
+            amountOfSubQuestions -= 1;
+        } else {
+            if(cell.depth === maxDepth) {
+                maxDepth -= 1;
+            }            
+        }
+
+        console.log(maxDepth);
+        console.log(amountOfSubQuestions);
+    },
+
+    /**
+    * Update the depth of a qualified node
     */
     updateDepth(cell, source) {
         //get the previouse cell's depth and set the next cells depth + 1
         if (cell.lincType === NodeEnum.Question || cell.lincType === NodeEnum.MultipleChoice || cell.lincType === NodeEnum.Choice || cell.lincType === NodeEnum.Notification) {
-            cell.depth = source.depth + 1;
-            if (cell.children != null) {
-                cell.children.forEach(child => {
-                    child.depth = cell.depth;
-                });
+            if (source.lincType === NodeEnum.Choice || source.isSubQuestion) {
+                //the cell is a sub cell of a choice
+                cell.isSubQuestion = true;
+
+                amountOfSubQuestions++;
+                console.log(amountOfSubQuestions);
+            } else {
+                cell.depth = source.depth + 1;
+                if (cell.children != null) {
+                    cell.children.forEach(child => {
+                        child.depth = cell.depth;
+                    });
+                }
             }
         } else if (cell.lincType === NodeEnum.Notification) {
             cell.depth = source.depth;

@@ -42,9 +42,12 @@ import { connectionHandlerFunctions } from "./MxNative/MxConnectionHandler";
 //Script that will auto save the flowchart to the local storage
 import { initAutoSave } from "./MxNative/AutoSave";
 
+//Script that will be triggered whenever cells are removed
+import { cellsRemovedFunctions } from "./MxNative/CellsRemoved";
+
 //Script that is the store of the flowchart editor this script contains some general information 
 //about the flowchart that will be shared with Vue trough the plugin script
-import { state } from "./store/flowcharteditor";
+import { state } from "./store/flowcharteditorEndpoint";
 
 import { mxClient, mxGraph, mxUtils, mxEvent, mxEditor, mxGraphModel, mxKeyHandler, mxUndoManager, mxConstants, mxGraphView } from "./MxGraph";
 
@@ -103,7 +106,6 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
 
         createSnapPoints(graph, model);
 
-        // Enables rubberband selection
         createRubberband(graph);
 
         mxConstants.WORD_WRAP = 'break-word';
@@ -123,6 +125,8 @@ let main = (graphContainer, toolbarContainer, formatbarContainer) => {
         clipBoardFunctions(graph);
 
         initAutoSave(graph, model);
+
+        cellsRemovedFunctions(graph);
 
         autoResizeCells(graph);
 
