@@ -9,9 +9,15 @@ import { QuestionNode } from "./QuestionNode";
  * @since 28-08-2019
  */
 export class MultiChoiceNode extends QuestionNode {
-    constructor(question, reasons, loopsubQuestions, choices){
+    constructor(question, reasons, loopsubQuestions, choices) {
         super(question, reasons);
         this.loopsubQuestions = loopsubQuestions;
+        if(choices) {
+            this.choices = choices;
+        }
+    }
+
+    addChoices(choices) {
         this.choices = choices;
     }
 
@@ -21,12 +27,14 @@ export class MultiChoiceNode extends QuestionNode {
             "key": "loopsubQuestions",
             "value": this.loopsubQuestions
         })
-        this.choices.forEach(choice => {
-            data.push({
-                "key": "choice",
-                "value": choice.id
-            }); 
-        });
+        if (this.choices) {
+            this.choices.forEach(choice => {
+                data.push({
+                    "key": "choice",
+                    "value": choice
+                });
+            });
+        }
         return data;
     }
 }

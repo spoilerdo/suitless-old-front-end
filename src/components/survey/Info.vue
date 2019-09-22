@@ -1,6 +1,6 @@
 <template>
   <div v-if="reasons != null && reasons != ''">
-    <v-flex px-5 my-2 v-for="(reason, index) in reasons" :key="index">
+    <v-flex px-2 my-2 v-for="(reason, index) in reasons" :key="index">
       <v-scale-transition>
         <v-card>
           <v-tooltip left>
@@ -36,6 +36,12 @@
     </v-flex>
   </div>
 </template>
+
+<style scoped>
+.max-width {
+  max-width: 50%;
+}
+</style>
 
 <script>
 import { getReasonsArray } from "@/services/flowchartHelper";

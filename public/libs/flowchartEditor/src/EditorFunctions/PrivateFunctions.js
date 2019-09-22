@@ -143,7 +143,11 @@ export function addMultipleChoice(graph, parent, json, x, y) {
     let parentSwimlane = genericAddVertex(graph, parent, json, NodeEnum.MultipleChoice, multiChoiceNode.getData(), 300, 300, x, y, 'shape=' + ShapeEnum.Swimlane + ";editable=0;");
     
     //add three standard sub vertexes or the vertexes from the json
-    addSubVertexes(graph, parentSwimlane, json, 3, 0); 
+    let choices = addSubVertexes(graph, parentSwimlane, json, 3, 0); 
+    if(choices){
+        multiChoiceNode.addChoices(choices);
+        parentSwimlane.lincData = multiChoiceNode.getData();
+    }
     
     return parentSwimlane;
 }
@@ -204,11 +208,16 @@ export function addSubVertexes(graph, parent, json, amountOfChildren, index) {
             genericAddVertex(graph, parent, child, NodeEnum.Choice);
         });
     } else {
+        let choiceNodeIds = [];
+
         for (let i = index; i < amountOfChildren; i++) {
 
             let choiceNode = new ChoiceNode("");
-            genericAddVertex(graph, parent, null, NodeEnum.Choice, choiceNode.getData(), 80, 40, 10, (70 + i * 50), 'shape=' + ShapeEnum.Swimlane + ';movable=0');
+            let newVertex = genericAddVertex(graph, parent, null, NodeEnum.Choice, choiceNode.getData(), 80, 40, 10, (70 + i * 50), 'shape=' + ShapeEnum.Swimlane + ';movable=0');
+            choiceNodeIds.push(newVertex.id);
         }
+
+        return choiceNodeIds;
     }
 }
 

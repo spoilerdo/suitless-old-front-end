@@ -6,6 +6,7 @@
  */
 export let GraphCoder = {
     encodeGraphToJSON(graph, name, description, maxDepth, lincData) {
+
         let cells = graph.getChildVertices(graph.getDefaultParent())
         let nodes = [];
         cells.forEach(n => {

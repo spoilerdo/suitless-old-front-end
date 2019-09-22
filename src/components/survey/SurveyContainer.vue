@@ -7,7 +7,7 @@
       row
       v-if="progress !== 100 && survey.nodes != null && surveyStarted && currentquestion != null"
     >
-      <v-flex xs11 sm7 md7 my-2>
+      <v-flex xs11 sm7 md7 my-2 px-2>
         <!--currentquestion is an object not an integer-->
         <Question
           v-if="currentquestion.style == $data.nodeEnum.Question"
@@ -29,6 +29,7 @@
         <Notification ref="surveyNotification" :timeVisible="0" />
       </v-flex>
       <Info
+        class="max-width"
         :reasons="getReasonsArray(currentquestion)"
         :questionObject="currentquestion"
         :flowchartName="survey.name"
@@ -62,6 +63,12 @@
     />
   </div>
 </template>
+
+<style scoped>
+.max-width {
+  max-width: 50%;
+}
+</style>
 
 <script>
 import Question from "@/components/survey/question/Question.vue";
@@ -208,10 +215,10 @@ export default {
 
       let firstSubQuestion = null;
       let subquestions = answers.filter(answer => answer.flows.length > 0);
-      if (subquestions.lenght > 0) {
+      if (subquestions.length > 0) {
         firstSubQuestion = this.survey.nodes[subquestions[0].flows[0].targetID];
       }
-      if (shouldLoopNonUniqueSubQuestions.value == "false") {
+      if (shouldLoopNonUniqueSubQuestions.value === "false") {
         //create list of unique sub questions based on targetid and only add these to the backlog (skip first one it will be handled seperately)
         subquestions = subquestions.slice(1);
         let uniqueList = [
